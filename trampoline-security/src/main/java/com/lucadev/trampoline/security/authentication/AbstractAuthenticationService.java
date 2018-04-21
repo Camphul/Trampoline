@@ -12,24 +12,25 @@ import java.util.Optional;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public abstract class AbstractAuthenticationService<T extends AuthenticationPayload> implements AuthenticationService<AuthenticationPayload>{
+public abstract class AbstractAuthenticationService<T extends AuthenticationPayload> implements AuthenticationService<AuthenticationPayload> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAuthenticationService.class);
 
     @Override
     public Optional<User> authenticate(AuthenticationPayload authPayload) {
-        if(authPayload == null) {
+        if (authPayload == null) {
             throw new IllegalArgumentException("Cannot authenticate user from null payload");
         }
-        if(!isSupportedType(authPayload)) {
+        if (!isSupportedType(authPayload)) {
             LOGGER.warn("Received unsupported payload type: {}", authPayload.getClass().getName());
             return attemptUnsupportedAuthenticationPayload(authPayload);
         }
-        return doAuthenticate((T)authPayload);
+        return doAuthenticate((T) authPayload);
     }
 
     /**
      * We have the option to attempt to authenticate unsupoorted payload types.
+     *
      * @param authPayload
      * @return
      */
@@ -39,6 +40,7 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
 
     /**
      * Does this service support the given payload type
+     *
      * @param payload type of payload to check support on
      * @return if we support the payload
      */
@@ -46,6 +48,7 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
 
     /**
      * This method gets called after the {@link #authenticate(AuthenticationPayload)} method verified the payload type
+     *
      * @param payload
      * @return
      */

@@ -9,6 +9,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * Autoconfigure the auth entry point to our jwt one
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

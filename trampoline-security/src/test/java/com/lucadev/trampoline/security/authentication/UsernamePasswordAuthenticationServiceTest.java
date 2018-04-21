@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 
 import java.util.Optional;
 
@@ -15,15 +13,16 @@ import static org.junit.Assert.*;
 
 /**
  * Test the authentication mechanism which requires an username/password payload.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class UsernamePasswordAuthenticationServiceTest {
 
-    private UsernamePasswordAuthenticationService service;
-    private AuthenticationManager authenticationManager;
     private static final String USERNAME = "testuser";
     private static final String CREDENTIAL = "testpass";
+    private UsernamePasswordAuthenticationService service;
+    private AuthenticationManager authenticationManager;
 
     @Before
     public void before() {

@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.impl.TokenServiceImpl;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;

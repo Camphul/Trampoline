@@ -8,8 +8,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
-import static org.junit.Assert.*;
+
 import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -27,7 +30,7 @@ public class UuidConverterAutoConfigurationTest {
 
     @After
     public void tearDown() throws Exception {
-        if(this.context != null) {
+        if (this.context != null) {
             this.context.close();
         }
     }

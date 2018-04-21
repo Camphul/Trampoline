@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.jwt.web.controller;
 
-import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.authentication.AuthenticationService;
 import com.lucadev.trampoline.security.authentication.UsernamePasswordAuthenticationPayload;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.model.User;
@@ -38,7 +38,7 @@ public class JwtAuthenticationController {
         Optional<User> user = authenticationService.authenticate(
                 new UsernamePasswordAuthenticationPayload(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
-        if(!user.isPresent()) {
+        if (!user.isPresent()) {
             return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
         }
         String token = tokenService.createToken(user.get());

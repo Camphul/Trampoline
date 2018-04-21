@@ -6,7 +6,6 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

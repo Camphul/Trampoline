@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
+import com.lucadev.trampoline.security.repository.RoleRepository;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.impl.RoleServiceImpl;
-import com.lucadev.trampoline.security.repository.RoleRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

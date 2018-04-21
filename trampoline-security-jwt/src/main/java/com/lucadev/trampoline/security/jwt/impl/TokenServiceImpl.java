@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.jwt.impl;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
@@ -224,13 +224,13 @@ public class TokenServiceImpl implements TokenService {
      * @return
      */
     private Date calculateExpirationDate(Date createdDate) {
-        return new Date(createdDate.getTime() + properties.getTokenTimeout()* 1000);
+        return new Date(createdDate.getTime() + properties.getTokenTimeout() * 1000);
     }
 
     private String getTokenFromHeader(String headerValue) {
         String authToken = headerValue.substring(properties.getTokenHeaderPrefix().length());
         //Remove first whitespace
-        while(authToken.startsWith(" ")) {
+        while (authToken.startsWith(" ")) {
             authToken = authToken.substring(1);
         }
         return authToken;

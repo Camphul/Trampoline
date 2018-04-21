@@ -1,11 +1,14 @@
 package com.lucadev.trampoline.security.model;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>

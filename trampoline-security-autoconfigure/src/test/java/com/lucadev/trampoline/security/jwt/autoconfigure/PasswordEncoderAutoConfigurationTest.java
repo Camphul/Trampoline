@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -26,7 +27,7 @@ public class PasswordEncoderAutoConfigurationTest {
 
     @After
     public void tearDown() throws Exception {
-        if(this.context != null) {
+        if (this.context != null) {
             this.context.close();
         }
     }

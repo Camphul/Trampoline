@@ -18,7 +18,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Role extends TrampolineEntity{
+public class Role extends TrampolineEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

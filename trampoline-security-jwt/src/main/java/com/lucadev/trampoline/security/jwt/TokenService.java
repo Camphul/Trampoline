@@ -15,6 +15,7 @@ public interface TokenService {
 
     /**
      * Creates a JWT token for the given user
+     *
      * @param user
      * @return
      */
@@ -22,6 +23,7 @@ public interface TokenService {
 
     /**
      * Refreshes a token, used when the token is almost expired.
+     *
      * @param token
      * @return
      */
@@ -29,6 +31,7 @@ public interface TokenService {
 
     /**
      * Read all data from the token into the given pojo
+     *
      * @param token
      * @return
      */
@@ -36,6 +39,7 @@ public interface TokenService {
 
     /**
      * Similar to {@link #getTokenData(String)} but this reads the request header instead of passing the raw token
+     *
      * @param request
      * @return
      */
@@ -43,14 +47,16 @@ public interface TokenService {
 
     /**
      * Validate a token
+     *
      * @param jwtPayload the data read from the token
-     * @param user the user to validate the data on
+     * @param user       the user to validate the data on
      * @return if the token is valid with the given user
      */
     boolean isValidToken(JwtPayload jwtPayload, User user);
 
     /**
      * Processes a request to refresh a token
+     *
      * @param request
      * @return
      */

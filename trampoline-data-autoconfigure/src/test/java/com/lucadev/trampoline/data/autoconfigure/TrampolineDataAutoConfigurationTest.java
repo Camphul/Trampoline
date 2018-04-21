@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -23,7 +23,7 @@ public class TrampolineDataAutoConfigurationTest {
 
     @After
     public void tearDown() throws Exception {
-        if(this.context != null) {
+        if (this.context != null) {
             this.context.close();
         }
     }

@@ -28,7 +28,7 @@ public class TimeProviderAutoConfigurationTest {
 
     @After
     public void tearDown() throws Exception {
-        if(this.context != null) {
+        if (this.context != null) {
             this.context.close();
         }
     }

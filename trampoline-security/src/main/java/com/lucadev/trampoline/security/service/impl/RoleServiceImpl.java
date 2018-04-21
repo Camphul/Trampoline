@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findByName(String roleName) {
-        if(roleName == null || roleName.isEmpty()) {
+        if (roleName == null || roleName.isEmpty()) {
             return null;
         }
         return roleRepository.findOneByName(roleName);
@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean hasPrivilege(Role role, Privilege privilege) {
-        if(role == null || privilege == null) {
+        if (role == null || privilege == null) {
             return false;
         }
         return role.getPrivileges().stream().anyMatch(p -> p.getName().equals(privilege.getName()));

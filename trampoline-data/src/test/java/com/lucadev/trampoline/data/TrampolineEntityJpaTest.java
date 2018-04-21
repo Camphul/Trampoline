@@ -76,7 +76,7 @@ public class TrampolineEntityJpaTest {
      * Should be able to update entity
      */
     @Test
-    public void shouldSucceedUpdateEntity(){
+    public void shouldSucceedUpdateEntity() {
         String payload = "testPersist1";
         SimpleTrampolineEntity entity = newEntity(payload);
         entityManager.persist(entity);
@@ -104,7 +104,7 @@ public class TrampolineEntityJpaTest {
     }
 
     private void assertBounds(long expected, long result, long bounds) {
-        assertTrue(result >= expected-bounds);
-        assertTrue(result <= expected+bounds);
+        assertTrue(result >= expected - bounds);
+        assertTrue(result <= expected + bounds);
     }
 }

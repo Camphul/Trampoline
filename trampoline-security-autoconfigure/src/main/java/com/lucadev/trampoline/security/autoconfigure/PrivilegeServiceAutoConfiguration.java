@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
+import com.lucadev.trampoline.security.repository.PrivilegeRepository;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.impl.PrivilegeServiceImpl;
-import com.lucadev.trampoline.security.repository.PrivilegeRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

@@ -1,10 +1,12 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.annotation.PostConstruct;
-import java.util.Properties;
 
 /**
  * Config values for JWT. Has immutable setters
@@ -48,56 +50,56 @@ public class JwtSecurityProperties {
         signingAlgorithm = handleDefault(signingAlgorithm, DEFAULT_SIGNING_ALGORITHM);
         tokenHeader = handleDefault(tokenHeader, DEFAULT_TOKEN_HEADER);
         tokenHeaderPrefix = handleDefault(tokenHeaderPrefix, DEFAULT_TOKEN_HEADER_PREFIX);
-        if(tokenTimeout <= 0) {
+        if (tokenTimeout <= 0) {
             tokenTimeout = 3600L;
         }
         authPath = handleDefault(authPath, DEFAULT_AUTH_PATH);
     }
 
     private String handleDefault(String prop, String defaultValue) {
-        if(prop == null || prop.isEmpty()) {
+        if (prop == null || prop.isEmpty()) {
             return defaultValue;
         }
         return prop;
     }
 
     public void setSecret(String secret) {
-        if(this.secret != null) {
+        if (this.secret != null) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.secret = secret;
     }
 
     public void setSigningAlgorithm(String signingAlgorithm) {
-        if(this.signingAlgorithm != null) {
+        if (this.signingAlgorithm != null) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.signingAlgorithm = signingAlgorithm;
     }
 
     public void setTokenHeader(String tokenHeader) {
-        if(this.tokenHeader != null) {
+        if (this.tokenHeader != null) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.tokenHeader = tokenHeader;
     }
 
     public void setTokenHeaderPrefix(String tokenHeaderPrefix) {
-        if(this.tokenHeaderPrefix != null) {
+        if (this.tokenHeaderPrefix != null) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.tokenHeaderPrefix = tokenHeaderPrefix;
     }
 
     public void setTokenTimeout(long tokenTimeout) {
-        if(this.tokenTimeout > 0) {
+        if (this.tokenTimeout > 0) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.tokenTimeout = tokenTimeout;
     }
 
     public void setAuthPath(String authPath) {
-        if(this.authPath != null) {
+        if (this.authPath != null) {
             throw new IllegalStateException("Cannot set prop of immutable config");
         }
         this.authPath = authPath;

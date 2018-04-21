@@ -3,7 +3,8 @@ package com.lucadev.trampoline.service.time;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -39,8 +40,8 @@ public class SystemTimeProviderTest {
     }
 
     private void assertAcceptedRange(long expected, long result) {
-        assertTrue("Measured result too low", result >= expected-ACCEPTED_DIFFERENCE);
-        assertTrue("Measured result too high", result <= expected+ACCEPTED_DIFFERENCE);
+        assertTrue("Measured result too low", result >= expected - ACCEPTED_DIFFERENCE);
+        assertTrue("Measured result too high", result <= expected + ACCEPTED_DIFFERENCE);
     }
 
 }

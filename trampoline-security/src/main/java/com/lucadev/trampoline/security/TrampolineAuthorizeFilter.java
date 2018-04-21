@@ -15,10 +15,11 @@ import java.io.IOException;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter{
+public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
 
     /**
      * Implementation of the filter which catches any exceptions around the custom processing part
+     *
      * @param httpServletRequest
      * @param httpServletResponse
      * @param filterChain
@@ -37,6 +38,7 @@ public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter{
 
     /**
      * Process an incoming request
+     *
      * @param request
      * @param response
      * @throws Exception

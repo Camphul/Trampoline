@@ -28,7 +28,7 @@ public abstract class AbstractUserService implements UserService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserDetails user = userRepository.findOneByUsername(s);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Could not find user with username " + s);
         }
         return user;
@@ -37,15 +37,15 @@ public abstract class AbstractUserService implements UserService {
     @Override
     public Optional<User> currentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null) {
+        if (auth == null) {
             return Optional.empty();
         }
         Object principal = auth.getPrincipal();
-        if(principal == null || !(principal instanceof User)) {
+        if (principal == null || !(principal instanceof User)) {
             return Optional.empty();
         }
 
-        return Optional.of((User)principal);
+        return Optional.of((User) principal);
     }
 
     @Override

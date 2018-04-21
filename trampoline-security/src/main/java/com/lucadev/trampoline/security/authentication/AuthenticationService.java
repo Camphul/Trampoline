@@ -15,6 +15,7 @@ public interface AuthenticationService<T extends AuthenticationPayload> {
 
     /**
      * Authenticate a user from a given payload
+     *
      * @param authPayload
      * @return
      */

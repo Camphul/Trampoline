@@ -27,7 +27,7 @@ public class AuthenticationManagerMock implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getPrincipal() + "";
         String password = authentication.getCredentials() + "";
-        if(acceptedUsername.equals(username) && acceptedPassword.equals(password)) {
+        if (acceptedUsername.equals(username) && acceptedPassword.equals(password)) {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
