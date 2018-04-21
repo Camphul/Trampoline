@@ -1,3 +1,3 @@
-#trampoline-security-starter
+# trampoline-security-starter
 
-Default trampoline-security config with jwt
+Default trampoline-security setup

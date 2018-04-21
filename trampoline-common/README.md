@@ -1,3 +1,3 @@
 # trampoline-common
 
-Common functionality that does not deserve its own library
+Common functionality that does not deserve its own module such as basic data models, simple services, etc...

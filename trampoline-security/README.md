@@ -1,3 +1,3 @@
-#trampoline-security
+# trampoline-security
 
-Spring Security functionality
+Spring Security functionality boilerplates(connected to data jpa)

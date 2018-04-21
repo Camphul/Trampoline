@@ -1,3 +1,4 @@
-#trampoline-example-app
+# trampoline-example-app
 
-Example app using trampoline libs
+Example app using trampoline modules.
+This module is currently being used to aid development.

@@ -1,3 +1,3 @@
-#trampoline-security-autoconfigure
+# trampoline-security-autoconfigure
 
 Autoconfiguration for trampoline-security

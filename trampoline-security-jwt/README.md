@@ -1,3 +1,3 @@
-#trampoline-security-jwt
+# trampoline-security-jwt
 
-Use JWT for security
+JWT Authorization/authentication

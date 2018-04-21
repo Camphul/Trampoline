@@ -1,3 +1,3 @@
-#trampoline-security-jwt-autoconfigure
+# trampoline-security-jwt-autoconfigure
 
-Autoconfigure required beans for JWT auth
+Autoconfigure JWT to hook into trampoline-security
