@@ -1,11 +1,10 @@
 package com.lucadev.trampoline.data.autoconfigure;
 
-import com.lucadev.trampoline.data.configuration.TrampolineDataConfiguration;
+import com.lucadev.trampoline.data.configuration.TrampolinePersistenceConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
 
 import static org.junit.Assert.*;
 
@@ -33,8 +32,8 @@ public class TrampolineDataAutoConfigurationTest {
     public void registersTrampolineDataConfigurationAutomatically() {
         this.context.register(TrampolineDataAutoConfiguration.class);
         this.context.refresh();
-        TrampolineDataConfiguration config = this.context.getBean(TrampolineDataConfiguration.class);
-        assertEquals(TrampolineDataConfiguration.class, config.getClass());
+        TrampolinePersistenceConfiguration config = this.context.getBean(TrampolinePersistenceConfiguration.class);
+        assertEquals(TrampolinePersistenceConfiguration.class, config.getClass());
     }
 
 }

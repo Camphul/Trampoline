@@ -3,9 +3,11 @@ package com.lucadev.trampoline.data.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
@@ -13,11 +15,16 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * Entity base with UUID as primary key and two date fields for audit information
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@MappedSuperclass
 @Getter
+@Setter
+@ToString
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class TrampolineEntity {
 
     @Id
@@ -31,13 +38,14 @@ public abstract class TrampolineEntity {
     private UUID id;
 
     @CreatedDate
-    @Column(name = "auditor_created_at", nullable = false, updatable = false)
+    @Column(name = "auditing_created_at", nullable = false, updatable = false)
     @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.PROTECTED)
     private Date created;
 
     @LastModifiedDate
-    @Column(name = "auditor_updated_at", nullable = false)
+    @Column(name = "auditing_updated_at", nullable = false)
     @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
