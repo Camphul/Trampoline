@@ -38,14 +38,14 @@ public class UsernamePasswordAuthenticationServiceTest {
     @Test
     public void shouldSucceedIsSupportedType() throws Exception {
         boolean expected = true;
-        boolean result = this.service.isSupportedType(new UsernamePasswordAuthenticationPayload(USERNAME, CREDENTIAL));
+        boolean result = this.service.isSupportedType(UsernamePasswordAuthenticationPayload.class);
         assertEquals(expected, result);
     }
 
     @Test
     public void shouldFailIsSupportedType() throws Exception {
         boolean expected = false;
-        boolean result = this.service.isSupportedType(new UnknownAuthenticationPayload());
+        boolean result = this.service.isSupportedType(UnknownAuthenticationPayload.class);
         assertEquals(expected, result);
     }
 

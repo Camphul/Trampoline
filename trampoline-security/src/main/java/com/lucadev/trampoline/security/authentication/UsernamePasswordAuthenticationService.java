@@ -34,8 +34,8 @@ public class UsernamePasswordAuthenticationService extends AbstractAuthenticatio
      * @return if we support the payload
      */
     @Override
-    public boolean isSupportedType(AuthenticationPayload payload) {
-        return payload instanceof UsernamePasswordAuthenticationPayload;
+    public boolean isSupportedType(Class<? extends AuthenticationPayload> payload) {
+        return payload.isAssignableFrom(UsernamePasswordAuthenticationPayload.class);
     }
 
     @Override

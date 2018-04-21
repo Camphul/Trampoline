@@ -19,7 +19,7 @@ import java.util.Optional;
  * @since 21-4-18
  */
 @RestController
-@RequestMapping("${trampoline.security.jwt.authpath:/auth}")
+@RequestMapping("${trampoline.security.jwt.authPath:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController {
 

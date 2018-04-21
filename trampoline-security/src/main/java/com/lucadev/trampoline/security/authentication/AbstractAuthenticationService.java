@@ -21,11 +21,11 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
         if (authPayload == null) {
             throw new IllegalArgumentException("Cannot authenticate user from null payload");
         }
-        if (!isSupportedType(authPayload)) {
-            LOGGER.warn("Received unsupported payload type: {}", authPayload.getClass().getName());
+        if (!isSupportedType(authPayload.getClass())) {
+            LOGGER.info("Received unsupported payload type: {}", authPayload.getClass().getName());
             return attemptUnsupportedAuthenticationPayload(authPayload);
         }
-        return doAuthenticate((T) authPayload);
+        return doAuthenticate((T)authPayload);
     }
 
     /**
@@ -44,7 +44,7 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
      * @param payload type of payload to check support on
      * @return if we support the payload
      */
-    public abstract boolean isSupportedType(AuthenticationPayload payload);
+    public abstract boolean isSupportedType(Class<? extends AuthenticationPayload> payload);
 
     /**
      * This method gets called after the {@link #authenticate(AuthenticationPayload)} method verified the payload type
