@@ -15,21 +15,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class AuthenticationTokenResponse extends SuccessResponse {
+public class JwtAuthenticationResponse extends SuccessResponse {
 
     private final String token;
 
-    public AuthenticationTokenResponse(boolean success, String token) {
+    public JwtAuthenticationResponse(boolean success, String token) {
         super(success);
         this.token = token;
     }
 
-    public AuthenticationTokenResponse(boolean success, String token, String message) {
+    public JwtAuthenticationResponse(boolean success, String token, String message) {
         super(success, message);
         this.token = token;
     }
 
-    public AuthenticationTokenResponse(String token) {
+    public JwtAuthenticationResponse(String token) {
         this(token != null && !token.isEmpty(), token, (token != null && !token.isEmpty()) ? null : "Failed auth(no token obtained)");
     }
 

@@ -1,7 +1,7 @@
-package com.lucadev.trampoline.security.jwt.autoconfigure;
+package com.lucadev.trampoline.security.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.authentication.AuthenticationService;
-import com.lucadev.trampoline.security.jwt.authentication.UsernamePasswordAuthenticationService;
+import com.lucadev.trampoline.security.authentication.AuthenticationService;
+import com.lucadev.trampoline.security.authentication.UsernamePasswordAuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

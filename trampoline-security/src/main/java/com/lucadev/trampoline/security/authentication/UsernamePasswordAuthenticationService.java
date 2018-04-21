@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.authentication;
+package com.lucadev.trampoline.security.authentication;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.model.User;

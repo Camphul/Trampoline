@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.jwt.impl;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.model.TokenData;
+import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -96,7 +96,7 @@ public class TokenServiceImpl implements TokenService {
                 .compact();
     }
 
-    private boolean isTokenRefreshable(TokenData token, Date lastPasswordReset) {
+    private boolean isTokenRefreshable(JwtPayload token, Date lastPasswordReset) {
         return !isCreatedDateTimeBeforeLastPasswordResetDateTime(token.getIssuedDate(), lastPasswordReset)
                 && (!isCurrentDateTimePastExpiryDateTime(token.getExpirationDate()) || token.isIgnorableExpiration());
     }
@@ -108,34 +108,34 @@ public class TokenServiceImpl implements TokenService {
      * @return
      */
     @Override
-    public TokenData getTokenData(String token) {
+    public JwtPayload getTokenData(String token) {
         final Claims claims = getAllTokenClaims(token);
-        TokenData tokenData = new TokenData();
-        tokenData.setRawToken(token);
-        tokenData.setSubject(UUID.fromString(claims.getSubject()));
-        tokenData.setUsername(claims.get(CLAIM_USERNAME, String.class));
-        tokenData.setEmail(claims.get(CLAIM_EMAIL, String.class));
-        tokenData.setIssuedDate(claims.getIssuedAt());
-        tokenData.setExpirationDate(claims.getExpiration());
-        tokenData.setImpersonateMode(claims.get(CLAIM_IS_IMPERSONATING, Boolean.class));
-        if (tokenData.isImpersonateMode()) {
-            tokenData.setImpersonateInitiatorId(UUID.fromString(
+        JwtPayload jwtPayload = new JwtPayload();
+        jwtPayload.setRawToken(token);
+        jwtPayload.setSubject(UUID.fromString(claims.getSubject()));
+        jwtPayload.setUsername(claims.get(CLAIM_USERNAME, String.class));
+        jwtPayload.setEmail(claims.get(CLAIM_EMAIL, String.class));
+        jwtPayload.setIssuedDate(claims.getIssuedAt());
+        jwtPayload.setExpirationDate(claims.getExpiration());
+        jwtPayload.setImpersonateMode(claims.get(CLAIM_IS_IMPERSONATING, Boolean.class));
+        if (jwtPayload.isImpersonateMode()) {
+            jwtPayload.setImpersonateInitiatorId(UUID.fromString(
                     claims.get(CLAIM_IMPERSONATE_INITIATOR, String.class)));
         }
-        tokenData.setIgnorableExpiration(claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
-        tokenData.setRoles((List<String>) claims.get(CLAIM_ROLES, ArrayList.class));
-        return tokenData;
+        jwtPayload.setIgnorableExpiration(claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
+        jwtPayload.setRoles((List<String>) claims.get(CLAIM_ROLES, ArrayList.class));
+        return jwtPayload;
     }
 
     @Override
-    public TokenData getTokenDataFromRequest(HttpServletRequest request) {
+    public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
         final String requestHeader = request.getHeader(properties.getTokenHeader());
-        TokenData tokenData = null;
+        JwtPayload jwtPayload = null;
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
             authToken = getTokenFromHeader(requestHeader);
             try {
-                tokenData = getTokenData(authToken);
+                jwtPayload = getTokenData(authToken);
             } catch (IllegalArgumentException e) {
                 throw new AuthenticationException("Could not parse token");
             } catch (ExpiredJwtException e) {
@@ -144,23 +144,23 @@ public class TokenServiceImpl implements TokenService {
         } else {
             throw new AuthenticationException("Could not find bearer string.");
         }
-        return tokenData;
+        return jwtPayload;
     }
 
     /**
      * Validate token data against the suspected User
      *
-     * @param tokenData
+     * @param jwtPayload
      * @param user
      * @return
      */
     @Override
-    public boolean isValidToken(TokenData tokenData, User user) {
+    public boolean isValidToken(JwtPayload jwtPayload, User user) {
         return (
-                user.getId().equals(tokenData.getSubject())
-                        && user.getUsername().equals(tokenData.getUsername())
-                        && (!isCurrentDateTimePastExpiryDateTime(tokenData.getExpirationDate()) || tokenData.isIgnorableExpiration())
-                        && !isCreatedDateTimeBeforeLastPasswordResetDateTime(tokenData.getIssuedDate(), user.getLastPasswordReset())
+                user.getId().equals(jwtPayload.getSubject())
+                        && user.getUsername().equals(jwtPayload.getUsername())
+                        && (!isCurrentDateTimePastExpiryDateTime(jwtPayload.getExpirationDate()) || jwtPayload.isIgnorableExpiration())
+                        && !isCreatedDateTimeBeforeLastPasswordResetDateTime(jwtPayload.getIssuedDate(), user.getLastPasswordReset())
         );
     }
 
@@ -174,14 +174,14 @@ public class TokenServiceImpl implements TokenService {
     public String processTokenRefreshRequest(HttpServletRequest request) {
         String authHeader = request.getHeader(properties.getTokenHeader());
         final String token = getTokenFromHeader(authHeader);
-        TokenData tokenData = getTokenData(token);
-        String username = tokenData.getUsername();
-        User user = userService.findById(tokenData.getSubject());
+        JwtPayload jwtPayload = getTokenData(token);
+        String username = jwtPayload.getUsername();
+        User user = userService.findById(jwtPayload.getSubject());
         if (!user.getUsername().equals(username)) {
             throw new AuthenticationException("Token subject does not match user");
         }
 
-        if (isTokenRefreshable(tokenData, user.getLastPasswordReset())) {
+        if (isTokenRefreshable(jwtPayload, user.getLastPasswordReset())) {
             String refreshedToken = refreshToken(token);
             return refreshedToken;
         } else {

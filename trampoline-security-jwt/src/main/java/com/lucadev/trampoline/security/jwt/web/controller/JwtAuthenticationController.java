@@ -1,10 +1,9 @@
 package com.lucadev.trampoline.security.jwt.web.controller;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.authentication.AuthenticationService;
-import com.lucadev.trampoline.security.jwt.authentication.MemePayload;
-import com.lucadev.trampoline.security.jwt.authentication.UsernamePasswordAuthenticationPayload;
-import com.lucadev.trampoline.security.jwt.model.AuthenticationTokenResponse;
+import com.lucadev.trampoline.security.authentication.AuthenticationService;
+import com.lucadev.trampoline.security.authentication.UsernamePasswordAuthenticationPayload;
+import com.lucadev.trampoline.security.jwt.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
@@ -34,20 +33,20 @@ public class JwtAuthenticationController {
      * @return
      */
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
-    public AuthenticationTokenResponse submitAuthenticationTokenRequest(
+    public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         Optional<User> user = authenticationService.authenticate(
                 new UsernamePasswordAuthenticationPayload(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
         if(!user.isPresent()) {
-            return new AuthenticationTokenResponse(false, "", "Could not authenticate user.");
+            return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
         }
         String token = tokenService.createToken(user.get());
 
         if (token == null || token.isEmpty()) {
-            return new AuthenticationTokenResponse(false, null, "Could not authenticate user");
+            return new JwtAuthenticationResponse(false, null, "Could not authenticate user");
         }
-        return new AuthenticationTokenResponse(true, token, "ok");
+        return new JwtAuthenticationResponse(true, token, "ok");
     }
 
     /**
@@ -58,14 +57,14 @@ public class JwtAuthenticationController {
      * @return
      */
     @GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
-    public AuthenticationTokenResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {
+    public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             String refreshedToken = tokenService.processTokenRefreshRequest(request);
-            return new AuthenticationTokenResponse(true, refreshedToken, "ok");
+            return new JwtAuthenticationResponse(true, refreshedToken, "ok");
         } catch (Exception e) {
             //Catch exception to always return correct format
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return new AuthenticationTokenResponse(false, null, e.getMessage());
+            return new JwtAuthenticationResponse(false, null, e.getMessage());
         }
     }
 

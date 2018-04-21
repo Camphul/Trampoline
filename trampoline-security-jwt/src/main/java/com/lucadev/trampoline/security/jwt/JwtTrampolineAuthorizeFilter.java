@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.jwt;
 import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
-import com.lucadev.trampoline.security.jwt.model.TokenData;
+import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -34,11 +34,11 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
         if (!containsValidTokenHeader(request)) {
             return;
         }
-        TokenData tokenData = tokenService.getTokenDataFromRequest(request);
-        if (tokenData == null) {
+        JwtPayload jwtPayload = tokenService.getTokenDataFromRequest(request);
+        if (jwtPayload == null) {
             throw new AuthenticationException("Could not obtain token data.");
         }
-        User userDetails = authorize(tokenData);
+        User userDetails = authorize(jwtPayload);
         if (userDetails == null) {
             throw new AuthenticationException("Failed authorization check");
         } else {
@@ -57,18 +57,18 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
     }
 
     /**
-     * Authorize from TokenData
+     * Authorize from JwtPayload
      *
-     * @param tokenData
+     * @param jwtPayload
      * @return
      */
     @Transactional
-    protected User authorize(TokenData tokenData) {
-        if (tokenData.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+    protected User authorize(JwtPayload jwtPayload) {
+        if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
-            String username = tokenData.getUsername();
+            String username = jwtPayload.getUsername();
             UserDetails userDetails = this.userService.loadUserByUsername(username);
             if (!(userDetails instanceof User)) {
                 throw new IllegalStateException("UserDetails should be of type User");
@@ -77,7 +77,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
             User user = (User) userDetails;
 
 
-            if (tokenService.isValidToken(tokenData, user)) {
+            if (tokenService.isValidToken(jwtPayload, user)) {
                 return userService.updateLastSeen(user);
             }
 

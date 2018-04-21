@@ -20,7 +20,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TokenData implements Serializable {
+public class JwtPayload implements Serializable {
 
     /**
      * Raw token

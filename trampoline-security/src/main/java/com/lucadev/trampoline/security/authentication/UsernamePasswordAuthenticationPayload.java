@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.authentication;
+package com.lucadev.trampoline.security.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class UsernamePasswordAuthenticationPayload implements AuthenticationPayl
      * Erase payload data
      */
     @Override
-    public void eraseCredentials() {
+    public void erasePayload() {
         this.username = null;
         this.password = null;
     }
