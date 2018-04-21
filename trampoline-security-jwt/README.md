@@ -1,3 +1,3 @@
 # trampoline-security-jwt
 
-JWT Authorization/authentication
+Basic setup for enabling JWT authentication/authorization ontop of [trampoline-security](../trampoline-security)

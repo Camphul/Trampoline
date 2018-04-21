@@ -1,3 +1,5 @@
 # trampoline-common
 
-Common functionality that does not deserve its own module such as basic data models, simple services, etc...
+Common components/services that aren't quite big enough for their dedicated starter.
+
+**WIP**

@@ -1,3 +1,3 @@
 # trampoline-data
 
-Spring Data related functionality such as base entities, auditing etc..
+This module expands upon Spring Data(JPA w/ Hibernate) to easily create advanced domain models, identity storage, and more.

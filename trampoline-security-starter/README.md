@@ -1,3 +1,3 @@
 # trampoline-security-starter
 
-Default trampoline-security setup
+Combines the autoconfigurations for security with the unopinionated trampoline-security.
