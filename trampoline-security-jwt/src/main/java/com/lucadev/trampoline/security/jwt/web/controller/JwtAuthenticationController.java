@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.web.controller;
 
-import com.lucadev.trampoline.security.jwt.JwtService;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.AuthenticationService;
 import com.lucadev.trampoline.security.jwt.authentication.UsernamePasswordAuthenticationPayload;
 import com.lucadev.trampoline.security.jwt.model.AuthenticationTokenResponse;
@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletResponse;
  * @since 21-4-18
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("${trampoline.security.jwt.authpath:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
     private final AuthenticationService authenticationService;
-    private final JwtService tokenService;
+    private final TokenService tokenService;
 
     /**
      * Login with username-password
@@ -32,7 +32,8 @@ public class JwtAuthenticationController {
      * @return
      */
     @PostMapping("/authorize")
-    public AuthenticationTokenResponse submitAuthenticationTokenRequest(@RequestBody UserAuthenticationRequest userAuthenticationRequest) {
+    public AuthenticationTokenResponse submitAuthenticationTokenRequest(
+            @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         User user = authenticationService.authenticate(
                 new UsernamePasswordAuthenticationPayload(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));

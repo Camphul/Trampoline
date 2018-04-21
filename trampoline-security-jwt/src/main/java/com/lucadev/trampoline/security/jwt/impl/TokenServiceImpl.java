@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.jwt.impl;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.jwt.configuration.JwtProperties;
-import com.lucadev.trampoline.security.jwt.JwtService;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.model.TokenData;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
@@ -13,21 +13,23 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.parameters.P;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * Implementation for {@link TokenService} used to manage JWT tokens.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @AllArgsConstructor
-public class JwtServiceImpl implements JwtService {
-    public static final String TOKEN_HEADER_PREFIX = "Bearer ";
-    private static final String CLAIM_USERNAME = "dashboardingUsername";
-    private static final String CLAIM_EMAIL = "dashboardingEmail";
-    private static final String CLAIM_ROLES = "dashboardingUserRoles";
+public class TokenServiceImpl implements TokenService {
+    private static final String CLAIM_USERNAME = "trampolineUsername";
+    private static final String CLAIM_EMAIL = "trampolineEmail";
+    private static final String CLAIM_ROLES = "trampolineUserRoles";
     private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "tokenIgnoreExpiration";
     /**
      * Boolean value to see if the token is used as impersonate
@@ -131,8 +133,8 @@ public class JwtServiceImpl implements JwtService {
         final String requestHeader = request.getHeader(properties.getTokenHeader());
         TokenData tokenData = null;
         String authToken = null;
-        if (requestHeader != null && requestHeader.startsWith(TOKEN_HEADER_PREFIX)) {
-            authToken = requestHeader.substring(TOKEN_HEADER_PREFIX.length() );
+        if (requestHeader != null && requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
+            authToken = getTokenFromHeader(requestHeader);
             try {
                 tokenData = getTokenData(authToken);
             } catch (IllegalArgumentException e) {
@@ -171,8 +173,8 @@ public class JwtServiceImpl implements JwtService {
      */
     @Override
     public String processTokenRefreshRequest(HttpServletRequest request) {
-        String authToken = request.getHeader(properties.getTokenHeader());
-        final String token = authToken.substring(TOKEN_HEADER_PREFIX.length());
+        String authHeader = request.getHeader(properties.getTokenHeader());
+        final String token = getTokenFromHeader(authHeader);
         TokenData tokenData = getTokenData(token);
         String username = tokenData.getUsername();
         User user = userService.findById(tokenData.getSubject());
@@ -224,5 +226,14 @@ public class JwtServiceImpl implements JwtService {
      */
     private Date calculateExpirationDate(Date createdDate) {
         return new Date(createdDate.getTime() + properties.getTokenTimeout()* 1000);
+    }
+
+    private String getTokenFromHeader(String headerValue) {
+        String authToken = headerValue.substring(properties.getTokenHeaderPrefix().length());
+        //Remove first whitespace
+        while(authToken.startsWith(" ")) {
+            authToken = authToken.substring(1);
+        }
+        return authToken;
     }
 }

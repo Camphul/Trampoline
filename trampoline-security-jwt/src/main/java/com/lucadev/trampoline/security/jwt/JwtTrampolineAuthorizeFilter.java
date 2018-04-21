@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
 
     private final UserService userService;
-    private final JwtService jwtService;
+    private final TokenService tokenService;
     private final JwtProperties jwtProperties;
 
     @Override
@@ -34,7 +34,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
         if (!containsValidTokenHeader(request)) {
             return;
         }
-        TokenData tokenData = jwtService.getTokenDataFromRequest(request);
+        TokenData tokenData = tokenService.getTokenDataFromRequest(request);
         if (tokenData == null) {
             throw new AuthenticationException("Could not obtain token data.");
         }
@@ -77,7 +77,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
             User user = (User) userDetails;
 
 
-            if (jwtService.isValidToken(tokenData, user)) {
+            if (tokenService.isValidToken(tokenData, user)) {
                 return userService.updateLastSeen(user);
             }
 

@@ -17,10 +17,16 @@ import java.util.Properties;
 @ConfigurationProperties(prefix = "trampoline.security.jwt")
 public class JwtProperties {
 
+    //Signing secret
     private String secret;
+    //Signing algorithm
     private String signingAlgorithm;
+    //HTTP Header containing the token
     private String tokenHeader;
+    //Timeout for token invalidation
     private long tokenTimeout;
+    //Auth basepath
     private String authPath;
+    //Token header data prefix
     private String tokenHeaderPrefix;
 }

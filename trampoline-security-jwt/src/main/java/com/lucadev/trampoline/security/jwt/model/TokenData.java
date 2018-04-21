@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * Data that can be read from a JWT token
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

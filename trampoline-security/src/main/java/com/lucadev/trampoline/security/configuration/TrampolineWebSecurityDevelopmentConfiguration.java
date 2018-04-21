@@ -7,8 +7,10 @@ import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,40 +23,51 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
+ * Configure websecurity for dev profile(h2 console, etc...)
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Configuration
-@EnableWebSecurity
 @AllArgsConstructor
-public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter{
-
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final Environment environment;
-    //Request filter for auth
-    private final TrampolineAuthorizeFilter trampolineAuthorizeFilter;
-    private final AuthenticationEntryPoint entryPoint;
+@Profile("dev")
+@Order(Ordered.HIGHEST_PRECEDENCE-1)
+public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/console/**/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .authorizeRequests()
 
-                .exceptionHandling().authenticationEntryPoint(entryPoint);
-
+                // Un-secure H2 Database
+                .antMatchers("/console/**/**").permitAll();
+        // disable page caching
         http
-                .addFilterBefore(trampolineAuthorizeFilter, UsernamePasswordAuthenticationFilter.class);
+                .headers()
+                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+                .cacheControl();
+
+        http.authorizeRequests().antMatchers("/console/**").permitAll()
+                .and()
+                .headers().frameOptions().disable();
     }
 
+    /**
+     * Strictly used in dev profile to load h2 console
+     *
+     * @return
+     */
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+        registrationBean.addUrlMappings("/console/*");
+        return registrationBean;
     }
 }
