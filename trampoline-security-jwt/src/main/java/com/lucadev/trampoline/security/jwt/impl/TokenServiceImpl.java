@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.impl;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import com.lucadev.trampoline.security.jwt.configuration.JwtProperties;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.model.TokenData;
 import com.lucadev.trampoline.security.model.Role;
@@ -13,7 +13,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.parameters.P;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -42,7 +41,7 @@ public class TokenServiceImpl implements TokenService {
 
     private final TimeProvider timeProvider;
     private final UserService userService;
-    private final JwtProperties properties;
+    private final JwtSecurityProperties properties;
 
     /**
      * Create a new token

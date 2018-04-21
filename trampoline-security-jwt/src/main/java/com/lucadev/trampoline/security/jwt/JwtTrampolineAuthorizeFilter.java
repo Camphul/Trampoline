@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import com.lucadev.trampoline.security.jwt.configuration.JwtProperties;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.model.TokenData;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -27,7 +27,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
 
     private final UserService userService;
     private final TokenService tokenService;
-    private final JwtProperties jwtProperties;
+    private final JwtSecurityProperties jwtSecurityProperties;
 
     @Override
     public void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -49,8 +49,8 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
     }
 
     protected boolean containsValidTokenHeader(HttpServletRequest request) {
-        String token = request.getHeader(jwtProperties.getTokenHeader());
-        if (token == null || !token.startsWith(jwtProperties.getTokenHeaderPrefix())) {
+        String token = request.getHeader(jwtSecurityProperties.getTokenHeader());
+        if (token == null || !token.startsWith(jwtSecurityProperties.getTokenHeaderPrefix())) {
             return false;
         }
         return true;

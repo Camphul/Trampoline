@@ -11,23 +11,34 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
+ * Authenticates using username password credentials
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
- * @since 14-4-18
+ * @since 21-4-18
  */
 @AllArgsConstructor
 @Getter
-@Component
-public class UsernamePasswordAuthenticationService implements AuthenticationService<UsernamePasswordAuthenticationPayload> {
+public class UsernamePasswordAuthenticationService extends AbstractAuthenticationService<UsernamePasswordAuthenticationPayload> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UsernamePasswordAuthenticationService.class);
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Does this service support the given payload type
+     *
+     * @param payload type of payload to check support on
+     * @return if we support the payload
+     */
     @Override
-    public User authenticate(UsernamePasswordAuthenticationPayload authPayload) {
+    public boolean isSupportedType(AuthenticationPayload payload) {
+        return payload instanceof UsernamePasswordAuthenticationPayload;
+    }
+
+    @Override
+    protected Optional<User> doAuthenticate(UsernamePasswordAuthenticationPayload authPayload) {
         String username = authPayload.getUsername();
         String password = authPayload.getPassword();
         if (username == null || password == null) {
@@ -42,7 +53,7 @@ public class UsernamePasswordAuthenticationService implements AuthenticationServ
 
             if (principal instanceof User) {
                 LOGGER.debug("Authenticated user \"{}\" with success", username);
-                return (User) principal;
+                return Optional.of((User) principal);
             } else {
                 throw new AuthenticationException("Unexpected principal type(" + principal.getClass().getName() + "): " + principal);
             }
@@ -51,27 +62,5 @@ public class UsernamePasswordAuthenticationService implements AuthenticationServ
         } catch (BadCredentialsException e) {
             throw new AuthenticationException("Bad credentials for user \"" + username + "\"", e);
         }
-    }
-
-    /**
-     * Get user from current thread
-     *
-     * @return
-     */
-    @Override
-    public User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            return null;
-        }
-        Object principal = authentication.getPrincipal();
-        if (principal == null) {
-            return null;
-        }
-        if (principal instanceof User) {
-            return (User) principal;
-        }
-        LOGGER.debug("Unknown principal: {}", principal);
-        return null;
     }
 }

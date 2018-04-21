@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.configuration.JwtProperties;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.JwtTrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
@@ -19,17 +19,17 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ConditionalOnClass(TrampolineAuthorizeFilter.class)
-@EnableConfigurationProperties(JwtProperties.class)
+@EnableConfigurationProperties(JwtSecurityProperties.class)
 @AllArgsConstructor
 @Import(TokenServiceAutoConfiguration.class)
 public class JwtTrampolineAuthorizeFilterAutoConfiguration {
 
-    private final JwtProperties jwtProperties;
+    private final JwtSecurityProperties jwtSecurityProperties;
 
     @Bean
     @ConditionalOnMissingBean
     public TrampolineAuthorizeFilter trampolineAuthorizeFilter(TokenService tokenService, UserService userService) {
-        return new JwtTrampolineAuthorizeFilter(userService, tokenService, jwtProperties);
+        return new JwtTrampolineAuthorizeFilter(userService, tokenService, jwtSecurityProperties);
     }
 
 }

@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.lucadev.trampoline.security.jwt.autoconfigure.TokenServiceAutoConfiguration,\
 com.lucadev.trampoline.security.jwt.autoconfigure.JwtAuthenticationEntryPointAutoConfiguration,\
+com.lucadev.trampoline.security.jwt.autoconfigure.AuthenticationServiceAutoConfiguration,\
 com.lucadev.trampoline.security.jwt.autoconfigure.JwtTrampolineAuthorizeFilterAutoConfiguration

@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.jwt.web.controller;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.AuthenticationService;
+import com.lucadev.trampoline.security.jwt.authentication.MemePayload;
 import com.lucadev.trampoline.security.jwt.authentication.UsernamePasswordAuthenticationPayload;
 import com.lucadev.trampoline.security.jwt.model.AuthenticationTokenResponse;
 import com.lucadev.trampoline.security.jwt.model.UserAuthenticationRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -31,13 +33,16 @@ public class JwtAuthenticationController {
      * @param userAuthenticationRequest
      * @return
      */
-    @PostMapping("/authorize")
+    @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public AuthenticationTokenResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
-        User user = authenticationService.authenticate(
+        Optional<User> user = authenticationService.authenticate(
                 new UsernamePasswordAuthenticationPayload(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
-        String token = tokenService.createToken(user);
+        if(!user.isPresent()) {
+            return new AuthenticationTokenResponse(false, "", "Could not authenticate user.");
+        }
+        String token = tokenService.createToken(user.get());
 
         if (token == null || token.isEmpty()) {
             return new AuthenticationTokenResponse(false, null, "Could not authenticate user");
@@ -52,7 +57,7 @@ public class JwtAuthenticationController {
      * @param response
      * @return
      */
-    @GetMapping("/refresh")
+    @GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
     public AuthenticationTokenResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             String refreshedToken = tokenService.processTokenRefreshRequest(request);

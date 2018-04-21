@@ -3,6 +3,8 @@ package com.lucadev.trampoline.security.jwt.authentication;
 
 import com.lucadev.trampoline.security.model.User;
 
+import java.util.Optional;
+
 /**
  * Interface with methods to authenticate user objects.
  *
@@ -11,11 +13,11 @@ import com.lucadev.trampoline.security.model.User;
  */
 public interface AuthenticationService<T extends AuthenticationPayload> {
 
-    User authenticate(T authPayload);
-
     /**
-     * Get user from current thread
+     * Authenticate a user from a given payload
+     * @param authPayload
+     * @return
      */
-    User getCurrentUser();
+    Optional<User> authenticate(T authPayload);
 
 }
