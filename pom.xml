@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.lucadev</groupId>
+	<artifactId>trampoline-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>trampoline-data</module>
+		<module>trampoline-data-autoconfigure</module>
+		<module>trampoline-data-starter</module>
+		<module>trampoline-security</module>
+		<module>trampoline-security-jwt</module>
+		<module>trampoline-security-jwt-autoconfigure</module>
+		<module>trampoline-security-jwt-adapter</module>
+		<module>trampoline-security-autoconfigure</module>
+		<module>trampoline-security-starter</module>
+		<module>trampoline-common</module>
+		<module>trampoline-common-autoconfigure</module>
+		<module>trampoline-common-starter</module>
+		<module>trampoline-starter</module>
+		<module>trampoline-example-app</module>
+	</modules>
+    <packaging>pom</packaging>
+
+	<name>trampoline</name>
+	<description>Trampoline Spring Boot libraries</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+		<javax.servlet.version>2.5</javax.servlet.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>

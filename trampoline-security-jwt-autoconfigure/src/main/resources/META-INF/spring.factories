@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lucadev.trampoline.security.jwt.autoconfigure.JwtServiceAutoConfiguration,\
+com.lucadev.trampoline.security.jwt.autoconfigure.JwtAuthorizeFilterAutoConfiguration

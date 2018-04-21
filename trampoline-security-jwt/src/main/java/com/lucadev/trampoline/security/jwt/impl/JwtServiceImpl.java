@@ -1,0 +1,228 @@
+package com.lucadev.trampoline.security.jwt.impl;
+
+import com.lucadev.trampoline.security.exception.AuthenticationException;
+import com.lucadev.trampoline.security.jwt.configuration.JwtProperties;
+import com.lucadev.trampoline.security.jwt.JwtService;
+import com.lucadev.trampoline.security.jwt.model.TokenData;
+import com.lucadev.trampoline.security.model.Role;
+import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.service.UserService;
+import com.lucadev.trampoline.service.time.TimeProvider;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @since 21-4-18
+ */
+@AllArgsConstructor
+public class JwtServiceImpl implements JwtService {
+    public static final String TOKEN_HEADER_PREFIX = "Bearer ";
+    private static final String CLAIM_USERNAME = "dashboardingUsername";
+    private static final String CLAIM_EMAIL = "dashboardingEmail";
+    private static final String CLAIM_ROLES = "dashboardingUserRoles";
+    private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "tokenIgnoreExpiration";
+    /**
+     * Boolean value to see if the token is used as impersonate
+     */
+    private static final String CLAIM_IS_IMPERSONATING = "tokenImpersonateMode";
+    /**
+     * The UUID of the User who initiated the impersonate mode
+     */
+    private static final String CLAIM_IMPERSONATE_INITIATOR = "tokenImpersonateInitiator";
+
+    private final TimeProvider timeProvider;
+    private final UserService userService;
+    private final JwtProperties properties;
+
+    /**
+     * Create a new token
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public String createToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(CLAIM_USERNAME, user.getUsername());
+        claims.put(CLAIM_EMAIL, user.getEmail());
+        claims.put(CLAIM_ROLES, user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList()));
+        claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, false);
+        claims.put(CLAIM_IS_IMPERSONATING, false);
+        return generateToken(claims, user.getId().toString());
+    }
+
+    /**
+     * Refresh an existing token without any checks
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public String refreshToken(String token) {
+        final Date createdDate = timeProvider.now();
+        final Date expirationDate = calculateExpirationDate(createdDate);
+        //copy over old claims
+        final Claims claims = getAllTokenClaims(token);
+        claims.setIssuedAt(createdDate);
+        claims.setExpiration(expirationDate);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .signWith(SignatureAlgorithm.forName(properties.getSigningAlgorithm()), properties.getSecret())
+                .compact();
+    }
+
+    private String generateToken(Map<String, Object> claims, String subject) {
+        final Date createdDate = timeProvider.now();
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.forName(properties.getSigningAlgorithm()), properties.getSecret())
+                .compact();
+    }
+
+    private boolean isTokenRefreshable(TokenData token, Date lastPasswordReset) {
+        return !isCreatedDateTimeBeforeLastPasswordResetDateTime(token.getIssuedDate(), lastPasswordReset)
+                && (!isCurrentDateTimePastExpiryDateTime(token.getExpirationDate()) || token.isIgnorableExpiration());
+    }
+
+    /**
+     * Get all token information
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public TokenData getTokenData(String token) {
+        final Claims claims = getAllTokenClaims(token);
+        TokenData tokenData = new TokenData();
+        tokenData.setRawToken(token);
+        tokenData.setSubject(UUID.fromString(claims.getSubject()));
+        tokenData.setUsername(claims.get(CLAIM_USERNAME, String.class));
+        tokenData.setEmail(claims.get(CLAIM_EMAIL, String.class));
+        tokenData.setIssuedDate(claims.getIssuedAt());
+        tokenData.setExpirationDate(claims.getExpiration());
+        tokenData.setImpersonateMode(claims.get(CLAIM_IS_IMPERSONATING, Boolean.class));
+        if (tokenData.isImpersonateMode()) {
+            tokenData.setImpersonateInitiatorId(UUID.fromString(
+                    claims.get(CLAIM_IMPERSONATE_INITIATOR, String.class)));
+        }
+        tokenData.setIgnorableExpiration(claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
+        tokenData.setRoles((List<String>) claims.get(CLAIM_ROLES, ArrayList.class));
+        return tokenData;
+    }
+
+    @Override
+    public TokenData getTokenDataFromRequest(HttpServletRequest request) {
+        final String requestHeader = request.getHeader(properties.getTokenHeader());
+        TokenData tokenData = null;
+        String authToken = null;
+        if (requestHeader != null && requestHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+            authToken = requestHeader.substring(TOKEN_HEADER_PREFIX.length() );
+            try {
+                tokenData = getTokenData(authToken);
+            } catch (IllegalArgumentException e) {
+                throw new AuthenticationException("Could not parse token");
+            } catch (ExpiredJwtException e) {
+                throw new AuthenticationException("Token is expired");
+            }
+        } else {
+            throw new AuthenticationException("Could not find bearer string.");
+        }
+        return tokenData;
+    }
+
+    /**
+     * Validate token data against the suspected User
+     *
+     * @param tokenData
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean isValidToken(TokenData tokenData, User user) {
+        return (
+                user.getId().equals(tokenData.getSubject())
+                        && user.getUsername().equals(tokenData.getUsername())
+                        && (!isCurrentDateTimePastExpiryDateTime(tokenData.getExpirationDate()) || tokenData.isIgnorableExpiration())
+                        && !isCreatedDateTimeBeforeLastPasswordResetDateTime(tokenData.getIssuedDate(), user.getLastPasswordReset())
+        );
+    }
+
+    /**
+     * Handle a request to refresh a token
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public String processTokenRefreshRequest(HttpServletRequest request) {
+        String authToken = request.getHeader(properties.getTokenHeader());
+        final String token = authToken.substring(TOKEN_HEADER_PREFIX.length());
+        TokenData tokenData = getTokenData(token);
+        String username = tokenData.getUsername();
+        User user = userService.findById(tokenData.getSubject());
+        if (!user.getUsername().equals(username)) {
+            throw new AuthenticationException("Token subject does not match user");
+        }
+
+        if (isTokenRefreshable(tokenData, user.getLastPasswordReset())) {
+            String refreshedToken = refreshToken(token);
+            return refreshedToken;
+        } else {
+            throw new AuthenticationException("Auth token can not be refreshed");
+        }
+    }
+
+    private Claims getAllTokenClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(properties.getSecret())
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    /**
+     * Is created date before the given lastPasswordReset date.
+     *
+     * @param created
+     * @param lastPasswordReset
+     * @return
+     */
+    private boolean isCreatedDateTimeBeforeLastPasswordResetDateTime(Date created, Date lastPasswordReset) {
+        return (lastPasswordReset != null && created.before(lastPasswordReset));
+    }
+
+    /**
+     * If the current date is higher than the given date
+     *
+     * @param expiration
+     * @return
+     */
+    private boolean isCurrentDateTimePastExpiryDateTime(Date expiration) {
+        return expiration.before(timeProvider.now());
+    }
+
+    /**
+     * Calculate expiry date
+     *
+     * @param createdDate
+     * @return
+     */
+    private Date calculateExpirationDate(Date createdDate) {
+        return new Date(createdDate.getTime() + properties.getTokenTimeout()* 1000);
+    }
+}

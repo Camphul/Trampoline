@@ -1,0 +1,28 @@
+package com.lucadev.trampoline.model;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @since 21-4-18
+ */
+public class MessageResponseTest {
+
+    /**
+     * Contents should indeed match
+     */
+    @Test
+    public void shouldSucceedMessage() {
+        String expectedMessage = "Hello world!";
+        MessageResponse messageResponse = new MessageResponse(expectedMessage);
+        assertEquals(expectedMessage, messageResponse.getMessage());
+    }
+
+    @Test
+    public void shouldSucceedNullMessage() {
+        MessageResponse messageResponse = new MessageResponse(null);
+        assertNull(messageResponse.getMessage());
+    }
+}
