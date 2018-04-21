@@ -6,6 +6,8 @@ import com.lucadev.trampoline.security.repository.RoleRepository;
 import com.lucadev.trampoline.security.service.RoleService;
 
 /**
+ * TODO: Unit tests
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

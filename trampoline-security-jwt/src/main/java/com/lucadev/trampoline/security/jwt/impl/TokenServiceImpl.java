@@ -182,8 +182,7 @@ public class TokenServiceImpl implements TokenService {
         }
 
         if (isTokenRefreshable(jwtPayload, user.getLastPasswordReset())) {
-            String refreshedToken = refreshToken(token);
-            return refreshedToken;
+            return refreshToken(token);
         } else {
             throw new AuthenticationException("Auth token can not be refreshed");
         }

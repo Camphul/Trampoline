@@ -1,6 +1,8 @@
 package com.lucadev.trampoline.security;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,6 +19,8 @@ import java.io.IOException;
  */
 public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineAuthorizeFilter.class);
+
     /**
      * Implementation of the filter which catches any exceptions around the custom processing part
      *
@@ -30,8 +34,9 @@ public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
             processAuthorization(httpServletRequest, httpServletResponse);
-        } catch (Exception ex) {
-            throw new AuthenticationException(ex.getMessage());
+        } catch (AuthenticationException ex) {
+            LOGGER.trace("Failed to process authorization", ex);
+            return;//Cancel further filters
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
@@ -41,7 +46,7 @@ public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
      *
      * @param request
      * @param response
-     * @throws Exception
+     * @throws AuthenticationException when we could not authorize/authenticate the request.
      */
-    public abstract void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws Exception;
+    public abstract void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException;
 }

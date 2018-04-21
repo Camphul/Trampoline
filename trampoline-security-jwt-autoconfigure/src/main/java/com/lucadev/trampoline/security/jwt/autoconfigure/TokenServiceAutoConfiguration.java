@@ -23,10 +23,12 @@ import org.springframework.context.annotation.Configuration;
 public class TokenServiceAutoConfiguration {
 
     private final JwtSecurityProperties jwtSecurityProperties;
+    private final TimeProvider timeProvider;
+    private final UserService userService;
 
     @Bean
     @ConditionalOnMissingBean
-    public TokenService tokenService(TimeProvider timeProvider, UserService userService) {
+    public TokenService tokenService() {
         return new TokenServiceImpl(timeProvider, userService, jwtSecurityProperties);
     }
 

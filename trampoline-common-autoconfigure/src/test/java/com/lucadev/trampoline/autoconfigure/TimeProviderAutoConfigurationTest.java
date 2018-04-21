@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 /**
@@ -38,7 +40,7 @@ public class TimeProviderAutoConfigurationTest {
         this.context.register(TimeProviderAutoConfiguration.class);
         this.context.refresh();
         TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-        assertTrue(timeProvider instanceof SystemTimeProvider);
+        assertThat(timeProvider, instanceOf(SystemTimeProvider.class));
     }
 
     @Test
@@ -46,7 +48,7 @@ public class TimeProviderAutoConfigurationTest {
         this.context.register(TimeProviderConfiguration.class, TimeProviderAutoConfiguration.class);
         this.context.refresh();
         TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-        assertFalse(timeProvider instanceof SystemTimeProvider);
+        assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
         assertEquals(0L, timeProvider.unix());
     }
 

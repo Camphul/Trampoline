@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -33,7 +35,7 @@ public class TrampolineDataAutoConfigurationTest {
         this.context.register(TrampolineDataAutoConfiguration.class);
         this.context.refresh();
         TrampolinePersistenceConfiguration config = this.context.getBean(TrampolinePersistenceConfiguration.class);
-        assertEquals(TrampolinePersistenceConfiguration.class, config.getClass());
+        assertThat(config, instanceOf(TrampolinePersistenceConfiguration.class));
     }
 
 }

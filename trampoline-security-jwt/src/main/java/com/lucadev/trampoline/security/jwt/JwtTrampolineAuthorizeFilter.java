@@ -30,9 +30,9 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
     private final JwtSecurityProperties jwtSecurityProperties;
 
     @Override
-    public void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (!containsValidTokenHeader(request)) {
-            return;
+            throw new AuthenticationException("Could not authenticate: no valid token header");
         }
         JwtPayload jwtPayload = tokenService.getTokenDataFromRequest(request);
         if (jwtPayload == null) {
@@ -50,10 +50,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
 
     protected boolean containsValidTokenHeader(HttpServletRequest request) {
         String token = request.getHeader(jwtSecurityProperties.getTokenHeader());
-        if (token == null || !token.startsWith(jwtSecurityProperties.getTokenHeaderPrefix())) {
-            return false;
-        }
-        return true;
+        return !(token == null || !token.startsWith(jwtSecurityProperties.getTokenHeaderPrefix()));
     }
 
     /**
@@ -62,7 +59,6 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
      * @param jwtPayload
      * @return
      */
-    @Transactional
     protected User authorize(JwtPayload jwtPayload) {
         if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

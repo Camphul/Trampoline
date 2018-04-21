@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.autoconfigure;
+package com.lucadev.trampoline.security.autoconfigure;
 
 import com.lucadev.trampoline.security.autoconfigure.PasswordEncoderAutoConfiguration;
 import org.junit.After;
@@ -10,7 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -37,7 +40,7 @@ public class PasswordEncoderAutoConfigurationTest {
         this.context.register(PasswordEncoderAutoConfiguration.class);
         this.context.refresh();
         PasswordEncoder encoder = this.context.getBean(PasswordEncoder.class);
-        assertTrue(encoder instanceof BCryptPasswordEncoder);
+        assertThat(encoder, instanceOf(BCryptPasswordEncoder.class));
     }
 
     @Test
@@ -45,7 +48,7 @@ public class PasswordEncoderAutoConfigurationTest {
         this.context.register(CustomPassEncoderBeanConfig.class, PasswordEncoderAutoConfiguration.class);
         this.context.refresh();
         PasswordEncoder encoder = this.context.getBean(PasswordEncoder.class);
-        assertFalse(encoder instanceof BCryptPasswordEncoder);
+        assertThat(encoder, not(instanceOf(BCryptPasswordEncoder.class)));
     }
 
     @Configuration

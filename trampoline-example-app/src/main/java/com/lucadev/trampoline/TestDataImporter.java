@@ -57,7 +57,10 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
         for (Role role : roles) {
             user.getRoles().add(role);
         }
-        user = userRepository.save(user);
+        user = userRepository.saveAndFlush(user);
+        if(user == null) {
+            LOGGER.error("Could not persist user!");
+        }
     }
 
     private Role makeRole(String name, String... privileges) {

@@ -11,6 +11,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.*;
 
 /**
@@ -93,9 +99,8 @@ public class TrampolineEntityJpaTest {
     public void shouldSucceedUpdateDateCheckUpdatedEntity() throws InterruptedException {
         String payload = "testPersist2";
         SimpleTrampolineEntity entity = newEntity(payload);
-        entityManager.persist(entity);
-        entityManager.flush();
-        Thread.sleep(3000);
+        entityManager.persistAndFlush(entity).getUpdated().getTime();
+        sleep(2, TimeUnit.SECONDS);
         String updatedPayload = "haha it has been updated now! ";
         entity.setPayload(updatedPayload);
         long timestamp = System.currentTimeMillis();
@@ -106,5 +111,16 @@ public class TrampolineEntityJpaTest {
     private void assertBounds(long expected, long result, long bounds) {
         assertTrue(result >= expected - bounds);
         assertTrue(result <= expected + bounds);
+    }
+
+    /**
+     * Sleep to test if certain time based attributes work as expected.
+     * @param duration
+     * @param timeUnit
+     */
+    private void sleep(long duration, TimeUnit timeUnit) {
+        long startWait = System.currentTimeMillis();
+        await().atMost(timeUnit.toMillis(duration) + TimeUnit.SECONDS.toMillis(1), TimeUnit.MILLISECONDS)
+                .until(System::currentTimeMillis, greaterThan(startWait + timeUnit.toMillis(duration)));
     }
 }

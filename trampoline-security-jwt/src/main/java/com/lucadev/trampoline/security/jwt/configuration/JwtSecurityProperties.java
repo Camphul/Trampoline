@@ -27,6 +27,10 @@ public class JwtSecurityProperties {
     public static final String DEFAULT_TOKEN_HEADER_PREFIX = "Bearer";
     public static final long DEFAULT_TOKEN_TIMEOUT = 3600L;
     public static final String DEFAULT_AUTH_PATH = "/auth";
+    /**
+     * Errormessage that gets thrown when you try to modify this object through a setter method.
+     */
+    private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 
     //Signing secret
     private String secret;
@@ -65,42 +69,42 @@ public class JwtSecurityProperties {
 
     public void setSecret(String secret) {
         if (this.secret != null) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.secret = secret;
     }
 
     public void setSigningAlgorithm(String signingAlgorithm) {
         if (this.signingAlgorithm != null) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.signingAlgorithm = signingAlgorithm;
     }
 
     public void setTokenHeader(String tokenHeader) {
         if (this.tokenHeader != null) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.tokenHeader = tokenHeader;
     }
 
     public void setTokenHeaderPrefix(String tokenHeaderPrefix) {
         if (this.tokenHeaderPrefix != null) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.tokenHeaderPrefix = tokenHeaderPrefix;
     }
 
     public void setTokenTimeout(long tokenTimeout) {
         if (this.tokenTimeout > 0) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.tokenTimeout = tokenTimeout;
     }
 
     public void setAuthPath(String authPath) {
         if (this.authPath != null) {
-            throw new IllegalStateException("Cannot set prop of immutable config");
+            throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
         }
         this.authPath = authPath;
     }
