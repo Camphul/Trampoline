@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.web.controller;
+package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.springframework.beans.factory.annotation.Autowired;

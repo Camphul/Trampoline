@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.web.controller;
+package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;

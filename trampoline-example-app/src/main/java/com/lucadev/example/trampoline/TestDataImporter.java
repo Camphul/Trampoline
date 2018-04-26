@@ -1,4 +1,4 @@
-package com.lucadev.trampoline;
+package com.lucadev.example.trampoline;
 
 import com.lucadev.trampoline.security.model.Privilege;
 import com.lucadev.trampoline.security.model.Role;
