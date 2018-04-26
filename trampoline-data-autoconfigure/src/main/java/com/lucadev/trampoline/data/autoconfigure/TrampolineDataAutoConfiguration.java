@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autoconfiguration which creates a bean for {@link TrampolinePersistenceConfiguration}
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -14,6 +15,10 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(TrampolinePersistenceConfiguration.class)
 public class TrampolineDataAutoConfiguration {
 
+    /**
+     * Bean definition for persistence configuration.
+     * @return default persistence configuration.
+     */
     @Bean
     @ConditionalOnMissingBean
     public TrampolinePersistenceConfiguration trampolineDataConfiguration() {

@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 /**
- * Abstract {@link AuthenticationService} which checks if the passed authentication payload type is supported by this service.
+ * Abstract {@link AuthenticationService} implementation.
+ * This abstraction implements a check on the {@link AuthenticationPayload} type to see if the implementation supports it.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
@@ -16,6 +17,12 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAuthenticationService.class);
 
+    /**
+     * Checks if the {@link AuthenticationPayload} is of the correct type.
+     * If not it will not authenticate. Else it will continue authentication.
+     * @param authPayload the payload containing required credentials to perform authentication.
+     * @return an {@link Optional} containing our authenticated {@link User}
+     */
     @Override
     public Optional<User> authenticate(AuthenticationPayload authPayload) {
         if (authPayload == null) {
@@ -29,10 +36,9 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
     }
 
     /**
-     * We have the option to attempt to authenticate unsupoorted payload types.
-     *
-     * @param authPayload
-     * @return
+     * Method which handles any unsupported {@link AuthenticationPayload}
+     * @param authPayload the {@link AuthenticationPayload} which is unsupported.
+     * @return an {@link Optional} containing the authentication attempt result.
      */
     protected Optional<User> attemptUnsupportedAuthenticationPayload(AuthenticationPayload authPayload) {
         return Optional.empty();

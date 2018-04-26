@@ -5,11 +5,17 @@ import org.springframework.core.convert.converter.Converter;
 import java.util.UUID;
 
 /**
+ * A Spring {@link Converter} to converter a {@link String} into a {@link UUID}
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class UuidConverter implements Converter<String, UUID> {
 
+    /**
+     * Conversion logic
+     * @see Converter#convert(Object)
+     */
     @Override
     public UUID convert(String s) {
         if (s == null || s.isEmpty())

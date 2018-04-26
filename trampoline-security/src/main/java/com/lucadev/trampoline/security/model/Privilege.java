@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
+ * A {@link TrampolineEntity} to specify a fine-grained permission.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -22,9 +24,16 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Privilege extends TrampolineEntity {
 
+    /**
+     * Privilege identifier.
+     */
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    /**
+     * Construct a new {@code Privilege}
+     * @param name the {@code Privilege} identifier.
+     */
     public Privilege(String name) {
         this.name = name;
     }

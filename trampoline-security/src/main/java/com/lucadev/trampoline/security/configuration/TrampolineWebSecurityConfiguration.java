@@ -16,6 +16,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
+ * Spring {@link WebSecurityConfigurerAdapter} to configure our own services/routes.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -31,12 +32,18 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
     private final TrampolineAuthorizeFilter trampolineAuthorizeFilter;
     private final AuthenticationEntryPoint entryPoint;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,6 +54,9 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
                 .addFilterBefore(trampolineAuthorizeFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * A {@link User} group.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -19,9 +20,16 @@ import java.util.Collection;
 @NoArgsConstructor
 @ToString
 public class Role extends TrampolineEntity {
+
+    /**
+     * {@link User} group identifier.
+     */
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    /**
+     * {@code Collection} of {@link Privilege} that this group contains.
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "TRAMPOLINE_ROLE_PRIVILEGE",
@@ -31,6 +39,10 @@ public class Role extends TrampolineEntity {
                     name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges = new ArrayList<>();
 
+    /**
+     * Construct a new {@code Role}
+     * @param name the {@code Role} identifier/name.
+     */
     public Role(String name) {
         this.name = name;
     }

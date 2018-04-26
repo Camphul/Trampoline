@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autoconfiguration for defining a default {@link TimeProvider} bean.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -15,6 +17,10 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(TimeProvider.class)
 public class TimeProviderAutoConfiguration {
 
+    /**
+     * Auto configured bean definition. In this case the {@link SystemTimeProvider}
+     * @return default {@link TimeProvider} bean.
+     */
     @Bean
     @ConditionalOnMissingBean
     public TimeProvider timeProvider() {

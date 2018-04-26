@@ -3,18 +3,22 @@ package com.lucadev.trampoline.service.time;
 import java.util.Date;
 
 /**
+ * Interface that defines methods that provide the current time.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public interface TimeProvider {
 
     /**
-     * @return current datetime
+     * Returns {@link #unix()} in a {@link Date} object.
+     * @return current time inside a {@link Date} object.
      */
     Date now();
 
     /**
-     * @return Unix timestamp
+     * Returns the current unix timestamp.
+     * @return unix timestamp
      */
     long unix();
 

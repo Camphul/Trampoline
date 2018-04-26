@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import java.util.Optional;
 
 /**
- * Authenticates using username password credentials
+ * {@link AuthenticationService} implementation based on username/password authentication.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
@@ -28,16 +28,17 @@ public class UsernamePasswordAuthenticationService extends AbstractAuthenticatio
     private final AuthenticationManager authenticationManager;
 
     /**
-     * Does this service support the given payload type
-     *
-     * @param payload type of payload to check support on
-     * @return if we support the payload
+     * {@inheritDoc}
      */
     @Override
     public boolean isSupportedType(Class<? extends AuthenticationPayload> payload) {
         return payload.isAssignableFrom(UsernamePasswordAuthenticationPayload.class);
     }
 
+    /**
+     * Authenticate a {@link User} with {@link UsernamePasswordAuthenticationPayload}
+     * {@inheritDoc}
+     */
     @Override
     protected Optional<User> doAuthenticate(UsernamePasswordAuthenticationPayload authPayload) {
         String username = authPayload.getUsername();

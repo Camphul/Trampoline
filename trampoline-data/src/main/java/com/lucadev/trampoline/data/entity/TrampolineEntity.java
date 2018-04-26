@@ -27,6 +27,9 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TrampolineEntity {
 
+    /**
+     * Primary key is a {@link UUID}
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -37,6 +40,9 @@ public abstract class TrampolineEntity {
     @Setter(AccessLevel.PROTECTED)
     private UUID id;
 
+    /**
+     * {@link Date} of when this entity was first persisted into the data source.
+     */
     @CreatedDate
     @Column(name = "auditing_created_at", nullable = false, updatable = false)
     @PastOrPresent
@@ -44,6 +50,9 @@ public abstract class TrampolineEntity {
     @Setter(AccessLevel.PROTECTED)
     private Date created;
 
+    /**
+     * {@link Date} of when this entity was last updated in the data source.
+     */
     @LastModifiedDate
     @Column(name = "auditing_updated_at", nullable = false)
     @PastOrPresent

@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * A {@link TrampolineEntity} and {@link UserDetails} to easily manage users.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -80,6 +81,9 @@ public class User extends TrampolineEntity implements UserDetails {
     @Getter
     private Date lastSeen;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
