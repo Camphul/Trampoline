@@ -11,11 +11,11 @@
         <module>trampoline-data-autoconfigure</module>
         <module>trampoline-data-starter</module>
         <module>trampoline-security</module>
+        <module>trampoline-security-autoconfigure</module>
+        <module>trampoline-security-starter</module>
         <module>trampoline-security-jwt</module>
         <module>trampoline-security-jwt-autoconfigure</module>
         <module>trampoline-security-jwt-starter</module>
-        <module>trampoline-security-autoconfigure</module>
-        <module>trampoline-security-starter</module>
         <module>trampoline-common</module>
         <module>trampoline-common-autoconfigure</module>
         <module>trampoline-common-starter</module>
@@ -25,7 +25,7 @@
     <packaging>pom</packaging>
 
     <name>trampoline</name>
-    <description>Trampoline Spring Boot libraries</description>
+    <description>Multi-module project to opinionate Spring Boot even more and make development even faster.</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
