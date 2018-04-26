@@ -1,10 +1,10 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import com.lucadev.trampoline.security.jwt.JwtTrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
+import com.lucadev.trampoline.security.jwt.impl.JwtTrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.service.UserService;
 import org.junit.After;
 import org.junit.Before;

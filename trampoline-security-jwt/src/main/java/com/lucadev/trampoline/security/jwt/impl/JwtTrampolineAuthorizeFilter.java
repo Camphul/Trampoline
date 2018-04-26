@@ -1,7 +1,8 @@
-package com.lucadev.trampoline.security.jwt;
+package com.lucadev.trampoline.security.jwt.impl;
 
-import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
+import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.User;

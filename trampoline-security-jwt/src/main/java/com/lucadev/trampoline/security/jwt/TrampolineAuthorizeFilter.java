@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security;
+package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import org.slf4j.Logger;
