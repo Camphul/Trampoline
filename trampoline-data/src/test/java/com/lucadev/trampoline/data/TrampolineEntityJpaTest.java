@@ -11,12 +11,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.*;
 
 /**
@@ -115,6 +113,7 @@ public class TrampolineEntityJpaTest {
 
     /**
      * Sleep to test if certain time based attributes work as expected.
+     *
      * @param duration
      * @param timeUnit
      */

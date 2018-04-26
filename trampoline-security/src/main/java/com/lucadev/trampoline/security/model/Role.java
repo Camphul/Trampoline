@@ -9,6 +9,7 @@ import java.util.Collection;
 
 /**
  * A {@link User} group.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -41,6 +42,7 @@ public class Role extends TrampolineEntity {
 
     /**
      * Construct a new {@code Role}
+     *
      * @param name the {@code Role} identifier/name.
      */
     public Role(String name) {

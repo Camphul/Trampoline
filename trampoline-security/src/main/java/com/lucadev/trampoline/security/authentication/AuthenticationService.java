@@ -15,6 +15,7 @@ public interface AuthenticationService<T extends AuthenticationPayload> {
 
     /**
      * Authenticate a {@link User} from a given {@link AuthenticationPayload}
+     *
      * @param authPayload the payload containing required credentials to perform authentication.
      * @return an {@link Optional} containing the authenticated {@link User}
      */

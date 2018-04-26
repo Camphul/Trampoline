@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * Autoconfiguration to provide a {@link UUIDConverter} bean.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -20,6 +21,7 @@ public class UuidConverterAutoConfiguration {
 
     /**
      * Bean definition for our {@link UUID} converter. In this case our {@link UUIDConverter}
+     *
      * @return a converter for converting a {@link String} into a {@link UUID}
      */
     @Bean

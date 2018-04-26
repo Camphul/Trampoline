@@ -1,16 +1,12 @@
 package com.lucadev.trampoline.security.jwt;
 
 import org.junit.Test;
-import org.mockito.verification.VerificationMode;
-import org.springframework.http.HttpStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

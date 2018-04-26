@@ -8,6 +8,7 @@ import java.util.UUID;
 
 /**
  * A {@link JpaRepository} specific to {@link TrampolineEntity} entities.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

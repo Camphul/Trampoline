@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -26,6 +26,7 @@ public class TokenServiceAutoConfigurationTest {
     private JwtSecurityProperties jwtSecurityProperties;
     private TimeProvider timeProvider;
     private UserService userService;
+
     @Before
     public void setUp() throws Exception {
         jwtSecurityProperties = mock(JwtSecurityProperties.class);
@@ -39,13 +40,13 @@ public class TokenServiceAutoConfigurationTest {
         if (this.context != null) {
             this.context.close();
         }
-        if(jwtSecurityProperties != null) {
+        if (jwtSecurityProperties != null) {
             jwtSecurityProperties = null;
         }
-        if(timeProvider != null) {
+        if (timeProvider != null) {
             timeProvider = null;
         }
-        if(userService != null) {
+        if (userService != null) {
             userService = null;
         }
     }
@@ -74,7 +75,7 @@ public class TokenServiceAutoConfigurationTest {
 
         @Bean
         public TokenService tokenService() {
-            return  mock(TokenService.class);
+            return mock(TokenService.class);
         }
     }
 }

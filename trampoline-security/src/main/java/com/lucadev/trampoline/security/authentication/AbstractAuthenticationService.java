@@ -20,6 +20,7 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
     /**
      * Checks if the {@link AuthenticationPayload} is of the correct type.
      * If not it will not authenticate. Else it will continue authentication.
+     *
      * @param authPayload the payload containing required credentials to perform authentication.
      * @return an {@link Optional} containing our authenticated {@link User}
      */
@@ -32,11 +33,12 @@ public abstract class AbstractAuthenticationService<T extends AuthenticationPayl
             LOGGER.info("Received unsupported payload type: {}", authPayload.getClass().getName());
             return attemptUnsupportedAuthenticationPayload(authPayload);
         }
-        return doAuthenticate((T)authPayload);
+        return doAuthenticate((T) authPayload);
     }
 
     /**
      * Method which handles any unsupported {@link AuthenticationPayload}
+     *
      * @param authPayload the {@link AuthenticationPayload} which is unsupported.
      * @return an {@link Optional} containing the authentication attempt result.
      */

@@ -1,14 +1,11 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import antlr.TokenStreamException;
 import com.lucadev.trampoline.security.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.jwt.JwtTrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
-import com.lucadev.trampoline.security.jwt.impl.TokenServiceImpl;
 import com.lucadev.trampoline.security.service.UserService;
-import com.lucadev.trampoline.security.service.impl.UserServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -47,7 +44,7 @@ public class JwtTrampolineAuthorizeFilterAutoConfigurationTest {
         if (this.context != null) {
             this.context.close();
         }
-        if(this.jwtSecurityProperties != null) {
+        if (this.jwtSecurityProperties != null) {
             this.jwtSecurityProperties = null;
         }
     }

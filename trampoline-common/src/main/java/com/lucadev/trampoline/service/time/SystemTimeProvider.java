@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * A {@link TimeProvider} implementation which uses the default {@link System} class to obtain time.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

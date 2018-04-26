@@ -3,7 +3,6 @@ package com.lucadev.trampoline.security.autoconfigure;
 import com.lucadev.trampoline.security.authentication.AuthenticationService;
 import com.lucadev.trampoline.security.authentication.UsernamePasswordAuthenticationService;
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -43,7 +41,7 @@ public class AuthenticationServiceAutoConfigurationTest {
             this.context.close();
         }
 
-        if(this.mockedAuthenticationManager != null) {
+        if (this.mockedAuthenticationManager != null) {
             this.mockedAuthenticationManager = null;
         }
     }

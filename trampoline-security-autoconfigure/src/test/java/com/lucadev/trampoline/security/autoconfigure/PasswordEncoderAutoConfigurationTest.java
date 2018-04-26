@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
-import com.lucadev.trampoline.security.autoconfigure.PasswordEncoderAutoConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>

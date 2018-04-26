@@ -14,6 +14,7 @@ public class UUIDConverter implements Converter<String, UUID> {
 
     /**
      * Conversion logic
+     *
      * @see Converter#convert(Object)
      */
     @Override
