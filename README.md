@@ -41,6 +41,10 @@ This module implements an authorization filter, authentication service(sign-in),
 - [trampoline-security-starter](/trampoline-security-starter)
 - [trampoline-security-jwt-starter](/trampoline-security-jwt-starter)
 
+### trampoline-X-web
+
+Trampoline web modules such as [trampoline-security-jwt-web](/trampoline-security-jwt-web) register routes to use their functionality such as JWT endpoints.
+
 ## Contributing
 
 If you wish to contribute please read the guidelines as described in [CONTRIBUTING.md](/CONTRIBUTING.md)

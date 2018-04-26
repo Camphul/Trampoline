@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.model;
+package com.lucadev.trampoline.security.jwt.web.model;
 
 import lombok.*;
 
