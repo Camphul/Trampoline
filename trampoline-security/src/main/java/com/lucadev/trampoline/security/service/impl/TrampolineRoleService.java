@@ -23,15 +23,15 @@ public class TrampolineRoleService implements RoleService {
      * {@inheritDoc}
      */
     @Override
-    public boolean hasRole(String roleName) {
-        return findByName(roleName) != null;
+    public boolean exists(String roleName) {
+        return find(roleName) != null;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Role findByName(String roleName) {
+    public Role find(String roleName) {
         if (roleName == null || roleName.isEmpty()) {
             return null;
         }
@@ -53,25 +53,25 @@ public class TrampolineRoleService implements RoleService {
      * {@inheritDoc}
      */
     @Override
-    public void addPrivilege(Role role, Privilege privilege) {
+    public Role addPrivilege(Role role, Privilege privilege) {
         role.getPrivileges().add(privilege);
-        roleRepository.save(role);
+        return roleRepository.save(role);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removePrivilege(Role role, Privilege privilege) {
+    public Role removePrivilege(Role role, Privilege privilege) {
         role.getPrivileges().remove(privilege);
-        roleRepository.save(role);
+        return roleRepository.save(role);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Role createRole(String roleName) {
+    public Role create(String roleName) {
         Role role = new Role(roleName);
         return roleRepository.save(role);
     }

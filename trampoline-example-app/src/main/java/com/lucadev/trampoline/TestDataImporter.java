@@ -64,7 +64,7 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     }
 
     private Role makeRole(String name, String... privileges) {
-        Role role = roleService.createRole(name);
+        Role role = roleService.create(name);
         for (String privilege : privileges) {
             role.getPrivileges().add(makePrivilege(privilege));
         }
@@ -72,6 +72,6 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     }
 
     public Privilege makePrivilege(String name) {
-        return privilegeService.createPrivilege(name);
+        return privilegeService.create(name);
     }
 }

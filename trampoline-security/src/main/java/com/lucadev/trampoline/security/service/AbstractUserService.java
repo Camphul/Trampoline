@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * Abstract implementation of {@link UserService}
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -21,16 +23,26 @@ public abstract class AbstractUserService implements UserService {
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
 
+    /**
+     * Construct the abstract service.
+     * @param userRepository the {@code Repository} used to persist {@link User} entities.
+     */
     public AbstractUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findOneByUsername(s);
         return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<User> currentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -45,6 +57,9 @@ public abstract class AbstractUserService implements UserService {
         return Optional.of((User) principal);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User findById(UUID subject) {
         return userRepository.findById(subject).orElse(null);

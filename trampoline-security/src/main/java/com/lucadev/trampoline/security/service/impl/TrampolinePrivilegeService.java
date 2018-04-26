@@ -19,7 +19,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
      * {@inheritDoc}
      */
     @Override
-    public Privilege createPrivilege(String privilege) {
+    public Privilege create(String privilege) {
         Privilege p = new Privilege(privilege);
         return privilegeRepository.save(p);
     }
@@ -28,7 +28,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
      * {@inheritDoc}
      */
     @Override
-    public void removePrivilege(String privilage) {
+    public void remove(String privilage) {
         privilegeRepository.deleteByName(privilage);
     }
 
@@ -36,7 +36,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
      * {@inheritDoc}
      */
     @Override
-    public Privilege findPrivilegeByName(String privilegeName) {
+    public Privilege find(String privilegeName) {
         return privilegeRepository.findOneByName(privilegeName);
     }
 }
