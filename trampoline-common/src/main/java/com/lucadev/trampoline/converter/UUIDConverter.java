@@ -10,7 +10,7 @@ import java.util.UUID;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class UuidConverter implements Converter<String, UUID> {
+public class UUIDConverter implements Converter<String, UUID> {
 
     /**
      * Conversion logic

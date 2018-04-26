@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.autoconfigure;
 
-import com.lucadev.trampoline.converter.UuidConverter;
+import com.lucadev.trampoline.converter.UUIDConverter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class UuidConverterAutoConfigurationTest {
+public class UUIDConverterAutoConfigurationTest {
 
     private static final String STATIC_UUID_STRING = "439948e5-192f-4980-8d70-71787265e1a5";
     private AnnotationConfigApplicationContext context;
@@ -41,7 +41,7 @@ public class UuidConverterAutoConfigurationTest {
         this.context.refresh();
 
         Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter", Converter.class);
-        assertTrue(uuidConverter instanceof UuidConverter);
+        assertTrue(uuidConverter instanceof UUIDConverter);
     }
 
     @Test

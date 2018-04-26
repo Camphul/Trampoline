@@ -13,13 +13,13 @@ import static org.junit.Assert.assertNull;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class UuidConverterTest {
+public class UUIDConverterTest {
 
-    private UuidConverter uuidConverter;
+    private UUIDConverter uuidConverter;
 
     @Before
     public void before() {
-        this.uuidConverter = new UuidConverter();
+        this.uuidConverter = new UUIDConverter();
     }
 
     @After
