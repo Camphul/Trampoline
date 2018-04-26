@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.autoconfigure;
 
 import com.lucadev.trampoline.security.repository.RoleRepository;
 import com.lucadev.trampoline.security.service.RoleService;
-import com.lucadev.trampoline.security.service.impl.RoleServiceImpl;
+import com.lucadev.trampoline.security.service.impl.TrampolineRoleService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ public class RoleServiceAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public RoleService roleService(RoleRepository roleRepository) {
-        return new RoleServiceImpl(roleRepository);
+        return new TrampolineRoleService(roleRepository);
     }
 
 }

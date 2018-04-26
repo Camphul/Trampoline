@@ -5,6 +5,8 @@ import com.lucadev.trampoline.security.model.Privilege;
 import org.springframework.stereotype.Repository;
 
 /**
+ * {@link TrampolineRepository} for {@link Privilege} entities.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

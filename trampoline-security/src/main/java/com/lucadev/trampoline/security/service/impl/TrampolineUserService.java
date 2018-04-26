@@ -6,20 +6,23 @@ import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 
 /**
- * TODO: Unit tests
+ * {@link com.lucadev.trampoline.security.service.UserService} implementation
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class UserServiceImpl extends AbstractUserService {
+public class TrampolineUserService extends AbstractUserService {
 
     private final TimeProvider timeProvider;
 
-    public UserServiceImpl(UserRepository userRepository, TimeProvider timeProvider) {
+    public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider) {
         super(userRepository);
         this.timeProvider = timeProvider;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User updateLastSeen(User user) {
         user.setLastSeen(timeProvider.now());

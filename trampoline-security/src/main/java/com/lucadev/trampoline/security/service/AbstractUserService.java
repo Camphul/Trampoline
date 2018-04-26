@@ -27,11 +27,8 @@ public abstract class AbstractUserService implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserDetails user = userRepository.findOneByUsername(s);
-        if (user == null) {
-            throw new UsernameNotFoundException("Could not find user with username " + s);
-        }
-        return user;
+        Optional<User> user = userRepository.findOneByUsername(s);
+        return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
     }
 
     @Override

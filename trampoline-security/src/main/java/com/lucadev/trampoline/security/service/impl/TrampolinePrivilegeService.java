@@ -6,28 +6,35 @@ import com.lucadev.trampoline.security.service.PrivilegeService;
 import lombok.AllArgsConstructor;
 
 /**
- * TODO: Unit tests
- *
+ * {@link PrivilegeService} implementation.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @AllArgsConstructor
-public class PrivilegeServiceImpl implements PrivilegeService {
+public class TrampolinePrivilegeService implements PrivilegeService {
 
     private final PrivilegeRepository privilegeRepository;
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Privilege createPrivilege(String privilege) {
         Privilege p = new Privilege(privilege);
         return privilegeRepository.save(p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removePrivilege(String privilage) {
         privilegeRepository.deleteByName(privilage);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Privilege findPrivilegeByName(String privilegeName) {
         return privilegeRepository.findOneByName(privilegeName);
