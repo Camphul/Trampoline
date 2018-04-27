@@ -44,25 +44,41 @@ public class UsernamePasswordAuthenticationService extends AbstractAuthenticatio
         String username = authPayload.getUsername();
         String password = authPayload.getPassword();
         if (username == null || password == null) {
-            throw new NullPointerException("Could not authenticate: username or password is null");
+            throw new AuthenticationException("Could not authenticate: username or password is null");
         }
         try {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            Object principal = auth.getPrincipal();
-            if (principal == null) {
-                throw new AuthenticationException("Failed authentication(null principal)");
-            }
+            User user = getUser(auth);
 
-            if (principal instanceof User) {
+            if (user != null) {
                 LOGGER.debug("Authenticated user \"{}\" with success", username);
-                return Optional.of((User) principal);
+                return Optional.of(user);
             } else {
-                throw new AuthenticationException("Unexpected principal type(" + principal.getClass().getName() + "): " + principal);
+                throw new AuthenticationException("Unhandled authentication state");
             }
         } catch (DisabledException e) {
             throw new AuthenticationException("User \"" + username + "\" is disabled!", e);
         } catch (BadCredentialsException e) {
             throw new AuthenticationException("Bad credentials for user \"" + username + "\"", e);
         }
+    }
+
+    /**
+     * {@link User} from {@link Authentication} or throw an {@link AuthenticationException}
+     * @param authentication
+     * @return
+     */
+    protected User getUser(Authentication authentication) {
+        if(authentication == null) {
+            throw new AuthenticationException("Failed to authenticate: authentication object may not be null.");
+        }
+        Object principal = authentication.getPrincipal();
+        if (principal == null) {
+            throw new AuthenticationException("Failed authentication(null principal)");
+        }
+        if (principal instanceof User) {
+            return (User)principal;
+        }
+        throw new AuthenticationException("Failed to authenticate: unknown reason.");
     }
 }
