@@ -64,4 +64,12 @@ public abstract class AbstractUserService implements UserService {
     public User findById(UUID subject) {
         return userRepository.findById(subject).orElse(null);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User update(User user) {
+        return userRepository.save(user);
+    }
 }

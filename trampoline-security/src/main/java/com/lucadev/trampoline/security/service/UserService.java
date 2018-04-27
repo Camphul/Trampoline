@@ -28,6 +28,13 @@ public interface UserService extends UserDetailsService {
     User findById(UUID subject);
 
     /**
+     * Update a {@link User}
+     * @param user the {@link User} containing updated data.
+     * @return the updated {@link User} after being updated.
+     */
+    User update(User user);
+
+    /**
      * Update {@link User#updated} value.
      * @param user the {@link User} to update.
      * @return the updated {@link User}

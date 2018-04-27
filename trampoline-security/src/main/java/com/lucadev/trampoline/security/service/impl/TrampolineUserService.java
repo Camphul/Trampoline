@@ -32,6 +32,6 @@ public class TrampolineUserService extends AbstractUserService {
     @Override
     public User updateLastSeen(User user) {
         user.setLastSeen(timeProvider.now());
-        return getUserRepository().save(user);
+        return update(user);
     }
 }
