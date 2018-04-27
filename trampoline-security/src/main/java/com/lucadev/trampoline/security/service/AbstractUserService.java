@@ -4,6 +4,8 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import java.util.UUID;
  */
 public abstract class AbstractUserService implements UserService {
 
+    protected static final String CACHE_REGION = "trampoline_cache_users";
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
 
@@ -61,7 +64,13 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(value = CACHE_REGION, key = "#subject")
     public User findById(UUID subject) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return userRepository.findById(subject).orElse(null);
     }
 
@@ -69,6 +78,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
+    @CacheEvict(value = CACHE_REGION, key = "#user.id")
     public User update(User user) {
         return userRepository.save(user);
     }

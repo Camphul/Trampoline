@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
+import org.springframework.cache.annotation.CacheEvict;
 
 /**
  * {@link com.lucadev.trampoline.security.service.UserService} implementation.
@@ -34,4 +35,6 @@ public class TrampolineUserService extends AbstractUserService {
         user.setLastSeen(timeProvider.now());
         return update(user);
     }
+
+
 }
