@@ -1,5 +1,6 @@
 package com.lucadev.example.trampoline;
 
+import com.lucadev.example.trampoline.service.BookService;
 import com.lucadev.trampoline.security.model.Privilege;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
@@ -31,6 +32,7 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BookService bookService;
 
     @Override
     @Transactional
@@ -38,11 +40,22 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
         LOGGER.info("Running test data imports");
         Role userRole = makeRole("ROLE_USER", "USER_READ", "WHOAMI_GET");
         Role adminRole = makeRole("ROLE_ADMIN", "USER_WRITE", "USER_DELETE");
-        makeUser("user", userRole);
-        makeUser("admin", userRole, adminRole);
+        User user = makeUser("user", userRole);
+        User admin = makeUser("admin", userRole, adminRole);
+
+        bookService.create("userBook1", user);
+        bookService.create("userBook2", user);
+        bookService.create("userBook3", user);
+        bookService.create("userBook4", user);
+
+        bookService.create("adminBook1", admin);
+        bookService.create("adminBook2", admin);
+        bookService.create("adminBook3", admin);
+        bookService.create("adminBook4", admin);
+        bookService.create("adminBook5", admin);
     }
 
-    private void makeUser(String name, Role... roles) {
+    private User makeUser(String name, Role... roles) {
         User user = new User();
         user.setUsername(name);
         user.setCredentialsExpired(false);
@@ -61,6 +74,7 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
         if (user == null) {
             LOGGER.error("Could not persist user!");
         }
+        return user;
     }
 
     private Role makeRole(String name, String... privileges) {
@@ -74,4 +88,5 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     public Privilege makePrivilege(String name) {
         return privilegeService.create(name);
     }
+
 }
