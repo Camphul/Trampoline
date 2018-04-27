@@ -56,4 +56,79 @@ public interface UserService extends UserDetailsService {
      * @return a {@link Page} of {@link User} entities.
      */
     Page<User> findAll(Pageable pageable);
+
+    /**
+     * Set {@link User#enabled} to false.
+     * @param user the {@link User} to disable.
+     * @return the updated, now disabled {@link User}
+     */
+    User disable(User user);
+
+    /**
+     * Set {@link User#enabled} to true.
+     * @param user the {@link User} to enable.
+     * @return the updated, enabled {@link User}
+     */
+    User enable(User user);
+
+    /**
+     * Set the {@link User#enabled} flag
+     * @param user the {@link User} to set the flag of.
+     * @param enabled enabled flag
+     * @return the updated {@link User}
+     */
+    User setEnabled(User user, boolean enabled);
+
+    /**
+     * Expire a {@link User}
+     * @param user the {@link User} to expire.
+     * @return the updated, expired {@link User}
+     */
+    User expire(User user);
+
+    /**
+     * Set the {@link User#expired} flag
+     * @param user the {@link User} to set the flag on.
+     * @param expired the new flag value.
+     * @return the updated {@link User}
+     */
+    User setExpired(User user, boolean expired);
+
+    /**
+     * Lock a {@link User}
+     * @param user the {@link User} to lock.
+     * @return the updated {@link User}
+     */
+    User lock(User user);
+
+    /**
+     * Unlock a {@link User}
+     * @param user the {@link User} to unlock.
+     * @return the updated {@link User}
+     */
+    User unlock(User user);
+
+    /**
+     * Set the {@link User#locked} flag.
+     * @param user the {@link User} to apply the flag on.
+     * @param locked the new locked value.
+     * @return the updated {@link User}
+     */
+    User setLocked(User user, boolean locked);
+
+    /**
+     * Expires the {@link User} credentials.
+     * @param user the {@link User} to expire the credentials on.
+     * @return the updated {@link User}
+     */
+    User expireCredentials(User user);
+
+    /**
+     * Set the {@link User#credentialsExpired} flag.
+     * @param user the {@link User} to apply the flag on.
+     * @param expired the new flag value.
+     * @return the updated {@link User}
+     */
+    User setCredentialsExpired(User user, boolean expired);
+
 }
