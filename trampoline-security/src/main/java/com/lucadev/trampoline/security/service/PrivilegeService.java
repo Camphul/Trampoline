@@ -17,10 +17,18 @@ public interface PrivilegeService {
     Privilege create(String privilege);
 
     /**
-     * Remove a {@link Privilege}
-     * @param privilage the privilege name
+     * Create a new {@link Privilege}.
+     * @param privilege the {@link Privilege} name
+     * @param target the type that this privilege will be applied on
+     * @return the newly persisted {@link Privilege}
      */
-    void remove(String privilage);
+    Privilege create(String privilege, String target);
+
+    /**
+     * Remove a {@link Privilege}
+     * @param privilege the privilege name
+     */
+    void remove(String privilege);
 
     /**
      * Find a {@link Privilege} by it's name.

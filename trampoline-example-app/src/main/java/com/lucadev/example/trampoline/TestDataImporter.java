@@ -5,6 +5,7 @@ import com.lucadev.trampoline.security.model.Privilege;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
+import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
 import lombok.AllArgsConstructor;
@@ -12,10 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -33,13 +36,20 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final BookService bookService;
+    private final AuthorizationSchemeService authorizationSchemeService;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         LOGGER.info("Running test data imports");
-        Role userRole = makeRole("ROLE_USER", "USER_READ", "WHOAMI_GET");
-        Role adminRole = makeRole("ROLE_ADMIN", "USER_WRITE", "USER_DELETE");
+        try {
+            authorizationSchemeService.importAuthorizationScheme(
+                    authorizationSchemeService.loadModel(new ClassPathResource("/auth_scheme.json")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Role userRole = roleService.find("ROLE_USER");
+        Role adminRole = roleService.find("ROLE_ADMIN");
         User user = makeUser("user", userRole);
         User admin = makeUser("admin", userRole, adminRole);
 
@@ -75,18 +85,6 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
             LOGGER.error("Could not persist user!");
         }
         return user;
-    }
-
-    private Role makeRole(String name, String... privileges) {
-        Role role = roleService.create(name);
-        for (String privilege : privileges) {
-            role.getPrivileges().add(makePrivilege(privilege));
-        }
-        return roleService.update(role);
-    }
-
-    public Privilege makePrivilege(String name) {
-        return privilegeService.create(name);
     }
 
 }

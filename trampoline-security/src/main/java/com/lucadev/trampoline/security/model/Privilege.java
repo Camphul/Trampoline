@@ -31,11 +31,28 @@ public class Privilege extends TrampolineEntity {
     private String name;
 
     /**
+     * Target type, where to apply this privilege on.
+     */
+    @Column(name = "target")
+    private String target;
+
+    /**
      * Construct a new {@code Privilege}
      *
      * @param name the {@code Privilege} identifier.
      */
     public Privilege(String name) {
         this.name = name;
+    }
+
+    /**
+     * Construct a new {@code Privilege}
+     *
+     * @param name the {@code Privilege} identifier.
+     * @param target the type to apply the privilege on.
+     */
+    public Privilege(String name, String target) {
+        this(name);
+        this.target = target;
     }
 }

@@ -1,0 +1,72 @@
+{
+  "profiles": ["dev"],
+  "defaultRoles": ["ROLE_USER"],
+  "privileges": [
+    {
+      "name": "WHOAMI_GET",
+      "target": "EXAMPLE"
+    },
+    {
+      "name": "USER_READ",
+      "target": "USER"
+    },
+    {
+      "name": "USER_EDIT",
+      "target": "USER"
+    },
+    {
+      "name": "USER_CREATE",
+      "target": "USER"
+    },
+    {
+      "name": "USER_DELETE",
+      "target": "USER"
+    },
+    {
+      "name": "BOOK_READ",
+      "target": "BOOK"
+    },
+    {
+      "name": "BOOK_EDIT",
+      "target": "BOOK"
+    },
+    {
+      "name": "BOOK_CREATE",
+      "target": "BOOK"
+    },
+    {
+      "name": "BOOK_DELETE",
+      "target": "BOOK"
+    }
+
+  ],
+  "roles": [
+    {
+      "name": "ROLE_USER",
+      "parents": [],
+      "privileges": [
+        "USER_READ",
+        "USER_EDIT",
+        "BOOK_READ",
+        "BOOK_EDIT",
+        "WHOAMI_GET"
+      ]
+    },
+    {
+      "name": "ROLE_ADMIN",
+      "parents": ["ROLE_USER"],
+      "privileges": [
+        "USER_CREATE",
+        "USER_DELETE",
+        "BOOK_CREATE",
+        "BOOK_DELETE"
+      ]
+    },
+    {
+      "name": "ROLE_SUPERADMIN",
+      "parents": ["ROLE_ADMIN"],
+      "privileges": [
+      ]
+    }
+  ]
+}
