@@ -66,11 +66,6 @@ public abstract class AbstractUserService implements UserService {
     @Override
     @Cacheable(value = CACHE_REGION, key = "#subject")
     public User findById(UUID subject) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return userRepository.findById(subject).orElse(null);
     }
 
