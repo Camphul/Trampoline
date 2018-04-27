@@ -41,6 +41,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findOneByUsername(s);
         return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
@@ -67,7 +68,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = CACHE_REGION, key = "#subject")
+    @Cacheable(CACHE_REGION)
     public User findById(UUID subject) {
         return userRepository.findById(subject).orElse(null);
     }
@@ -76,7 +77,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @CacheEvict(value = CACHE_REGION, key = "#user.id")
+    @CacheEvict(CACHE_REGION)
     public User update(User user) {
         return userRepository.save(user);
     }
@@ -85,6 +86,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(CACHE_REGION)
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -93,6 +95,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(CACHE_REGION)
     public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
