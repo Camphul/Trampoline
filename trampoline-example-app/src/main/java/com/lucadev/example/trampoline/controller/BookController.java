@@ -8,6 +8,8 @@ import com.lucadev.trampoline.model.SuccessResponse;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +31,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
     public List<BookDto> getBookList() {
         LOGGER.info("GET book list");
         List<Book> books = bookService.findAll();
@@ -36,12 +39,14 @@ public class BookController {
     }
 
     @GetMapping("/{uuid}")
+    @PreAuthorize("hasPermission(#uuid, 'BOOK', 'READ')")
     public BookDto getBook(@PathVariable("uuid")UUID uuid) {
         LOGGER.info("GET book");
         return new BookDto(bookService.findById(uuid));
     }
 
     @DeleteMapping("/{uuid}")
+    @PreAuthorize("hasPermission(#uuid, 'BOOK', 'DELETE')")
     public SuccessResponse deleteBook(@PathVariable("uuid")UUID uuid) {
         LOGGER.info("DELETE book");
         bookService.remove(bookService.findById(uuid));
@@ -49,12 +54,14 @@ public class BookController {
     }
 
     @PostMapping
+    @PreAuthorize("hasPermission('BOOK', 'CREATE')")
     public BookDto postBook(@RequestBody CreateBookRequest request) {
         LOGGER.info("POST book");
         return new BookDto(bookService.create(request.getName()));
     }
 
     @PatchMapping("/{uuid}")
+    @PreAuthorize("hasPermission(#uuid, 'BOOK', 'PATCH')")
     public BookDto postBook(@PathVariable UUID uuid,@RequestBody CreateBookRequest request) {
         LOGGER.info("PATCH book");
         Book book = bookService.findById(uuid);

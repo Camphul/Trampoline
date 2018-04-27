@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lucadev.trampoline.security.ac.autoconfigure.EvaluationFactoryAutoConfiguration,\
+com.lucadev.trampoline.security.ac.autoconfigure.DecisionManagerAutoConfiguration

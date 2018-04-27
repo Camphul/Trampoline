@@ -88,9 +88,14 @@ public class User extends TrampolineEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        getRoles().forEach(role -> role.getPrivileges()
-                .forEach(privilege -> authorities.add(
-                        new SimpleGrantedAuthority(privilege.getName()))));
+        getRoles().forEach(role -> {
+                    authorities.add(new SimpleGrantedAuthority(role.getName()));
+                    role.getPrivileges()
+                            .forEach(privilege -> authorities.add(
+                                    new SimpleGrantedAuthority(privilege.getName()))
+                            );
+                }
+        );
         return authorities;
     }
 
