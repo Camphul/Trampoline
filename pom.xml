@@ -22,6 +22,7 @@
         <module>trampoline-common-starter</module>
         <module>trampoline-starter</module>
         <module>trampoline-example-app</module>
+        <module>trampoline-security-user-web</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,8 +1,11 @@
 package com.lucadev.trampoline.security.service;
 
 import com.lucadev.trampoline.security.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,4 +43,17 @@ public interface UserService extends UserDetailsService {
      * @return the updated {@link User}
      */
     User updateLastSeen(User user);
+
+    /**
+     * Get a {@link List} of all users
+     * @return a {@link List} of all {@link User} entities.
+     */
+    List<User> findAll();
+
+    /**
+     * Find all users but paged.
+     * @param pageable paging information.
+     * @return a {@link Page} of {@link User} entities.
+     */
+    Page<User> findAll(Pageable pageable);
 }

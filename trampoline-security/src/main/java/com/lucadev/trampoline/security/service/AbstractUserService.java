@@ -6,11 +6,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,5 +79,23 @@ public abstract class AbstractUserService implements UserService {
     @CacheEvict(value = CACHE_REGION, key = "#user.id")
     public User update(User user) {
         return userRepository.save(user);
+    }
+
+    /**
+     * Get a {@link List} of all users
+     *
+     * @return a {@link List} of all {@link User} entities.
+     */
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 }
