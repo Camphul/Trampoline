@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.lucadev</groupId>
-            <artifactId>tramponline-common-starter</artifactId>
+            <artifactId>trampoline-common-starter</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
