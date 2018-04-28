@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -43,8 +42,8 @@ public class JwtAuthenticationController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
         }
-        User user = (User)authentication.getPrincipal();
-        if(user == null) {
+        User user = (User) authentication.getPrincipal();
+        if (user == null) {
             return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
         }
 
