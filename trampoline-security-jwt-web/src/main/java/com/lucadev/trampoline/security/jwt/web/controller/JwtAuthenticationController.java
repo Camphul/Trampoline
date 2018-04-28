@@ -1,13 +1,14 @@
 package com.lucadev.trampoline.security.jwt.web.controller;
 
-import com.lucadev.trampoline.security.authentication.AuthenticationService;
-import com.lucadev.trampoline.security.authentication.UsernamePasswordAuthenticationPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationManager authenticationService;
     private final TokenService tokenService;
 
     /**
@@ -35,13 +36,19 @@ public class JwtAuthenticationController {
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
-        Optional<User> user = authenticationService.authenticate(
-                new UsernamePasswordAuthenticationPayload(userAuthenticationRequest.getUsername(),
+        Authentication authentication = authenticationService.authenticate(
+                new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
-        if (!user.isPresent()) {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
             return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
         }
-        String token = tokenService.createToken(user.get());
+        User user = (User)authentication.getPrincipal();
+        if(user == null) {
+            return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
+        }
+
+        String token = tokenService.createToken(user);
 
         if (token == null || token.isEmpty()) {
             return new JwtAuthenticationResponse(false, null, "Could not authenticate user");
