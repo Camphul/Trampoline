@@ -18,18 +18,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(TrampolineAuthorizeFilter.class)
-@EnableConfigurationProperties(JwtSecurityProperties.class)
 @AllArgsConstructor
 public class JwtTrampolineAuthorizeFilterAutoConfiguration {
 
-    private final JwtSecurityProperties jwtSecurityProperties;
     private final TokenService tokenService;
-    private final UserService userService;
 
     @Bean
     @ConditionalOnMissingBean
     public TrampolineAuthorizeFilter trampolineAuthorizeFilter() {
-        return new JwtTrampolineAuthorizeFilter(userService, tokenService, jwtSecurityProperties);
+        return new JwtTrampolineAuthorizeFilter(tokenService);
     }
 
 }

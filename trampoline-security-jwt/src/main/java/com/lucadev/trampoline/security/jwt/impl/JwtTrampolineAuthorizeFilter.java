@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.impl;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
+import com.lucadev.trampoline.security.jwt.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
@@ -9,9 +10,11 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,59 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
 
-    private final UserService userService;
     private final TokenService tokenService;
-    private final JwtSecurityProperties jwtSecurityProperties;
 
     @Override
     public void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if (!containsValidTokenHeader(request)) {
-            throw new AuthenticationException("Could not authenticate: no token header found.");
-        }
-        JwtPayload jwtPayload = tokenService.getTokenDataFromRequest(request);
-        if (jwtPayload == null) {
-            throw new AuthenticationException("Could not obtain token data.");
-        }
-        User userDetails = authorize(jwtPayload);
-        if (userDetails == null) {
-            throw new AuthenticationException("Failed authorization check");
-        } else {
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        Authentication authentication = tokenService.getAuthentication(request);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    protected boolean containsValidTokenHeader(HttpServletRequest request) {
-        String token = request.getHeader(jwtSecurityProperties.getTokenHeader());
-        return !(token == null || !token.startsWith(jwtSecurityProperties.getTokenHeaderPrefix()));
-    }
-
-    /**
-     * Authorize from JwtPayload
-     *
-     * @param jwtPayload
-     * @return
-     */
-    protected User authorize(JwtPayload jwtPayload) {
-        if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            // It is not compelling necessary to load the use details from the database. You could also store the information
-            // in the token and read it from it. It's up to you ;)
-            String username = jwtPayload.getUsername();
-            UserDetails userDetails = this.userService.loadUserByUsername(username);
-            if (!(userDetails instanceof User)) {
-                throw new IllegalStateException("UserDetails should be of type User");
-            }
-
-            User user = (User) userDetails;
-
-
-            if (tokenService.isValidToken(jwtPayload, user)) {
-                return userService.updateLastSeen(user);
-            }
-
-        }
-        throw new AuthenticationException("Could not authenticate using token");
-    }
 }

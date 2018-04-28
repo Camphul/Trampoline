@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.User;
+import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,5 +62,12 @@ public interface TokenService {
      * @return
      */
     String processTokenRefreshRequest(HttpServletRequest request);
+
+    /**
+     * Get authentication result
+     * @param request
+     * @return
+     */
+    Authentication getAuthentication(HttpServletRequest request);
 
 }

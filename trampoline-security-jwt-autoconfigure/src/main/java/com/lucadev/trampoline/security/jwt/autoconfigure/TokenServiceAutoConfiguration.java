@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -25,11 +26,12 @@ public class TokenServiceAutoConfiguration {
     private final JwtSecurityProperties jwtSecurityProperties;
     private final TimeProvider timeProvider;
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @Bean
     @ConditionalOnMissingBean
     public TokenService tokenService() {
-        return new TokenServiceImpl(timeProvider, userService, jwtSecurityProperties);
+        return new TokenServiceImpl(timeProvider, userService, jwtSecurityProperties, authenticationManager);
     }
 
 }

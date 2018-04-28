@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.impl;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
+import com.lucadev.trampoline.security.jwt.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.jwt.model.JwtPayload;
@@ -13,6 +14,11 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -42,6 +48,7 @@ public class TokenServiceImpl implements TokenService {
     private final TimeProvider timeProvider;
     private final UserService userService;
     private final JwtSecurityProperties properties;
+    private final AuthenticationManager authenticationManager;
 
     /**
      * Create a new token
@@ -130,6 +137,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
         final String requestHeader = request.getHeader(properties.getTokenHeader());
+        if(requestHeader == null || requestHeader.isEmpty()) {
+            throw new AuthenticationException("Could not find token header.");
+        }
         JwtPayload jwtPayload = null;
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
@@ -186,6 +196,18 @@ public class TokenServiceImpl implements TokenService {
         } else {
             throw new AuthenticationException("Auth token can not be refreshed");
         }
+    }
+
+    @Override
+    public Authentication getAuthentication(HttpServletRequest request) {
+        JwtPayload jwtPayload = getTokenDataFromRequest(request);
+        if (jwtPayload == null) {
+            return null;
+        }
+        //TODO: Jwt auth token for authentication manager
+        JwtAuthenticationToken token = new JwtAuthenticationToken(jwtPayload);
+
+        return authenticationManager.authenticate(token);
     }
 
     private Claims getAllTokenClaims(String token) {

@@ -36,8 +36,10 @@ public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
             processAuthorization(httpServletRequest, httpServletResponse);
         } catch (AuthenticationException ex) {
             LOGGER.trace("Failed to process authorization", ex);
+            ex.printStackTrace();
+        } finally {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -45,7 +47,7 @@ public abstract class TrampolineAuthorizeFilter extends OncePerRequestFilter {
      *
      * @param request
      * @param response
-     * @throws AuthenticationException when we could not authorize/authenticate the request.
+     * @throws AuthenticationException when we could not getUser/authenticate the request.
      */
     public abstract void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException;
 }

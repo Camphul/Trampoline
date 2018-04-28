@@ -32,7 +32,7 @@ public class JwtAuthenticationController {
      * @param userAuthenticationRequest
      * @return
      */
-    @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
+    @PostMapping("${trampoline.security.jwt.authPath.getUser:/getUser}")
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         Authentication authentication = authenticationService.authenticate(

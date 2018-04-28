@@ -1,11 +1,17 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
+import com.lucadev.trampoline.security.jwt.JwtAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.TrampolineAuthorizeFilter;
+import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,6 +35,8 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     //Request filter for auth
     private final TrampolineAuthorizeFilter trampolineAuthorizeFilter;
     private final AuthenticationEntryPoint entryPoint;
+    private final TokenService tokenService;
+    private final UserService userService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -38,6 +46,11 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         HttpMethod.POST,
                         jwtSecurityProperties.getAuthPath() + "/**"
                 );
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(new JwtAuthenticationProvider(tokenService, userService));
     }
 
     @Override

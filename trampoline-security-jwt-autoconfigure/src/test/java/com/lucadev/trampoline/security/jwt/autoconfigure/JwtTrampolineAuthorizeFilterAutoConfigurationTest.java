@@ -27,14 +27,10 @@ import static org.mockito.Mockito.mock;
  */
 public class JwtTrampolineAuthorizeFilterAutoConfigurationTest {
     private AnnotationConfigApplicationContext context;
-    private JwtSecurityProperties jwtSecurityProperties;
-    private UserService userService;
     private TokenService tokenService;
 
     @Before
     public void setUp() throws Exception {
-        this.jwtSecurityProperties = mock(JwtSecurityProperties.class);
-        this.userService = mock(UserService.class);
         this.tokenService = mock(TokenService.class);
         context = new AnnotationConfigApplicationContext();
     }
@@ -44,15 +40,11 @@ public class JwtTrampolineAuthorizeFilterAutoConfigurationTest {
         if (this.context != null) {
             this.context.close();
         }
-        if (this.jwtSecurityProperties != null) {
-            this.jwtSecurityProperties = null;
-        }
     }
 
     @Test
     public void registersJwtTrampolineAuthorizeFilterAutomatically() {
-        this.context.registerBean(JwtTrampolineAuthorizeFilterAutoConfiguration.class, jwtSecurityProperties,
-                tokenService, userService);
+        this.context.registerBean(JwtTrampolineAuthorizeFilterAutoConfiguration.class, tokenService);
         this.context.refresh();
         TrampolineAuthorizeFilter filter = context.getBean(TrampolineAuthorizeFilter.class);
         assertThat(filter, instanceOf(JwtTrampolineAuthorizeFilter.class));
@@ -61,8 +53,7 @@ public class JwtTrampolineAuthorizeFilterAutoConfigurationTest {
     @Test
     public void customTrampolineAuthorizeFilterBean() {
         this.context.register(CustomTrampolineAuthorizeFilterConfig.class);
-        this.context.registerBean(JwtTrampolineAuthorizeFilterAutoConfiguration.class, jwtSecurityProperties,
-                tokenService, userService);
+        this.context.registerBean(JwtTrampolineAuthorizeFilterAutoConfiguration.class, tokenService);
         this.context.refresh();
         TrampolineAuthorizeFilter filter = context.getBean(TrampolineAuthorizeFilter.class);
         assertThat(filter, not(instanceOf(JwtTrampolineAuthorizeFilter.class)));
