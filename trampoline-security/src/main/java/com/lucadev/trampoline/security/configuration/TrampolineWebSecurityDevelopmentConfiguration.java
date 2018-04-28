@@ -20,7 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @AllArgsConstructor
 @Profile("dev")
-@Order(Integer.MAX_VALUE - 1)
+@Order(2)
 public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override

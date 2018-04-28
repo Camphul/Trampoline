@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-@Order(Integer.MAX_VALUE)
+@Order(1)
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;

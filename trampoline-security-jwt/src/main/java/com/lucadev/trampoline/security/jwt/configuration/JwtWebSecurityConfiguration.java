@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
 import com.lucadev.trampoline.security.jwt.JwtAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.TrampolineAuthorizeFilter;
 import com.lucadev.trampoline.security.service.UserService;
@@ -28,7 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableConfigurationProperties(JwtSecurityProperties.class)
 @AllArgsConstructor
-@Order(1)
+@Order(3)
 public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtSecurityProperties jwtSecurityProperties;
@@ -50,7 +51,12 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new JwtAuthenticationProvider(tokenService, userService));
+        auth.authenticationProvider(jwtAuthenticationProvider());
+    }
+
+    @Bean
+    public JwtAuthenticationProvider jwtAuthenticationProvider() {
+        return new JwtAuthenticationProvider(tokenService, userService);
     }
 
     @Override
