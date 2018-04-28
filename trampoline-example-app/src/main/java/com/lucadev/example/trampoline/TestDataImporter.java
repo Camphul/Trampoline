@@ -1,12 +1,10 @@
 package com.lucadev.example.trampoline;
 
 import com.lucadev.example.trampoline.service.BookService;
-import com.lucadev.trampoline.security.model.Privilege;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
-import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -22,6 +20,8 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
+ * Test component to import test data.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -31,7 +31,6 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestDataImporter.class);
 
-    private final PrivilegeService privilegeService;
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

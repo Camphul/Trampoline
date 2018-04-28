@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * POJO of the authorization scheme.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 27-4-18
  */

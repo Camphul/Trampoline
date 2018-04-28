@@ -1,6 +1,5 @@
 package com.lucadev.trampoline;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

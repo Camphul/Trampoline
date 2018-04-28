@@ -31,6 +31,7 @@ public abstract class AbstractUserService implements UserService {
 
     /**
      * Construct the abstract service.
+     *
      * @param userRepository the {@code Repository} used to persist {@link User} entities.
      */
     public AbstractUserService(UserRepository userRepository) {

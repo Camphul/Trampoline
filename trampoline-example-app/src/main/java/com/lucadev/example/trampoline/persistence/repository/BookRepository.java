@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @since 27-4-18
  */
 @Repository
-public interface BookRepository extends TrampolineRepository<Book>{
+public interface BookRepository extends TrampolineRepository<Book> {
 
     Book findOneByName(String name);
 

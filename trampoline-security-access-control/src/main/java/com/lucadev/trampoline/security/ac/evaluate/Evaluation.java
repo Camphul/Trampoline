@@ -10,24 +10,28 @@ public interface Evaluation {
 
     /**
      * Deny access
+     *
      * @return this{@code Evaluation} that will deny access
      */
     Evaluation deny();
 
     /**
      * Ignore access control
+     *
      * @return this {@code Evaluation} that will ignore the access check.
      */
     Evaluation ignore();
 
     /**
      * Grant access
+     *
      * @return this {@code Evaluation} that will grant access
      */
     Evaluation grant();
 
     /**
      * Get the result of the evaluation.
+     *
      * @return the chosen {@link EvaluationResult}
      */
     EvaluationResult getEvaluationResult();

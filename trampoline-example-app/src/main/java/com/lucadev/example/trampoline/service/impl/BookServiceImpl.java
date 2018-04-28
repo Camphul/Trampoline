@@ -7,7 +7,6 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +17,7 @@ import java.util.UUID;
  */
 @Service
 @AllArgsConstructor
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final UserService userService;

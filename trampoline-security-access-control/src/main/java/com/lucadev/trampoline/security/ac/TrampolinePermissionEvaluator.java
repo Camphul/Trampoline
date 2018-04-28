@@ -8,7 +8,6 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * {@link PermissionEvaluator} which handles all access-control based aspects.
@@ -27,11 +26,11 @@ public class TrampolinePermissionEvaluator implements PermissionEvaluator {
      */
     @Override
     public boolean hasPermission(Authentication auth, Object domainObject, Object permission) {
-        if ((auth == null) || (domainObject == null) || !(permission instanceof String)){
+        if ((auth == null) || (domainObject == null) || !(permission instanceof String)) {
             return false;
         }
         String targetType = null;
-        if(domainObject instanceof String) {
+        if (domainObject instanceof String) {
             targetType = String.valueOf(domainObject);
         } else {
             targetType = domainObject.getClass().getSimpleName().toUpperCase();
@@ -44,7 +43,7 @@ public class TrampolinePermissionEvaluator implements PermissionEvaluator {
      */
     @Override
     public boolean hasPermission(Authentication auth, Serializable targetId, String targetType, Object permission) {
-        if(auth == null || targetType == null || !(permission instanceof String)) {
+        if (auth == null || targetType == null || !(permission instanceof String)) {
             return false;
         }
         return hasPrivilege(auth, targetId, targetType, ((String) permission).toUpperCase());

@@ -7,7 +7,7 @@ import com.lucadev.trampoline.security.model.auth.scheme.AuthorizationSchemeMode
 import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import lombok.*;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -37,23 +37,22 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
 
     /**
      * Import roles
-     * @param model entire model
+     *
+     * @param model        entire model
      * @param privilegeMap mapping of loaded privileges
      */
     private void importPrivileges(AuthorizationSchemeModel model, Map<String, UUID> privilegeMap) {
         for (AuthorizationSchemeModel.PrivilegeAuthorizationSchemeModel privilegeModel : model.getPrivileges()) {
             String target = privilegeModel.getTarget();
-            if(target.isEmpty()) {
-                target = null;
-            }
-            Privilege priv = privilegeService.create(privilegeModel.getName(), target);
-            privilegeMap.put(privilegeModel.getName(), priv.getId());
-            LOGGER.info("JSON IMPORTED PRIVILEGE::{}", priv);
+            Privilege privilege = privilegeService.create(privilegeModel.getName(), target);
+            privilegeMap.put(privilegeModel.getName(), privilege.getId());
+            LOGGER.info("JSON IMPORTED PRIVILEGE::{}", privilege);
         }
     }
 
     /**
      * Import roles
+     *
      * @param model
      * @param roleMap
      */
@@ -61,8 +60,8 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
         for (AuthorizationSchemeModel.RoleAuthorizationSchemeModel roleModel : model.getRoles()) {
             //create
             Role role = roleService.create(roleModel.getName());
-            for (String priv : roleModel.getPrivileges()) {
-                Privilege privilege = privilegeService.find(priv);
+            for (String privilegeName : roleModel.getPrivileges()) {
+                Privilege privilege = privilegeService.find(privilegeName);
                 role.getPrivileges().add(privilege);
             }
             role = roleService.update(role);
@@ -76,7 +75,7 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
     private boolean containsValidProfile(AuthorizationSchemeModel model) {
         for (String prof : environment.getActiveProfiles()) {
             for (String modelProfile : model.getProfiles()) {
-                if(prof.equals(modelProfile)) {
+                if (prof.equals(modelProfile)) {
                     return true;
                 }
             }
@@ -88,7 +87,7 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
     @Override
     public AuthorizationSchemeModel loadModel(Resource resource) throws IOException {
         File file = resource.getFile();
-        if(!file.exists()) {
+        if (!file.exists()) {
             throw new FileNotFoundException("Cannot load non existent resource");
         }
         LOGGER.info("Starting import of authorization scheme");
@@ -98,7 +97,7 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
     @Override
     @Transactional
     public void importAuthorizationScheme(AuthorizationSchemeModel model) throws IOException {
-        if(!containsValidProfile(model)) {
+        if (!containsValidProfile(model)) {
             return;
         }
         Map<String, UUID> roleMap = new HashMap<>();

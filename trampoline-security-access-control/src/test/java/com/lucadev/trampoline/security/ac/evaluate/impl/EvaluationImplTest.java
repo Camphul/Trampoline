@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.ac.evaluate.impl;
 import com.lucadev.trampoline.security.ac.evaluate.EvaluationResult;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>

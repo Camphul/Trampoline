@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface BookService {
 
     Book create(String name);
+
     Book create(String name, User author);
 
     Book update(Book book);

@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -23,7 +22,7 @@ public class BookAccessEvaluator implements AccessEvaluator {
     public void checkAccess(Evaluation eval, Authentication auth, Object domainObject, String targetType, String permission) {
         LOGGER.info("checkAccess(eval={}, auth={}, domainObject={}, targetType={}, permission={})",
                 eval, auth, domainObject, targetType, permission);
-        if(!targetType.equals("BOOK")) {
+        if (!targetType.equals("BOOK")) {
             return;
         }
         auth.getAuthorities().forEach(System.out::println);

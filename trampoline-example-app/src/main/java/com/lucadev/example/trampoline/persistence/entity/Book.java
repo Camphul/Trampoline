@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Book extends TrampolineEntity{
+public class Book extends TrampolineEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY)

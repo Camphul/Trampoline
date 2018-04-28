@@ -1,10 +1,13 @@
 {
-  "profiles": ["dev"],
-  "defaultRoles": ["ROLE_USER"],
+  "profiles": [
+    "dev"
+  ],
+  "defaultRoles": [
+    "ROLE_USER"
+  ],
   "privileges": [
     {
-      "name": "WHOAMI_GET",
-      "target": "EXAMPLE"
+      "name": "WHOAMI_GET"
     },
     {
       "name": "USER_READ",
@@ -38,7 +41,6 @@
       "name": "BOOK_DELETE",
       "target": "BOOK"
     }
-
   ],
   "roles": [
     {
@@ -54,7 +56,9 @@
     },
     {
       "name": "ROLE_ADMIN",
-      "parents": ["ROLE_USER"],
+      "parents": [
+        "ROLE_USER"
+      ],
       "privileges": [
         "USER_CREATE",
         "USER_DELETE",
@@ -64,7 +68,9 @@
     },
     {
       "name": "ROLE_SUPERADMIN",
-      "parents": ["ROLE_ADMIN"],
+      "parents": [
+        "ROLE_ADMIN"
+      ],
       "privileges": [
       ]
     }

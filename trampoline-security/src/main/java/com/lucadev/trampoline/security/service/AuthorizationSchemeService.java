@@ -16,6 +16,7 @@ public interface AuthorizationSchemeService {
 
     /**
      * Load a authorization scheme
+     *
      * @param resource
      * @return
      * @throws IOException

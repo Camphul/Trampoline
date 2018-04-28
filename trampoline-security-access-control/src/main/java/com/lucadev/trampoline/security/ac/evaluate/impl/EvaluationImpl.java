@@ -2,7 +2,6 @@ package com.lucadev.trampoline.security.ac.evaluate.impl;
 
 import com.lucadev.trampoline.security.ac.evaluate.Evaluation;
 import com.lucadev.trampoline.security.ac.evaluate.EvaluationResult;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 

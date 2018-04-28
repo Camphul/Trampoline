@@ -4,7 +4,6 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.springframework.cache.annotation.CacheEvict;
 
 /**
  * {@link com.lucadev.trampoline.security.service.UserService} implementation.
@@ -19,8 +18,9 @@ public class TrampolineUserService extends AbstractUserService {
 
     /**
      * Construct the service.
+     *
      * @param userRepository the repository to persist {@link User} entities.
-     * @param timeProvider {@link TimeProvider} instance.
+     * @param timeProvider   {@link TimeProvider} instance.
      */
     public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider) {
         super(userRepository);

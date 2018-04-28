@@ -3,18 +3,15 @@ package com.lucadev.trampoline.security.ac.autoconfigure;
 import com.lucadev.trampoline.security.ac.decision.AffirmativeDecisionManager;
 import com.lucadev.trampoline.security.ac.decision.DecisionManager;
 import com.lucadev.trampoline.security.ac.evaluate.EvaluationFactory;
-import com.lucadev.trampoline.security.ac.evaluate.impl.EvaluationFactoryImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**

@@ -48,7 +48,7 @@ public class Privilege extends TrampolineEntity {
     /**
      * Construct a new {@code Privilege}
      *
-     * @param name the {@code Privilege} identifier.
+     * @param name   the {@code Privilege} identifier.
      * @param target the type to apply the privilege on.
      */
     public Privilege(String name, String target) {

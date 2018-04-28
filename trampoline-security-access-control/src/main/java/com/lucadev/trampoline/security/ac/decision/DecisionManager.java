@@ -15,6 +15,7 @@ public interface DecisionManager {
 
     /**
      * Decide on permission
+     *
      * @param auth
      * @param domainObject
      * @param targetType
@@ -25,6 +26,7 @@ public interface DecisionManager {
 
     /**
      * A {@link List} of {@link AccessEvaluator} beans.
+     *
      * @return
      */
     List<AccessEvaluator> getAccessEvaluators();

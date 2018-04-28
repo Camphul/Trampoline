@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * {@link PrivilegeService} implementation.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */

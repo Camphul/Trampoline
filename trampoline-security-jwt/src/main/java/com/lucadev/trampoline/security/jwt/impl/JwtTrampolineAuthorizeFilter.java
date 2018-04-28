@@ -32,7 +32,7 @@ public class JwtTrampolineAuthorizeFilter extends TrampolineAuthorizeFilter {
     @Override
     public void processAuthorization(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (!containsValidTokenHeader(request)) {
-            return;
+            throw new AuthenticationException("Could not authenticate: no token header found.");
         }
         JwtPayload jwtPayload = tokenService.getTokenDataFromRequest(request);
         if (jwtPayload == null) {

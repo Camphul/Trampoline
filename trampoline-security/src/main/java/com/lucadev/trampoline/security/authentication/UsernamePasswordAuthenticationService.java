@@ -65,11 +65,12 @@ public class UsernamePasswordAuthenticationService extends AbstractAuthenticatio
 
     /**
      * {@link User} from {@link Authentication} or throw an {@link AuthenticationException}
+     *
      * @param authentication
      * @return
      */
     protected User getUser(Authentication authentication) {
-        if(authentication == null) {
+        if (authentication == null) {
             throw new AuthenticationException("Failed to authenticate: authentication object may not be null.");
         }
         Object principal = authentication.getPrincipal();
@@ -77,7 +78,7 @@ public class UsernamePasswordAuthenticationService extends AbstractAuthenticatio
             throw new AuthenticationException("Failed authentication(null principal)");
         }
         if (principal instanceof User) {
-            return (User)principal;
+            return (User) principal;
         }
         throw new AuthenticationException("Failed to authenticate: unknown reason.");
     }

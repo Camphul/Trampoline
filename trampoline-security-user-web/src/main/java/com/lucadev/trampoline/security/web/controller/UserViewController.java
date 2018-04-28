@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * View specific {@link User}
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 27-4-18
  */

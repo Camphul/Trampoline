@@ -12,7 +12,8 @@ public interface UserPasswordService {
 
     /**
      * Is {@code password} the {@link User} password.
-     * @param user the {@link User} to check on.
+     *
+     * @param user     the {@link User} to check on.
      * @param password the expected password.
      * @return if the password matches.
      */
@@ -20,6 +21,7 @@ public interface UserPasswordService {
 
     /**
      * Change {@link User} password.
+     *
      * @param user
      * @param newPassword
      * @return
