@@ -15,10 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -200,14 +197,17 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Authentication getAuthentication(HttpServletRequest request) {
-        JwtPayload jwtPayload = getTokenDataFromRequest(request);
-        if (jwtPayload == null) {
+        try {
+            JwtPayload jwtPayload = getTokenDataFromRequest(request);
+            if (jwtPayload == null) {
+                return null;
+            }
+            //TODO: Jwt auth token for authentication manager
+            JwtAuthenticationToken token = new JwtAuthenticationToken(jwtPayload);
+            return authenticationManager.authenticate(token);
+        } catch (Exception ex) {
             return null;
         }
-        //TODO: Jwt auth token for authentication manager
-        JwtAuthenticationToken token = new JwtAuthenticationToken(jwtPayload);
-
-        return authenticationManager.authenticate(token);
     }
 
     private Claims getAllTokenClaims(String token) {

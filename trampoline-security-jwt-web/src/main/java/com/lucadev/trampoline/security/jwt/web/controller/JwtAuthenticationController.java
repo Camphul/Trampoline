@@ -3,7 +3,6 @@ package com.lucadev.trampoline.security.jwt.web.controller;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
-import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,27 +31,17 @@ public class JwtAuthenticationController {
      * @param userAuthenticationRequest
      * @return
      */
-    @PostMapping("${trampoline.security.jwt.authPath.getUser:/getUser}")
+    @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         Authentication authentication = authenticationService.authenticate(
                 new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
 
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
-        }
-        User user = (User) authentication.getPrincipal();
-        if (user == null) {
-            return new JwtAuthenticationResponse(false, "", "Could not authenticate user.");
-        }
-
-        String token = tokenService.createToken(user);
-
-        if (token == null || token.isEmpty()) {
+        if (authentication == null) {
             return new JwtAuthenticationResponse(false, null, "Could not authenticate user");
         }
-        return new JwtAuthenticationResponse(true, token, "ok");
+        return new JwtAuthenticationResponse(true, String.valueOf(authentication.getDetails()), "ok");
     }
 
     /**

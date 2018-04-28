@@ -23,7 +23,7 @@ public class TrampolineUserPasswordService implements UserPasswordService {
      */
     @Override
     public boolean isPassword(User user, String password) {
-        return passwordEncoder.matches(user.getPassword(), password);
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     /**
