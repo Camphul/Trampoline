@@ -65,6 +65,7 @@ public interface TokenService {
 
     /**
      * Get authentication result
+     *
      * @param request
      * @return
      */

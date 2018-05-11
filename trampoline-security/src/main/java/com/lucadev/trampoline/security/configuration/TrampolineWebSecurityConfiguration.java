@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.configuration;
 
-import com.lucadev.trampoline.security.authentication.TrampolineAuthenticationManager;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
 
 /**
  * Spring {@link WebSecurityConfigurerAdapter} to configure our own services/routes.
@@ -28,35 +26,20 @@ import java.util.ArrayList;
 @Order(1)
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    protected void initAuthenticationManager(AuthenticationManagerBuilder auth, UserService userService,
+                                             PasswordEncoder passwordEncoder) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder);
     }
 
-    /**
-     * Wrap the {@link AuthenticationManager} into our own {@link TrampolineAuthenticationManager}
-     * @return
-     * @throws Exception
-     */
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return authenticationManagerBean();
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) {
+        return authentication -> builder.getOrBuild().authenticate(authentication);
     }
 
-    /**
-     * @see #authenticationManager()
-     * {@inheritDoc}
-     */
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return new TrampolineAuthenticationManager(new ArrayList<>(), super.authenticationManagerBean());
-    }
+
 }

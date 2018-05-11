@@ -32,8 +32,7 @@ public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityCo
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        http.authorizeRequests()
 
                 // Un-secure H2 Database
                 .antMatchers("/console/**/**").permitAll();

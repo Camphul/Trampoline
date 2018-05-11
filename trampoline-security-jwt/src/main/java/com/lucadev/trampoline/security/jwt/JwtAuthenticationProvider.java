@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -31,10 +32,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         LOGGER.info("Checking authentication for JwtAuthenticationToken");
-        if (authentication instanceof JwtAuthenticationToken) {
-            return getJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
-        } else {
-            return getJwtAuthentication(authentication);
+        try {
+            if (authentication instanceof JwtAuthenticationToken) {
+                return getJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
+            } else {
+                return getJwtAuthentication(authentication);
+            }
+        } catch (Exception e) {
+            throw new BadCredentialsException("JWT Provider failed", e);
         }
     }
 

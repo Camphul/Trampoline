@@ -134,7 +134,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
         final String requestHeader = request.getHeader(properties.getTokenHeader());
-        if(requestHeader == null || requestHeader.isEmpty()) {
+        if (requestHeader == null || requestHeader.isEmpty()) {
             throw new AuthenticationException("Could not find token header.");
         }
         JwtPayload jwtPayload = null;
