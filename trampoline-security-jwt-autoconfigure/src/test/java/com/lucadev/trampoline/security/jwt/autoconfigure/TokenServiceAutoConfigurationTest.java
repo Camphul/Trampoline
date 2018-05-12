@@ -1,8 +1,10 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
+import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
+import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
@@ -11,9 +13,11 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -52,7 +56,7 @@ public class TokenServiceAutoConfigurationTest {
     }
 
     @Test
-    public void registersTokenServiceImplAutomatically() {
+    public void registersJwtTokenServiceAutomatically() {
         this.context.registerBean(TokenServiceAutoConfiguration.class, jwtSecurityProperties,
                 timeProvider, userService);
         this.context.refresh();
@@ -67,7 +71,7 @@ public class TokenServiceAutoConfigurationTest {
                 timeProvider, userService);
         this.context.refresh();
         TokenService tokenService = this.context.getBean(TokenService.class);
-        assertThat(tokenService, not(instanceOf(JwtTokenService.class)));
+        assertThat(tokenService, instanceOf(TestTokenService.class));
     }
 
     @Configuration
@@ -75,7 +79,45 @@ public class TokenServiceAutoConfigurationTest {
 
         @Bean
         public TokenService tokenService() {
-            return mock(TokenService.class);
+            return new TestTokenService();
+        }
+    }
+
+    protected static class TestTokenService implements TokenService {
+
+        @Override
+        public String createToken(User user) {
+            return null;
+        }
+
+        @Override
+        public String refreshToken(String token) {
+            return null;
+        }
+
+        @Override
+        public JwtPayload getTokenData(String token) {
+            return null;
+        }
+
+        @Override
+        public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
+            return null;
+        }
+
+        @Override
+        public boolean isValidToken(JwtPayload jwtPayload, User user) {
+            return false;
+        }
+
+        @Override
+        public String processTokenRefreshRequest(HttpServletRequest request) {
+            return null;
+        }
+
+        @Override
+        public Authentication getAuthenticationToken(HttpServletRequest request) {
+            return null;
         }
     }
 }
