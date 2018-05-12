@@ -7,6 +7,7 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,13 @@ public class BookServiceImpl implements BookService {
     private final UserService userService;
 
     @Override
-    @PostAuthorize("hasPermission(returnObject, 'CREATE')")
+    @PreAuthorize("hasPermission(#user, 'BOOK', 'CREATE')")
     public Book create(String name) {
         return create(name, userService.currentUser().get());
     }
 
     @Override
-    @PostAuthorize("hasPermission(returnObject, 'CREATE')")
+    @PreAuthorize("hasPermission(#user, 'BOOK', 'CREATE')")
     public Book create(String name, User author) {
         Book book = new Book(author, name);
         return bookRepository.save(book);
@@ -56,17 +57,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
     public Book findByAuthor(User author) {
         return bookRepository.findOneByAuthor(author);
     }
 
     @Override
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
     public Book find(String name) {
         return bookRepository.findOneByName(name);
     }
 
     @Override
-    @PostAuthorize("hasPermission(returnObject, 'READ')")
+    @PostFilter("hasPermission(filterObject, 'READ')")
     public List<Book> findAll() {
         return bookRepository.findAll();
     }

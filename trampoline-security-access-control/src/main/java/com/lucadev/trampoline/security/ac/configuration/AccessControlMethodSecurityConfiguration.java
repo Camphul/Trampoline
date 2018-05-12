@@ -42,11 +42,12 @@ public class AccessControlMethodSecurityConfiguration extends GlobalMethodSecuri
     @ConditionalOnMissingBean
     @Bean(name = "accessControlPermissionEvaluator")
     public PermissionEvaluator permissionEvaluator() {
-        return new TrampolinePermissionEvaluator(aclDecisionManager());
+        return new TrampolinePermissionEvaluator(methodSecurityAccessDecisionManager());
     }
 
     @Bean
-    public AccessDecisionManager aclDecisionManager() {
+    public AccessDecisionManager methodSecurityAccessDecisionManager() {
+        //Somehow it requires this useless mapping
         return new AffirmativeBased(accessVoters.stream().map(v -> (AccessDecisionVoter<?>) v).collect(Collectors.toList()));
     }
 

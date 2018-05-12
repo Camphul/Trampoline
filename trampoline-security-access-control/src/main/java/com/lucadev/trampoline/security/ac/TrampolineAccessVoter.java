@@ -8,21 +8,12 @@ import org.springframework.security.core.Authentication;
 import java.util.Collection;
 
 /**
+ * Abstract {@link AccessDecisionVoter} to work with our security implementation.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 12-5-18
  */
 public abstract class TrampolineAccessVoter<S extends Object> implements AccessDecisionVoter<S> {
-
-    private final Class<S> clazz;
-
-    public TrampolineAccessVoter(Class<S> clazz) {
-        this.clazz = clazz;
-    }
-
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return clazz.isAssignableFrom(aClass);
-    }
 
     @Override
     public int vote(Authentication authentication, S s, Collection<ConfigAttribute> collection) {

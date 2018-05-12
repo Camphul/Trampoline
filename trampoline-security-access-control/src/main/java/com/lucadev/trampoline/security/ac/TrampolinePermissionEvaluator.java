@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -64,14 +63,8 @@ public class TrampolinePermissionEvaluator implements PermissionEvaluator {
         List<ConfigAttribute> attributes = new ArrayList<>();
         attributes.add(new StringConfigAttribute(permission));
 
-        if (domainObject instanceof Collection) {
-            Collection col = (Collection) domainObject;
-            for (Object domainElement : col) {
-                decisionManager.decide(auth, domainElement, attributes);
-            }
-        } else {
-            decisionManager.decide(auth, domainObject, attributes);
-        }
+
+        decisionManager.decide(auth, domainObject, attributes);
         //Decisionmanager throws an exception when it should deny access
         return true;
     }
