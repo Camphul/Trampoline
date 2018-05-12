@@ -134,12 +134,13 @@ public class JwtTokenService implements TokenService {
         if (requestHeader == null || requestHeader.isEmpty()) {
             throw new AuthenticationCredentialsNotFoundException("Could not find token header.");
         }
-        JwtPayload jwtPayload = null;
-        String authToken = null;
         if (requestHeader != null && requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
-            authToken = getTokenFromHeader(requestHeader);
+            String authToken = getTokenFromHeader(requestHeader);
+            if (authToken == null) {
+                throw new AuthenticationCredentialsNotFoundException("Auth token is null.");
+            }
             try {
-                jwtPayload = getTokenData(authToken);
+                return getTokenData(authToken);
             } catch (IllegalArgumentException e) {
                 throw new BadCredentialsException("Could not parse token");
             } catch (ExpiredJwtException e) {
@@ -148,7 +149,6 @@ public class JwtTokenService implements TokenService {
         } else {
             throw new AuthenticationCredentialsNotFoundException("Could not find bearer string.");
         }
-        return jwtPayload;
     }
 
     /**
@@ -205,7 +205,6 @@ public class JwtTokenService implements TokenService {
             if (jwtPayload == null) {
                 return null;
             }
-            //TODO: Jwt auth token for authentication manager
             return new JwtAuthenticationToken(jwtPayload);
         } catch (Exception ex) {
             ex.printStackTrace();

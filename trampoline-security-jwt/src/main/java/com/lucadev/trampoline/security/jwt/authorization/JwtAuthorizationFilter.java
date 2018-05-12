@@ -30,17 +30,21 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        Authentication token = tokenService.getAuthenticationToken(httpServletRequest);
-        if (token == null) {
-            JWT_LOGGER.debug("Could not authenticate null JWT token.");
+        try {
+            Authentication token = tokenService.getAuthenticationToken(httpServletRequest);
+            if (token == null) {
+                JWT_LOGGER.debug("Could not authenticate null JWT token.");
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
+            }
+
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            JWT_LOGGER.debug("Set the authentication object.");
             filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
+        } catch (Exception ex) {
+            JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(), ex.getMessage());
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
-
-        Authentication authentication = authenticationManager.authenticate(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        JWT_LOGGER.debug("Set the authentication object.");
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
-
     }
 }
