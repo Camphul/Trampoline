@@ -5,6 +5,11 @@ Access control mechanism module.
 ## Mechanism
 
 1. User requests resource
-2. Resource secured through hasPermission
-3. Preprocess some data coming from the hasPermission call
-4. Evaluate access result through the use of a decision manager and multiple access evaluators
+2. PermissionEvaluator for expressions
+3. Fires AccessDecisionManager
+4. Check if we can grant access
+
+## TODO
+
+1. Implement ACL
+2. Better role/privilege system

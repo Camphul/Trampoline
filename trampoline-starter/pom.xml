@@ -29,12 +29,12 @@
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.lucadev</groupId>-->
-        <!--<artifactId>trampoline-security-access-control-starter</artifactId>-->
-        <!--<version>${project.version}</version>-->
-        <!--<scope>compile</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.lucadev</groupId>
+            <artifactId>trampoline-security-access-control-starter</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>com.lucadev</groupId>
             <artifactId>trampoline-security-jwt-starter</artifactId>
