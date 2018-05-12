@@ -93,6 +93,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * Get user from authentication
+     *
      * @param authentication
      * @return
      */

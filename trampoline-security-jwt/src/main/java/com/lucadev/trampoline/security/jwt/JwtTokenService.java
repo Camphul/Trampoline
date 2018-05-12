@@ -242,6 +242,7 @@ public class JwtTokenService implements TokenService {
 
     /**
      * Calculate expiry date based on the configured token timeout
+     *
      * @param createdDate
      * @return
      */
@@ -251,6 +252,7 @@ public class JwtTokenService implements TokenService {
 
     /**
      * Get the raw token string from the header value(remove the prefix)
+     *
      * @param headerValue the raw header value
      * @return the un-prefixed, ready to parse jwt token
      */

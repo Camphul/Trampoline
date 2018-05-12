@@ -36,9 +36,10 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * Construct an authenticated token.
+     *
      * @param authorities the user authorities.
-     * @param user the actual user.
-     * @param jwtPayload the jwt linked to the user.
+     * @param user        the actual user.
+     * @param jwtPayload  the jwt linked to the user.
      */
     public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities, User user, JwtPayload jwtPayload) {
         super(authorities);
@@ -49,6 +50,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * Never pass credentials in JWT
+     *
      * @return
      */
     @Override
@@ -58,6 +60,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * {@inheritDoc}
+     *
      * @return either username or {@link User} object when authenticated.
      */
     @Override
@@ -67,6 +70,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * Username inside the jwt token.
+     *
      * @return JWT username.
      */
     @Override
@@ -76,6 +80,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * Auth details, jwt token when authenticated. Else {@code super.getDetails();}
+     *
      * @return user details.
      */
     @Override

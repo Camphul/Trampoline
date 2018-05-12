@@ -74,6 +74,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * Autowires the {@link AuthenticationManager} builder. Used to build the global {@link AuthenticationManager}
+     *
      * @param builder the builder for the global {@link AuthenticationManager}
      */
     @Autowired
@@ -92,6 +93,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * Configure security chains to work with JWT.
+     *
      * @param http
      * @throws Exception
      */
