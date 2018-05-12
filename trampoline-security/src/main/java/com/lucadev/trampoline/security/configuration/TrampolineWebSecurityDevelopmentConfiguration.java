@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.configuration;
 
-import lombok.AllArgsConstructor;
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurityDevelopmentConfiguration.DEV_SECURITY_CONFIGURATION_ORDER;
+import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurityDevelopmentConfiguration.DEV_SECURITY_CONFIGURATION_PROFILE;
+
 /**
  * Configure websecurity for dev profile to disable security on the H2 console, etc..
  *
@@ -18,16 +20,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @since 21-4-18
  */
 @Configuration
-@AllArgsConstructor
-@Profile("dev")
-@Order(2)
+@Profile(DEV_SECURITY_CONFIGURATION_PROFILE)
+@Order(DEV_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityConfigurerAdapter {
+
+    /**
+     * The {@link Order} of this configuration
+     */
+    public static final int DEV_SECURITY_CONFIGURATION_ORDER = 90;
+    /**
+     * The profile which activates this configuration
+     */
+    public static final String DEV_SECURITY_CONFIGURATION_PROFILE = "dev";
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
                 .antMatchers("/console/**/**");
+        super.configure(web);
     }
 
     @Override

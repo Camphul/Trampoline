@@ -1,10 +1,8 @@
-package com.lucadev.trampoline.security.jwt.impl;
+package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.exception.AuthenticationException;
-import com.lucadev.trampoline.security.jwt.JwtAuthenticationToken;
-import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
-import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -14,7 +12,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +25,7 @@ import java.util.stream.Collectors;
  * @since 21-4-18
  */
 @AllArgsConstructor
-public class TokenServiceImpl implements TokenService {
+public class JwtTokenService implements TokenService {
     private static final String CLAIM_USERNAME = "trampolineUsername";
     private static final String CLAIM_EMAIL = "trampolineEmail";
     private static final String CLAIM_ROLES = "trampolineUserRoles";
@@ -45,7 +42,6 @@ public class TokenServiceImpl implements TokenService {
     private final TimeProvider timeProvider;
     private final UserService userService;
     private final JwtSecurityProperties properties;
-    private final AuthenticationManager authenticationManager;
 
     /**
      * Create a new token
@@ -195,19 +191,25 @@ public class TokenServiceImpl implements TokenService {
         }
     }
 
+    /**
+     * Read the header containing our token and create an {@link Authentication} object from it.
+     *
+     * @param request
+     * @return
+     */
     @Override
-    public Authentication getAuthentication(HttpServletRequest request) {
+    public Authentication getAuthenticationToken(HttpServletRequest request) {
         try {
             JwtPayload jwtPayload = getTokenDataFromRequest(request);
             if (jwtPayload == null) {
                 return null;
             }
             //TODO: Jwt auth token for authentication manager
-            JwtAuthenticationToken token = new JwtAuthenticationToken(jwtPayload);
-            return authenticationManager.authenticate(token);
+            return new JwtAuthenticationToken(jwtPayload);
         } catch (Exception ex) {
-            return null;
+            ex.printStackTrace();
         }
+        return null;
     }
 
     private Claims getAllTokenClaims(String token) {
@@ -239,8 +241,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
-     * Calculate expiry date
-     *
+     * Calculate expiry date based on the configured token timeout
      * @param createdDate
      * @return
      */
@@ -248,6 +249,11 @@ public class TokenServiceImpl implements TokenService {
         return new Date(createdDate.getTime() + properties.getTokenTimeout() * 1000);
     }
 
+    /**
+     * Get the raw token string from the header value(remove the prefix)
+     * @param headerValue the raw header value
+     * @return the un-prefixed, ready to parse jwt token
+     */
     private String getTokenFromHeader(String headerValue) {
         String authToken = headerValue.substring(properties.getTokenHeaderPrefix().length());
         //Remove first whitespace

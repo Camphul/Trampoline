@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.model;
+package com.lucadev.trampoline.security.jwt;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Data that can be read from a JWT token
+ * Representation of the data inside the JWT
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class JwtPayload implements Serializable {
 
     /**
-     * Raw token
+     * Raw token data
      */
     private String rawToken;
     /**

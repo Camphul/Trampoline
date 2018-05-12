@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.JwtAuthenticationEntryPoint;
+import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationEntryPoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

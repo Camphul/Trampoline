@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
+import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
-import com.lucadev.trampoline.security.jwt.impl.TokenServiceImpl;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
@@ -57,7 +57,7 @@ public class TokenServiceAutoConfigurationTest {
                 timeProvider, userService);
         this.context.refresh();
         TokenService tokenService = this.context.getBean(TokenService.class);
-        assertThat(tokenService, instanceOf(TokenServiceImpl.class));
+        assertThat(tokenService, instanceOf(JwtTokenService.class));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class TokenServiceAutoConfigurationTest {
                 timeProvider, userService);
         this.context.refresh();
         TokenService tokenService = this.context.getBean(TokenService.class);
-        assertThat(tokenService, not(instanceOf(TokenServiceImpl.class)));
+        assertThat(tokenService, not(instanceOf(JwtTokenService.class)));
     }
 
     @Configuration

@@ -1,7 +1,8 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
-import com.lucadev.trampoline.security.jwt.JwtAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
 import com.lucadev.trampoline.security.service.UserPasswordService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -10,14 +11,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.Filter;
+
+import static com.lucadev.trampoline.security.jwt.configuration.JwtWebSecurityConfiguration.JWT_SECURITY_CONFIGURATION_ORDER;
 
 
 /**
@@ -27,12 +33,20 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  * @since 21-4-18
  */
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(JwtSecurityProperties.class)
 @AllArgsConstructor
-@Order(3)
+@Order(JWT_SECURITY_CONFIGURATION_ORDER)
 public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    /**
+     * The {@link Order} of this configuration
+     */
+    public static final int JWT_SECURITY_CONFIGURATION_ORDER = 50;
+    /**
+     * The filter class which our custom JWT filter will sit infront of
+     */
+    public static final Class<? extends Filter> JWT_FILTER_BEFORE = UsernamePasswordAuthenticationFilter.class;
+
 
     private final JwtSecurityProperties jwtSecurityProperties;
     //Request filter for auth
@@ -40,7 +54,14 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserPasswordService userPasswordService;
     private final UserService userService;
     private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
+    /**
+     * Websecurity to allow auth route.
+     *
+     * @param web
+     * @throws Exception
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
@@ -51,27 +72,59 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 );
     }
 
+    /**
+     * Autowires the {@link AuthenticationManager} builder. Used to build the global {@link AuthenticationManager}
+     * @param builder the builder for the global {@link AuthenticationManager}
+     */
     @Autowired
     public void initAuthenticationManager(AuthenticationManagerBuilder builder) {
-        builder.authenticationProvider(jwtAuthenticationProvider());
+        builder.authenticationProvider(authenticationProvider());
     }
 
-    public JwtAuthenticationProvider jwtAuthenticationProvider() {
+    /**
+     * Construct the {@link JwtAuthenticationProvider} used for authentication.
+     *
+     * @return
+     */
+    protected AuthenticationProvider authenticationProvider() {
         return new JwtAuthenticationProvider(tokenService, userService, userPasswordService);
     }
 
+    /**
+     * Configure security chains to work with JWT.
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement()
+        http
+                //Sessionless
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .csrf().disable()
+                //Handle unauthorized/auth exceptions
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and()
                 .authorizeRequests()
-                .anyRequest().permitAll()
-                .antMatchers(jwtSecurityProperties.getAuthPath()).permitAll();
+                //Permit auth requests
+                .antMatchers(jwtSecurityProperties.getAuthPath()).permitAll()
+                //All other requests should be authenticated
+                .anyRequest().authenticated()
+                .and()
+                //Apply our JWT filter.
+                .addFilterBefore(filter(), JWT_FILTER_BEFORE);
 
+        //Disable cross site request forgery since JWT is not vulnerable to CSRF
+        http.csrf().disable();
+    }
+
+    /**
+     * Create our JWT filter
+     *
+     * @return a {@link JwtAuthorizationFilter}
+     */
+    protected Filter filter() {
+        return new JwtAuthorizationFilter(authenticationManager, tokenService);
     }
 
 }

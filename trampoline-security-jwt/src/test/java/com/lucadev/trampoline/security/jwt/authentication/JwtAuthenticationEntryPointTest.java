@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt;
+package com.lucadev.trampoline.security.jwt.authentication;
 
 import org.junit.Test;
 

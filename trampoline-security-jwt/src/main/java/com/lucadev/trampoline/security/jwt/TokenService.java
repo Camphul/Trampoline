@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.jwt;
 
-import com.lucadev.trampoline.security.jwt.model.JwtPayload;
 import com.lucadev.trampoline.security.model.User;
 import org.springframework.security.core.Authentication;
 
@@ -64,11 +63,11 @@ public interface TokenService {
     String processTokenRefreshRequest(HttpServletRequest request);
 
     /**
-     * Get authentication result
+     * Get authentication token from request(not authenticated)
      *
      * @param request
      * @return
      */
-    Authentication getAuthentication(HttpServletRequest request);
+    Authentication getAuthenticationToken(HttpServletRequest request);
 
 }

@@ -1,6 +1,6 @@
-package com.lucadev.trampoline.security.jwt;
+package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.model.JwtPayload;
+import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.model.User;
 import lombok.Getter;
 import lombok.ToString;

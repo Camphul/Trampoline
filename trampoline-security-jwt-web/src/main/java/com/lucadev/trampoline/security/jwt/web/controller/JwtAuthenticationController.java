@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
-    private final AuthenticationManager authenticationService;
+    private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
     /**
@@ -34,7 +34,7 @@ public class JwtAuthenticationController {
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
-        Authentication authentication = authenticationService.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getUsername(),
                         userAuthenticationRequest.getPassword()));
 

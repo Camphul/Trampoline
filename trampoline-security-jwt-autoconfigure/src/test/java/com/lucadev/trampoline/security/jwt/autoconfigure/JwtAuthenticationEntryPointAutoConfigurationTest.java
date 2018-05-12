@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.JwtAuthenticationEntryPoint;
+import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationEntryPoint;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt;
+package com.lucadev.trampoline.security.jwt.authentication;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,6 +16,15 @@ import java.io.IOException;
  */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     * Always deny access when no authentication is configured
+     *
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param e
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                          AuthenticationException e) throws IOException, ServletException {

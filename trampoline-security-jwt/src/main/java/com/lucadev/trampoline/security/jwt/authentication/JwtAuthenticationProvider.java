@@ -1,6 +1,7 @@
-package com.lucadev.trampoline.security.jwt;
+package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.model.JwtPayload;
+import com.lucadev.trampoline.security.jwt.JwtPayload;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserPasswordService;
 import com.lucadev.trampoline.security.service.UserService;
@@ -29,6 +30,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final UserService userService;
     private final UserPasswordService userPasswordService;
 
+    /**
+     * Perform authentication
+     *
+     * @param authentication
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         LOGGER.info("Checking authentication for JwtAuthenticationToken");
@@ -80,7 +88,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 //     * @return
 //     */
 //    protected User getUser(JwtPayload jwtPayload) {
-//        if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//        if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthenticationToken() == null) {
 //
 //            // It is not compelling necessary to load the use details from the database. You could also store the information
 //            // in the token and read it from it. It's up to you ;)
