@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,23 +41,49 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         LOGGER.info("Checking authentication for JwtAuthenticationToken");
-        try {
-            if (authentication instanceof JwtAuthenticationToken) {
-                return getJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
-            } else {
-                return getJwtAuthentication(authentication);
-            }
-        } catch (Exception e) {
-            throw new BadCredentialsException("JWT Provider failed", e);
+        if (authentication instanceof JwtAuthenticationToken) {
+            return createJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
+        } else {
+            return createJwtAuthentication(authentication);
         }
     }
 
-    private Authentication getJwtAuthentication(JwtPayload jwtPayload) {
+    /**
+     * Authorize when already owner of a JWT token
+     *
+     * @param jwtPayload
+     * @return
+     */
+    private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
         UserDetails userDetails = userService.loadUserByUsername(jwtPayload.getUsername());
+        validateToken(userDetails, jwtPayload);
         return new JwtAuthenticationToken(userDetails.getAuthorities(), (User) userDetails, jwtPayload);
     }
 
-    private Authentication getJwtAuthentication(Authentication authentication) {
+    /**
+     * Validate the token against the actual user
+     *
+     * @param userDetails
+     * @param jwtPayload
+     */
+    private void validateToken(UserDetails userDetails, JwtPayload jwtPayload) {
+        if (!(userDetails instanceof User)) {
+            throw new BadCredentialsException("Failed authentication: unsupported UserDetails type. Must be of type User");
+        }
+
+        User user = (User) userDetails;
+        if (!tokenService.isValidToken(jwtPayload, user)) {
+            throw new BadCredentialsException("Token did not validate against user with success.");
+        }
+    }
+
+    /**
+     * Authenticate
+     *
+     * @param authentication
+     * @return
+     */
+    private Authentication createJwtAuthentication(Authentication authentication) {
         User user = getUser(authentication);
         String token = tokenService.createToken(user);
         JwtPayload payload = tokenService.getTokenData(token);
@@ -64,12 +91,17 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         return new JwtAuthenticationToken(authorities, user, payload);
     }
 
+    /**
+     * Get user from authentication
+     * @param authentication
+     * @return
+     */
     private User getUser(Authentication authentication) {
         String name = authentication.getName();
         String credentials = String.valueOf(authentication.getCredentials());
         UserDetails userDetails = userService.loadUserByUsername(name);
         if (userDetails == null || !(userDetails instanceof User)) {
-            throw new com.lucadev.trampoline.security.exception.AuthenticationException("Unexpected userdetails");
+            throw new AuthenticationServiceException("Unsupported or null UserDetails Type");
         }
 
         User user = (User) userDetails;
@@ -77,37 +109,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         if (correctCredentials) {
             return user;
         }
-        throw new com.lucadev.trampoline.security.exception.AuthenticationException("Invalid credentials?");
+        throw new BadCredentialsException("Invalid credentials?");
 
     }
-
-//    /**
-//     * Authorize from JwtPayload
-//     *
-//     * @param jwtPayload
-//     * @return
-//     */
-//    protected User getUser(JwtPayload jwtPayload) {
-//        if (jwtPayload.getUsername() != null && SecurityContextHolder.getContext().getAuthenticationToken() == null) {
-//
-//            // It is not compelling necessary to load the use details from the database. You could also store the information
-//            // in the token and read it from it. It's up to you ;)
-//            String username = jwtPayload.getUsername();
-//            UserDetails userDetails = this.userService.loadUserByUsername(username);
-//            if (!(userDetails instanceof User)) {
-//                return null;
-//            }
-//
-//            User user = (User) userDetails;
-//
-//
-//            if (tokenService.isValidToken(jwtPayload, user)) {
-//                return userService.updateLastSeen(user);
-//            }
-//
-//        }
-//        return null;
-//    }
 
     @Override
     public boolean supports(Class<?> aClass) {

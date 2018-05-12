@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.jwt;
 
-import com.lucadev.trampoline.security.exception.AuthenticationException;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.model.Role;
@@ -12,6 +11,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,7 +132,7 @@ public class JwtTokenService implements TokenService {
     public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
         final String requestHeader = request.getHeader(properties.getTokenHeader());
         if (requestHeader == null || requestHeader.isEmpty()) {
-            throw new AuthenticationException("Could not find token header.");
+            throw new AuthenticationCredentialsNotFoundException("Could not find token header.");
         }
         JwtPayload jwtPayload = null;
         String authToken = null;
@@ -140,12 +141,12 @@ public class JwtTokenService implements TokenService {
             try {
                 jwtPayload = getTokenData(authToken);
             } catch (IllegalArgumentException e) {
-                throw new AuthenticationException("Could not parse token");
+                throw new BadCredentialsException("Could not parse token");
             } catch (ExpiredJwtException e) {
-                throw new AuthenticationException("Token is expired");
+                throw new BadCredentialsException("Token is expired");
             }
         } else {
-            throw new AuthenticationException("Could not find bearer string.");
+            throw new AuthenticationCredentialsNotFoundException("Could not find bearer string.");
         }
         return jwtPayload;
     }
@@ -181,13 +182,13 @@ public class JwtTokenService implements TokenService {
         String username = jwtPayload.getUsername();
         User user = userService.findById(jwtPayload.getSubject());
         if (!user.getUsername().equals(username)) {
-            throw new AuthenticationException("Token subject does not match user");
+            throw new BadCredentialsException("Token subject does not match user");
         }
 
         if (isTokenRefreshable(jwtPayload, user.getLastPasswordReset())) {
             return refreshToken(token);
         } else {
-            throw new AuthenticationException("Auth token can not be refreshed");
+            throw new BadCredentialsException("Auth token can not be refreshed");
         }
     }
 
