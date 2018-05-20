@@ -23,6 +23,9 @@
         <module>trampoline-common-starter</module>
         <module>trampoline-starter</module>
         <module>trampoline-example-app</module>
+        <module>trampoline-security-abac</module>
+        <module>trampoline-security-abac-autoconfigure</module>
+        <module>trampoline-security-abac-starter</module>
     </modules>
     <packaging>pom</packaging>
 
