@@ -14,9 +14,6 @@
         <module>trampoline-security-autoconfigure</module>
         <module>trampoline-security-starter</module>
         <module>trampoline-security-user-web</module>
-        <module>trampoline-security-access-control</module>
-        <module>trampoline-security-access-control-autoconfigure</module>
-        <module>trampoline-security-access-control-starter</module>
         <module>trampoline-security-jwt</module>
         <module>trampoline-security-jwt-web</module>
         <module>trampoline-security-jwt-autoconfigure</module>

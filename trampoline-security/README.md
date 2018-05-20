@@ -1,6 +1,6 @@
 # trampoline-security
 
-Module that expands upon some basic Spring Security functionality. 
+Module that expands upon some basic Spring Security functionality together with trampoline-data to store identities.
 
 ## User layout
 
