@@ -3,6 +3,7 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.mock;
  */
 public class TokenServiceAutoConfigurationTest {
     private AnnotationConfigApplicationContext context;
+    private JwtConfiguration jwtConfiguration;
     private JwtSecurityProperties jwtSecurityProperties;
     private TimeProvider timeProvider;
     private UserService userService;
@@ -36,6 +38,7 @@ public class TokenServiceAutoConfigurationTest {
         jwtSecurityProperties = mock(JwtSecurityProperties.class);
         timeProvider = mock(TimeProvider.class);
         userService = mock(UserService.class);
+        jwtConfiguration = mock(JwtConfiguration.class);
         context = new AnnotationConfigApplicationContext();
     }
 
@@ -53,11 +56,14 @@ public class TokenServiceAutoConfigurationTest {
         if (userService != null) {
             userService = null;
         }
+        if (jwtConfiguration != null) {
+            jwtConfiguration = null;
+        }
     }
 
     @Test
     public void registersJwtTokenServiceAutomatically() {
-        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtSecurityProperties,
+        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
                 timeProvider, userService);
         this.context.refresh();
         TokenService tokenService = this.context.getBean(TokenService.class);
@@ -67,7 +73,7 @@ public class TokenServiceAutoConfigurationTest {
     @Test
     public void customTokenServiceBean() {
         this.context.register(CustomTokenServiceConfig.class);
-        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtSecurityProperties,
+        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
                 timeProvider, userService);
         this.context.refresh();
         TokenService tokenService = this.context.getBean(TokenService.class);

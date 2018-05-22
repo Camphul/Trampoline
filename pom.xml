@@ -13,7 +13,6 @@
         <module>trampoline-security</module>
         <module>trampoline-security-autoconfigure</module>
         <module>trampoline-security-starter</module>
-        <module>trampoline-security-user-web</module>
         <module>trampoline-security-jwt</module>
         <module>trampoline-security-jwt-web</module>
         <module>trampoline-security-jwt-autoconfigure</module>
