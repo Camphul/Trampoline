@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.expression.Expression;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,13 +32,13 @@ public class JsonFilePolicyDefinition implements PolicyDefinition {
     private final String policyFilePath;
     private List<PolicyRule> rules;
 
-    public JsonFilePolicyDefinition(String jsonFilePath) {
+    public JsonFilePolicyDefinition(String jsonFilePath) throws IOException {
         this.policyFilePath = jsonFilePath;
+        loadPolicyRules();
     }
 
 
-    @PostConstruct
-    private void init() throws IOException {
+    private void loadPolicyRules() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Expression.class, new SpelDeserializer());
@@ -50,10 +49,10 @@ public class JsonFilePolicyDefinition implements PolicyDefinition {
         }
 
         try {
-            LOGGER.debug("[init] Checking policy file at: {}", policyFilePath);
+            LOGGER.debug("[loadPolicyRules] Checking policy file at: {}", policyFilePath);
             rules = mapper.readValue(file,
                     JsonPolicyFileModel.class).getPolicies();
-            LOGGER.info("[init] Policy loaded successfully.");
+            LOGGER.info("[loadPolicyRules] Policy loaded successfully.");
         } catch (JsonMappingException e) {
             LOGGER.error("An error occurred while parsing the policy file.", e);
         } catch (IOException e) {
@@ -64,6 +63,36 @@ public class JsonFilePolicyDefinition implements PolicyDefinition {
     @Override
     public List<PolicyRule> getAllPolicyRules() {
         return rules;
+    }
+
+    @Override
+    public boolean hasPolicyRule(String name) {
+        return rules.stream().anyMatch(p -> p.getName().equals(name));
+    }
+
+    /**
+     * Adds an in-memory policy rule.
+     *
+     * @param policyRule the policy rule to add
+     */
+    @Override
+    public PolicyRule addPolicyRule(PolicyRule policyRule) {
+        rules.add(policyRule);
+        return policyRule;
+    }
+
+    @Override
+    public PolicyRule updatePolicyRule(PolicyRule policyRule) {
+        for (PolicyRule rule : rules) {
+            if (rule.getName().equals(policyRule.getName())) {
+                rule.setCondition(policyRule.getCondition());
+                rule.setTarget(policyRule.getTarget());
+                rule.setDescription(policyRule.getDescription());
+                return rule;
+            }
+        }
+        //policy not found
+        return null;
     }
 
     /**

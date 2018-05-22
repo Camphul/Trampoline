@@ -17,4 +17,29 @@ public interface PolicyDefinition {
      */
     List<PolicyRule> getAllPolicyRules();
 
+    /**
+     * Check if the policy rule exists.
+     *
+     * @param name the name attribute of the policy
+     * @return if the policy exists.
+     */
+    boolean hasPolicyRule(String name);
+
+    /**
+     * Add a new policy rule
+     *
+     * @param policyRule the policy rule to add
+     * @return the saved rule.
+     */
+    PolicyRule addPolicyRule(PolicyRule policyRule);
+
+    /**
+     * Update a policy rule.
+     *
+     * @param policyRule the policy role to update.
+     * @return the updated rule.
+     */
+    PolicyRule updatePolicyRule(PolicyRule policyRule);
+
 }
+

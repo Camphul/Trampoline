@@ -47,4 +47,7 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
         return elParser.parseExpression(expresion);
     }
 
+    public ExpressionParser getElParser() {
+        return elParser;
+    }
 }
