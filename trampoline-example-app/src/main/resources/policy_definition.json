@@ -10,7 +10,7 @@
       "name": "View book list",
       "description": "PM read the details of his project only.",
       "target": "action == 'BOOKS_LIST'",
-      "condition": "true"
+      "condition": "hasRole('ROLE_ADMIN') || resource.author == subject.id"
     }
   ]
 }

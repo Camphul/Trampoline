@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.abac.AbstractAbacPermissionEvaluator;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 
 import java.util.Date;
@@ -23,6 +24,9 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
+        if (authentication == null) {
+            throw new AccessDeniedException("Not authenticated");
+        }
         Object user = authentication.getPrincipal();
         Map<String, Object> environment = new HashMap<>();
 
@@ -36,7 +40,7 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 		*/
         environment.put("time", new Date());
 
-        LOGGER.debug("hasPersmission({}, {}, {})", user, targetDomainObject, permission);
+        LOGGER.debug("hasPermission({}, {}, {})", user, targetDomainObject, permission);
         return policyEnforcement.check(user, targetDomainObject, permission, environment);
     }
 }

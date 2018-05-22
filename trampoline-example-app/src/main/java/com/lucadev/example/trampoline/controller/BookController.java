@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class BookController {
     private final PolicyEnforcement policyEnforcement;
 
     @GetMapping
-    @PreAuthorize("hasPermission(null, 'BOOKS_LIST')")
+    @PostFilter("hasPermission(filterObject, 'BOOKS_LIST')")
     public List<BookDto> getBookList() {
         LOGGER.info("GET book list");
         List<Book> books = bookService.findAll();

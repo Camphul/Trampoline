@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -56,11 +57,29 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
      */
     @Override
     public void check(Object resource, String permission) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = authenticationContext().orElseThrow(() -> new AccessDeniedException("Not authenticated."));
 
 
         if (!check(auth.getPrincipal(), resource, permission, environmentContext()))
             throw new AccessDeniedException("Access is denied");
+    }
+
+    /**
+     * Filter the list for access
+     * @param resources the list of resources
+     * @param permission the permission to check
+     * @param <T> the type of resource in the list
+     * @return the filtered list.
+     */
+    @Override
+    public <T> List<T> filter(List<T> resources, String permission) {
+        Map<String, Object> environment = environmentContext();
+        Object principal = authenticationContext()
+                .orElseThrow(() -> new AccessDeniedException("Not authenticated."))
+                .getPrincipal();
+        return resources.stream()
+                .filter(resource -> check(principal, resource, permission, environment))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -122,5 +141,18 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
             }
         }
         return false;
+    }
+
+    /**
+     * Get current authentication
+     *
+     * @return a {@link Authentication} from the security context.
+     */
+    private Optional<Authentication> authenticationContext() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return Optional.empty();
+        }
+        return Optional.of(auth);
     }
 }

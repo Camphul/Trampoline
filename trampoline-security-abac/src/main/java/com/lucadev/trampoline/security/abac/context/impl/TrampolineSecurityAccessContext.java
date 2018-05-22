@@ -1,20 +1,36 @@
 package com.lucadev.trampoline.security.abac.context.impl;
 
 import com.lucadev.trampoline.security.abac.context.SecurityAccessContext;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.access.expression.SecurityExpressionRoot;
+import org.springframework.security.core.Authentication;
 
 /**
+ * Handle method security methods
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 20-5-18
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TrampolineSecurityAccessContext implements SecurityAccessContext {
+public class TrampolineSecurityAccessContext extends SecurityExpressionRoot implements SecurityAccessContext {
     private Object subject;
     private Object resource;
     private Object action;
     private Object environment;
+
+    protected TrampolineSecurityAccessContext(Authentication authentication) {
+        super(authentication);
+    }
+
+    public TrampolineSecurityAccessContext(Authentication authentication, Object subject, Object resource, Object action, Object environment) {
+        this(authentication);
+        this.subject = subject;
+        this.resource = resource;
+        this.action = action;
+        this.environment = environment;
+    }
 }

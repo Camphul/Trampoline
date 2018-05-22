@@ -1,12 +1,14 @@
 package com.lucadev.trampoline.security.abac.context;
 
+import org.springframework.security.access.expression.SecurityExpressionOperations;
+
 /**
  * Contains the context required to evaluate access
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 20-5-18
  */
-public interface SecurityAccessContext {
+public interface SecurityAccessContext extends SecurityExpressionOperations {
 
     /**
      * @return Identity trying to access the resource

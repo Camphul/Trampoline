@@ -1,5 +1,7 @@
 package com.lucadev.trampoline.security.abac.policy;
 
+import java.util.List;
+
 /**
  * Interface that defines methods to enforce a {@link PolicyRule}
  *
@@ -27,5 +29,15 @@ public interface PolicyEnforcement {
      * @param permission the permission required by the action against the resource.
      */
     void check(Object resource, String permission);
+
+    /**
+     * Filter the list for access
+     *
+     * @param resources  the list of resources
+     * @param permission the permission to check
+     * @param <T>        the type of resource in the list
+     * @return the filtered list.
+     */
+    <T> List<T> filter(List<T> resources, String permission);
 
 }
