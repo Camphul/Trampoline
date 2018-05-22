@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
@@ -45,6 +46,7 @@ public class JwtTokenService implements TokenService {
      */
     private static final String CLAIM_IMPERSONATE_INITIATOR = "tokenImpersonateInitiator";
 
+    private final JwtConfiguration jwtConfiguration;
     private final TimeProvider timeProvider;
     private final UserService userService;
     private final JwtSecurityProperties properties;
@@ -63,7 +65,7 @@ public class JwtTokenService implements TokenService {
         claims.put(CLAIM_ROLES, user.getRoles().stream()
                 .map(Role::getName)
                 .collect(Collectors.toList()));
-        claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, false);
+        claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, jwtConfiguration.getIgnoreExpirationFlag(user));
         claims.put(CLAIM_IS_IMPERSONATING, false);
         return generateToken(claims, user.getId().toString());
     }
