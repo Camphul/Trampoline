@@ -14,7 +14,7 @@ public class ExampleJwtConfiguration extends DefaultJwtConfiguration {
 
     @Override
     public boolean getIgnoreExpirationFlag(User user) {
-        return true;
+        return false;
     }
 
     @Override

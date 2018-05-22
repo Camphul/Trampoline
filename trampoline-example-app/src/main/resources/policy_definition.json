@@ -11,6 +11,12 @@
       "description": "PM read the details of his project only.",
       "target": "action == 'BOOKS_LIST'",
       "condition": "hasRole('ROLE_ADMIN') || resource.author == subject.id"
+    },
+    {
+      "name": "View WHOAMI page",
+      "description": "/whoami endpoint access",
+      "target": "action == 'WHO_AM_I'",
+      "condition": "hasRole('ROLE_USER')"
     }
   ]
 }
