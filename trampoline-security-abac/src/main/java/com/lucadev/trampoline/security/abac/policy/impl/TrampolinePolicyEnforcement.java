@@ -59,7 +59,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 
-        if (check(auth.getPrincipal(), resource, permission, environmentContext()))
+        if (!check(auth.getPrincipal(), resource, permission, environmentContext()))
             throw new AccessDeniedException("Access is denied");
     }
 
