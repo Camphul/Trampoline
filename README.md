@@ -3,47 +3,27 @@ Jump straight into serious development through the use of multiple ready-to-use 
 
 Please check [trampoline-example-app](/trampoline-example-app) for an example application.
 
+## About
+
+Trampoline is a collection of Spring(boot) starters to speed up development by providing even more opinionated service.
+However, a lot of services/components maintain configurable.
+
+## Features
+
+* User management(persisted through JPA, see trampoline-security)
+* JPA base entity to handle JPA auditing, provides an UUID id, date create, and date updated.
+* ABAC: extension of the user management starter. Configure policies using SpeL expressions, load them from JSON or persist them using JPA(can be imported from JSON too!).
+Only the policy configurations are required to get started.
+* RBAC: Simple RBAC implementation with hierarchy. With roles and privileges(authorities).
+* JWT starter: import the JWT starter and have JWT enabled without any required configurations(expands on the user management)
+
+## Getting started
+Please read the [docs](/docs/README.md) for more information.
+
 ## Project Status
 
-**Extremely WIP:** I have no idea regarding future plans but want to keep working on this to prevent time wasted on rewriting boilerplate user services, permission services, etc...
+This project is still in early development. Please do not use it for any serious applications(yet).
 
-## Modules/starters
-
-Click on the link to the module to learn more.
-
-### trampoline-common
-
-The [trampoline-common](/trampoline-common) starter contains a bunch of services and components that aren't quite large enough to have their own starter.
-
-### trampoline-data
-
-The [trampoline-data](/trampoline-data) module expands on Spring Data JPA by providing base entities, repositories and more.
-Easily audit all your entities and use UUID as primary key.
-
-### trampoline-security
-
-The [trampoline-security](/trampoline-security) module tries to implement Spring Security as much as possible by persisting users with the help of [trampoline-data](/trampoline-data) and a number of services.
- 
-This module does not implement any authentication/authorization mechanisms other than a service to programmatically authenticate against persisted users.
-
-### trampoline-security-jwt
-
-The [trampoline-security-jwt](/trampoline-security-jwt) module expands on the above [trampoline-security](/trampoline-security) by providing service implementations defined in [trampoline-security](/trampoline-security) through autoconfiguration.
-
-This module implements an authorization filter, authentication service(sign-in), jwt refresh functionality(token expiry), and more.
-
-### trampoline-starter
-
-[trampoline-starter](/trampoline-starter) is a collection of trampoline starters quickly start development:
-
-- [trampoline-common-starter](/trampoline-common-starter)
-- [trampoline-data-starter](/trampoline-data-starter) 
-- [trampoline-security-starter](/trampoline-security-starter)
-- [trampoline-security-jwt-starter](/trampoline-security-jwt-starter)
-
-### trampoline-X-web
-
-Trampoline web modules such as [trampoline-security-jwt-web](/trampoline-security-jwt-web) register routes to use their functionality such as JWT endpoints.
 
 ## Contributing
 
