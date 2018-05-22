@@ -11,6 +11,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
  */
 @AllArgsConstructor
 public class JwtTokenService implements TokenService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenService.class);
+
     private static final String CLAIM_USERNAME = "trampolineUsername";
     private static final String CLAIM_EMAIL = "trampolineEmail";
     private static final String CLAIM_ROLES = "trampolineUserRoles";
@@ -134,7 +139,7 @@ public class JwtTokenService implements TokenService {
         if (requestHeader == null || requestHeader.isEmpty()) {
             throw new AuthenticationCredentialsNotFoundException("Could not find token header.");
         }
-        if (requestHeader != null && requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
+        if (requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
             String authToken = getTokenFromHeader(requestHeader);
             if (authToken == null) {
                 throw new AuthenticationCredentialsNotFoundException("Auth token is null.");
@@ -207,7 +212,7 @@ public class JwtTokenService implements TokenService {
             }
             return new JwtAuthenticationToken(jwtPayload);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.error("Failed to obtain JWT authentication object.", ex);
         }
         return null;
     }

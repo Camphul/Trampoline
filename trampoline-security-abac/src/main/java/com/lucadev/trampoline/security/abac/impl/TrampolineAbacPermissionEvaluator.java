@@ -30,14 +30,6 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
         Object user = authentication.getPrincipal();
         Map<String, Object> environment = new HashMap<>();
 
-		/*
-        Object authDetails = authentication.getDetails();
-		if(authDetails != null) {
-			if(authDetails instanceof WebAuthenticationDetails) {
-				environment.put("remoteAddress", ((WebAuthenticationDetails) authDetails).getRemoteAddress());
-			}
-		}
-		*/
         environment.put("time", new Date());
 
         LOGGER.debug("hasPermission({}, {}, {})", user, targetDomainObject, permission);

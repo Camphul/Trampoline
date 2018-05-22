@@ -39,7 +39,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      * @throws AuthenticationException
      */
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) {
         LOGGER.info("Checking authentication for JwtAuthenticationToken");
         if (authentication instanceof JwtAuthenticationToken) {
             return createJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());

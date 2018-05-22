@@ -66,9 +66,10 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 
     /**
      * Filter the list for access
-     * @param resources the list of resources
+     *
+     * @param resources  the list of resources
      * @param permission the permission to check
-     * @param <T> the type of resource in the list
+     * @param <T>        the type of resource in the list
      * @return the filtered list.
      */
     @Override
@@ -89,16 +90,6 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
      */
     private Map<String, Object> environmentContext() {
         Map<String, Object> environment = new HashMap<>();
-
-		/*
-        Object authDetails = auth.getDetails();
-		if(authDetails != null) {
-			if(authDetails instanceof WebAuthenticationDetails) {
-				environment.put("remoteAddress", ((WebAuthenticationDetails) authDetails).getRemoteAddress());
-			}
-		}
-		*/
-        environment.put("time", new Date());
         return environment;
     }
 

@@ -113,4 +113,23 @@ public class User extends TrampolineEntity implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return !credentialsExpired;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        return username != null ? username.equals(user.username) : user.username == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        return result;
+    }
 }

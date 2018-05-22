@@ -58,4 +58,25 @@ public abstract class TrampolineEntity {
     @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrampolineEntity that = (TrampolineEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (created != null ? !created.equals(that.created) : that.created != null) return false;
+        return updated != null ? updated.equals(that.updated) : that.updated == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (created != null ? created.hashCode() : 0);
+        result = 31 * result + (updated != null ? updated.hashCode() : 0);
+        return result;
+    }
 }
