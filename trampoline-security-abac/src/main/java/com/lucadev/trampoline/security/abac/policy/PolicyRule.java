@@ -27,11 +27,14 @@ public class PolicyRule extends TrampolineEntity {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+
     @Column(name = "description", nullable = false)
     private String description;
+
     @Convert(converter = SpelAttributeConverter.class)
     @Column(name = "target_expression", nullable = false)
     private Expression target;
+
     @Convert(converter = SpelAttributeConverter.class)
     @Column(name = "condition_expression", nullable = false)
     private Expression condition;

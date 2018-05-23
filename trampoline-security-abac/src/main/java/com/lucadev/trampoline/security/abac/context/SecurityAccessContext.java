@@ -37,4 +37,5 @@ public interface SecurityAccessContext extends SecurityExpressionOperations {
      * @return if the actions match
      */
     boolean isAction(Object action);
+
 }
