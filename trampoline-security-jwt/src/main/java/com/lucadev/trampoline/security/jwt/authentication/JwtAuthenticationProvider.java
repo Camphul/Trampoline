@@ -40,7 +40,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) {
-        LOGGER.info("Checking authentication for JwtAuthenticationToken");
+        LOGGER.debug("Checking authentication for JwtAuthenticationToken");
         if (authentication instanceof JwtAuthenticationToken) {
             return createJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
         } else {

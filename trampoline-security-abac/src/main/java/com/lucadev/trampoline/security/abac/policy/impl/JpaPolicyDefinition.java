@@ -12,13 +12,15 @@ import org.springframework.cache.annotation.Cacheable;
 import java.util.List;
 
 /**
+ * A {@link PolicyDefinition} which persists {@link PolicyRule} through JPA.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 22-5-18
  */
 @AllArgsConstructor
 public class JpaPolicyDefinition implements PolicyDefinition {
 
-    public static final String POLICY_RULE_CACHE_REGISTRY = "trampoline_policy_rule_cache";
+    public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
     private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyDefinition.class);
     private final PolicyRuleRepository policyRuleRepository;
 
@@ -38,31 +40,32 @@ public class JpaPolicyDefinition implements PolicyDefinition {
     private void importPolicyRules(PolicyDefinition parent) {
         LOGGER.info("Importing policy rules...");
         parent.getAllPolicyRules().stream()
+                //Only add when none exist with the same name
                 .filter(r -> !hasPolicyRule(r.getName()))
                 .forEach(this::addPolicyRule);
     }
 
-    @Cacheable(POLICY_RULE_CACHE_REGISTRY)
+    @Cacheable(POLICY_RULE_CACHE_REGION)
     @Override
     public List<PolicyRule> getAllPolicyRules() {
         return policyRuleRepository.findAll();
     }
 
     @Override
-    @Cacheable(POLICY_RULE_CACHE_REGISTRY)
+    @Cacheable(POLICY_RULE_CACHE_REGION)
     public boolean hasPolicyRule(String name) {
         return policyRuleRepository.countByName(name) > 0;
     }
 
     @Override
-    @CacheEvict(POLICY_RULE_CACHE_REGISTRY)
+    @CacheEvict(POLICY_RULE_CACHE_REGION)
     public PolicyRule addPolicyRule(PolicyRule policyRule) {
         LOGGER.debug("Saving policy rule {}", policyRule.getName());
         return policyRuleRepository.save(policyRule);
     }
 
     @Override
-    @CacheEvict(POLICY_RULE_CACHE_REGISTRY)
+    @CacheEvict(POLICY_RULE_CACHE_REGION)
     public PolicyRule updatePolicyRule(PolicyRule policyRule) {
         return addPolicyRule(policyRule);
     }

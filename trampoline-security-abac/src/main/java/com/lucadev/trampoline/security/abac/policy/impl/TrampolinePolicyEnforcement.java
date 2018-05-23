@@ -13,7 +13,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -97,34 +100,31 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
      * Filters the rules to match the given {@link SecurityAccessContext}
      *
      * @param allRules the rules to filter.
-     * @param cxt      the {@link SecurityAccessContext} to apply as filter constraints.
+     * @param ctx      the {@link SecurityAccessContext} to apply as filter constraints.
      * @return the filtered {@link List} of {@link PolicyRule} objects.
      */
-    private List<PolicyRule> filterRules(List<PolicyRule> allRules, SecurityAccessContext cxt) {
-        List<PolicyRule> matchedRules = new ArrayList<>();
-        for (PolicyRule rule : allRules) {
+    private List<PolicyRule> filterRules(List<PolicyRule> allRules, SecurityAccessContext ctx) {
+        return allRules.stream().filter(rule -> {
             try {
-                if (rule.getTarget().getValue(cxt, Boolean.class)) {
-                    matchedRules.add(rule);
-                }
+                return rule.getTarget().getValue(ctx, Boolean.class);
             } catch (EvaluationException ex) {
-                logger.info("An error occurred while evaluating PolicyRule.", ex);
+                logger.error("Failed to evaluate PolicyRule target", ex);
             }
-        }
-        return matchedRules;
+            return false;
+        }).collect(Collectors.toList());
     }
 
     /**
      * Evaluate a {@link List} of {@link PolicyRule} objects against the {@link SecurityAccessContext}
      *
      * @param matchedRules the rules to evaluate.
-     * @param cxt          the {@link SecurityAccessContext} to evaluate against
+     * @param ctx          the {@link SecurityAccessContext} to evaluate against
      * @return
      */
-    private boolean checkRules(List<PolicyRule> matchedRules, SecurityAccessContext cxt) {
+    private boolean checkRules(List<PolicyRule> matchedRules, SecurityAccessContext ctx) {
         for (PolicyRule rule : matchedRules) {
             try {
-                if (rule.getCondition().getValue(cxt, Boolean.class)) {
+                if (rule.getCondition().getValue(ctx, Boolean.class)) {
                     return true;
                 }
             } catch (EvaluationException ex) {

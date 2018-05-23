@@ -34,6 +34,14 @@ public interface UserService extends UserDetailsService {
     User findById(UUID subject);
 
     /**
+     * Persist new {@link User}
+     *
+     * @param user the {@link User} to persist
+     * @return the persisted {@link User}
+     */
+    User save(User user);
+
+    /**
      * Update a {@link User}
      *
      * @param user the {@link User} containing updated data.

@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 public abstract class AbstractUserService implements UserService {
 
-    protected static final String CACHE_REGION = "trampoline_cache_users";
+    protected static final String CACHE_REGION = "trampoline_users_cache";
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
 
@@ -72,6 +72,14 @@ public abstract class AbstractUserService implements UserService {
     @Cacheable(CACHE_REGION)
     public User findById(UUID subject) {
         return userRepository.findById(subject).orElse(null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     /**

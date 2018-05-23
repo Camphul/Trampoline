@@ -10,36 +10,28 @@
       "name": "WHOAMI_GET"
     },
     {
-      "name": "USER_READ",
-      "target": "USER"
+      "name": "USER_READ"
     },
     {
-      "name": "USER_EDIT",
-      "target": "USER"
+      "name": "USER_EDIT"
     },
     {
-      "name": "USER_CREATE",
-      "target": "USER"
+      "name": "USER_CREATE"
     },
     {
-      "name": "USER_DELETE",
-      "target": "USER"
+      "name": "USER_DELETE"
     },
     {
-      "name": "BOOK_READ",
-      "target": "BOOK"
+      "name": "BOOK_READ"
     },
     {
-      "name": "BOOK_EDIT",
-      "target": "BOOK"
+      "name": "BOOK_EDIT"
     },
     {
-      "name": "BOOK_CREATE",
-      "target": "BOOK"
+      "name": "BOOK_CREATE"
     },
     {
-      "name": "BOOK_DELETE",
-      "target": "BOOK"
+      "name": "BOOK_DELETE"
     }
   ],
   "roles": [

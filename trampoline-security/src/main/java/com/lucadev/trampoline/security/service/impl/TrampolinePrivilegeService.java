@@ -21,12 +21,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
      */
     @Override
     public Privilege create(String privilege) {
-        return create(privilege, null);
-    }
-
-    @Override
-    public Privilege create(String privilege, String target) {
-        Privilege p = new Privilege(privilege, target);
+        Privilege p = new Privilege(privilege);
         return privilegeRepository.save(p);
     }
 

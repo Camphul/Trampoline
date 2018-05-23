@@ -43,8 +43,7 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
      */
     private void importPrivileges(AuthorizationSchemeModel model, Map<String, UUID> privilegeMap) {
         for (AuthorizationSchemeModel.PrivilegeAuthorizationSchemeModel privilegeModel : model.getPrivileges()) {
-            String target = privilegeModel.getTarget();
-            Privilege privilege = privilegeService.create(privilegeModel.getName(), target);
+            Privilege privilege = privilegeService.create(privilegeModel.getName());
             privilegeMap.put(privilegeModel.getName(), privilege.getId());
             LOGGER.info("JSON IMPORTED PRIVILEGE::{}", privilege);
         }

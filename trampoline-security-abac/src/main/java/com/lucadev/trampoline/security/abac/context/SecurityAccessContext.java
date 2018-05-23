@@ -29,4 +29,12 @@ public interface SecurityAccessContext extends SecurityExpressionOperations {
      * @return the environment/context in which the action is being taken against the resource by the subject.
      */
     Object getEnvironment();
+
+    /**
+     * Check if the given action is equal to the action in the parameters
+     *
+     * @param action the action to check
+     * @return if the actions match
+     */
+    boolean isAction(Object action);
 }

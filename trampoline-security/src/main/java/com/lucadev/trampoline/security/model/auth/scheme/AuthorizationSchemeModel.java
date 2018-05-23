@@ -21,7 +21,6 @@ public class AuthorizationSchemeModel {
     @Data
     public static class PrivilegeAuthorizationSchemeModel {
         private String name;
-        private String target;
     }
 
     /**
