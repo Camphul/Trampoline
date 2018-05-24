@@ -53,3 +53,7 @@ public class TrampolineApplication {
 
 }
 ```
+
+## Write your app with the help of Trampoline
+
+For an example on how to use Trampoline in your application please check the [trampoline-example-app](../trampoline-example-app) and read the other docs.
