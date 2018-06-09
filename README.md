@@ -16,6 +16,8 @@ However, a lot of services/components maintain configurable.
 Only the policy configurations are required to get started.
 * RBAC: Simple RBAC implementation with hierarchy. With roles and privileges(authorities).
 * JWT starter: import the JWT starter and have JWT enabled without any required configurations(expands on the user management)
+* Asset storage: handle file uploads with ease without having to persist everything in the db as a blob.
+* Asset storage decoupling: write your own AssetStore implementation to work with S3, GCP, Azure or your local filesystem.
 
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.

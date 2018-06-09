@@ -2,6 +2,7 @@ package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,14 @@ public class PingController {
     }
 
     @RequestMapping("/ping")
+    @PreAuthorize("permitAll()")
     public String ping() {
         return "Pong: " + timeProvider.unix();
+    }
+
+    @RequestMapping("/ping/protected")
+    public String pingProtected() {
+        return "Protected pong: " + timeProvider.unix();
     }
 
 }

@@ -25,6 +25,9 @@
         <module>trampoline-security-abac</module>
         <module>trampoline-security-abac-autoconfigure</module>
         <module>trampoline-security-abac-starter</module>
+        <module>trampoline-asset-store</module>
+        <module>trampoline-asset-store-autoconfigure</module>
+        <module>trampoline-asset-store-starter</module>
     </modules>
     <packaging>pom</packaging>
 
