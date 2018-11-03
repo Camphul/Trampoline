@@ -1,0 +1,38 @@
+{
+  "profiles": [
+    "dev"
+  ],
+  "defaultRoles": [
+    "ROLE_USER"
+  ],
+  "privileges": [
+    {
+      "name": "WHOAMI_GET"
+    }
+  ],
+  "roles": [
+    {
+      "name": "ROLE_USER",
+      "parents": [],
+      "privileges": [
+        "WHOAMI_GET"
+      ]
+    },
+    {
+      "name": "ROLE_ADMIN",
+      "parents": [
+        "ROLE_USER"
+      ],
+      "privileges": [
+      ]
+    },
+    {
+      "name": "ROLE_SUPERADMIN",
+      "parents": [
+        "ROLE_ADMIN"
+      ],
+      "privileges": [
+      ]
+    }
+  ]
+}
