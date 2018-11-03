@@ -25,6 +25,9 @@ public class AssetResponse {
      * @return a {@link AssetResponse} instance.
      */
     public static AssetResponse from(Asset asset) {
+        if (asset == null)
+            throw new NullPointerException("Cannot create response from null asset.");
+
         return new AssetResponse(asset);
     }
 

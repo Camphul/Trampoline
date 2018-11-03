@@ -24,6 +24,9 @@ public class AssetMetaDataBuilder {
      * @return
      */
     public static AssetMetaData fromMultipartFile(MultipartFile multipartFile) {
+        if (multipartFile == null)
+            throw new NullPointerException("Cannot create asset metadata from null multipartFile");
+
         return new AssetMetaData(multipartFile.getName(), multipartFile.getOriginalFilename(),
                 multipartFile.getContentType(), multipartFile.getSize());
     }
