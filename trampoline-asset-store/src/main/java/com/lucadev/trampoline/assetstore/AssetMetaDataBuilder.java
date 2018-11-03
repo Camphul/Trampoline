@@ -11,6 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class AssetMetaDataBuilder {
 
     /**
+     * Disable instance creation
+     */
+    private AssetMetaDataBuilder() {
+        throw new IllegalAccessError("This builder should not be constructable.");
+    }
+
+    /**
      * Create a {@link AssetMetaData} from a multipart file.
      *
      * @param multipartFile

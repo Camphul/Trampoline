@@ -11,13 +11,19 @@ import lombok.ToString;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 9-6-18
  */
-@AllArgsConstructor
 @Getter
 @ToString
+@AllArgsConstructor
 public class AssetResponse {
 
     private final Asset asset;
 
+    /**
+     * Construct {@code AssetResponse}
+     *
+     * @param asset
+     * @return a {@link AssetResponse} instance.
+     */
     public static AssetResponse from(Asset asset) {
         return new AssetResponse(asset);
     }

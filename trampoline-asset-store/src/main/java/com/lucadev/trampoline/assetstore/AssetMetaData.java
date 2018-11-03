@@ -36,6 +36,14 @@ public class AssetMetaData extends TrampolineEntity {
     @Column(name = "file_size")
     private long fileSize;
 
+    /**
+     * Construct asset meta data
+     *
+     * @param name             the filename as it's stored.
+     * @param originalFilename the original filename(when uploaded through multipart for example)
+     * @param contentType      the file content type(MIME)
+     * @param fileSize         the size of the file in bytes.
+     */
     public AssetMetaData(String name, String originalFilename, String contentType, long fileSize) {
         this.name = name;
         this.originalFilename = originalFilename;
