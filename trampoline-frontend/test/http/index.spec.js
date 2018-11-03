@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import http from '../../src/trampoline/http';
+import {expect} from "chai";
+import http from "../../src/http";
 
 describe('trampoline-http-client', () => {
    it('http should return axios client', ()=> {

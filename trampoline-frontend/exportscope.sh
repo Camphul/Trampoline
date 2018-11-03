@@ -1,5 +1,4 @@
 #!/bin/bash
-./addcomponents.sh
 ./test.sh
 echo "Tagging"
 bit tag --all 1.0.0

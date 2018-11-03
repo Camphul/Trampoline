@@ -1,4 +1,15 @@
 #!/bin/bash
 echo "Importing all bit components"
+npm config set '@bit:registry' https://node.bitsrc.io
+
+BIT_IMPORT_PATH="components"
 bit init
-bit import camphul.trampoline/trampoline/http
+
+importComponent() {
+    bit import $1 --path $BIT_IMPORT_PATH
+}
+
+importComponent camphul.trampoline/http
+importComponent camphul.trampoline/configuration
+
+bit install
