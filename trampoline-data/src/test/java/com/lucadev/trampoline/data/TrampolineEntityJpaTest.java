@@ -1,12 +1,10 @@
 package com.lucadev.trampoline.data;
 
-import com.lucadev.trampoline.MockApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,6 @@ import static org.junit.Assert.*;
  * @since 21-4-18
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MockApplication.class)
 @DataJpaTest
 @Transactional
 @ActiveProfiles(profiles = "test")

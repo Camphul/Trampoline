@@ -1,5 +1,5 @@
 # Trampoline
-Jump straight into serious development through the use of multiple ready-to-use Spring Boot starters.
+Jump straight into serious Spring development through the use of multiple ready-to-use Spring Boot starters.
 
 Please check [trampoline-example-app](/trampoline-example-app) for an example application.
 
