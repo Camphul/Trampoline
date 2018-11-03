@@ -71,12 +71,12 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
     /**
      * Writes the asset to the output message.
      *
-     * @see HttpMessageConverter#write(Object, MediaType, HttpOutputMessage)
      * @param assetResponse
      * @param mediaType
      * @param httpOutputMessage
      * @throws IOException
      * @throws HttpMessageNotWritableException
+     * @see HttpMessageConverter#write(Object, MediaType, HttpOutputMessage)
      */
     @Override
     public void write(AssetResponse assetResponse, @Nullable MediaType mediaType, HttpOutputMessage httpOutputMessage) throws IOException, HttpMessageNotWritableException {
