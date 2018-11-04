@@ -23,7 +23,7 @@ local.properties
 *.launch
 
 # PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+*.pydevprojectgit rm -r --cached
 
 # CDT-specific (C/C++ Development Tooling)
 .cproject
