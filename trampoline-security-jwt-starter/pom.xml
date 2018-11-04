@@ -11,6 +11,9 @@
 
     <artifactId>trampoline-security-jwt-starter</artifactId>
     <packaging>jar</packaging>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A trampoline starter module</description>
+    <url>https://github.com/Camphul/Trampoline</url>
     <dependencies>
         <dependency>
             <groupId>com.lucadev</groupId>

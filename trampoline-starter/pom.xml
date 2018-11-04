@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <artifactId>trampoline-starter</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A trampoline starter module containing all modules</description>
+    <url>https://github.com/Camphul/Trampoline</url>
     <dependencies>
         <dependency>
             <groupId>com.lucadev</groupId>

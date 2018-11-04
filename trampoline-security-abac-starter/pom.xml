@@ -10,7 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trampoline-security-abac-starter</artifactId>
-
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A trampoline starter module</description>
+    <url>https://github.com/Camphul/Trampoline</url>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>

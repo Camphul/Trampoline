@@ -1,5 +1,7 @@
 local-asset-store
 experimental-*
+public.key
+private.key
 # Created by https://www.gitignore.io/api/eclipse,netbeans,intellij+all,visualstudiocode
 
 ### Eclipse ###

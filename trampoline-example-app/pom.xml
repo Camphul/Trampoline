@@ -10,7 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trampoline-example-app</artifactId>
-
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A trampoline starter example project</description>
+    <url>https://github.com/Camphul/Trampoline</url>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
