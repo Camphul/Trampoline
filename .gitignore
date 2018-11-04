@@ -1,5 +1,5 @@
 local-asset-store
-experimental-frontend
+experimental-*
 # Created by https://www.gitignore.io/api/eclipse,netbeans,intellij+all,visualstudiocode
 
 ### Eclipse ###
