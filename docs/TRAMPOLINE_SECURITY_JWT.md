@@ -1,12 +1,13 @@
 # trampoline-security-jwt docs
 
-## Architecture
-TODO
+Easily integrate JWT authorization in your application.
+
+
 ## JwtPayload
-TODO
+POJO containing jwt token data
 ## JwtAuthenticationToken
-TODO
+Binds the JwtPayload the a principal(the user inside the request)
 ## TokenService
-TODO
+JWT functionality
 ## JwtConfiguration
-TODO
+Configuration for custom JWT claims/impersonation.

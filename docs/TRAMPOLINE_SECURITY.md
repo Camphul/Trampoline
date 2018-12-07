@@ -11,33 +11,25 @@ There are three main entities:
 2. Role: a User role
 3. Privilege: a privilege, contained in a Role
 
-A user may have zero or more roles. And a role may have zero or more privileges. 
+A user may have zero or more roles. And a role may have zero or more privileges.
+ 
+A privilege may not be duplicate but may be used in multiple roles.
 ## UserService
 User management methods. Also contains methods to handle the UserDetails methods(lock, enable, expire, etc...).
 ## RoleService
-TODO
+Manage the Role objects.
 ## PrivilegeService
-TODO
+Manage the Privilege objects.
 ## AuthorizationSchemeService
 This service bean allows you to build the role/privilege scheme through the use of json or using a Java builder.
 
-### Java builder
+## AuthorizationSchemeBuilderConfiguration
 
-It is recommended to create a startup listener. We do not have an autoload config ready yet.
+Create a configuration implementing this interface will allow you to build the authorization scheme using the builder.
 
-Autowire the service and invoke `build()`. This creates a scheme builder. And example of how to use it can be seen here:
+### Java builder using a Configuration
 
-```java
-//Wrap inside SystemAuthentication SecurityContext
-authorizationSchemeService.builder().wrapSystemAuthentication((wrappedBuilder) ->
-        //Create user role
-    wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING").buildAnd()
-            //Create admin role, adds privileges from ROLE_USER to this role.
-            .createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER").withPrivileges("MANAGE_USERS").buildAnd()
-            //Only build when dev profile is enabled
-            .forProfile("dev", (devBuilder) ->
-                //Add developer role
-                devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()
-            )
-);
-```
+Please see the example [BlogExampleAuthorizatrionSchemeBuilderConfiguration](../trampoline-example-app/src/main/java/com/lucadev/example/trampoline/configuration/BlogExampleAuthorizatrionSchemeBuilderConfiguration.java)
+
+Roles and privileges are only added when they do not exist(adding privileges to an existing role using the builder wont work).
+This is done since you should have your auth scheme populated on production.

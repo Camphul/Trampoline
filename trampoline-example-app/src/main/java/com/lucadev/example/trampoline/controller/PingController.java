@@ -1,34 +1,38 @@
 package com.lucadev.example.trampoline.controller;
 
+import com.lucadev.trampoline.model.MessageResponse;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Ping controller
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
- * @since 21-4-18
+ * @since 7-12-18
  */
 @RestController
+@AllArgsConstructor
 public class PingController {
 
-    private TimeProvider timeProvider;
+    private final TimeProvider timeProvider;
 
-    @Autowired
-    public PingController(TimeProvider timeProvider) {
-        this.timeProvider = timeProvider;
+    /**
+     * Unprotected ping route
+     *
+     * @return
+     */
+    @GetMapping("/ping/unprotected")
+    public MessageResponse pingUnprotected() {
+        return new MessageResponse("Pong unprotected: " + timeProvider.unix());
     }
 
-    @RequestMapping("/ping")
-    @PreAuthorize("permitAll()")
-    public String ping() {
-        return "Pong: " + timeProvider.unix();
-    }
-
-    @RequestMapping("/ping/protected")
-    public String pingProtected() {
-        return "Protected pong: " + timeProvider.unix();
+    @GetMapping("/ping/protected")
+    @PreAuthorize("hasPermission(null, 'PING_PROTECTED')")
+    public MessageResponse pingProtected() {
+        return new MessageResponse("Pong protected: " + timeProvider.unix());
     }
 
 }

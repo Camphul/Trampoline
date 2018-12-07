@@ -59,6 +59,21 @@ public abstract class TrampolineEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
+    /**
+     * Check if the entity has not been persisted yet.
+     *
+     * @return true if the id is null(which means it has not been persisted yet)
+     */
+    public boolean isNewTrampolineEntity() {
+        return this.id == null;
+    }
+
+    /**
+     * Equals implementation which only checks the id, created date and modified date.
+     *
+     * @param o the object to compare to.
+     * @return if the objects are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

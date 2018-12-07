@@ -9,16 +9,15 @@ import org.springframework.context.annotation.Configuration;
  * @since 7-12-18
  */
 @Configuration
-public class ExampleAuthorizationSchemeBuilderConfiguration implements AuthorizationSchemeBuilderConfiguration {
+public class BlogExampleAuthorizatrionSchemeBuilderConfiguration implements AuthorizationSchemeBuilderConfiguration {
 
     @Override
     public void build(AuthorizationSchemeBuilder builder) {
         builder.wrapSystemAuthentication((wrappedBuilder) ->
                 //Create user role
-                wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "USER_READ", "USER_EDIT",
-                        "USER_CREATE", "USER_DELETE", "BOOK_READ", "BOOK_EDIT", "BOOK_CREATE", "BOOK_DELETE").buildAnd()
+                wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING_PROTECTED").buildAnd()
                         //Create admin role
-                        .createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER").withPrivileges("MANAGE_USERS").buildAnd()
+                        .createRole("ROLE_ADMIN").withPrivileges("MANAGE_USERS").buildAnd()
                         //Only build when dev profile is enabled
                         .forProfile("dev", (devBuilder) ->
                                 //Add developer role

@@ -1,12 +1,14 @@
 # trampoline-security-abac docs
 
+Attribute based access control enabled row level security for Spring using SPeL expression that are persisted or loaded from Json.
+
 ## PolicyRule
-TODO
+The actual spel expressions
 ## PolicyDefinition
-TODO
+Collection of the rules.
 ## PolicyEnforcement
-TODO
+Checks the rules against the subject/resource
 ## AbacPermissionEvaluator
-TODO
+Binds to spring permission evaluator to policy enforcement
 ## SecurityAccessContext
-TODO
+Context in which the spel expressions are ran.

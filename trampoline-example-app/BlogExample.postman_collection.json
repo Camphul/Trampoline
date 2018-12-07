@@ -1,0 +1,830 @@
+{
+  "info": {
+    "_postman_id": "e5b4671a-5f5b-4743-a812-390847ea9fc0",
+    "name": "BlogExample",
+    "description": "Endpoint tests for the Trampoline example application(blog)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authorization",
+      "description": "Requests related to the authorization of a user",
+      "item": [
+        {
+          "name": "Fail authorization(wrong credentials)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9d281d49-8198-4cd4-942f-b079f07433a7",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "a8a28d91-c9e5-4e58-adbe-fc7a02ca0460",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"somenonexistentuser\",\n\t\"password\": \"somewrongcredential\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Fail authorization by providing wrongful credentials."
+          },
+          "response": []
+        },
+        {
+          "name": "Fail authorization(incorrect request body)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9d281d49-8198-4cd4-942f-b079f07433a7",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "a8a28d91-c9e5-4e58-adbe-fc7a02ca0460",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"cheese\": \"this request doesnt make any sense lol\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Fail authorization by posting an invalid request body."
+          },
+          "response": []
+        },
+        {
+          "name": "Signup bob",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "fa4e3030-f915-46f7-96f6-9f432407d0bc",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Your test name\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"bob\",\n\t\"password\": \"test\",\n\t\"email\": \"bob@bob.example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/signup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "signup"
+              ]
+            },
+            "description": "Sign up a user named 'bob' with password 'test' and email 'bob@bob.example.com'"
+          },
+          "response": []
+        },
+        {
+          "name": "Authorize user: bob",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "bd5ea1a7-63a5-45c7-9f42-030d5fb29c7e",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Message to be ok\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"ok\");",
+                  "});",
+                  "",
+                  "pm.test(\"Success state to true\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    //Set jwt_token to be used in other requests",
+                  "    pm.globals.set(\"jwt_token\", jsonData.token);",
+                  "    pm.globals.set(\"auth_username\", \"bob\");",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "7f206b2c-e8f4-4659-aa16-a66e5cee8748",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"bob\",\n\t\"password\": \"test\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Authorize with 'bob'"
+          },
+          "response": []
+        },
+        {
+          "name": "Authorize user: jeff",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "1fc9fe34-cdf8-4223-9df9-e31bb1be8d67",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Message to be ok\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"ok\");",
+                  "});",
+                  "",
+                  "pm.test(\"Success state to true\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    //Set jwt_token to be used in other requests",
+                  "    pm.globals.set(\"jwt_token\", jsonData.token);",
+                  "    pm.globals.set(\"auth_username\", \"jeff\");",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "7f206b2c-e8f4-4659-aa16-a66e5cee8748",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"jeff\",\n\t\"password\": \"test\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Authorize with 'jeff'"
+          },
+          "response": []
+        },
+        {
+          "name": "Authorize user: admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "35b91c78-8633-4535-8b59-ccf614f44314",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Message to be ok\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"ok\");",
+                  "});",
+                  "",
+                  "pm.test(\"Success state to true\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    //Set jwt_token to be used in other requests",
+                  "    pm.globals.set(\"jwt_token\", jsonData.token);",
+                  "    pm.globals.set(\"auth_username\", \"admin\");",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "a8a28d91-c9e5-4e58-adbe-fc7a02ca0460",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"test\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Authorize with 'admin'"
+          },
+          "response": []
+        },
+        {
+          "name": "Authorize user: user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Message to be ok\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.eql(\"ok\");",
+                  "});",
+                  "",
+                  "pm.test(\"Success state to true\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    //Set jwt_token to be used in other requests",
+                  "    pm.globals.set(\"jwt_token\", jsonData.token);",
+                  "    pm.globals.set(\"auth_username\", \"user\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"test\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/authorize",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "authorize"
+              ]
+            },
+            "description": "Authorize with 'user'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Blogs",
+      "description": null,
+      "item": [
+        {
+          "name": "POST /blogs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "f3c206e5-c888-48cd-8d5c-9fac16e611e1",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "",
+                  "pm.test(\"Create blogpost\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "   pm.environment.set(\"blogpost_id\", jsonData.id); ",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"title\": \"My blog post entry\",\n\t \"content\": \"these are the contents of my blog post!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/blogs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs"
+              ]
+            },
+            "description": "Create blog entry"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /blogs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "7d7b4182-b60a-4d19-a428-1b33a2292c63",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs"
+              ]
+            },
+            "description": "List blogs"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /blogs/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "93b3eed0-7285-4434-aa5c-9270b6ad42a9",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "",
+                  "pm.test(\"Your test name\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedId = pm.globals.get(\"blogpost_id\"); ",
+                  "    pm.expect(jsonData.id).to.eql(expectedId);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}"
+              ]
+            },
+            "description": "View blog detail"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /blogs/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "905114f9-d2ab-4b2a-9161-f06c48c0dfaf",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "",
+                  "pm.test(\"Create blogpost\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"title\": \"My editted blog post entry\",\n\t \"content\": \"these are the modified contents of my blog post!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}"
+              ]
+            },
+            "description": "Edit blog entry"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /blogs/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "33f01542-aa8f-4123-8f01-e84ad7fb8f43",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "",
+                  "pm.test(\"Should success be true\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedId = pm.globals.get(\"blogpost_id\"); ",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    ",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}"
+              ]
+            },
+            "description": "Delete blogpost"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GET /whoami",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "4a15d470-b2a7-451f-ae60-467c9fb3bd95",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "",
+              "",
+              "pm.test(\"Check username\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    var expectedUsername = pm.globals.get(\"auth_username\"); ",
+              "    pm.expect(jsonData.username).to.eql(expectedUsername);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:8080/whoami",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "whoami"
+          ]
+        },
+        "description": "Get the current user(should ran the authorize request first to obtain token) through the whoami endpoint."
+      },
+      "response": []
+    },
+    {
+      "name": "GET /ping/unprotected",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "b2c79a14-adb7-4614-b146-03e4314d4aa4",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Include pong message\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.include('Pong unprotected: ');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "disabled": true
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:8080/ping/unprotected",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ping",
+            "unprotected"
+          ]
+        },
+        "description": "Unprotected ping"
+      },
+      "response": []
+    },
+    {
+      "name": "GET /ping/protected",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "a8e29f89-d00c-4341-8a06-ab301b89f771",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Include pong message\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.include('Pong protected: ');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:8080/ping/protected",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ping",
+            "protected"
+          ]
+        },
+        "description": "Protected ping route"
+      },
+      "response": []
+    }
+  ]
+}

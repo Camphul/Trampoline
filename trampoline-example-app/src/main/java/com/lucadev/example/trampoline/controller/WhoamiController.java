@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Return the raw user object.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 26-4-18
  */
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class WhoamiController {
 
     private UserService userService;
-
 
     @GetMapping("/whoami")
     @PreAuthorize("hasPermission(null, 'WHO_AM_I')")

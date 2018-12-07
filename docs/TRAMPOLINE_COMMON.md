@@ -8,7 +8,7 @@ As the name says. The TimeProvider service bean provides methods to obtain the c
 
 ## UUID Converter
 
-The UUIDConverter handles internal UUID conversion. This way you can easily handle UUID path variables inside of controllers(you don't have to convert from String each time).
+Allows you to put `UUID` as parameter in your controller mapping. Converts a String into the UUID equivalent.
 
 ## MessageResponse
 

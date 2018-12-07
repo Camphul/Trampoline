@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TrampolineApplication {
     @Autowired
-    private TestDataImporter testDataImporter;
+    private DummyUserImporter dummyUserImporter;
 
 
     public static void main(String[] args) {

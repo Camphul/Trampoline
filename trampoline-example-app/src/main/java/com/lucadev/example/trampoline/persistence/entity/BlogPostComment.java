@@ -8,23 +8,20 @@ import javax.persistence.*;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
- * @since 27-4-18
+ * @since 7-12-18
  */
 @Entity
-@Table(name = "EXAMPLE_APP_BOOK")
+@Table(name = "BLOGPOST_COMMENT")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Book extends TrampolineEntity {
-
-
+public class BlogPostComment extends TrampolineEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_author")
+    @JoinColumn(name = "blogpost_comment_author")
     private User author;
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
-
+    @Column(name = "content", nullable = false)
+    private String content;
 }

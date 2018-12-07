@@ -1,6 +1,5 @@
 package com.lucadev.example.trampoline;
 
-import com.lucadev.example.trampoline.service.BookService;
 import com.lucadev.trampoline.security.authentication.SystemAuthentication;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
@@ -28,15 +27,13 @@ import java.util.Date;
  */
 @Component
 @AllArgsConstructor
-public class TestDataImporter implements ApplicationListener<ContextRefreshedEvent>, Ordered {
+public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestDataImporter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);
 
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BookService bookService;
-
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -51,18 +48,8 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
             Role userRole = roleService.find("ROLE_USER");
             Role adminRole = roleService.find("ROLE_ADMIN");
             User user = makeUser("user", userRole);
+            User user2 = makeUser("jeff", userRole);
             User admin = makeUser("admin", userRole, adminRole);
-
-            bookService.create("userBook1", user);
-            bookService.create("userBook2", user);
-            bookService.create("userBook3", user);
-            bookService.create("userBook4", user);
-
-            bookService.create("adminBook1", admin);
-            bookService.create("adminBook2", admin);
-            bookService.create("adminBook3", admin);
-            bookService.create("adminBook4", admin);
-            bookService.create("adminBook5", admin);
         } finally {
             SecurityContextHolder.clearContext();
         }
