@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import lombok.AccessLevel;
@@ -64,6 +65,15 @@ public abstract class AbstractUserService implements UserService {
 
         return Optional.of((User) principal);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User currentUserOrThrow() throws CurrentUserNotFoundException {
+        return currentUser().orElseThrow(CurrentUserNotFoundException::new);
+    }
+
 
     /**
      * {@inheritDoc}

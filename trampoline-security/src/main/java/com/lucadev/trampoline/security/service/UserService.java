@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,14 @@ public interface UserService extends UserDetailsService {
      * @return currently active {@link User} inside an {@link Optional}
      */
     Optional<User> currentUser();
+
+    /**
+     * Obtains the {@link User} from the current {@link Thread}.
+     * Throws a {@link CurrentUserNotFoundException} when null.
+     *
+     * @return currently active {@link User}
+     */
+    User currentUserOrThrow() throws CurrentUserNotFoundException;
 
     /**
      * Find a {@link User} by it's {@link User#id}

@@ -6,6 +6,8 @@ There is an abstract base entity which has JPA auditing to keep track of creatio
 
 There's also an extension of the JpaRepository to handle our custom abstract entity.
 
+Also contains pagination utilities.
+
 ## TODO
 
 - better testing

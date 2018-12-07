@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
-public class WhoamiController {
+public class WhoAmIController {
 
     private UserService userService;
 
     @GetMapping("/whoami")
     @PreAuthorize("hasPermission(null, 'WHO_AM_I')")
     public User whoami() {
-        return userService.currentUser().get();
+        return userService.currentUserOrThrow();
     }
 
 }
