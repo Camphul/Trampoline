@@ -11,6 +11,8 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 /**
+ * Invoke the {@link AuthorizationSchemeBuilderConfiguration} on startup.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */
