@@ -5,20 +5,19 @@ import com.lucadev.trampoline.security.authentication.SystemAuthentication;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
-import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
 import com.lucadev.trampoline.security.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.Ordered;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -27,9 +26,9 @@ import java.util.Date;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-//@Component
+@Component
 @AllArgsConstructor
-public class TestDataImporter implements ApplicationListener<ContextRefreshedEvent> {
+public class TestDataImporter implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestDataImporter.class);
 
@@ -37,28 +36,18 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final BookService bookService;
-    private final AuthorizationSchemeService authorizationSchemeService;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
             //to test the builder, ignore this one
-            if (true) {
-                return;
-            }
             SecurityContext ctx = SecurityContextHolder.createEmptyContext();
             SecurityContextHolder.setContext(ctx);
             ctx.setAuthentication(new SystemAuthentication());
 
             //Do what ever you want to do
             LOGGER.info("Running test data imports");
-            try {
-                authorizationSchemeService.importAuthorizationScheme(
-                        authorizationSchemeService.loadModel(new ClassPathResource("/auth_scheme.json")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             Role userRole = roleService.find("ROLE_USER");
             Role adminRole = roleService.find("ROLE_ADMIN");
             User user = makeUser("user", userRole);
@@ -101,4 +90,8 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
         return user;
     }
 
+    @Override
+    public int getOrder() {
+        return 90;
+    }
 }
