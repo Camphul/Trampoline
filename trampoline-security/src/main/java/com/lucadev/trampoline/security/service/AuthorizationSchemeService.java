@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.service;
 
 
+import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchemeBuilder;
 import com.lucadev.trampoline.security.model.auth.scheme.AuthorizationSchemeModel;
 import org.springframework.core.io.Resource;
 
@@ -27,5 +28,12 @@ public interface AuthorizationSchemeService {
      * Migrate an authorization scheme into the database.
      */
     void importAuthorizationScheme(AuthorizationSchemeModel authorizationSchemeModel) throws IOException;
+
+    /**
+     * Use java builder pattern for creating authorization scheme.
+     *
+     * @return the builder
+     */
+    AuthorizationSchemeBuilder builder();
 
 }

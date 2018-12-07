@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchemeBuilder;
 import com.lucadev.trampoline.security.model.Privilege;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.auth.scheme.AuthorizationSchemeModel;
@@ -27,9 +28,9 @@ import java.util.UUID;
  * @since 27-4-18
  */
 @AllArgsConstructor
-public class JsonAuthorizationSchemeService implements AuthorizationSchemeService {
+public class TrampolineAuthorizationSchemeService implements AuthorizationSchemeService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonAuthorizationSchemeService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineAuthorizationSchemeService.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final Environment environment;
     private final RoleService roleService;
@@ -103,5 +104,10 @@ public class JsonAuthorizationSchemeService implements AuthorizationSchemeServic
         Map<String, UUID> privilegeMap = new HashMap<>();
         importPrivileges(model, privilegeMap);
         importRoles(model, roleMap);
+    }
+
+    @Override
+    public AuthorizationSchemeBuilder builder() {
+        return AuthorizationSchemeBuilder.create(roleService, privilegeService, environment);
     }
 }

@@ -12,3 +12,7 @@ We have three entities which are all persisted using JPA:
 
 A User can have multiple roles and a role consists out of one or more privileges.
 These roles/privileges will be used for fine-grained access controll in another module.
+
+## Roadmap
+
+Generate auth scheme through java code instead of json? Through a config bean?

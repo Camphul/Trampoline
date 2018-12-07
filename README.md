@@ -35,3 +35,26 @@ If you wish to contribute please read the guidelines as described in [CONTRIBUTI
 ## License
 
 This project is licensed under the [MIT License](/LICENSE.txt)
+
+## Why use Trampoline
+
+Some examples on why you could use Trampoline.
+
+Setup role/privilege scheme:
+
+```java
+//Wrap inside SystemAuthentication SecurityContext
+authorizationSchemeService.builder().wrapSystemAuthentication((wrappedBuilder) ->
+        //Create user role
+    wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING").buildAnd()
+            //Create admin role, adds privileges from ROLE_USER to this role.
+            .createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER").withPrivileges("MANAGE_USERS").buildAnd()
+            //Only build when dev profile is enabled
+            .forProfile("dev", (devBuilder) ->
+                //Add developer role
+                devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()
+            )
+);
+```
+
+You could also define the entire scheme in a json file and import that.

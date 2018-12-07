@@ -12,8 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableTrampoline
 @SpringBootApplication
 public class TrampolineApplication {
+    //@Autowired
+    //private TestDataImporter testDataImporter;
+
     @Autowired
-    private TestDataImporter testDataImporter;
+    private AuthSchemeImporter authSchemeImporter;
 
     public static void main(String[] args) {
         SpringApplication.run(TrampolineApplication.class, args);

@@ -16,7 +16,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
@@ -28,7 +27,7 @@ import java.util.Date;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@Component
+//@Component
 @AllArgsConstructor
 public class TestDataImporter implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -44,6 +43,10 @@ public class TestDataImporter implements ApplicationListener<ContextRefreshedEve
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
+            //to test the builder, ignore this one
+            if (true) {
+                return;
+            }
             SecurityContext ctx = SecurityContextHolder.createEmptyContext();
             SecurityContextHolder.setContext(ctx);
             ctx.setAuthentication(new SystemAuthentication());

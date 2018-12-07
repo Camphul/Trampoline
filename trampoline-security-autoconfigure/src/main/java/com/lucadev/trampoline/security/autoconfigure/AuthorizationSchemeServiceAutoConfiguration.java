@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.autoconfigure;
 import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import com.lucadev.trampoline.security.service.impl.JsonAuthorizationSchemeService;
+import com.lucadev.trampoline.security.service.impl.TrampolineAuthorizationSchemeService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -27,7 +27,7 @@ public class AuthorizationSchemeServiceAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public AuthorizationSchemeService authorizationSchemeService() {
-        return new JsonAuthorizationSchemeService(environment, roleService, privilegeService);
+        return new TrampolineAuthorizationSchemeService(environment, roleService, privilegeService);
     }
 
 }
