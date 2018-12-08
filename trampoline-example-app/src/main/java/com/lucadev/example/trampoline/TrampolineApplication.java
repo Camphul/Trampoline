@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@EnableTrampoline
+@EnableTrampoline /* Required to load necessary Trampoline components */
 @SpringBootApplication
 public class TrampolineApplication {
     @Autowired

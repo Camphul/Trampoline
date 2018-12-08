@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * The entity for the blog post.
+ * Extends a {@link TrampolineEntity} to enable auditing and {@link java.util.UUID} id.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */
@@ -21,6 +24,7 @@ import java.util.Collection;
 @ToString
 public class BlogPost extends TrampolineEntity {
 
+    //The user who persisted this blogpost.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blogpost_author")
     private User author;
@@ -31,6 +35,7 @@ public class BlogPost extends TrampolineEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    //A blogpost may have 0 or more comments.
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "BLOGPOST_COMMENT_RELATION",

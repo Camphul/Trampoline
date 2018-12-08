@@ -23,6 +23,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * REST controller for blog posts.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */
@@ -34,6 +36,14 @@ public class BlogPostController {
     private final BlogPostService blogPostService;
     private final PolicyEnforcement policyEnforcement;
 
+    /**
+     * Evaluate the BLOGPOST_LIST policy against the current principal.
+     * Then find all blogposts and map the {@link Page} of type {@link BlogPost} to type {@link BlogPostSummaryDto}.
+     * This is achieved using Trampoline's {@link MappedPage} which accepts a map function to map all contents.
+     *
+     * @param pageable your standard Spring pageable.
+     * @return a mapped result of the blogs.
+     */
     @GetMapping("/blogs")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_LIST')")
     public Page<BlogPostSummaryDto> getBlogPosts(Pageable pageable) {
@@ -42,6 +52,12 @@ public class BlogPostController {
         return MappedPage.of(blogPostPage, pageable, BlogPostSummaryDto::new);
     }
 
+    /**
+     * Evaluates if the principal can create blog posts by evaluating the BLOGPOST_CREATE policy.
+     *
+     * @param request
+     * @return
+     */
     @PostMapping("/blogs")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_CREATE')")
     public CreateBlogPostResponse createBlogPost(@RequestBody CreateBlogPostRequest request) {
@@ -50,12 +66,15 @@ public class BlogPostController {
 
         BlogPost post = blogPostService.createBlogPost(user, request);
 
-        if (post == null) {
-            return new CreateBlogPostResponse(null, false, "Failed to create blogpost");
-        }
         return new CreateBlogPostResponse(post.getId(), true, "ok");
     }
 
+    /**
+     * Evaluate BLOGPOST_VIEW with the returned BlogPost against the current principal.
+     * Maybe the principal may only view his own blogposts!
+     * @param id
+     * @return
+     */
     @GetMapping("/blogs/{id}")
     @PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
     public BlogPostDto viewBlogPost(@PathVariable("id") UUID id) {
@@ -63,13 +82,22 @@ public class BlogPostController {
         return new BlogPostDto(blogPost.orElseThrow(() -> new ResourceNotFoundException(id)));
     }
 
+    /**
+     * Might be strange not to see an annotation to authorize but some actions require some more work.
+     * @param id
+     * @return
+     */
     @DeleteMapping("/blogs/{id}")
     public SuccessResponse deleteBlogPost(@PathVariable("id") UUID id) {
+        //Find the blog post we want to delete
         Optional<BlogPost> blogPostOptional = blogPostService.findById(id);
 
-        //This cannot be done using a authorize annotation so we use policyenforcement to check permission.
+        //This cannot be done using a authorize annotation so we use PolicyEnforcement to evaluate permission to delete.
+        //You don't want to give everyone access to delete each other's blog posts!
         //In this case we simply check ownership of the blogpost and check if the principal has ROLE_USER
         BlogPost blogPost = blogPostOptional.orElseThrow(() -> new ResourceNotFoundException(id));
+
+        //If this fails it will throw an AccessDenied or other Exception which will stop the deleteById to be invoked.
         policyEnforcement.check(blogPost, "BLOGPOST_DELETE");
 
         blogPostService.deleteById(id);
@@ -77,6 +105,12 @@ public class BlogPostController {
         return new SuccessResponse(true, "ok");
     }
 
+    /**
+     * This is nearly the same as the {@link #deleteBlogPost(UUID)}.
+     * @param id
+     * @param request
+     * @return
+     */
     @PatchMapping("/blogs/{id}")
     public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody CreateBlogPostRequest request) {
         Optional<BlogPost> blogPostOptional = blogPostService.findById(id);
@@ -86,8 +120,14 @@ public class BlogPostController {
         BlogPost blogPost = blogPostOptional.orElseThrow(() -> new ResourceNotFoundException(id));
         policyEnforcement.check(blogPost, "BLOGPOST_EDIT");
 
-        blogPost.setTitle(request.getTitle());
-        blogPost.setContent(request.getContent());
+        //Only change when set in the request body
+        if (request.getTitle() != null) {
+            blogPost.setTitle(request.getTitle());
+        }
+
+        if (request.getContent() != null) {
+            blogPost.setContent(request.getContent());
+        }
 
         blogPostService.update(blogPost);
 

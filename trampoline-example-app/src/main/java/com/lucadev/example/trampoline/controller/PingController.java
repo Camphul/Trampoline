@@ -20,7 +20,7 @@ public class PingController {
     private final TimeProvider timeProvider;
 
     /**
-     * Unprotected ping route
+     * Unprotected ping route since it is ignored through the configuration we set.
      *
      * @return
      */
@@ -29,6 +29,11 @@ public class PingController {
         return new MessageResponse("Pong unprotected: " + timeProvider.unix());
     }
 
+    /**
+     * Protected ping which evaluates a policy on the current principal.
+     *
+     * @return
+     */
     @GetMapping("/ping/protected")
     @PreAuthorize("hasPermission(null, 'PING_PROTECTED')")
     public MessageResponse pingProtected() {

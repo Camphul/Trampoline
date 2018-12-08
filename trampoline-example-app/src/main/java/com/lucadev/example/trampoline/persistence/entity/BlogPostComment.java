@@ -7,6 +7,8 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
+ * Another entity defining a comment on a blog post.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */

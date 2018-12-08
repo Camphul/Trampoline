@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 /**
- * Register a user
+ * Register a user. Nothing special here.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
@@ -38,6 +38,7 @@ public class UserRegistrationController {
     public UserRegisterResponse signup(@RequestBody UserRegisterRequest signupRequest) {
         String username = signupRequest.getUsername();
         String email = signupRequest.getEmail();
+        //Passwords must be hashed.
         String hashedPassword = passwordEncoder.encode(signupRequest.getPassword());
 
         User user = new User();

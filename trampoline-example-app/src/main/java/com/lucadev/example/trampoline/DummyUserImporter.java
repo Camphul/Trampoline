@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 /**
- * Test component to import test data.
+ * Import some dummy users when the application finished loading(ContextRefreshed)
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
@@ -38,13 +38,13 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
-            //to test the builder, ignore this one
+            //Required if you were to use abac on a service level.
             SecurityContext ctx = SecurityContextHolder.createEmptyContext();
             SecurityContextHolder.setContext(ctx);
             ctx.setAuthentication(new SystemAuthentication());
 
             //Do what ever you want to do
-            LOGGER.info("Running test data imports");
+            LOGGER.info("Running dummy user imports");
             Role userRole = roleService.find("ROLE_USER");
             Role adminRole = roleService.find("ROLE_ADMIN");
             User user = makeUser("user", userRole);
@@ -77,6 +77,11 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
         return user;
     }
 
+    /**
+     * Defining load order since Trampoline has an inner listener for ContextRefreshed which is used to configure the authorization scheme.
+     *
+     * @return
+     */
     @Override
     public int getOrder() {
         return 90;

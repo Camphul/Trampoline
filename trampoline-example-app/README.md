@@ -1,6 +1,7 @@
 # trampoline-example-app
 
 Example application using all modules in this project to create a simple REST API for a blogging website.
+Everything is documented and I try to provide comments wherever necessary.
 
 This application is written using lombok to generate code. Please install the lombok plugin for your IDE before running.
 

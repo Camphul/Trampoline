@@ -5,7 +5,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Configure public routes
+ * Trampoline makes all routes protected by default.
+ * In this configuration we make some required routes public.
+ * JWT authorization route is public by default.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18

@@ -5,20 +5,32 @@ import com.lucadev.trampoline.security.configuration.AuthorizationSchemeBuilderC
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * This is a Trampoline configuration implementation.
+ * Implementing {@link AuthorizationSchemeBuilderConfiguration} allows you to build the authorization scheme(roles/privileges)
+ * using a sort of builder pattern.
+ *
+ * This configuration is ran when the application started(trampoline has an inner ContextRefreshed listener which has a high priority).
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Configuration
 public class BlogExampleAuthorizatrionSchemeBuilderConfiguration implements AuthorizationSchemeBuilderConfiguration {
 
+    /**
+     * Build the authorization scheme
+     *
+     * @param builder please see {@link AuthorizationSchemeBuilder} for more information.
+     */
     @Override
     public void build(AuthorizationSchemeBuilder builder) {
+        //Wrap creation inside system authentication(you most likely wont need this for this purpose).
         builder.wrapSystemAuthentication((wrappedBuilder) ->
                 //Create user role
                 wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING_PROTECTED").buildAnd()
                         //Create admin role
                         .createRole("ROLE_ADMIN").withPrivileges("MANAGE_USERS").buildAnd()
-                        //Only build when dev profile is enabled
+                        //Only do the following when dev profile is enabled
                         .forProfile("dev", (devBuilder) ->
                                 //Add developer role
                                 devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()

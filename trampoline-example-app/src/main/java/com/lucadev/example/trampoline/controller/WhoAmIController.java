@@ -19,6 +19,12 @@ public class WhoAmIController {
 
     private UserService userService;
 
+    /**
+     * Evaluate if principal(current user) has access to this mapping.
+     * Then return the current user or throw a {@link com.lucadev.trampoline.security.exception.CurrentUserNotFoundException}
+     *
+     * @return
+     */
     @GetMapping("/whoami")
     @PreAuthorize("hasPermission(null, 'WHO_AM_I')")
     public User whoami() {
