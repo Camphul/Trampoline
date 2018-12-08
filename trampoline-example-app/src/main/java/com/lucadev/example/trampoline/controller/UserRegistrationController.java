@@ -1,7 +1,7 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.model.UserRegisterRequest;
-import com.lucadev.example.trampoline.model.UserRegisterResponse;
+import com.lucadev.trampoline.model.UUIDSuccessResponse;
 import com.lucadev.trampoline.security.model.Role;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.RoleService;
@@ -35,7 +35,7 @@ public class UserRegistrationController {
      * @return
      */
     @PostMapping("/signup")
-    public UserRegisterResponse signup(@RequestBody UserRegisterRequest signupRequest) {
+    public UUIDSuccessResponse signup(@RequestBody UserRegisterRequest signupRequest) {
         String username = signupRequest.getUsername();
         String email = signupRequest.getEmail();
         //Passwords must be hashed.
@@ -60,7 +60,7 @@ public class UserRegistrationController {
 
         user = userService.update(user);
 
-        return new UserRegisterResponse(user.getId(), true, "ok");
+        return new UUIDSuccessResponse(user.getId(), true);
     }
 
 }
