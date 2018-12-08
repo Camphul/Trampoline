@@ -1,7 +1,10 @@
 package com.lucadev.example.trampoline.persistence.repository;
 
+import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
 import com.lucadev.trampoline.data.repository.TrampolineRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,5 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BlogPostCommentRepository extends TrampolineRepository<BlogPostComment> {
+
+    Page<BlogPostComment> findAllByBlogPost(BlogPost blogPost, Pageable pageable);
 
 }

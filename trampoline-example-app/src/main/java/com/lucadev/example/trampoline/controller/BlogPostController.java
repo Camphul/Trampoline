@@ -2,6 +2,7 @@ package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.model.CreateBlogPostRequest;
 import com.lucadev.example.trampoline.model.CreateBlogPostResponse;
+import com.lucadev.example.trampoline.model.dto.BlogPostCommentDto;
 import com.lucadev.example.trampoline.model.dto.BlogPostDto;
 import com.lucadev.example.trampoline.model.dto.BlogPostSummaryDto;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
@@ -19,7 +20,6 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -72,30 +72,29 @@ public class BlogPostController {
     /**
      * Evaluate BLOGPOST_VIEW with the returned BlogPost against the current principal.
      * Maybe the principal may only view his own blogposts!
+     *
      * @param id
+     * @param pageable pageable for navigating through post comments.
      * @return
      */
     @GetMapping("/blogs/{id}")
     @PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
-    public BlogPostDto viewBlogPost(@PathVariable("id") UUID id) {
-        Optional<BlogPost> blogPost = blogPostService.findById(id);
-        return new BlogPostDto(blogPost.orElseThrow(() -> new ResourceNotFoundException(id)));
+    public BlogPostDto viewBlogPost(@PathVariable("id") UUID id, Pageable pageable) {
+        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        return new BlogPostDto(blogPost,
+                MappedPage.of(blogPostService.findAllComments(blogPost, pageable), pageable, BlogPostCommentDto::new));
     }
 
     /**
      * Might be strange not to see an annotation to authorize but some actions require some more work.
+     *
      * @param id
      * @return
      */
     @DeleteMapping("/blogs/{id}")
     public SuccessResponse deleteBlogPost(@PathVariable("id") UUID id) {
         //Find the blog post we want to delete
-        Optional<BlogPost> blogPostOptional = blogPostService.findById(id);
-
-        //This cannot be done using a authorize annotation so we use PolicyEnforcement to evaluate permission to delete.
-        //You don't want to give everyone access to delete each other's blog posts!
-        //In this case we simply check ownership of the blogpost and check if the principal has ROLE_USER
-        BlogPost blogPost = blogPostOptional.orElseThrow(() -> new ResourceNotFoundException(id));
+        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 
         //If this fails it will throw an AccessDenied or other Exception which will stop the deleteById to be invoked.
         policyEnforcement.check(blogPost, "BLOGPOST_DELETE");
@@ -107,17 +106,14 @@ public class BlogPostController {
 
     /**
      * This is nearly the same as the {@link #deleteBlogPost(UUID)}.
+     *
      * @param id
      * @param request
      * @return
      */
     @PatchMapping("/blogs/{id}")
     public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody CreateBlogPostRequest request) {
-        Optional<BlogPost> blogPostOptional = blogPostService.findById(id);
-
-        //This cannot be done using a authorize annotation so we use policyenforcement to check permission.
-        //In this case we simply check ownership of the blogpost and check if the principal has ROLE_USER
-        BlogPost blogPost = blogPostOptional.orElseThrow(() -> new ResourceNotFoundException(id));
+        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         policyEnforcement.check(blogPost, "BLOGPOST_EDIT");
 
         //Only change when set in the request body

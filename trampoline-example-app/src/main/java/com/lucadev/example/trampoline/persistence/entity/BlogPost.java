@@ -36,12 +36,9 @@ public class BlogPost extends TrampolineEntity {
     private String content;
 
     //A blogpost may have 0 or more comments.
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "BLOGPOST_COMMENT_RELATION",
-            joinColumns = @JoinColumn(
-                    name = "blogpost_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "blogpost_comment_id", referencedColumnName = "id"))
-    private Collection<BlogPostComment> comment = new ArrayList<>();
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Collection<BlogPostComment> comments = new ArrayList<>();
 }

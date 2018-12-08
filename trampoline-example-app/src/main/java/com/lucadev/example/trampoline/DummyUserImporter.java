@@ -34,6 +34,7 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

@@ -1,7 +1,10 @@
 package com.lucadev.example.trampoline.service;
 
+import com.lucadev.example.trampoline.model.CreateBlogPostCommentRequest;
 import com.lucadev.example.trampoline.model.CreateBlogPostRequest;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
+import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
+import com.lucadev.example.trampoline.persistence.repository.BlogPostCommentRepository;
 import com.lucadev.example.trampoline.persistence.repository.BlogPostRepository;
 import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
@@ -14,7 +17,7 @@ import java.util.UUID;
 
 /**
  * Service to manage {@link BlogPost} entities.
- *
+ * <p>
  * If we were to apply PreAuthorize/PostAuthorize annotations in here and we would like to generate dummy posts
  * on ContextRefreshed(startup) we must set a {@link org.springframework.security.core.context.SecurityContext}
  * to use {@link com.lucadev.trampoline.security.authentication.SystemAuthentication}
@@ -27,6 +30,7 @@ import java.util.UUID;
 public class BlogPostService {
 
     private final BlogPostRepository repository;
+    private final BlogPostCommentRepository commentRepository;
 
     /**
      * Pageable find all
@@ -56,6 +60,7 @@ public class BlogPostService {
 
     /**
      * Find {@link BlogPost} by id.
+     *
      * @param id the {@link UUID} of the {@link BlogPost} since we use {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
      * @return
      */
@@ -65,6 +70,7 @@ public class BlogPostService {
 
     /**
      * Delete {@link BlogPost} by id.
+     *
      * @param id
      */
     public void deleteById(UUID id) {
@@ -73,10 +79,60 @@ public class BlogPostService {
 
     /**
      * Update {@link BlogPost}.
+     *
      * @param blogPost
      * @return
      */
     public BlogPost update(BlogPost blogPost) {
         return repository.save(blogPost);
+    }
+
+    public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
+        BlogPostComment comment = new BlogPostComment(author, request.getContent());
+        comment = commentRepository.save(comment);
+
+        comment.setBlogPost(blogPost);
+        blogPost.getComments().add(comment);
+        repository.save(blogPost);
+        return comment;
+    }
+
+    /**
+     * Find pageable comments
+     *
+     * @param blogPost
+     * @param pageable
+     * @return
+     */
+    public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
+        return commentRepository.findAllByBlogPost(blogPost, pageable);
+    }
+
+    /**
+     * Find comment by id
+     *
+     * @param commentId
+     * @return
+     */
+    public Optional<BlogPostComment> findCommentById(UUID commentId) {
+        return commentRepository.findById(commentId);
+    }
+
+    /**
+     * Delete comment
+     *
+     * @param commentId
+     */
+    public void deleteCommentById(UUID commentId) {
+        commentRepository.deleteById(commentId);
+    }
+
+    /**
+     * Update comment
+     *
+     * @param comment
+     */
+    public void updateComment(BlogPostComment comment) {
+        commentRepository.save(comment);
     }
 }

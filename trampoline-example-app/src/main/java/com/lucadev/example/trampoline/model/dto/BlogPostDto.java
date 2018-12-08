@@ -3,11 +3,10 @@ package com.lucadev.example.trampoline.model.dto;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * DTO for {@link BlogPost}
@@ -25,15 +24,15 @@ public class BlogPostDto {
     private final Date created;
     private final Date updated;
     private final UserSummaryDto author;
-    private final List<BlogPostCommentDto> comments;
+    private final Page<BlogPostCommentDto> comments;
 
-    public BlogPostDto(BlogPost blogPost) {
+    public BlogPostDto(BlogPost blogPost, Page<BlogPostCommentDto> comments) {
         this.id = blogPost.getId();
         this.title = blogPost.getTitle();
         this.content = blogPost.getContent();
         this.author = new UserSummaryDto(blogPost.getAuthor());
         this.created = blogPost.getCreated();
         this.updated = blogPost.getUpdated();
-        this.comments = blogPost.getComment().stream().map(BlogPostCommentDto::new).collect(Collectors.toList());
+        this.comments = comments;
     }
 }

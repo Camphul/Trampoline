@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * This is a Trampoline configuration implementation.
  * Implementing {@link AuthorizationSchemeBuilderConfiguration} allows you to build the authorization scheme(roles/privileges)
  * using a sort of builder pattern.
- *
+ * <p>
  * This configuration is ran when the application started(trampoline has an inner ContextRefreshed listener which has a high priority).
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>

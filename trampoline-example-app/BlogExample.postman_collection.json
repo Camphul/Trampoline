@@ -440,7 +440,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "f3c206e5-c888-48cd-8d5c-9fac16e611e1",
+                "id": "6ba933cc-83d2-4a67-9f67-2133bec7c335",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Status code is 200\", function () {",
@@ -452,7 +452,7 @@
                   "pm.test(\"Create blogpost\", function () {",
                   "    var jsonData = pm.response.json();",
                   "    pm.expect(jsonData.success).to.eql(true);",
-                  "   pm.environment.set(\"blogpost_id\", jsonData.id); ",
+                  "   pm.globals.set(\"blogpost_id\", jsonData.id); ",
                   "});"
                 ]
               }
@@ -486,6 +486,64 @@
               ]
             },
             "description": "Create blog entry"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /blogs/{id}/comments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "248f55be-a369-41fc-8e8b-eeabfaf91dc7",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Your test name\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    var commentId = jsonData.id;",
+                  "    pm.globals.set(\"comment_id\", commentId);",
+                  "    ",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"content\": \"This is a comment on the blogpost\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}",
+                "comments"
+              ]
+            },
+            "description": "Add comment to post"
           },
           "response": []
         },
@@ -579,6 +637,144 @@
           "response": []
         },
         {
+          "name": "GET /blogs/{id}/comments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "340f3d3b-d044-4c9a-825e-473e21710be4",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}",
+                "comments"
+              ]
+            },
+            "description": "View blog comments"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /blogs/{id}/comments/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "340f3d3b-d044-4c9a-825e-473e21710be4",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}/comments/{{comment_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}",
+                "comments",
+                "{{comment_id}}"
+              ]
+            },
+            "description": "View blog comments"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /blogs/{id}/comments/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "340f3d3b-d044-4c9a-825e-473e21710be4",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"content\": \"My modified comment\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}/comments/{{comment_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}",
+                "comments",
+                "{{comment_id}}"
+              ]
+            },
+            "description": "PAtch blogpost comment"
+          },
+          "response": []
+        },
+        {
           "name": "PATCH /blogs/{id}",
           "event": [
             {
@@ -615,7 +811,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"title\": \"My editted blog post entry\",\n\t \"content\": \"these are the modified contents of my blog post!\"\n}"
+              "raw": "{\n\t\"title\": \"The new blog title lmao\",\n\t\"content\": \"changed the contents lol\"\n}"
             },
             "url": {
               "raw": "http://localhost:8080/blogs/{{blogpost_id}}",
@@ -630,6 +826,50 @@
               ]
             },
             "description": "Edit blog entry"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /blogs/{id}/comments/{id}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "340f3d3b-d044-4c9a-825e-473e21710be4",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "http://localhost:8080/blogs/{{blogpost_id}}/comments/{{comment_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "blogs",
+                "{{blogpost_id}}",
+                "comments",
+                "{{comment_id}}"
+              ]
+            },
+            "description": "Delete blogpost comment"
           },
           "response": []
         },

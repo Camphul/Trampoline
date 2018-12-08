@@ -58,9 +58,9 @@ To make a route publicly accessible ignore it using the WebSecurity configuratio
 | /blogs/{id}                       | DELETE        | Delete blogpost                       |
 | /blogs/{id}                       | PATCH         | Edit blogpost                         |
 | /blogs/{id}/comments              | GET           | View blogpost comments only           |
-| /blogs/{id}/comments              | POST          | Add comment to blog post              |
-| /blogs/{id}/comments/{id}         | DELETE        | Delete blogpost comment               |
-| /blogs/{id}/comments/{id}         | PATCH         | Edit blogpost comment                 |
+| /blogs/{id}/comments              | POST          | Add comments to blog post              |
+| /blogs/{id}/comments/{id}         | DELETE        | Delete blogpost comments               |
+| /blogs/{id}/comments/{id}         | PATCH         | Edit blogpost comments                 |
 
 
 ## Try it out

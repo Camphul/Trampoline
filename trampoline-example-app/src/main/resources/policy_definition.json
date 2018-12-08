@@ -47,6 +47,36 @@
       "description": "Do PATCH /blogs/{id}",
       "target": "isAction('BLOGPOST_EDIT')",
       "condition": "hasRole('ROLE_USER') && resource.author.id == subject.id"
+    },
+    {
+      "name": "View blog comment list",
+      "description": "View GET /blogs/{id}/comments",
+      "target": "isAction('BLOGPOST_COMMENTS_LIST')",
+      "condition": "hasRole('ROLE_USER')"
+    },
+    {
+      "name": "Create blog post comment",
+      "description": "Do POST /blogs/{id}/commments",
+      "target": "isAction('BLOGPOST_COMMENTS_CREATE')",
+      "condition": "hasRole('ROLE_USER')"
+    },
+    {
+      "name": "View blogpost comment",
+      "description": "View GET /blogs/{id}/comments/{id}",
+      "target": "isAction('BLOGPOST_COMMENT_VIEW')",
+      "condition": "hasRole('ROLE_USER')"
+    },
+    {
+      "name": "Delete blogpost comment",
+      "description": "Do DELETE /blogs/{id}/comments/{id}",
+      "target": "isAction('BLOGPOST_COMMENT_DELETE')",
+      "condition": "hasRole('ROLE_USER') && resource.author.id == subject.id"
+    },
+    {
+      "name": "Patch blogpost comment",
+      "description": "Do PATCH /blogs/{id}/comments/{id}",
+      "target": "isAction('BLOGPOST_COMMENT_EDIT')",
+      "condition": "hasRole('ROLE_USER') && resource.author.id == subject.id"
     }
   ]
 }
