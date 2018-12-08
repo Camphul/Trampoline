@@ -23,10 +23,30 @@ Only the policy configurations are required to get started.
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.
 
+## Example project
+
+[trampoline-example-app](trampoline-example-app) is a REST api to maintain blogs and comments on blogs.
+
+The readme provides a bunch of information regarding the endpoints, dummy users. I also added a PostMan collection so you can easily test the api through postman.
+
 ## Project Status
 
 This project is still in early development. Please do not use it for any serious applications(yet).
 
+
+## Roadmap
+
+These items are not in a specific order:
+- ModelMapper/DTO simplification: prevent the creation of too many models(will look into the existing Spring solutions)
+- OAuth2 support for trampoline-security
+- Something to make frontend easier too(prewritten VueJS components/services? Or template rendering things?)
+- Something like Spring REST but with ABAC capability and no HATEOAS mess?
+- Improve AssetStore and write implementations for cloud services?
+- Something something message queue/kafka related??
+- Something something microservices?
+- NoSQL/Document db support?
+- Atleast 70% test coverage ehhh?
+- Bunch of things to prevent duplicate code in controllers?
 
 ## Contributing
 
@@ -35,26 +55,3 @@ If you wish to contribute please read the guidelines as described in [CONTRIBUTI
 ## License
 
 This project is licensed under the [MIT License](/LICENSE.txt)
-
-## Why use Trampoline
-
-Some examples on why you could use Trampoline.
-
-Setup role/privilege scheme:
-
-```java
-//Wrap inside SystemAuthentication SecurityContext
-authorizationSchemeService.builder().wrapSystemAuthentication((wrappedBuilder) ->
-        //Create user role
-    wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING").buildAnd()
-            //Create admin role, adds privileges from ROLE_USER to this role.
-            .createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER").withPrivileges("MANAGE_USERS").buildAnd()
-            //Only build when dev profile is enabled
-            .forProfile("dev", (devBuilder) ->
-                //Add developer role
-                devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()
-            )
-);
-```
-
-You could also define the entire scheme in a json file and import that.
