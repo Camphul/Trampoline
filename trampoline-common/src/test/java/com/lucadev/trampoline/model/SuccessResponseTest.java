@@ -3,7 +3,6 @@ package com.lucadev.trampoline.model;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Way too many tests for a simple model
@@ -22,7 +21,7 @@ public class SuccessResponseTest {
     @Test
     public void shouldSucceedEmptyMessageWithOkSuccess() {
         SuccessResponse successResponse = new SuccessResponse(true);
-        assertTrue(successResponse.getMessage().isEmpty());
+        assertEquals("ok", successResponse.getMessage());
     }
 
     @Test
@@ -34,7 +33,7 @@ public class SuccessResponseTest {
     @Test
     public void shouldSucceedEmptyMessageWithFailSuccess() {
         SuccessResponse successResponse = new SuccessResponse(false);
-        assertTrue(successResponse.getMessage().isEmpty());
+        assertEquals("error", successResponse.getMessage());
     }
 
     @Test

@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -38,7 +37,6 @@ public class UUIDConverterTest {
     public void shouldFailConvert() {
         String errorString = "this is not an uuid";
         UUID result = uuidConverter.convert(errorString);
-        assertNull(result);
     }
 
 }

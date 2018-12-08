@@ -37,7 +37,6 @@ public class BlogPost extends TrampolineEntity {
 
     //A blogpost may have 0 or more comments.
     @OneToMany(
-            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private Collection<BlogPostComment> comments = new ArrayList<>();

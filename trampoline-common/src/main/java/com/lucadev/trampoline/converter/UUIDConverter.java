@@ -13,9 +13,9 @@ import java.util.UUID;
 public class UUIDConverter implements Converter<String, UUID> {
 
     /**
-     * Conversion logic
-     *
-     * @see Converter#convert(Object)
+     * Convert a String to a {@link UUID}
+     * @param s the source String
+     * @return null if s is null or empty. Else the UUID from s
      */
     @Override
     public UUID convert(String s) {

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -87,6 +88,7 @@ public class BlogPostService {
         return repository.save(blogPost);
     }
 
+    @Transactional
     public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
         BlogPostComment comment = new BlogPostComment(author, request.getContent());
         comment = commentRepository.save(comment);
@@ -134,5 +136,21 @@ public class BlogPostService {
      */
     public void updateComment(BlogPostComment comment) {
         commentRepository.save(comment);
+    }
+
+    /**
+     * Removes a comment
+     *
+     * @param comment
+     */
+    @Transactional
+    public void removeComment(BlogPost blogPost, BlogPostComment comment) {
+        //Unlink relations
+        comment.setBlogPost(null);
+        blogPost.getComments().remove(comment);
+        //Save blogpost
+        update(blogPost);
+        //Now it's save to delete
+        commentRepository.delete(comment);
     }
 }

@@ -17,12 +17,12 @@ public class SuccessResponse extends MessageResponse {
 
     /**
      * Construct a {@code SuccessResponse}
-     * The message in this case is an empty {@link String}
-     *
+     * The message in this case depends on the success.
+     * If success is true it will default to "ok" else "error"
      * @param success if the action was completed with success.
      */
     public SuccessResponse(boolean success) {
-        super("");
+        super(success ? "ok" : "error");
         this.success = success;
     }
 

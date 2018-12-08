@@ -1,7 +1,6 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.model.CreateBlogPostCommentRequest;
-import com.lucadev.example.trampoline.model.CreateBlogPostCommentResponse;
 import com.lucadev.example.trampoline.model.dto.BlogPostCommentDto;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
@@ -9,6 +8,7 @@ import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
 import com.lucadev.trampoline.data.pagination.MappedPage;
 import com.lucadev.trampoline.model.SuccessResponse;
+import com.lucadev.trampoline.model.UUIDSuccessResponse;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -57,12 +57,12 @@ public class BlogPostCommentController {
      */
     @PostMapping("/blogs/{blogId}/comments")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_CREATE')")
-    public CreateBlogPostCommentResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody CreateBlogPostCommentRequest request) {
+    public UUIDSuccessResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody CreateBlogPostCommentRequest request) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         User currentUser = userService.currentUserOrThrow();
 
         BlogPostComment comment = blogPostService.addComment(currentUser, blogPost, request);
-        return new CreateBlogPostCommentResponse(comment.getId(), true, "ok");
+        return new UUIDSuccessResponse(comment.getId(), true);
     }
 
     @GetMapping("/blogs/{blogId}/comments/{commentId}")
@@ -79,15 +79,17 @@ public class BlogPostCommentController {
     @DeleteMapping("/blogs/{blogId}/comments/{commentId}")
     public SuccessResponse deleteBlogPostComment(@PathVariable("blogId") UUID blogId, @PathVariable("commentId") UUID commentId) {
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
+        BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         if (!comment.getBlogPost().getId().equals(blogId)) {
             throw new ResourceNotFoundException("Could not find comment " + String.valueOf(commentId) + " for blog post " + String.valueOf(blogId));
         }
 
         policyEnforcement.check(comment, "BLOGPOST_COMMENT_DELETE");
 
-        blogPostService.deleteCommentById(commentId);
 
-        return new SuccessResponse(true, "ok");
+        blogPostService.removeComment(blogPost, comment);
+
+        return new SuccessResponse(true);
     }
 
     @PatchMapping("/blogs/{blogId}/comments/{commentId}")
@@ -106,7 +108,7 @@ public class BlogPostCommentController {
 
         blogPostService.updateComment(comment);
 
-        return new SuccessResponse(true, "ok");
+        return new SuccessResponse(true);
     }
 
 }

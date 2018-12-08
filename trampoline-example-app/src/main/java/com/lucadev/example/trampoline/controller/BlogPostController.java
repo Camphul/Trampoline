@@ -1,7 +1,6 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.model.CreateBlogPostRequest;
-import com.lucadev.example.trampoline.model.CreateBlogPostResponse;
 import com.lucadev.example.trampoline.model.dto.BlogPostCommentDto;
 import com.lucadev.example.trampoline.model.dto.BlogPostDto;
 import com.lucadev.example.trampoline.model.dto.BlogPostSummaryDto;
@@ -10,6 +9,7 @@ import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
 import com.lucadev.trampoline.data.pagination.MappedPage;
 import com.lucadev.trampoline.model.SuccessResponse;
+import com.lucadev.trampoline.model.UUIDSuccessResponse;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -60,13 +60,13 @@ public class BlogPostController {
      */
     @PostMapping("/blogs")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_CREATE')")
-    public CreateBlogPostResponse createBlogPost(@RequestBody CreateBlogPostRequest request) {
+    public UUIDSuccessResponse createBlogPost(@RequestBody CreateBlogPostRequest request) {
         //Most likely not null since it has already authenticated.
         User user = userService.currentUserOrThrow();
 
         BlogPost post = blogPostService.createBlogPost(user, request);
 
-        return new CreateBlogPostResponse(post.getId(), true, "ok");
+        return new UUIDSuccessResponse(post.getId(), true);
     }
 
     /**
@@ -101,7 +101,7 @@ public class BlogPostController {
 
         blogPostService.deleteById(id);
 
-        return new SuccessResponse(true, "ok");
+        return new SuccessResponse(true);
     }
 
     /**
@@ -127,6 +127,6 @@ public class BlogPostController {
 
         blogPostService.update(blogPost);
 
-        return new SuccessResponse(true, "ok");
+        return new SuccessResponse(true);
     }
 }
