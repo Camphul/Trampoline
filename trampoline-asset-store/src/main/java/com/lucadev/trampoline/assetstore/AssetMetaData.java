@@ -1,10 +1,7 @@
 package com.lucadev.trampoline.assetstore;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +16,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TRAMPOLINE_ASSET_META_DATA")
 @Getter
-@NoArgsConstructor
+@Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class AssetMetaData extends TrampolineEntity {
 
     @Setter
@@ -35,19 +34,4 @@ public class AssetMetaData extends TrampolineEntity {
 
     @Column(name = "file_size")
     private long fileSize;
-
-    /**
-     * Construct asset meta data
-     *
-     * @param name             the filename as it's stored.
-     * @param originalFilename the original filename(when uploaded through multipart for example)
-     * @param contentType      the file content type(MIME)
-     * @param fileSize         the size of the file in bytes.
-     */
-    public AssetMetaData(String name, String originalFilename, String contentType, long fileSize) {
-        this.name = name;
-        this.originalFilename = originalFilename;
-        this.contentType = contentType;
-        this.fileSize = fileSize;
-    }
 }

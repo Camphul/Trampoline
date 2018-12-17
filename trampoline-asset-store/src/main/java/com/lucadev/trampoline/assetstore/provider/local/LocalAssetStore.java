@@ -60,7 +60,7 @@ public class LocalAssetStore extends AbstractAssetStore {
         if (resource.getFile().delete()) {
             repository.delete(assetMetaData);
         } else {
-            throw new RuntimeException("Could not delete asset");
+            throw new RuntimeException("Could not delete asset(no permission to fs?)");
         }
     }
 
@@ -69,6 +69,11 @@ public class LocalAssetStore extends AbstractAssetStore {
         return repository.findById(id).orElse(null);
     }
 
+    /**
+     * Get the actual asset file from metadata.
+     * @param assetMetaData
+     * @return
+     */
     private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
         UUID id = assetMetaData.getId();
         if (id == null) {

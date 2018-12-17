@@ -87,7 +87,8 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
         //Set header values
         httpOutputMessage.getHeaders()
                 .setContentType(MediaType.parseMediaType(metaData.getContentType()));
-        httpOutputMessage.getHeaders().setAccept(MediaType.parseMediaTypes(metaData.getContentType()));
+        httpOutputMessage.getHeaders()
+                .setAccept(MediaType.parseMediaTypes(metaData.getContentType()));
 
         //Write response
         OutputStream outputStream = httpOutputMessage.getBody();
