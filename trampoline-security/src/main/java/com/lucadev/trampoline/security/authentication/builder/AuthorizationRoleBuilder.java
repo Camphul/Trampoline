@@ -31,8 +31,8 @@ public class AuthorizationRoleBuilder {
      * Construct without a role name
      *
      * @param authorizationSchemeBuilder the main scheme builder
-     * @param roleService the Role service
-     * @param privilegeService the Privilege service
+     * @param roleService                the Role service
+     * @param privilegeService           the Privilege service
      */
     public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService) {
         this.authorizationSchemeBuilder = authorizationSchemeBuilder;
@@ -48,9 +48,9 @@ public class AuthorizationRoleBuilder {
      * Construct with an initial role name.
      *
      * @param authorizationSchemeBuilder the main builder
-     * @param roleService the Role service
-     * @param privilegeService the Privilege service
-     * @param name the name for the {@link Role} to create.
+     * @param roleService                the Role service
+     * @param privilegeService           the Privilege service
+     * @param name                       the name for the {@link Role} to create.
      */
     public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService, String name) {
         this(authorizationSchemeBuilder, roleService, privilegeService);
@@ -59,6 +59,7 @@ public class AuthorizationRoleBuilder {
 
     /**
      * Set the name for the {@link Role}. The name should start with ROLE_ prefix.
+     *
      * @param name the name for the {@link Role}
      * @return
      */
@@ -69,6 +70,7 @@ public class AuthorizationRoleBuilder {
 
     /**
      * Add a {@link Privilege} to the {@link Role}
+     *
      * @param privilege the String version of the {@link Privilege}
      * @return the role builder.
      */
@@ -153,6 +155,7 @@ public class AuthorizationRoleBuilder {
     /**
      * Get back to the {@link AuthorizationSchemeBuilder}
      * To persist the built role you must first invoke {@link #build()} or use {@link #buildAnd()}
+     *
      * @return the origin of this role builder.
      */
     public AuthorizationSchemeBuilder and() {
@@ -161,6 +164,7 @@ public class AuthorizationRoleBuilder {
 
     /**
      * Wrap {@link #build()} and {@link #and()}
+     *
      * @return the origin of this role builder.
      */
     public AuthorizationSchemeBuilder buildAnd() {

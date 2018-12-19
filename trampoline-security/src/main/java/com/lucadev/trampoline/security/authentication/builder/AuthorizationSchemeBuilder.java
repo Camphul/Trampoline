@@ -53,7 +53,7 @@ public class AuthorizationSchemeBuilder {
     /**
      * Construct a builder.
      *
-     * @param roleService the {@link Role} service bean.
+     * @param roleService      the {@link Role} service bean.
      * @param privilegeService the {@link Privilege} service bean.
      * @return
      */
@@ -64,8 +64,9 @@ public class AuthorizationSchemeBuilder {
     /**
      * Wrap the builder inside a {@link SecurityContext}.
      * Clears the {@link SecurityContext} when the wrapped function is done executing.
+     *
      * @param authentication the {@link Authentication} object for the {@link SecurityContext}
-     * @param wrapped the lambda function to apply when the {@link SecurityContext} is set.
+     * @param wrapped        the lambda function to apply when the {@link SecurityContext} is set.
      * @return the result builder.
      */
     public AuthorizationSchemeBuilder wrapAuthentication(Authentication authentication,
@@ -88,6 +89,7 @@ public class AuthorizationSchemeBuilder {
     /**
      * Wrap the builder inside a {@link SecurityContext} with {@link SystemAuthentication} as {@link Authentication} object.
      * Clears the {@link SecurityContext} when the wrapped function is done executing.
+     *
      * @param wrapped the lambda function to apply when the {@link SecurityContext} is set.
      * @return the result builder.
      */
@@ -97,6 +99,7 @@ public class AuthorizationSchemeBuilder {
 
     /**
      * Execute the wrapped builder only when the specified Spring profile is active.
+     *
      * @param profile the profile required to apply the wrapped function.
      * @param wrapped the function to apply.
      * @return the result builder.
@@ -107,8 +110,9 @@ public class AuthorizationSchemeBuilder {
 
     /**
      * Execute the wrapped builder only when the specified Spring profiles are active.
+     *
      * @param profiles the profiles required to apply the wrapped function.
-     * @param wrapped the function to apply.
+     * @param wrapped  the function to apply.
      * @return the result builder.
      */
     public AuthorizationSchemeBuilder forProfiles(String[] profiles, Function<AuthorizationSchemeBuilder, AuthorizationSchemeBuilder> wrapped) {
@@ -140,6 +144,7 @@ public class AuthorizationSchemeBuilder {
 
     /**
      * Create a {@link Role} using a special builder.
+     *
      * @param name the role name.
      * @return the {@link Role} builder.
      */
@@ -149,6 +154,7 @@ public class AuthorizationSchemeBuilder {
 
     /**
      * Create a {@link Role} using a special builder without setting the role name yet.
+     *
      * @return the {@link Role} builder.
      */
     public AuthorizationRoleBuilder createRole() {

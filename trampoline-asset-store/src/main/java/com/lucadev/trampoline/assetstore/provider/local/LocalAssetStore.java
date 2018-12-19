@@ -71,6 +71,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 
     /**
      * Get the actual asset file from metadata.
+     *
      * @param assetMetaData
      * @return
      */
