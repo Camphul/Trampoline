@@ -46,6 +46,7 @@ These items are not in a specific order:
 - NoSQL/Document db support?
 - Atleast 70% test coverage ehhh?
 - Bunch of things to prevent duplicate code in controllers?
+- Fix websecurity route config in JWT lib and move to JWT-WEB lib(possible security leak?)
 
 ## Contributing
 
