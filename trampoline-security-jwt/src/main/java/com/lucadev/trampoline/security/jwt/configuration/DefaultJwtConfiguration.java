@@ -23,6 +23,6 @@ public class DefaultJwtConfiguration implements JwtConfiguration {
 
     @Override
     public void createToken(User user, Claims claims) {
-
+        //Dont do anything by default
     }
 }

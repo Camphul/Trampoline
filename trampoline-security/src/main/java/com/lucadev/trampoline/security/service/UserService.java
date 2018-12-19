@@ -32,7 +32,7 @@ public interface UserService extends UserDetailsService {
      *
      * @return currently active {@link User}
      */
-    User currentUserOrThrow() throws CurrentUserNotFoundException;
+    User currentUserOrThrow();
 
     /**
      * Find a {@link User} by it's {@link User#id}

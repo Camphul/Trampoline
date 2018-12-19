@@ -44,7 +44,7 @@ public abstract class AbstractUserService implements UserService {
      */
     @Override
     @Cacheable(CACHE_REGION)
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String s) {
         Optional<User> user = userRepository.findOneByUsername(s);
         return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
     }
@@ -70,7 +70,7 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public User currentUserOrThrow() throws CurrentUserNotFoundException {
+    public User currentUserOrThrow() {
         return currentUser().orElseThrow(CurrentUserNotFoundException::new);
     }
 

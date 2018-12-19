@@ -64,7 +64,7 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
      * @see HttpMessageConverter#read(Class, HttpInputMessage)
      */
     @Override
-    public AssetResponse read(Class<? extends AssetResponse> aClass, HttpInputMessage httpInputMessage) throws IOException, HttpMessageNotReadableException {
+    public AssetResponse read(Class<? extends AssetResponse> aClass, HttpInputMessage httpInputMessage) throws IOException {
         return null;
     }
 
@@ -79,7 +79,7 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
      * @see HttpMessageConverter#write(Object, MediaType, HttpOutputMessage)
      */
     @Override
-    public void write(AssetResponse assetResponse, @Nullable MediaType mediaType, HttpOutputMessage httpOutputMessage) throws IOException, HttpMessageNotWritableException {
+    public void write(AssetResponse assetResponse, @Nullable MediaType mediaType, HttpOutputMessage httpOutputMessage) throws IOException {
         //Get meta data
         Asset asset = assetResponse.getAsset();
         AssetMetaData metaData = asset.getMetaData();

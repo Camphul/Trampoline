@@ -33,8 +33,9 @@ public class AssetStoreAutoConfiguration {
         switch (providerType) {
             case "local":
                 return new LocalAssetStore(localStorageDirectory, repository);
+            default:
+                return new LocalAssetStore(localStorageDirectory, repository);
         }
-        throw new UnsupportedOperationException("Unsupported asset storage provider");
     }
 
 }
