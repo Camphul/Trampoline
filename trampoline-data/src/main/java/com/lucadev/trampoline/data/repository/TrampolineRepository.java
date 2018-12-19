@@ -13,7 +13,7 @@ import java.util.UUID;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@NoRepositoryBean
 @Transactional
+@NoRepositoryBean
 public interface TrampolineRepository<T extends TrampolineEntity> extends JpaRepository<T, UUID> {
 }

@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
 import com.lucadev.trampoline.security.configuration.AuthorizationSchemeBuilderConfiguration;
-import com.lucadev.trampoline.security.configuration.DefaultAuthorizationSchemeBuilderConfiguration;
+import com.lucadev.trampoline.security.configuration.NOPAuthorizationSchemeBuilderConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -23,7 +23,7 @@ public class AuthorizationSchemeBuilderAutoConfiguration {
     @ConditionalOnMissingBean
     public AuthorizationSchemeBuilderConfiguration authorizationSchemeBuilderConfiguration() {
         LOGGER.debug("Using default AuthorizationSchemeBuilderConfiguration");
-        return new DefaultAuthorizationSchemeBuilderConfiguration();
+        return new NOPAuthorizationSchemeBuilderConfiguration();
     }
 
 }

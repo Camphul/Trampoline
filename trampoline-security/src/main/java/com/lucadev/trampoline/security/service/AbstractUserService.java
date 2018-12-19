@@ -54,7 +54,7 @@ public abstract class AbstractUserService implements UserService {
      */
     @Override
     public Optional<User> currentUser() {
-        Authentication auth = contextAuthentication();
+        Authentication auth = authenticationContext();
         if (auth == null) {
             return Optional.empty();
         }
@@ -208,7 +208,7 @@ public abstract class AbstractUserService implements UserService {
      *
      * @return the current thread's {@link org.springframework.security.core.context.SecurityContext} authentication.
      */
-    protected Authentication contextAuthentication() {
+    protected Authentication authenticationContext() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 }

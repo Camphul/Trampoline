@@ -2,6 +2,7 @@ package com.lucadev.trampoline.assetstore;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import lombok.*;
+import org.springframework.util.unit.DataSize;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,4 +35,11 @@ public class AssetMetaData extends TrampolineEntity {
 
     @Column(name = "file_size")
     private long fileSize;
+
+    /**
+     * @return {@link DataSize} as it's preferred in the newer Spring releases.
+     */
+    public DataSize getDataSize() {
+        return DataSize.ofBytes(getFileSize());
+    }
 }
