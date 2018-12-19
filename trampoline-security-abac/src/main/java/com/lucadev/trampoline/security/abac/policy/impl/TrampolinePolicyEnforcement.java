@@ -62,7 +62,6 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
     public void check(Object resource, String permission) {
         Authentication auth = authenticationContext().orElseThrow(() -> new AccessDeniedException("Not authenticated."));
 
-
         if (!check(auth.getPrincipal(), resource, permission, environmentContext()))
             throw new AccessDeniedException("Access is denied");
     }

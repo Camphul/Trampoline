@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import lombok.Getter;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.SpelCompilerMode;
@@ -18,6 +19,7 @@ import java.io.IOException;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 20-5-18
  */
+@Getter
 public class SpelDeserializer extends StdDeserializer<Expression> {
 
     /**
@@ -47,7 +49,4 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
         return elParser.parseExpression(expresion);
     }
 
-    public ExpressionParser getElParser() {
-        return elParser;
-    }
 }
