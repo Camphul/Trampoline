@@ -39,7 +39,7 @@ public class JpaPolicyDefinition implements PolicyDefinition {
 
     private void importPolicyRules(PolicyDefinition parent) {
         LOGGER.info("Importing policy rules...");
-        parent.getAllPolicyRules().stream()
+        parent.findAllPolicyRules().stream()
                 //Only add when none exist with the same name
                 .filter(r -> !hasPolicyRule(r.getName()))
                 .forEach(this::addPolicyRule);
@@ -47,7 +47,7 @@ public class JpaPolicyDefinition implements PolicyDefinition {
 
     @Cacheable(POLICY_RULE_CACHE_REGION)
     @Override
-    public List<PolicyRule> getAllPolicyRules() {
+    public List<PolicyRule> findAllPolicyRules() {
         return policyRuleRepository.findAll();
     }
 

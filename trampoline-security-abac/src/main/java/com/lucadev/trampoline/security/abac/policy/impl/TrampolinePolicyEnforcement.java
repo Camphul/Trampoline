@@ -42,7 +42,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
     @Override
     public boolean check(Object subject, Object resource, Object action, Object environment) {
         //Get all policy rules
-        List<PolicyRule> allRules = policyDefinition.getAllPolicyRules();
+        List<PolicyRule> allRules = policyDefinition.findAllPolicyRules();
         //Wrap the context
         SecurityAccessContext cxt = securityAccessContextFactory.create(subject, resource, action, environment);
         //Filter the rules according to context.

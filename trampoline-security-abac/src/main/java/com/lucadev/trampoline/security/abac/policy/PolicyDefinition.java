@@ -15,7 +15,7 @@ public interface PolicyDefinition {
      *
      * @return a {@link List} of all defined {@link PolicyRule} objects.
      */
-    List<PolicyRule> getAllPolicyRules();
+    List<PolicyRule> findAllPolicyRules();
 
     /**
      * Check if the policy rule exists.

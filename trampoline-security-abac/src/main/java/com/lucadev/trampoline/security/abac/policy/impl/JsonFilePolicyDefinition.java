@@ -61,7 +61,7 @@ public class JsonFilePolicyDefinition implements PolicyDefinition {
     }
 
     @Override
-    public List<PolicyRule> getAllPolicyRules() {
+    public List<PolicyRule> findAllPolicyRules() {
         return rules;
     }
 
