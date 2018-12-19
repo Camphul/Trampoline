@@ -36,13 +36,12 @@ public class MappedPage<R> extends PageImpl<R> {
      * Might make your code look nicer.
      *
      * @param original    the original Page before
-     * @param pageable    the {@link Pageable}
      * @param mapFunction the function to transform the contents of the page.
      * @param <T>         the type of the original page.
      * @param <R>         the content type of the new page.
      * @return a mapped page.
      */
-    public static <T, R> MappedPage<R> of(Page<T> original, Pageable pageable, Function<T, R> mapFunction) {
-        return new MappedPage<>(original, pageable, mapFunction);
+    public static <T, R> MappedPage<R> of(Page<T> original, Function<T, R> mapFunction) {
+        return new MappedPage<>(original, original.getPageable(), mapFunction);
     }
 }

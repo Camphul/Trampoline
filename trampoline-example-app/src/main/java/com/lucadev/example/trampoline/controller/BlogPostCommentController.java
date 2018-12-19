@@ -45,7 +45,7 @@ public class BlogPostCommentController {
     public Page<BlogPostCommentDto> getBlogPostComments(@PathVariable("blogId") UUID blogId, Pageable pageable) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         Page<BlogPostComment> blogPostCommentPage = blogPostService.findAllComments(blogPost, pageable);
-        return MappedPage.of(blogPostCommentPage, pageable, BlogPostCommentDto::new);
+        return MappedPage.of(blogPostCommentPage, BlogPostCommentDto::new);
     }
 
     /**

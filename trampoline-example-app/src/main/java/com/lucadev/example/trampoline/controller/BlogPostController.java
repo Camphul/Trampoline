@@ -49,7 +49,7 @@ public class BlogPostController {
     public Page<BlogPostSummaryDto> getBlogPosts(Pageable pageable) {
         Page<BlogPost> blogPostPage = blogPostService.findAll(pageable);
 
-        return MappedPage.of(blogPostPage, pageable, BlogPostSummaryDto::new);
+        return MappedPage.of(blogPostPage, BlogPostSummaryDto::new);
     }
 
     /**
@@ -82,7 +82,7 @@ public class BlogPostController {
     public BlogPostDto viewBlogPost(@PathVariable("id") UUID id, Pageable pageable) {
         BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         return new BlogPostDto(blogPost,
-                MappedPage.of(blogPostService.findAllComments(blogPost, pageable), pageable, BlogPostCommentDto::new));
+                MappedPage.of(blogPostService.findAllComments(blogPost, pageable), BlogPostCommentDto::new));
     }
 
     /**
