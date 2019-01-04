@@ -26,7 +26,6 @@ public class AssetMetaDataBuilderTest {
         assertEquals(ORIGINAL_FN, meta.getOriginalFilename());
         assertEquals(CONTENT_TYPE, meta.getContentType());
         assertEquals(CONTENT.length, meta.getFileSize());
-        //TODO: write imp
     }
 
     @Test(expected = NullPointerException.class)

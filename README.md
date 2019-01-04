@@ -42,9 +42,9 @@ These items are not in a specific order:
 - Something like Spring REST but with ABAC capability and no HATEOAS mess?
 - Improve AssetStore and write implementations for cloud services?
 - Something something message queue/kafka related??
-- Something something microservices?
 - NoSQL/Document db support?
 - Atleast 70% test coverage ehhh?
+- Better abstractions.
 - Bunch of things to prevent duplicate code in controllers?
 - Fix websecurity route config in JWT lib and move to JWT-WEB lib(possible security leak?)
 
