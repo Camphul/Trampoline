@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
-import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
@@ -56,7 +55,6 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserService userService;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
-    private final AuthenticationProperties authenticationProperties;
 
     /**
      * Websecurity to allow auth route.
@@ -90,7 +88,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @return
      */
     protected AuthenticationProvider authenticationProvider() {
-        return new JwtAuthenticationProvider(tokenService, userService, userPasswordService, authenticationProperties);
+        return new JwtAuthenticationProvider(tokenService, userService, userPasswordService);
     }
 
     /**

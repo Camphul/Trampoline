@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import org.springframework.data.domain.Page;
@@ -179,5 +180,13 @@ public interface UserService extends UserDetailsService {
      * @return
      */
     UserDetails loadUserByEmail(String email);
+
+    /**
+     * Current {@link IdentificationType} being used
+     * @return
+     */
+    IdentificationType getIdentificationType();
+
+    void setIdentificationType(IdentificationType identificationType);
 
 }

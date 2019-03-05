@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.model.User;
@@ -31,7 +31,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final TokenService tokenService;
     private final UserService userService;
     private final UserPasswordService userPasswordService;
-    private final AuthenticationProperties authenticationProperties;
 
     /**
      * Perform authentication
@@ -50,6 +49,14 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
+    private String getIdentifierFromJwt(JwtPayload payload, IdentificationType identificationType) {
+        return identificationType == IdentificationType.USERNAME ? payload.getUsername() : payload.getEmail();
+    }
+
+    private UserDetails loadUserFromJwtPayload(JwtPayload jwtPayload) {
+        return userService.loadUserByIdentifier(getIdentifierFromJwt(jwtPayload, userService.getIdentificationType()));
+    }
+
     /**
      * Authorize when already owner of a JWT token
      *
@@ -57,11 +64,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      * @return
      */
     private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
-        String userIdentifier = jwtPayload.getUsername();
-        if(authenticationProperties.isEmailIdentification()) {
-            userIdentifier = jwtPayload.getEmail();
-        }
-        UserDetails userDetails = userService.loadUserByIdentifier(userIdentifier);
+        UserDetails userDetails = loadUserFromJwtPayload(jwtPayload);
         User user = (User)userDetails;
         validateToken(userDetails, jwtPayload);
         //Update lastseen

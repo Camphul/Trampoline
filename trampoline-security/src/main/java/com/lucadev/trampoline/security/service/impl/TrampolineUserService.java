@@ -1,10 +1,10 @@
 package com.lucadev.trampoline.security.service.impl;
 
-import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * {@link com.lucadev.trampoline.security.service.UserService} implementation.
@@ -23,8 +23,8 @@ public class TrampolineUserService extends AbstractUserService {
      * @param userRepository the repository to persist {@link User} entities.
      * @param timeProvider   {@link TimeProvider} instance.
      */
-    public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider, AuthenticationProperties authenticationProperties) {
-        super(userRepository, authenticationProperties);
+    public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider, boolean emailIdentification) {
+        super(userRepository, emailIdentification);
         this.timeProvider = timeProvider;
     }
 

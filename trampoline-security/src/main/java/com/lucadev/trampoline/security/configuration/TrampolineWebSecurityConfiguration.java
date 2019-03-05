@@ -3,7 +3,6 @@ package com.lucadev.trampoline.security.configuration;
 import com.lucadev.trampoline.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -25,7 +24,6 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
  */
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(AuthenticationProperties.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(TRAMPOLINE_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {

@@ -14,6 +14,11 @@ There are three main entities:
 A user may have zero or more roles. And a role may have zero or more privileges.
  
 A privilege may not be duplicate but may be used in multiple roles.
+
+## Properties
+
+* trampoline.security.authentication.emailIdentification: set to true if you only want the user to be able to login through email.
+
 ## UserService
 User management methods. Also contains methods to handle the UserDetails methods(lock, enable, expire, etc...).
 ## RoleService

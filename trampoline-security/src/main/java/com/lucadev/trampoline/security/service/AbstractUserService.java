@@ -1,11 +1,12 @@
 package com.lucadev.trampoline.security.service;
 
-import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,17 +31,18 @@ public abstract class AbstractUserService implements UserService {
     protected static final String CACHE_REGION = "trampoline_users_cache";
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
-    @Getter(AccessLevel.PROTECTED)
-    private final AuthenticationProperties authenticationProperties;
+    private IdentificationType identificationType = IdentificationType.USERNAME;
 
     /**
      * Construct the abstract service.
      *
      * @param userRepository the {@code Repository} used to persist {@link User} entities.
      */
-    public AbstractUserService(UserRepository userRepository, AuthenticationProperties authenticationProperties) {
+    public AbstractUserService(UserRepository userRepository, boolean emailIdentification) {
         this.userRepository = userRepository;
-        this.authenticationProperties = authenticationProperties;
+        if(emailIdentification) {
+            identificationType = IdentificationType.EMAIL;
+        }
     }
 
     /**
@@ -56,7 +57,7 @@ public abstract class AbstractUserService implements UserService {
 
     @Override
     public UserDetails loadUserByIdentifier(String identifier) {
-        if(authenticationProperties.isEmailIdentification()){
+        if(identificationType == IdentificationType.EMAIL){
             return loadUserByEmail(identifier);
         }
         return loadUserByUsername(identifier);
@@ -230,5 +231,15 @@ public abstract class AbstractUserService implements UserService {
      */
     protected Authentication authenticationContext() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    @Override
+    public IdentificationType getIdentificationType() {
+        return identificationType;
+    }
+
+    @Override
+    public void setIdentificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
     }
 }

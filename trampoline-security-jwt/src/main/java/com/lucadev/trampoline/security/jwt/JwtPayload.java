@@ -62,4 +62,5 @@ public class JwtPayload implements Serializable {
      * Can we ignore expirydate?
      */
     private boolean ignorableExpiration;
+
 }
