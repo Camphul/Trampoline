@@ -37,7 +37,7 @@ public class JwtAuthenticationController {
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getUsername(),
+                new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getIdentifier(),
                         userAuthenticationRequest.getPassword()));
 
         if (authentication == null) {

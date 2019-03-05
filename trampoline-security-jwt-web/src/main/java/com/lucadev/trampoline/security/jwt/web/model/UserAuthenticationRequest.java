@@ -15,7 +15,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class UserAuthenticationRequest implements Serializable {
 
-    private String username;
+    private String identifier;
     private String password;
 
 }
