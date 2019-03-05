@@ -41,7 +41,7 @@ public class ResourceNotFoundException extends RuntimeException {
      * @param resourceId the id which was used to try and fetch the resource.
      */
     public ResourceNotFoundException(UUID resourceId) {
-        this(resourceId, "Resource with id " + String.valueOf(resourceId) + " not found");
+        this(resourceId, "Resource with id " + resourceId + " not found");
     }
 
     /**

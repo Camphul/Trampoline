@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
+import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.security.service.impl.TrampolineUserService;
@@ -19,8 +20,8 @@ public class UserServiceAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public UserService userService(UserRepository repository, TimeProvider timeProvider) {
-        return new TrampolineUserService(repository, timeProvider);
+    public UserService userService(UserRepository repository, TimeProvider timeProvider, AuthenticationProperties authenticationProperties) {
+        return new TrampolineUserService(repository, timeProvider, authenticationProperties);
     }
 
 }

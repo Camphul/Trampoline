@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
 import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
@@ -29,14 +30,17 @@ public abstract class AbstractUserService implements UserService {
     protected static final String CACHE_REGION = "trampoline_users_cache";
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
+    @Getter(AccessLevel.PROTECTED)
+    private final AuthenticationProperties authenticationProperties;
 
     /**
      * Construct the abstract service.
      *
      * @param userRepository the {@code Repository} used to persist {@link User} entities.
      */
-    public AbstractUserService(UserRepository userRepository) {
+    public AbstractUserService(UserRepository userRepository, AuthenticationProperties authenticationProperties) {
         this.userRepository = userRepository;
+        this.authenticationProperties = authenticationProperties;
     }
 
     /**
@@ -45,8 +49,13 @@ public abstract class AbstractUserService implements UserService {
     @Override
     @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) {
-        Optional<User> user = userRepository.findOneByUsername(s);
-        return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
+        Optional<User> user = null;
+        if(authenticationProperties.isEmailIdentification()){
+            user = userRepository.findOneByEmail(s);
+        } else {
+            user = userRepository.findOneByUsername(s);
+        }
+        return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with identifier " + s));
     }
 
     /**
