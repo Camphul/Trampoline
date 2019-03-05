@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -164,5 +165,19 @@ public interface UserService extends UserDetailsService {
      * @return the updated {@link User}
      */
     User setCredentialsExpired(User user, boolean expired);
+
+    /**
+     * Splits logic of username/email identification into a separate method
+     * @param identifier always a string since usernames and emails are both strings
+     * @return
+     */
+    UserDetails loadUserByIdentifier(String identifier);
+
+    /**
+     * Similar to {@link UserDetailsService#loadUserByUsername(String)}
+     * @param email
+     * @return
+     */
+    UserDetails loadUserByEmail(String email);
 
 }

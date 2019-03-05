@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,13 +50,23 @@ public abstract class AbstractUserService implements UserService {
     @Override
     @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) {
-        Optional<User> user = null;
+        Optional<User> user = userRepository.findOneByUsername(s);
+        return user.orElseThrow(() -> new BadCredentialsException("Could not find user with username " + s));
+    }
+
+    @Override
+    public UserDetails loadUserByIdentifier(String identifier) {
         if(authenticationProperties.isEmailIdentification()){
-            user = userRepository.findOneByEmail(s);
-        } else {
-            user = userRepository.findOneByUsername(s);
+            return loadUserByEmail(identifier);
         }
-        return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with identifier " + s));
+        return loadUserByUsername(identifier);
+    }
+
+    @Override
+    @Cacheable(CACHE_REGION)
+    public UserDetails loadUserByEmail(String email) {
+        Optional<User> user = userRepository.findOneByEmail(email);
+        return user.orElseThrow(() -> new BadCredentialsException("Could not find user with email " + email));
     }
 
     /**

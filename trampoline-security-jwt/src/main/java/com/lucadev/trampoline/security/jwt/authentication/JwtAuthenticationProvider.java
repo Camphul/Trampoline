@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
+import com.lucadev.trampoline.security.configuration.AuthenticationProperties;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.model.User;
@@ -30,6 +31,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final TokenService tokenService;
     private final UserService userService;
     private final UserPasswordService userPasswordService;
+    private final AuthenticationProperties authenticationProperties;
 
     /**
      * Perform authentication
@@ -55,7 +57,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      * @return
      */
     private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
-        UserDetails userDetails = userService.loadUserByUsername(jwtPayload.getUsername());
+        String userIdentifier = jwtPayload.getUsername();
+        if(authenticationProperties.isEmailIdentification()) {
+            userIdentifier = jwtPayload.getEmail();
+        }
+        UserDetails userDetails = userService.loadUserByIdentifier(userIdentifier);
         User user = (User)userDetails;
         validateToken(userDetails, jwtPayload);
         //Update lastseen
@@ -103,7 +109,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private User getUser(Authentication authentication) {
         String name = authentication.getName();
         String credentials = String.valueOf(authentication.getCredentials());
-        UserDetails userDetails = userService.loadUserByUsername(name);
+        UserDetails userDetails = userService.loadUserByIdentifier(name);
         if (userDetails == null || !(userDetails instanceof User)) {
             throw new AuthenticationServiceException("Unsupported or null UserDetails Type");
         }
