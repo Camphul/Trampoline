@@ -11,6 +11,7 @@ However, a lot of services/components maintain configurable.
 ## Features
 
 * User management(persisted through JPA, see trampoline-security)
+* Configure if you'd want users to login through their username or email
 * JPA base entity to handle JPA auditing, provides an UUID id, date create, and date updated.
 * ABAC: extension of the user management starter. Configure policies using SpeL expressions, load them from JSON or persist them using JPA(can be imported from JSON too!).
 Only the policy configurations are required to get started.
@@ -37,15 +38,8 @@ This project is still in early development. Please do not use it for any serious
 
 These items are not in a specific order:
 - ModelMapper/DTO simplification: prevent the creation of too many models(will look into the existing Spring solutions)
-- OAuth2 support for trampoline-security
-- Something to make frontend easier too(prewritten VueJS components/services? Or template rendering things?)
-- Something like Spring REST but with ABAC capability and no HATEOAS mess?
 - Improve AssetStore and write implementations for cloud services?
-- Something something message queue/kafka related??
-- NoSQL/Document db support?
-- Atleast 70% test coverage ehhh?
-- Better abstractions.
-- Bunch of things to prevent duplicate code in controllers?
+- Spring Application Context Events stuff
 - Fix websecurity route config in JWT lib and move to JWT-WEB lib(possible security leak?)
 
 ## Contributing
