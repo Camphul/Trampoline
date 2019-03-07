@@ -13,7 +13,6 @@ import static org.junit.Assert.assertTrue;
 public class SystemTimeProviderTest {
 
     private SystemTimeProvider systemTimeProvider;
-    private long ACCEPTED_DIFFERENCE = 100;//100ms difference accepted
 
     @Before
     public void before() {
@@ -40,6 +39,8 @@ public class SystemTimeProviderTest {
     }
 
     private void assertAcceptedRange(long expected, long result) {
+        //100ms difference accepted
+        long ACCEPTED_DIFFERENCE = 100;
         assertTrue("Measured result too low", result >= expected - ACCEPTED_DIFFERENCE);
         assertTrue("Measured result too high", result <= expected + ACCEPTED_DIFFERENCE);
     }

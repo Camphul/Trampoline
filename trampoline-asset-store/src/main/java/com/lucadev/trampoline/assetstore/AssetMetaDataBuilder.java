@@ -20,8 +20,8 @@ public class AssetMetaDataBuilder {
     /**
      * Create a {@link AssetMetaData} from a multipart file.
      *
-     * @param multipartFile
-     * @return
+     * @param multipartFile the {@link MultipartFile} to create metadata from
+     * @return the {@link AssetMetaData} built from the {@code multipartFile}
      */
     public static AssetMetaData fromMultipartFile(MultipartFile multipartFile) {
         if (multipartFile == null)

@@ -21,7 +21,7 @@ public class AssetResponse {
     /**
      * Construct {@code AssetResponse}
      *
-     * @param asset
+     * @param asset {@link Asset} to create a response for.
      * @return a {@link AssetResponse} instance.
      */
     public static AssetResponse from(Asset asset) {

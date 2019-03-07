@@ -71,7 +71,7 @@ public class BlogPostCommentController {
         //BlogId is not requireed but we want to check if someone is not messing with the url
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
         if (!comment.getBlogPost().getId().equals(blogId)) {
-            throw new ResourceNotFoundException("Could not find comment " + String.valueOf(commentId) + " for blog post " + String.valueOf(blogId));
+            throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);
         }
         return new BlogPostCommentDto(comment);
     }
@@ -81,7 +81,7 @@ public class BlogPostCommentController {
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         if (!comment.getBlogPost().getId().equals(blogId)) {
-            throw new ResourceNotFoundException("Could not find comment " + String.valueOf(commentId) + " for blog post " + String.valueOf(blogId));
+            throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);
         }
 
         policyEnforcement.check(comment, "BLOGPOST_COMMENT_DELETE");
@@ -97,7 +97,7 @@ public class BlogPostCommentController {
                                                 @RequestBody CreateBlogPostCommentRequest request) {
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
         if (!comment.getBlogPost().getId().equals(blogId)) {
-            throw new ResourceNotFoundException("Could not find comment " + String.valueOf(commentId) + " for blog post " + String.valueOf(blogId));
+            throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);
         }
 
         policyEnforcement.check(comment, "BLOGPOST_COMMENT_EDIT");
