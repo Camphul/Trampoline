@@ -37,7 +37,7 @@ public abstract class TrampolineEntity implements Serializable {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     @Setter(AccessLevel.PROTECTED)
     private UUID id;
 

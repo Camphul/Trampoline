@@ -54,7 +54,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
 
     private UserDetails loadUserFromJwtPayload(JwtPayload jwtPayload) {
-        return userService.loadUserByIdentifier(getIdentifierFromJwt(jwtPayload, userService.getIdentificationType()));
+        return userService.loadUserByUsername(getIdentifierFromJwt(jwtPayload, userService.getIdentificationType()));
     }
 
     /**
@@ -112,7 +112,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private User getUser(Authentication authentication) {
         String name = authentication.getName();
         String credentials = String.valueOf(authentication.getCredentials());
-        UserDetails userDetails = userService.loadUserByIdentifier(name);
+        UserDetails userDetails = userService.loadUserByUsername(name);
         if (userDetails == null || !(userDetails instanceof User)) {
             throw new AuthenticationServiceException("Unsupported or null UserDetails Type");
         }

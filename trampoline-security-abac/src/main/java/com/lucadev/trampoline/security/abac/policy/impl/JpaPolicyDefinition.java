@@ -39,6 +39,8 @@ public class JpaPolicyDefinition implements PolicyDefinition {
 
     private void importPolicyRules(PolicyDefinition parent) {
         LOGGER.info("Importing policy rules...");
+        List<PolicyRule> policyRules = parent.findAllPolicyRules();
+
         parent.findAllPolicyRules().stream()
                 //Only add when none exist with the same name
                 .filter(r -> !hasPolicyRule(r.getName()))

@@ -168,13 +168,6 @@ public interface UserService extends UserDetailsService {
     User setCredentialsExpired(User user, boolean expired);
 
     /**
-     * Splits logic of username/email identification into a separate method
-     * @param identifier always a string since usernames and emails are both strings
-     * @return
-     */
-    UserDetails loadUserByIdentifier(String identifier);
-
-    /**
      * Similar to {@link UserDetailsService#loadUserByUsername(String)}
      * @param email
      * @return

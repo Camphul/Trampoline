@@ -51,16 +51,11 @@ public abstract class AbstractUserService implements UserService {
     @Override
     @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) {
+        if(identificationType == IdentificationType.EMAIL){
+            return loadUserByEmail(s);
+        }
         Optional<User> user = userRepository.findOneByUsername(s);
         return user.orElseThrow(() -> new BadCredentialsException("Could not find user with username " + s));
-    }
-
-    @Override
-    public UserDetails loadUserByIdentifier(String identifier) {
-        if(identificationType == IdentificationType.EMAIL){
-            return loadUserByEmail(identifier);
-        }
-        return loadUserByUsername(identifier);
     }
 
     @Override
