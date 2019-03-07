@@ -2,17 +2,18 @@
 
 Module that expands upon some basic Spring Security functionality together with trampoline-data to store identities.
 
-## User layout
+## Architecture
 
-We have three entities which are all persisted using JPA:
+trampoline-security is the base module to implement security in your trampoline based application.
 
-- User
-- Role
-- Privilege
+This module is probably the most opinionated as the User class is a TrampolineEntity and implements Spring's UserDetails.
+Each User can have 0 or more roles assigned(in the form of a Role). Each role may contain 0 or more privileges(in the form of a Privilege).
 
-A User can have multiple roles and a role consists out of one or more privileges.
-These roles/privileges will be used for fine-grained access controll in another module.
+There's service's for each component:
 
-## Roadmap
+- UserService: extends Spring's UserDetailsService
+- RoleService: manages roles
+- PrivilegeService: manages privileges
+- UserPasswordService: separate service dedicated to manage user's passwords(through the use of Spring's PasswordEncoder).
 
-Generate auth scheme through java code instead of json? Through a config bean?
+Roles and privileges can be configured in Java by implementing the AuthorizationSchemeBuilderConfiguration.
