@@ -2,6 +2,11 @@ local-asset-store
 experimental-*
 public.key
 private.key
+
+# Maven wrapper
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
 # Created by https://www.gitignore.io/api/eclipse,netbeans,intellij+all,visualstudiocode
 
 ### Eclipse ###
