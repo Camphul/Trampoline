@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
@@ -63,8 +65,9 @@ public class JwtConfigurationAutoConfigurationTest {
         }
 
         @Override
-        public void createToken(User user, Claims claims) {
+        public void createToken(User user, Map<String, Object> claims) {
 
         }
+
     }
 }
