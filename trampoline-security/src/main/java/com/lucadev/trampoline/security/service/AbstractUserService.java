@@ -10,7 +10,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -227,13 +230,20 @@ public abstract class AbstractUserService implements UserService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IdentificationType getIdentificationType() {
         return identificationType;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIdentificationType(IdentificationType identificationType) {
         this.identificationType = identificationType;
     }
+
 }

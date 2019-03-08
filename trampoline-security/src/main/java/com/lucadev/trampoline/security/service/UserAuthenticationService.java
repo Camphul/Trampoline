@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.model.User;
 
 /**
@@ -8,7 +9,7 @@ import com.lucadev.trampoline.security.model.User;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 27-4-18
  */
-public interface UserPasswordService {
+public interface UserAuthenticationService {
 
     /**
      * Is {@code password} the {@link User} password.
@@ -27,4 +28,13 @@ public interface UserPasswordService {
      * @return
      */
     User changePassword(User user, String newPassword);
+
+    /**
+     * Required checks to see if the user is not disable, locked, etc...<br>
+     * Will throw runtime exceptions if disabled, expired, cred expired, locked.
+     *
+     * @param user the {@link User} to check against.
+     */
+    void validateUserState(User user);
+
 }

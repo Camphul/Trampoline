@@ -182,6 +182,10 @@ public interface UserService extends UserDetailsService {
      */
     IdentificationType getIdentificationType();
 
+    /**
+     * Set a new {@link IdentificationType}
+     *
+     * @param identificationType if we use username or email for authorization.
+     */
     void setIdentificationType(IdentificationType identificationType);
-
 }

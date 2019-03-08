@@ -14,36 +14,65 @@ import java.util.Collection;
  */
 public class SystemAuthentication implements Authentication {
 
+    /**
+     * System authorities.
+     * @return No authorities in this case.
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.NO_AUTHORITIES;
     }
 
+    /**
+     * System credentials
+     * @return null
+     */
     @Override
     public Object getCredentials() {
         return null;
     }
 
+    /**
+     * System details
+     * @return null
+     */
     @Override
     public Object getDetails() {
         return null;
     }
 
+    /**
+     * System principal
+     * @return the authentication name.
+     */
     @Override
     public Object getPrincipal() {
         return getName();
     }
 
+    /**
+     * If we are authenticated.
+     * @return true
+     */
     @Override
     public boolean isAuthenticated() {
         return true;
     }
 
+    /**
+     * Disallow updating
+     * @param b the new state.
+     * @throws IllegalArgumentException
+     */
     @Override
     public void setAuthenticated(boolean b) throws IllegalArgumentException {
-        throw new IllegalArgumentException("Cannot update authenticated state");
+        throw new IllegalArgumentException("Cannot update authenticated state of SystemAuthentication");
     }
 
+    /**
+     * Name of this principal
+     * @return SYSTEM.
+     */
     @Override
     public String getName() {
         return "SYSTEM";

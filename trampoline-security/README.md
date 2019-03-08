@@ -14,7 +14,7 @@ There's service's for each component:
 - `UserService`: extends Spring's `UserDetailsService`
 - `RoleService`: manages roles
 - `PrivilegeService`: manages privileges
-- `UserPasswordService`: separate service dedicated to manage user's passwords(through the use of Spring's `PasswordEncoder`).
+- `UserAuthenticationService`: separate service dedicated to manage user's passwords(through the use of Spring's `PasswordEncoder`) and validate the state of the `User`. Check if it's still enabled, etc..
 
 ### Configuring authorization scheme
 

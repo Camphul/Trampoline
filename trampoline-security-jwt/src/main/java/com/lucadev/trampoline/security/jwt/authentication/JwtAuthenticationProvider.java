@@ -1,10 +1,11 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
+import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.model.User;
-import com.lucadev.trampoline.security.service.UserPasswordService;
+import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 /**
+ * A {@link AuthenticationProvider} implementation to verify and create JWT's.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 28-4-18
  */
@@ -27,47 +30,78 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationProvider.class);
     private final TokenService tokenService;
     private final UserService userService;
-    private final UserPasswordService userPasswordService;
+    private final UserAuthenticationService userAuthenticationService;
 
     /**
      * Perform authentication
      *
-     * @param authentication
-     * @return
+     * @param authentication the {@link Authentication} object.
+     * @return a new {@link Authentication} object based on the old one.
      * @throws AuthenticationException
      */
     @Override
     public Authentication authenticate(Authentication authentication) {
         LOGGER.debug("Checking authentication for JwtAuthenticationToken");
+        //If there's already a JwtAuthenticationToken present
         if (authentication instanceof JwtAuthenticationToken) {
-            return createJwtAuthentication(((JwtAuthenticationToken) authentication).getJwtPayload());
+            JwtPayload payload = ((JwtAuthenticationToken) authentication).getJwtPayload();
+            return createValidatedJwtAuthentication(payload);
         } else {
-            return createJwtAuthentication(authentication);
+            return createNewJwtAuthentication(authentication);
         }
     }
 
-    private String getIdentifierFromJwt(JwtPayload payload, IdentificationType identificationType) {
+    /**
+     * Obtains either the username of email based upon the {@link IdentificationType}
+     * @param payload the {@link JwtPayload}
+     * @param identificationType if we use the username or password.
+     * @return the username or password.
+     */
+    private String getUserIdentifier(JwtPayload payload, IdentificationType identificationType) {
         return identificationType == IdentificationType.USERNAME ? payload.getUsername() : payload.getEmail();
     }
 
-    private UserDetails loadUserFromJwtPayload(JwtPayload jwtPayload) {
-        return userService.loadUserByUsername(getIdentifierFromJwt(jwtPayload, userService.getIdentificationType()));
+    /**
+     * Loads {@link UserDetails} from the {@link JwtPayload}
+     * @param jwtPayload the authorization token.
+     * @return the {@link UserDetails} obtained from the {@link JwtPayload}
+     */
+    private User loadUserFromJwt(JwtPayload jwtPayload) {
+        UserDetails userDetails = userService.loadUserByUsername(getUserIdentifier(jwtPayload, userService.getIdentificationType()));
+
+        if(!(userDetails instanceof User)) {
+            throw new ResourceNotFoundException("Could not find a User. Received the wrong type.");
+        }
+        return (User)userDetails;
     }
 
     /**
      * Authorize when already owner of a JWT token
+     * @param jwtPayload the JWT data.
+     * @return the new {@link Authentication} object
+     */
+    private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
+        User user = loadUserFromJwt(jwtPayload);
+        userAuthenticationService.validateUserState(user);
+        validateToken(user, jwtPayload);
+        //Updates user's last seen.
+        userService.updateLastSeen(user);
+        return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
+    }
+
+    /**
+     * Authenticate
      *
-     * @param jwtPayload
+     * @param authentication
      * @return
      */
-    private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
-        UserDetails userDetails = loadUserFromJwtPayload(jwtPayload);
-        User user = (User) userDetails;
-        checkUserAllowance(user);
-        validateToken(userDetails, jwtPayload);
-        //Update lastseen
-        userService.updateLastSeen(user);
-        return new JwtAuthenticationToken(userDetails.getAuthorities(), user, jwtPayload);
+    private Authentication createNewJwtAuthentication(Authentication authentication) {
+        User user = getUser(authentication);
+        userAuthenticationService.validateUserState(user);
+        String token = tokenService.createToken(user);
+        JwtPayload payload = tokenService.getTokenData(token);
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+        return new JwtAuthenticationToken(authorities, user, payload);
     }
 
     /**
@@ -88,21 +122,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
 
     /**
-     * Authenticate
-     *
-     * @param authentication
-     * @return
-     */
-    private Authentication createJwtAuthentication(Authentication authentication) {
-        User user = getUser(authentication);
-        checkUserAllowance(user);
-        String token = tokenService.createToken(user);
-        JwtPayload payload = tokenService.getTokenData(token);
-        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        return new JwtAuthenticationToken(authorities, user, payload);
-    }
-
-    /**
      * Get user from authentication
      *
      * @param authentication
@@ -112,13 +131,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         String name = authentication.getName();
         String credentials = String.valueOf(authentication.getCredentials());
         UserDetails userDetails = userService.loadUserByUsername(name);
-        if (userDetails == null || !(userDetails instanceof User)) {
+        if (!(userDetails instanceof User)) {
             throw new AuthenticationServiceException("Unsupported or null UserDetails Type");
         }
 
         User user = (User) userDetails;
 
-        boolean correctCredentials = userPasswordService.isPassword(user, credentials);
+        boolean correctCredentials = userAuthenticationService.isPassword(user, credentials);
         if (correctCredentials) {
             return user;
         }
@@ -127,28 +146,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
 
     /**
-     * Check if user is not disabled, expired, etc...
-     *
-     * @param user
+     * {@inheritDoc}
      */
-    private void checkUserAllowance(User user) {
-        if (!user.isEnabled()) {
-            throw new DisabledException("User is disabled.");
-        }
-
-        if (!user.isAccountNonExpired()) {
-            throw new AccountExpiredException("User account is expired.");
-        }
-
-        if (!user.isCredentialsNonExpired()) {
-            throw new AccountExpiredException("User credentials are expired.");
-        }
-
-        if (!user.isAccountNonLocked()) {
-            throw new LockedException("User account is locked.");
-        }
-    }
-
     @Override
     public boolean supports(Class<?> aClass) {
         return JwtAuthenticationToken.class.isAssignableFrom(aClass) ||

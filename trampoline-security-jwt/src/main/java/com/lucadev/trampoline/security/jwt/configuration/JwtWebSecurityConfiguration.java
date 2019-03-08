@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.jwt.configuration;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
-import com.lucadev.trampoline.security.service.UserPasswordService;
+import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtSecurityProperties jwtSecurityProperties;
     //Request filter for auth
     private final AuthenticationEntryPoint entryPoint;
-    private final UserPasswordService userPasswordService;
+    private final UserAuthenticationService userAuthenticationService;
     private final UserService userService;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
@@ -88,7 +88,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @return
      */
     protected AuthenticationProvider authenticationProvider() {
-        return new JwtAuthenticationProvider(tokenService, userService, userPasswordService);
+        return new JwtAuthenticationProvider(tokenService, userService, userAuthenticationService);
     }
 
     /**
