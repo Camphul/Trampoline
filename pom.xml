@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.lucadev</groupId>
+    <groupId>com.lucadev.trampoline</groupId>
     <artifactId>trampoline-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>20190308</version>
     <modules>
         <module>trampoline-data</module>
         <module>trampoline-data-autoconfigure</module>

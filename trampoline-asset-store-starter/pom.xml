@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>trampoline-parent</artifactId>
-        <groupId>com.lucadev</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>com.lucadev.trampoline</groupId>
+        <version>20190308</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -15,13 +15,13 @@
     <url>https://github.com/Camphul/Trampoline</url>
     <dependencies>
         <dependency>
-            <groupId>com.lucadev</groupId>
+            <groupId>com.lucadev.trampoline</groupId>
             <artifactId>trampoline-asset-store</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.lucadev</groupId>
+            <groupId>com.lucadev.trampoline</groupId>
             <artifactId>trampoline-asset-store-autoconfigure</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

@@ -23,7 +23,7 @@ As you can see you require the trampoline starter dependency. This dependency ad
 
 ```xml
 <dependency>
-    <groupId>com.lucadev</groupId>
+    <groupId>com.lucadev.trampoline</groupId>
     <artifactId>trampoline-starter</artifactId>
     <version>!!PROJECT VERSION HERE!!</version>
 </dependency>
