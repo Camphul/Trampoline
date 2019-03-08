@@ -9,10 +9,7 @@ import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -66,6 +63,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
         UserDetails userDetails = loadUserFromJwtPayload(jwtPayload);
         User user = (User)userDetails;
+        checkUserAllowance(user);
         validateToken(userDetails, jwtPayload);
         //Update lastseen
         userService.updateLastSeen(user);
@@ -97,6 +95,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      */
     private Authentication createJwtAuthentication(Authentication authentication) {
         User user = getUser(authentication);
+        checkUserAllowance(user);
         String token = tokenService.createToken(user);
         JwtPayload payload = tokenService.getTokenData(token);
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
@@ -118,12 +117,31 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         }
 
         User user = (User) userDetails;
+
         boolean correctCredentials = userPasswordService.isPassword(user, credentials);
         if (correctCredentials) {
             return user;
         }
         throw new BadCredentialsException("Invalid credentials?");
 
+    }
+
+    private void checkUserAllowance(User user) {
+        if(!user.isEnabled()) {
+            throw new DisabledException("User is disabled.");
+        }
+
+        if(!user.isAccountNonExpired()) {
+            throw new AccountExpiredException("User account is expired.");
+        }
+
+        if(!user.isCredentialsNonExpired()) {
+            throw new AccountExpiredException("User credentials are expired.");
+        }
+
+        if(!user.isAccountNonLocked()) {
+            throw new LockedException("User account is locked.");
+        }
     }
 
     @Override
