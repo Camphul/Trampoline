@@ -44,7 +44,7 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
 
     @Override
     public Expression deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         String expresion = jp.getCodec().readValue(jp, String.class);
         return elParser.parseExpression(expresion);
     }
