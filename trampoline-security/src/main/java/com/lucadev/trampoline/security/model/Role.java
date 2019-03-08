@@ -4,6 +4,8 @@ import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -25,6 +27,8 @@ public class Role extends TrampolineEntity {
     /**
      * {@link User} group identifier.
      */
+    @Size(min = 2, max = 64, message = "Role size must be between 2 and 64")
+    @NotBlank(message = "Role name cannot be blank")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

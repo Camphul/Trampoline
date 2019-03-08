@@ -9,6 +9,8 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -28,6 +30,8 @@ public class Privilege extends TrampolineEntity {
     /**
      * Privilege identifier.
      */
+    @Size(min = 2, max = 64, message = "Privilege size must be between 2 and 64")
+    @NotBlank(message = "Privilege name cannot be blank")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
