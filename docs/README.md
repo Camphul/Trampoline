@@ -13,4 +13,13 @@ spring.main.allow-bean-definition-overriding=true
 
 Other properties being used are:
 
+- trampoline.assetstore.provider: which AssetStore to use, defaults to local
+- trampoline.assetstore.provider.local.directory: directory to use for local AssetStore, defaults to ./local-asset-store/
 - trampoline.security.abac.policy.definition.json.filepath: define which json file to load policy from for trampoline-security-abac
+- trampoline.security.authentication.emailIdentification: use email instead of username for authorization
+- trampoline.security.jwt.secret: jwt signing secret, default is trampolineSecret
+- trampoline.security.jwt.signingAlgorithm: algorithm used to sign, default is HS512
+- trampoline.security.jwt.tokenHeader: header containing token, default is Authorization
+- trampoline.security.jwt.tokenHeaderPrefix: Prefix before jwt, default is Bearer
+- trampoline.security.jwt.tokenTimeout: timeout property of jwt, default is 3600
+- trampoline.security.jwt.authPath: auth basepath for authorizing and refreshing tokens, default is /auth
