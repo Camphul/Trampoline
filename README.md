@@ -1,24 +1,22 @@
 # Trampoline
-Jump straight into serious Spring development through the use of multiple ready-to-use Spring Boot starters.
 
-Please check [trampoline-example-app](/trampoline-example-app) for an example application.
+Jump straight into serious Spring development through the use of multiple ready-to-use Spring Boot starters.
 
 ## About
 
-Trampoline is a collection of Spring(boot) starters to speed up development by providing even more opinionated service.
-However, a lot of services/components maintain configurable.
+Trampoline is a collection of Spring Boot 2 starters to speed up development by providing even more opinionated services.
+However, a lot of services/components maintain configurable through the use of auto-configurations.
 
 ## Features
 
-* User management(persisted through JPA, see trampoline-security)
-* Configure if you'd want users to login through their username or email
-* JPA base entity to handle JPA auditing, provides an UUID id, date create, and date updated.
-* ABAC: extension of the user management starter. Configure policies using SpeL expressions, load them from JSON or persist them using JPA(can be imported from JSON too!).
-Only the policy configurations are required to get started.
-* RBAC: Simple RBAC implementation with hierarchy. With roles and privileges(authorities).
-* JWT starter: import the JWT starter and have JWT enabled without any required configurations(expands on the user management)
-* Asset storage: handle file uploads with ease without having to persist everything in the db as a blob.
-* Asset storage decoupling: write your own AssetStore implementation to work with S3, GCP, Azure or your local filesystem.
+Please read the documentation for a full list of features. I'll try to summarize them here:
+
+- Bunch of common components: `TimeProvider` to get current datetime, `UUIDConverter` converts controller parameters automatically to `UUID`, bunch of models to keep your REST responses consistent.
+- Spring Data extension adding a base entity. JPA auditing(created, last updated at) and a `UUID` as `id`(you wont have to add an `id` column yourself).
+- Binary file upload/download. Don't store uploads as blobs but store them using a `AssetStore`. Only references to where the file is really stored is stored in the DB. Allows you to use S3, GCP. local fs.
+- Spring Security implementation which persists to a datasource using JPA.
+- JWT authorization which is achieved by implementing existing Spring Security interfaces. Meaning you can switch to JWT with only a couple lines of code!
+- Attribute based access control: achieve row-level security on resource by writing Spring Expression Language(SpEL). 
 
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.
@@ -29,18 +27,6 @@ Please read the [docs](/docs/README.md) for more information.
 
 The readme provides a bunch of information regarding the endpoints, dummy users. I also added a PostMan collection so you can easily test the api through postman.
 
-## Project Status
-
-This project is still in early development. Please do not use it for any serious applications(yet).
-
-
-## Roadmap
-
-These items are not in a specific order:
-- ModelMapper/DTO simplification: prevent the creation of too many models(will look into the existing Spring solutions)
-- Improve AssetStore and write implementations for cloud services?
-- Spring Application Context Events stuff
-- Fix websecurity route config in JWT lib and move to JWT-WEB lib(possible security leak?)
 
 ## Contributing
 
