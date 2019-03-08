@@ -3,6 +3,8 @@ package com.lucadev.trampoline.security.jwt.configuration;
 import com.lucadev.trampoline.security.model.User;
 import io.jsonwebtoken.Claims;
 
+import java.util.Map;
+
 /**
  * Default Jwt configuration
  *
@@ -22,7 +24,7 @@ public class DefaultJwtConfiguration implements JwtConfiguration {
     }
 
     @Override
-    public void createToken(User user, Claims claims) {
+    public void createToken(User user, Map<String, Object> claims) {
         //Dont do anything by default
     }
 }

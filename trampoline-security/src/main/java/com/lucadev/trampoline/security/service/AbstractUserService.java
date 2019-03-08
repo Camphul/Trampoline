@@ -75,7 +75,7 @@ public abstract class AbstractUserService implements UserService {
             return Optional.empty();
         }
         Object principal = auth.getPrincipal();
-        if (principal == null || !(principal instanceof User)) {
+        if (!(principal instanceof User)) {
             return Optional.empty();
         }
 

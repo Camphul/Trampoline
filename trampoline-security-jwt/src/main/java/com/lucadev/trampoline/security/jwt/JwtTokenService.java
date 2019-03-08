@@ -67,6 +67,7 @@ public class JwtTokenService implements TokenService {
                 .collect(Collectors.toList()));
         claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, jwtConfiguration.getIgnoreExpirationFlag(user));
         claims.put(CLAIM_IS_IMPERSONATING, false);
+        jwtConfiguration.createToken(user, claims);
         return generateToken(claims, user.getId().toString());
     }
 

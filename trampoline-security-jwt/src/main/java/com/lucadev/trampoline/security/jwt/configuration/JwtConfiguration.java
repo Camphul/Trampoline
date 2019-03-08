@@ -3,6 +3,8 @@ package com.lucadev.trampoline.security.jwt.configuration;
 import com.lucadev.trampoline.security.model.User;
 import io.jsonwebtoken.Claims;
 
+import java.util.Map;
+
 /**
  * Interface which helps configure the jwt token, allows to set expiry value for claims etc...
  *
@@ -33,5 +35,5 @@ public interface JwtConfiguration {
      * @param user   the user for which a token is created
      * @param claims the created claims
      */
-    void createToken(User user, Claims claims);
+    void createToken(User user, Map<String, Object> claims);
 }

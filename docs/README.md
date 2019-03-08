@@ -35,3 +35,7 @@ Other properties being used are:
 - `trampoline.security.jwt.tokenHeaderPrefix`: Prefix before jwt, default is Bearer
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
+
+## Examples
+
+An example project is available at [trampoline-example-app](../trampoline-example-app)

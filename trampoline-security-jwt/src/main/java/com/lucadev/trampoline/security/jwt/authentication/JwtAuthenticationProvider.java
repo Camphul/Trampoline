@@ -126,6 +126,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     }
 
+    /**
+     * Check if user is not disabled, expired, etc...
+     * @param user
+     */
     private void checkUserAllowance(User user) {
         if(!user.isEnabled()) {
             throw new DisabledException("User is disabled.");
