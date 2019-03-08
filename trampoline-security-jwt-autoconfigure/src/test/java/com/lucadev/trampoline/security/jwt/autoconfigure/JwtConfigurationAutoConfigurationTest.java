@@ -3,7 +3,6 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfiguration;
 import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
 import com.lucadev.trampoline.security.model.User;
-import io.jsonwebtoken.Claims;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

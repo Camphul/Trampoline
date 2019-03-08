@@ -62,7 +62,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      */
     private Authentication createJwtAuthentication(JwtPayload jwtPayload) {
         UserDetails userDetails = loadUserFromJwtPayload(jwtPayload);
-        User user = (User)userDetails;
+        User user = (User) userDetails;
         checkUserAllowance(user);
         validateToken(userDetails, jwtPayload);
         //Update lastseen
@@ -128,22 +128,23 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * Check if user is not disabled, expired, etc...
+     *
      * @param user
      */
     private void checkUserAllowance(User user) {
-        if(!user.isEnabled()) {
+        if (!user.isEnabled()) {
             throw new DisabledException("User is disabled.");
         }
 
-        if(!user.isAccountNonExpired()) {
+        if (!user.isAccountNonExpired()) {
             throw new AccountExpiredException("User account is expired.");
         }
 
-        if(!user.isCredentialsNonExpired()) {
+        if (!user.isCredentialsNonExpired()) {
             throw new AccountExpiredException("User credentials are expired.");
         }
 
-        if(!user.isAccountNonLocked()) {
+        if (!user.isAccountNonLocked()) {
             throw new LockedException("User account is locked.");
         }
     }

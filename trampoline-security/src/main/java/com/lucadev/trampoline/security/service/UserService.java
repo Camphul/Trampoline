@@ -169,6 +169,7 @@ public interface UserService extends UserDetailsService {
 
     /**
      * Similar to {@link UserDetailsService#loadUserByUsername(String)}
+     *
      * @param email
      * @return
      */
@@ -176,6 +177,7 @@ public interface UserService extends UserDetailsService {
 
     /**
      * Current {@link IdentificationType} being used
+     *
      * @return
      */
     IdentificationType getIdentificationType();

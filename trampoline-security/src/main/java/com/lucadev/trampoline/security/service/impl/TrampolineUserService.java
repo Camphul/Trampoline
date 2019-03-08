@@ -4,7 +4,6 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * {@link com.lucadev.trampoline.security.service.UserService} implementation.

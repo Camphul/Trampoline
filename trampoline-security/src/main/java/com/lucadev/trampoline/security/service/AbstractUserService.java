@@ -6,7 +6,6 @@ import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -40,7 +39,7 @@ public abstract class AbstractUserService implements UserService {
      */
     public AbstractUserService(UserRepository userRepository, boolean emailIdentification) {
         this.userRepository = userRepository;
-        if(emailIdentification) {
+        if (emailIdentification) {
             identificationType = IdentificationType.EMAIL;
         }
     }
@@ -51,7 +50,7 @@ public abstract class AbstractUserService implements UserService {
     @Override
     @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) {
-        if(identificationType == IdentificationType.EMAIL){
+        if (identificationType == IdentificationType.EMAIL) {
             return loadUserByEmail(s);
         }
         Optional<User> user = userRepository.findOneByUsername(s);

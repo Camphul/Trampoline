@@ -1,7 +1,6 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
 import com.lucadev.trampoline.security.model.User;
-import io.jsonwebtoken.Claims;
 
 import java.util.Map;
 

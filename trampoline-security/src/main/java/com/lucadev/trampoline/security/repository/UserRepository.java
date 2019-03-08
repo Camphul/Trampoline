@@ -25,6 +25,7 @@ public interface UserRepository extends TrampolineRepository<User> {
 
     /**
      * Find user by its email.
+     *
      * @param email
      * @return
      */
