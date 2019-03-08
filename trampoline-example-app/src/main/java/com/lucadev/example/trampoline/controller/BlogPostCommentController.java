@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 /**
+ * Controller which uses trampoline-security-abac
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 8-12-18
  */
@@ -41,7 +43,7 @@ public class BlogPostCommentController {
      * @return
      */
     @GetMapping("/blogs/{blogId}/comments")
-    @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_LIST')")
+    @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_LIST')")//Check for permission before invocation
     public Page<BlogPostCommentDto> getBlogPostComments(@PathVariable("blogId") UUID blogId, Pageable pageable) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         Page<BlogPostComment> blogPostCommentPage = blogPostService.findAllComments(blogPost, pageable);
@@ -84,6 +86,8 @@ public class BlogPostCommentController {
             throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);
         }
 
+        //We had to fetch the comment before we'd be able to check the permission.
+        //This will throw an AccessDeniedException when we do not meet the permission policy
         policyEnforcement.check(comment, "BLOGPOST_COMMENT_DELETE");
 
 
