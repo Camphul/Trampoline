@@ -36,6 +36,11 @@ Other properties being used are:
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
 
+We also provide two example properties files:
+
+- [application-dev-example.properties](application-dev-example.properties)
+- [application-prod-example.properties](application-prod-example.properties)
+
 ## Examples
 
 An example project is available at [trampoline-example-app](../trampoline-example-app)
