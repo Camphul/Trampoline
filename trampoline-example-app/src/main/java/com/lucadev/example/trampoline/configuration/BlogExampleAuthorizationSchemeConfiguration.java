@@ -1,12 +1,12 @@
 package com.lucadev.example.trampoline.configuration;
 
 import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchemeBuilder;
-import com.lucadev.trampoline.security.configuration.AuthorizationSchemeBuilderConfiguration;
+import com.lucadev.trampoline.security.configuration.AuthorizationSchemeConfiguration;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * This is a Trampoline configuration implementation.
- * Implementing {@link AuthorizationSchemeBuilderConfiguration} allows you to build the authorization scheme(roles/privileges)
+ * Implementing {@link AuthorizationSchemeConfiguration} allows you to build the authorization scheme(roles/privileges)
  * using a sort of builder pattern.
  * <p>
  * This configuration is ran when the application started(trampoline has an inner ContextRefreshed listener which has a high priority).
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 7-12-18
  */
 @Configuration
-public class BlogExampleAuthorizatrionSchemeBuilderConfiguration implements AuthorizationSchemeBuilderConfiguration {
+public class BlogExampleAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
 
     /**
      * Build the authorization scheme

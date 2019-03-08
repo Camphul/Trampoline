@@ -18,7 +18,9 @@ There's service's for each component:
 
 ### Configuring authorization scheme
 
-Roles and privileges can be configured in Java by implementing the `AuthorizationSchemeBuilderConfiguration`.
-A NOP implementation is loaded by default and ran when the `ContextRefreshed` event is fired(after application load).
+To import an authorization schema(roles/privileges) please set the `trampoline.security.authorization.schema.run.configuration` property to `true`
+
+Roles and privileges can be configured in Java by implementing the `AuthorizationSchemeConfiguration`.
+A NOP implementation is loaded by default and ran when the `ContextRefreshedEvent` event is fired(after application load).
 It is recommended to only do this in the development profile, export the SQL and import those into the production db.
 It will probably cause conflicts if you try to add roles that already exist.

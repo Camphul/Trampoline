@@ -8,7 +8,7 @@ import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchem
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
  */
-public interface AuthorizationSchemeBuilderConfiguration {
+public interface AuthorizationSchemeConfiguration {
 
     /**
      * Build the authorization scheme using the Java builder.
