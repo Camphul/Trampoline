@@ -31,8 +31,8 @@ public class AuthorizationRoleBuilder {
      * Construct without a role name
      *
      * @param authorizationSchemeBuilder the main scheme builder
-     * @param roleService                the Role service
-     * @param privilegeService           the Privilege service
+     * @param roleService                the Role handler
+     * @param privilegeService           the Privilege handler
      */
     public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService) {
         this.authorizationSchemeBuilder = authorizationSchemeBuilder;
@@ -48,8 +48,8 @@ public class AuthorizationRoleBuilder {
      * Construct with an initial role name.
      *
      * @param authorizationSchemeBuilder the main builder
-     * @param roleService                the Role service
-     * @param privilegeService           the Privilege service
+     * @param roleService                the Role handler
+     * @param privilegeService           the Privilege handler
      * @param name                       the name for the {@link Role} to create.
      */
     public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService, String name) {

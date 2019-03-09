@@ -1,5 +1,7 @@
 package com.lucadev.example.trampoline.controller;
 
+import com.lucadev.trampoline.security.logging.ActivityLayer;
+import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ public class WhoAmIController {
      */
     @GetMapping("/whoami")
     @PreAuthorize("hasPermission(null, 'WHO_AM_I')")
+	@LogUserActivity(value = "whoami", category = "whoami", layer = ActivityLayer.CONTROLLER)
     public User whoami() {
         return userService.currentUserOrThrow();
     }

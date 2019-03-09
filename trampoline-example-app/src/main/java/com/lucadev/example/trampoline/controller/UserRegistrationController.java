@@ -30,7 +30,7 @@ public class UserRegistrationController {
     private RoleService roleService;
 
     /**
-     * Should be done through the use of a dedicated service but meh.
+     * Should be done through the use of a dedicated handler but meh.
      *
      * @param signupRequest
      * @return

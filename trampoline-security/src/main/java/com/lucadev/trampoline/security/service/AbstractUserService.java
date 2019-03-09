@@ -36,7 +36,7 @@ public abstract class AbstractUserService implements UserService {
     private IdentificationType identificationType = IdentificationType.USERNAME;
 
     /**
-     * Construct the abstract service.
+     * Construct the abstract handler.
      *
      * @param userRepository the {@code Repository} used to persist {@link User} entities.
      */

@@ -24,6 +24,7 @@ import javax.persistence.*;
 public class BlogPostComment extends TrampolineEntity {
 
     @Setter
+	@ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blogpost_id")
     private BlogPost blogPost;

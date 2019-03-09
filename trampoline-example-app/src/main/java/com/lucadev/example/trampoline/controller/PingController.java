@@ -1,6 +1,8 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.model.MessageResponse;
+import com.lucadev.trampoline.security.logging.ActivityLayer;
+import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,7 @@ public class PingController {
      * @return
      */
     @GetMapping("/ping/unprotected")
+	@LogUserActivity(value = "ping_unprotected", category = "ping", layer = ActivityLayer.CONTROLLER)
     public MessageResponse pingUnprotected() {
         return new MessageResponse("Pong unprotected: " + timeProvider.unix());
     }
@@ -36,6 +39,7 @@ public class PingController {
      */
     @GetMapping("/ping/protected")
     @PreAuthorize("hasPermission(null, 'PING_PROTECTED')")
+	@LogUserActivity(value = "ping_protected", category = "ping", layer = ActivityLayer.CONTROLLER)
     public MessageResponse pingProtected() {
         return new MessageResponse("Pong protected: " + timeProvider.unix());
     }

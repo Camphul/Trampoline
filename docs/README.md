@@ -13,7 +13,8 @@ Please reference the following modules for documentation:
 - [trampoline-security-abac](../trampoline-security-abac)
 - [trampoline-security-jwt](../trampoline-security-jwt)
 - [trampoline-security-jwt-web](../trampoline-security-jwt-web)
-- [trampoline-validate](../trampoline-validate)
+- [trampoline-security-logging](../trampoline-security-logging)
+- [trampoline-web](../trampoline-web)
 
 
 ## Configuration Values

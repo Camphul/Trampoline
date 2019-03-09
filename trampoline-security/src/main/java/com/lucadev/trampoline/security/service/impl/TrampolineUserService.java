@@ -17,7 +17,7 @@ public class TrampolineUserService extends AbstractUserService {
     private final TimeProvider timeProvider;
 
     /**
-     * Construct the service.
+     * Construct the handler.
      *
      * @param userRepository the repository to persist {@link User} entities.
      * @param timeProvider   {@link TimeProvider} instance.

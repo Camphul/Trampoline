@@ -39,7 +39,7 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
-            //Required if you were to use abac on a service level.
+            //Required if you were to use abac on a handler level.
             SecurityContext ctx = SecurityContextHolder.createEmptyContext();
             SecurityContextHolder.setContext(ctx);
             ctx.setAuthentication(new SystemAuthentication());

@@ -30,6 +30,9 @@
 		<module>trampoline-web</module>
 		<module>trampoline-web-autoconfigure</module>
 		<module>trampoline-web-starter</module>
+		<module>trampoline-security-logging</module>
+		<module>trampoline-security-logging-autoconfigure</module>
+		<module>trampoline-security-logging-starter</module>
 	</modules>
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>

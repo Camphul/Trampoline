@@ -22,7 +22,7 @@ public class MethodArgumentNotValidExceptionHandler extends AbstractRestExceptio
 
 	/**
 	 * Construct new handler.
-	 * @param validationService service used to make responses.
+	 * @param validationService handler used to make responses.
 	 */
 	public MethodArgumentNotValidExceptionHandler(ValidationService validationService) {
 		super(MethodArgumentNotValidException.class, HttpStatus.BAD_REQUEST);

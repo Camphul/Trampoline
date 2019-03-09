@@ -37,7 +37,7 @@ public class AuthorizationSchemeBuilder {
      */
     private AuthorizationSchemeBuilder(RoleService roleService, PrivilegeService privilegeService, Environment environment) {
         if (roleService == null || privilegeService == null) {
-            throw new NullPointerException("This build requires role service and privilege service to not be null.");
+            throw new NullPointerException("This build requires role handler and privilege handler to not be null.");
         }
 
         if (environment == null) {
@@ -53,8 +53,8 @@ public class AuthorizationSchemeBuilder {
     /**
      * Construct a builder.
      *
-     * @param roleService      the {@link Role} service bean.
-     * @param privilegeService the {@link Privilege} service bean.
+     * @param roleService      the {@link Role} handler bean.
+     * @param privilegeService the {@link Privilege} handler bean.
      * @return
      */
     public static AuthorizationSchemeBuilder create(RoleService roleService, PrivilegeService privilegeService, Environment environment) {

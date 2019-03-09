@@ -1,6 +1,7 @@
 package com.lucadev.example.trampoline;
 
 import com.lucadev.trampoline.EnableTrampoline;
+import com.lucadev.trampoline.security.logging.EnableUserActivityLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 21-4-18
  */
 @EnableTrampoline /* Required to load necessary Trampoline components */
+@EnableUserActivityLogging
 @SpringBootApplication
 public class TrampolineApplication {
 
