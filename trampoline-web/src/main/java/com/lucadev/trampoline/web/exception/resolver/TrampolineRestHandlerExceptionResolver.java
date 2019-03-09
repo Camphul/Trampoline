@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.web.exception.resolver;
 
-import com.lucadev.trampoline.web.ResponseEntityResponseProcessor;
+import com.lucadev.trampoline.web.internal.ResponseEntityResponseProcessor;
 import com.lucadev.trampoline.web.exception.ExceptionHandlerNotFoundException;
 import com.lucadev.trampoline.web.exception.handler.RestExceptionHandler;
 import lombok.AllArgsConstructor;

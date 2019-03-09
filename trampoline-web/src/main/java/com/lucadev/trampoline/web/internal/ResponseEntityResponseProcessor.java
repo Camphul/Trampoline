@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.web;
+package com.lucadev.trampoline.web.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
