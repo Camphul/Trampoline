@@ -17,6 +17,10 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(ValidationService.class)
 public class ValidationServiceAutoConfiguration {
 
+	/**
+	 * Configure default {@link ValidationService} implementation.
+	 * @return default {@link TrampolineValidationService}
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public ValidationService validationService() {

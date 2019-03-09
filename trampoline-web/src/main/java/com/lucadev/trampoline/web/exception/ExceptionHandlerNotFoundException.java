@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Failed to handle exception.")
 public class ExceptionHandlerNotFoundException extends RuntimeException {
 
+	/**
+	 * Construct exception with a message.
+	 * @param message the message to display.
+	 */
 	public ExceptionHandlerNotFoundException(String message) {
 		super(message);
 	}

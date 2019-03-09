@@ -99,9 +99,10 @@ public class TrampolineRestHandlerExceptionResolver extends AbstractHandlerExcep
 	}
 
 	/**
-	 * @param exception
-	 * @param handler
-	 * @param <EX>
+	 * Register a new {@link RestExceptionHandler}
+	 * @param exception the {@link Exception} to hook into.
+	 * @param handler the new handler to register.
+	 * @param <EX> the type of the exception.
 	 */
 	@Override
 	public <EX extends Exception> void addExceptionHandler(Class<EX> exception, RestExceptionHandler<EX, ?> handler) {

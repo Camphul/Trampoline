@@ -7,6 +7,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * Interface which extends {@link HandlerExceptionResolver} to handle REST-like responses for exceptions.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/9/19
  */
@@ -24,9 +26,9 @@ public interface RestHandlerExceptionResolver extends HandlerExceptionResolver {
 	/**
 	 * Add a {@link RestExceptionHandler}
 	 *
-	 * @param exception
-	 * @param handler
-	 * @param <EX>
+	 * @param exception the {@link Exception} to hook into.
+	 * @param handler the handler to register.
+	 * @param <EX> the type of the exception.
 	 */
 	<EX extends Exception> void addExceptionHandler(Class<EX> exception, RestExceptionHandler<EX, ?> handler);
 

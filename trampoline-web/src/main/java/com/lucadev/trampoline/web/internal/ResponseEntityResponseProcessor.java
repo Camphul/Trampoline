@@ -46,6 +46,10 @@ public class ResponseEntityResponseProcessor implements InitializingBean {
 		this.messageConverters = messageConverters;
 	}
 
+	/**
+	 * Once the bean has set its properties.
+	 * @throws Exception incase something fails.
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		if (contentNegotiationManager == null) {
