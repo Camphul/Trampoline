@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.web.validation.service;
+package com.lucadev.trampoline.web.validation;
 
 import com.lucadev.trampoline.web.validation.BindingResultResponse;
 import org.springframework.validation.BindingResult;

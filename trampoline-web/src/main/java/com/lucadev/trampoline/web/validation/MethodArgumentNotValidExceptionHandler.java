@@ -1,7 +1,6 @@
 package com.lucadev.trampoline.web.validation;
 
 import com.lucadev.trampoline.web.exception.handler.AbstractRestExceptionHandler;
-import com.lucadev.trampoline.web.validation.service.ValidationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.MethodArgumentNotValidException;
