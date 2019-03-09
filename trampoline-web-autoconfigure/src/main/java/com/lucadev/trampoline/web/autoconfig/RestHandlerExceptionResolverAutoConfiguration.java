@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.web.autoconfig;
 
+import com.lucadev.trampoline.web.ResponseEntityResponseProcessor;
 import com.lucadev.trampoline.web.exception.handler.RestExceptionHandler;
 import com.lucadev.trampoline.web.exception.resolver.RestHandlerExceptionResolver;
 import com.lucadev.trampoline.web.exception.resolver.TrampolineRestHandlerExceptionResolver;
@@ -18,7 +19,8 @@ import java.util.List;
 public class RestHandlerExceptionResolverAutoConfiguration {
 
 	@Bean(name = "restHandlerExceptionResolver")
-	public RestHandlerExceptionResolver restHandlerExceptionResolver(List<RestExceptionHandler> exceptionHandlers) {
-		return new TrampolineRestHandlerExceptionResolver(exceptionHandlers);
+	public RestHandlerExceptionResolver restHandlerExceptionResolver(List<RestExceptionHandler> exceptionHandlers,
+																	 ResponseEntityResponseProcessor responseProcessor) {
+		return new TrampolineRestHandlerExceptionResolver(exceptionHandlers, responseProcessor);
 	}
 }

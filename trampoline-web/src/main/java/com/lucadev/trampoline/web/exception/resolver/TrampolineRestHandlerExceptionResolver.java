@@ -1,18 +1,16 @@
 package com.lucadev.trampoline.web.exception.resolver;
 
+import com.lucadev.trampoline.web.ResponseEntityResponseProcessor;
 import com.lucadev.trampoline.web.exception.ExceptionHandlerNotFoundException;
 import com.lucadev.trampoline.web.exception.handler.RestExceptionHandler;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +30,12 @@ public class TrampolineRestHandlerExceptionResolver extends AbstractHandlerExcep
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineRestHandlerExceptionResolver.class);
 	private final Map<Class<? extends Exception>, RestExceptionHandler> exceptionHandlerMap = new LinkedHashMap<>();
+	private final ResponseEntityResponseProcessor responseProcessor;
 
-	public TrampolineRestHandlerExceptionResolver(List<RestExceptionHandler> exceptionHandlers) {
+
+	public TrampolineRestHandlerExceptionResolver(List<RestExceptionHandler> exceptionHandlers, ResponseEntityResponseProcessor responseProcessor) {
 		exceptionHandlers.forEach((ex) -> addExceptionHandler(ex.getExceptionClass(), ex));
+		this.responseProcessor = responseProcessor;
 	}
 
 	@Override
@@ -47,9 +48,20 @@ public class TrampolineRestHandlerExceptionResolver extends AbstractHandlerExcep
 			LOGGER.warn("No exception handler has been found for {}", e.getClass());
 			return null;
 		}
-		responseEntity.getHeaders().toSingleValueMap().forEach(response::setHeader);
-		response.setStatus(responseEntity.getStatusCodeValue());
-		return generateRestResponse(responseEntity, request);
+
+		processResponse(responseEntity, request, response);
+
+		return new ModelAndView();
+	}
+
+	private void processResponse(ResponseEntity<?> responseEntity, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			MethodParameter methodParameter = responseProcessor.getMethodParameter(RestExceptionHandler.class,
+					"handleException", new Class[]{Exception.class, HttpServletRequest.class});
+			responseProcessor.processResponse(methodParameter, responseEntity, request, response);
+		} catch (Exception e) {
+			LOGGER.error("Failed to process exception handle.", e);
+		}
 	}
 
 	/**
@@ -97,37 +109,4 @@ public class TrampolineRestHandlerExceptionResolver extends AbstractHandlerExcep
 		LOGGER.debug("Registered exception handler for {}: {}", exception.getName(), handler.getClass().getName());
 	}
 
-	/**
-	 * Create a {@link ModelAndView} from the {@link ResponseEntity}
-	 *
-	 * @param responseEntity the REST view to return.
-	 * @param request        the request in which the exception was triggered.
-	 * @return the MaV to display to the client.
-	 */
-	protected ModelAndView generateRestResponse(ResponseEntity<?> responseEntity, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		mav.setView(resolveView(request));
-		mav.addObject(responseEntity.getBody());
-		return mav;
-	}
-
-	/**
-	 * Resolve the view type.
-	 * Falls back to JSON by default.
-	 *
-	 * @param request the request triggering the exception.
-	 * @return the view to show the client.
-	 */
-	protected View resolveView(HttpServletRequest request) {
-		MediaType accepted = MediaType.parseMediaType(request.getContentType());
-
-		if (accepted.isCompatibleWith(MediaType.APPLICATION_JSON)) {
-			return new MappingJackson2JsonView();
-		} else if (accepted.isCompatibleWith(MediaType.APPLICATION_XML)) {
-			return new MappingJackson2XmlView();
-		}
-
-		//Fallback
-		return new MappingJackson2JsonView();
-	}
 }

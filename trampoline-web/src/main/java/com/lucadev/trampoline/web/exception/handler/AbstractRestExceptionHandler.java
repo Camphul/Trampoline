@@ -21,6 +21,7 @@ public abstract class AbstractRestExceptionHandler<E extends Exception, R> imple
 
 	/**
 	 * Construct new handler.
+	 *
 	 * @param exceptionClass the {@link Exception} we want to handle.
 	 * @param responseStatus the http response status for the exception we want to handle.
 	 */
@@ -37,6 +38,7 @@ public abstract class AbstractRestExceptionHandler<E extends Exception, R> imple
 
 	/**
 	 * Override this to easily add more functionality.
+	 *
 	 * @param exception the {@link Exception} that was triggered.
 	 * @param request   the request in which the exception was triggered.
 	 * @return
