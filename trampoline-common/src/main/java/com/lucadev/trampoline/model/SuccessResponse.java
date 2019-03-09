@@ -31,7 +31,7 @@ public class SuccessResponse extends MessageResponse {
      * Construct a {@code SuccessResponse}
      *
      * @param success if the action was completed with success.
-     * @param message the message related to the success state of this response.
+     * @param message the message related to the success state of this model.
      */
     public SuccessResponse(boolean success, String message) {
         super(message);

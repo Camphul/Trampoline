@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Converts the asset to the correct content type and writes it to the response(instead of plaintext/html)
+ * Converts the asset to the correct content type and writes it to the model(instead of plaintext/html)
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 9-6-18
@@ -90,7 +90,7 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
         httpOutputMessage.getHeaders()
                 .setAccept(MediaType.parseMediaTypes(metaData.getContentType()));
 
-        //Write response
+        //Write model
         OutputStream outputStream = httpOutputMessage.getBody();
         outputStream.write(asset.getData());
         outputStream.close();

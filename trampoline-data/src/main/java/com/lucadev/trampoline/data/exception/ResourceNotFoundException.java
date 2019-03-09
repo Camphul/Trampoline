@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * A {@link RuntimeException} which is to be used when a JPA resource could not be found(unknown id, etc..).
  * <p>
- * This exception specifically tells Spring to return a 404 error code to the client.
+ * This model specifically tells Spring to return a 404 error code to the client.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
@@ -24,7 +24,7 @@ public class ResourceNotFoundException extends RuntimeException {
     private final String message;
 
     /**
-     * Construct the exception with the resource id that could not be found together with an informative message.
+     * Construct the model with the resource id that could not be found together with an informative message.
      *
      * @param resourceId the id which was used to try and fetch the resource.
      * @param message    a description explaining the error in detail.
@@ -35,7 +35,7 @@ public class ResourceNotFoundException extends RuntimeException {
     }
 
     /**
-     * Construct the exception with the resource id that could not be found.
+     * Construct the model with the resource id that could not be found.
      * Uses a default message as error description.
      *
      * @param resourceId the id which was used to try and fetch the resource.
@@ -45,7 +45,7 @@ public class ResourceNotFoundException extends RuntimeException {
     }
 
     /**
-     * Construct the exception with only a message describing the error.
+     * Construct the model with only a message describing the error.
      * It might not be directly related to the resource id but may be a related resource which was not found.
      * It is however encouraged to then use the {@link #ResourceNotFoundException(UUID, String)} constructor with a clear error description.
      * This description should inform the client that a related resource to the resouce with the specified id was not found.

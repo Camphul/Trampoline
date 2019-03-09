@@ -4,6 +4,8 @@ import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
- * REST controller for JWT auth related endpoints.
+ * REST model for JWT auth related endpoints.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 21-4-18
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationController.class);
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
@@ -34,8 +38,9 @@ public class JwtAuthenticationController {
      */
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
-            @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
+            @Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         try {
+        	LOGGER.debug("Attempting sign-in.");
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getIdentifier(),
                             userAuthenticationRequest.getPassword()));
@@ -62,7 +67,7 @@ public class JwtAuthenticationController {
             String refreshedToken = tokenService.processTokenRefreshRequest(request);
             return new JwtAuthenticationResponse(true, refreshedToken, "ok");
         } catch (Exception e) {
-            //Catch exception to always return correct format
+            //Catch model to always return correct format
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return new JwtAuthenticationResponse(false, null, e.getMessage());
         }

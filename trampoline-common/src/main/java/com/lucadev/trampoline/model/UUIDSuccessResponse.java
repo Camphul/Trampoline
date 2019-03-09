@@ -36,7 +36,7 @@ public class UUIDSuccessResponse extends SuccessResponse {
      *
      * @param id      the id to pass
      * @param success if the action was completed with success.
-     * @param message the message related to the success state of this response.
+     * @param message the message related to the success state of this model.
      */
     public UUIDSuccessResponse(UUID id, boolean success, String message) {
         super(success, message);

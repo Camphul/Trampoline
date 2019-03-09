@@ -27,7 +27,10 @@
         <module>trampoline-asset-store</module>
         <module>trampoline-asset-store-autoconfigure</module>
         <module>trampoline-asset-store-starter</module>
-    </modules>
+		<module>trampoline-validate</module>
+		<module>trampoline-validate-autoconfigure</module>
+		<module>trampoline-validate-starter</module>
+	</modules>
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent

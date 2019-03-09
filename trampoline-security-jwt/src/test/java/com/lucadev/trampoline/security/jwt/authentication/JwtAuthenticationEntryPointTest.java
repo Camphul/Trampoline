@@ -27,7 +27,7 @@ public class JwtAuthenticationEntryPointTest {
 
         entryPoint.commence(mockRequest, mockResponse, null);//Validate that all responses are set unauthorized
 
-        //Does not matter which text response, as long as it's UNAUTHORIZED
+        //Does not matter which text model, as long as it's UNAUTHORIZED
         verify(mockResponse, atLeastOnce()).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), any());
     }
 

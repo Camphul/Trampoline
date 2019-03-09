@@ -21,7 +21,7 @@ public class CurrentUserNotFoundException extends RuntimeException {
     private final String message;
 
     /**
-     * Describe the exception in another way.
+     * Describe the model in another way.
      *
      * @param message error description
      */

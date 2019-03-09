@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Model to use when wanting to return an asset to a web client with the correct content type.
+ * Model to use when wanting to return an asset to a model client with the correct content type.
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 9-6-18
@@ -21,12 +21,12 @@ public class AssetResponse {
     /**
      * Construct {@code AssetResponse}
      *
-     * @param asset {@link Asset} to create a response for.
+     * @param asset {@link Asset} to create a model for.
      * @return a {@link AssetResponse} instance.
      */
     public static AssetResponse from(Asset asset) {
         if (asset == null)
-            throw new NullPointerException("Cannot create response from null asset.");
+            throw new NullPointerException("Cannot create model from null asset.");
 
         return new AssetResponse(asset);
     }
