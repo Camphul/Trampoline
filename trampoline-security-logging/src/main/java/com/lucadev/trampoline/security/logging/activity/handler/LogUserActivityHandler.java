@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/9/19
  */
-@Service
 public class LogUserActivityHandler implements UserActivityHandler {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LogUserActivityHandler.class);
