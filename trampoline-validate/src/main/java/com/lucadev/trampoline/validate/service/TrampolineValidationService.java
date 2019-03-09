@@ -1,12 +1,7 @@
 package com.lucadev.trampoline.validate.service;
 
-import com.lucadev.trampoline.validate.model.FieldValidationError;
-import com.lucadev.trampoline.validate.model.ValidationErrorResponse;
+import com.lucadev.trampoline.validate.model.BindingResultResponse;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Default {@link ValidationService} implementation.
@@ -17,11 +12,7 @@ import java.util.stream.Collectors;
 public class TrampolineValidationService implements ValidationService {
 
 	@Override
-	public ValidationErrorResponse createValidationErrorResponse(BindingResult bindingResult) {
-		List<FieldValidationError> errors =
-				bindingResult.getAllErrors().stream().map(
-						err -> new FieldValidationError((FieldError) err)).collect(Collectors.toList());
-
-		return new ValidationErrorResponse("Failed to validate object.", errors);
+	public BindingResultResponse createBindingResultResponse(BindingResult bindingResult) {
+		return new BindingResultResponse("Validation error has occurred.", bindingResult);
 	}
 }

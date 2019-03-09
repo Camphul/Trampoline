@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.validate.service;
 
-import com.lucadev.trampoline.validate.model.ValidationErrorResponse;
+import com.lucadev.trampoline.validate.model.BindingResultResponse;
 import org.springframework.validation.BindingResult;
 
 /**
@@ -12,11 +12,11 @@ import org.springframework.validation.BindingResult;
 public interface ValidationService {
 
 	/**
-	 * Create a {@link ValidationErrorResponse}
+	 * Create a {@link BindingResultResponse}
 	 *
 	 * @param bindingResult the validation errors.
-	 * @return the {@link ValidationErrorResponse}
+	 * @return the {@link BindingResultResponse}
 	 */
-	ValidationErrorResponse createValidationErrorResponse(BindingResult bindingResult);
+	BindingResultResponse createBindingResultResponse(BindingResult bindingResult);
 
 }

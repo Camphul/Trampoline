@@ -1,13 +1,14 @@
 package com.lucadev.trampoline.validate.handler;
 
-import com.lucadev.trampoline.validate.model.ValidationErrorResponse;
 import com.lucadev.trampoline.validate.service.ValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
 /**
@@ -19,14 +20,12 @@ import org.springframework.web.context.request.WebRequest;
  */
 @ControllerAdvice
 @AllArgsConstructor
-public class TrampolineValidationExceptionHandler implements ResponseEntityExceptionHandler<MethodArgumentNotValidException,
-		ValidationErrorResponse> {
+public class TrampolineValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private final ValidationService validationService;
 
 	@Override
-	@ExceptionHandler(value = {MethodArgumentNotValidException.class})
-	public ResponseEntity<ValidationErrorResponse> handle(MethodArgumentNotValidException exception, WebRequest webRequest) {
-		return ResponseEntity.badRequest().body(validationService.createValidationErrorResponse(exception.getBindingResult()));
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return ResponseEntity.badRequest().body(validationService.createBindingResultResponse(ex.getBindingResult()));
 	}
 }

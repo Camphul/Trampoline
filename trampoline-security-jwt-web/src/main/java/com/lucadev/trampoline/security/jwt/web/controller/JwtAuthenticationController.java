@@ -4,8 +4,6 @@ import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -26,7 +24,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationController.class);
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
@@ -40,7 +37,6 @@ public class JwtAuthenticationController {
     public JwtAuthenticationResponse submitAuthenticationTokenRequest(
             @Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         try {
-        	LOGGER.debug("Attempting sign-in.");
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getIdentifier(),
                             userAuthenticationRequest.getPassword()));

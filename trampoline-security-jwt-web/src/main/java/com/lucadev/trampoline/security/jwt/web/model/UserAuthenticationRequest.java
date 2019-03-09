@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
+ * Request which contains credentials to authorize a user.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 14-4-18
  */
@@ -18,14 +20,14 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class UserAuthenticationRequest implements Serializable {
 
-	@NotNull(message = "Identifier may not be null.")
-	@Size(min=2, max=256, message = "Identifier must be between 2 and 256 characters.")
-	@NotBlank(message = "Identifier may not be blank.")
+	@NotNull
+	@Size(min=2, max=256)
+	@NotBlank
     private String identifier;
 
-	@NotNull(message = "Password may not be null.")
-	@NotBlank(message = "Password may not be blank.")
-	@Size(min=2, max=256, message = "Password must be between 2 and 256 characters.")
+	@NotNull
+	@NotBlank
+	@Size(min=2, max=256)
     private String password;
 
 }
