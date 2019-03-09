@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 /**
@@ -60,7 +61,7 @@ public class BlogPostController {
      */
     @PostMapping("/blogs")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_CREATE')")
-    public UUIDSuccessResponse createBlogPost(@RequestBody CreateBlogPostRequest request) {
+    public UUIDSuccessResponse createBlogPost(@RequestBody @Valid CreateBlogPostRequest request) {
         //Most likely not null since it has already authenticated.
         User user = userService.currentUserOrThrow();
 
@@ -112,7 +113,7 @@ public class BlogPostController {
      * @return
      */
     @PatchMapping("/blogs/{id}")
-    public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody CreateBlogPostRequest request) {
+    public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody @Valid CreateBlogPostRequest request) {
         BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         policyEnforcement.check(blogPost, "BLOGPOST_EDIT");
 

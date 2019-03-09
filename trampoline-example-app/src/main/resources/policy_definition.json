@@ -7,16 +7,16 @@
       "condition": "true"
     },
     {
-      "name": "View WHOAMI page",
+      "name": "View whoami page",
       "description": "View GET /whoami",
       "target": "isAction('WHO_AM_I')",
-      "condition": "hasAuthority('WHOAMI_GET')"
+      "condition": "hasAuthority('GET_WHOAMI')"
     },
     {
       "name": "View protected ping page",
       "description": "View GET /ping/protected",
       "target": "isAction('PING_PROTECTED')",
-      "condition": "hasAuthority('PING_PROTECTED')"
+      "condition": "hasAuthority('GET_PING_PROTECTED')"
     },
     {
       "name": "View blog list",

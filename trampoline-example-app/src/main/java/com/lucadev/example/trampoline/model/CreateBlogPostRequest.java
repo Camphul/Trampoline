@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 7-12-18
@@ -15,7 +19,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CreateBlogPostRequest {
 
+	@NotBlank
+	@NotNull
+	@Size(min=2, max=32)
     private String title;
+	@NotBlank
+	@NotNull
+	@Size(min=2, max=1024)
     private String content;
 
 }

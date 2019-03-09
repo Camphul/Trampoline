@@ -27,7 +27,7 @@ public class BlogExampleAuthorizationSchemeConfiguration implements Authorizatio
         //Wrap creation inside system authentication(you most likely wont need this for this purpose).
         builder.wrapSystemAuthentication((wrappedBuilder) ->
                 //Create user role
-                wrappedBuilder.createRole("ROLE_USER").withPrivileges("WHOAMI_GET", "PING_PROTECTED").buildAnd()
+                wrappedBuilder.createRole("ROLE_USER").withPrivileges("GET_WHOAMI", "GET_PING_PROTECTED").buildAnd()
                         //Create admin role
                         .createRole("ROLE_ADMIN").withPrivileges("MANAGE_USERS").buildAnd()
                         //Only do the following when dev profile is enabled

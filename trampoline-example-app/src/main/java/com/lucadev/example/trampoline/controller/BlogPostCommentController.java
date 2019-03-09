@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 /**
@@ -59,7 +60,7 @@ public class BlogPostCommentController {
      */
     @PostMapping("/blogs/{blogId}/comments")
     @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_CREATE')")
-    public UUIDSuccessResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody CreateBlogPostCommentRequest request) {
+    public UUIDSuccessResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody @Valid CreateBlogPostCommentRequest request) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         User currentUser = userService.currentUserOrThrow();
 
@@ -98,7 +99,7 @@ public class BlogPostCommentController {
 
     @PatchMapping("/blogs/{blogId}/comments/{commentId}")
     public SuccessResponse patchBlogPostComment(@PathVariable("blogId") UUID blogId, @PathVariable("commentId") UUID commentId,
-                                                @RequestBody CreateBlogPostCommentRequest request) {
+                                                @RequestBody @Valid CreateBlogPostCommentRequest request) {
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
         if (!comment.getBlogPost().getId().equals(blogId)) {
             throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);

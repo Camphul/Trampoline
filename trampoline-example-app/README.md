@@ -17,7 +17,7 @@ In this application you have the following entities(next to to user/role/privile
 
 We have the following authorization schema:
 
-- ROLE_USER: WHOAMI_GET, PING_PROTECTED
+- ROLE_USER: GET_WHOAMI, GET_PING_PROTECTED
 - ROLE_ADMIN: MANAGE_USERS
 
 
