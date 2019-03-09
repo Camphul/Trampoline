@@ -5,6 +5,7 @@ import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class JwtAuthenticationController {
      * @return
      */
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
-    public JwtAuthenticationResponse submitAuthenticationTokenRequest(
+    public ResponseEntity<JwtAuthenticationResponse> submitAuthenticationTokenRequest(
             @Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -42,11 +43,13 @@ public class JwtAuthenticationController {
                             userAuthenticationRequest.getPassword()));
 
             if (authentication == null) {
-                return new JwtAuthenticationResponse(false, null, "Could not authenticate user");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                		new JwtAuthenticationResponse(false, null, "Could not authenticate user"));
             }
-            return new JwtAuthenticationResponse(true, String.valueOf(authentication.getDetails()), "ok");
+            return ResponseEntity.ok(new JwtAuthenticationResponse(true, String.valueOf(authentication.getDetails()), "ok"));
         } catch (Exception ex) {
-            return new JwtAuthenticationResponse(false, null, ex.getMessage());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+					new JwtAuthenticationResponse(false, null, ex.getMessage()));
         }
     }
 
