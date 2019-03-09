@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>trampoline-parent</artifactId>
+		<groupId>com.lucadev.trampoline</groupId>
+		<version>20190308</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<packaging>jar</packaging>
+	<artifactId>trampoline-validate-starter</artifactId>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>A trampoline starter module</description>
+	<url>https://github.com/Camphul/Trampoline</url>
+	<dependencies>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-web</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-web-autoconfigure</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

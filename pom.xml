@@ -27,9 +27,9 @@
         <module>trampoline-asset-store</module>
         <module>trampoline-asset-store-autoconfigure</module>
         <module>trampoline-asset-store-starter</module>
-		<module>trampoline-validate</module>
-		<module>trampoline-validate-autoconfigure</module>
-		<module>trampoline-validate-starter</module>
+		<module>trampoline-web</module>
+		<module>trampoline-web-autoconfigure</module>
+		<module>trampoline-web-starter</module>
 	</modules>
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>

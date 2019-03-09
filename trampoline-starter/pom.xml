@@ -52,7 +52,7 @@
         </dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-validate-starter</artifactId>
+			<artifactId>trampoline-web-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>

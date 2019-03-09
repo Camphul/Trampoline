@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lucadev.trampoline.web.autoconfig.ValidationServiceAutoConfiguration,\
+com.lucadev.trampoline.web.autoconfig.RestHandlerExceptionResolverAutoConfiguration
