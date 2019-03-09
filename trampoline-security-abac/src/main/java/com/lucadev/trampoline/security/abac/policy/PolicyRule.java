@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
@@ -25,9 +27,13 @@ import javax.persistence.Table;
 @Table(name = "TRAMPOLINE_POLICY_RULE")
 public class PolicyRule extends TrampolineEntity {
 
+	@NotBlank
+	@NotEmpty
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+	@NotBlank
+	@NotEmpty
     @Column(name = "description", nullable = false)
     private String description;
 

@@ -7,6 +7,9 @@ import org.springframework.util.unit.DataSize;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 /**
  * Asset meta data
@@ -24,15 +27,22 @@ import javax.persistence.Table;
 public class AssetMetaData extends TrampolineEntity {
 
     @Setter
+	@NotBlank
+	@NotEmpty
     @Column(name = "asset_name", nullable = false)
     private String name;
 
+    @NotBlank
+	@NotEmpty
     @Column(name = "original_filename", nullable = false)
     private String originalFilename;
 
+    @NotBlank
+	@NotEmpty
     @Column(name = "content_type")
     private String contentType;
 
+    @Positive
     @Column(name = "file_size")
     private long fileSize;
 

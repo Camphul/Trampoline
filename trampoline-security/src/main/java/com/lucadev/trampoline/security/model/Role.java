@@ -27,8 +27,8 @@ public class Role extends TrampolineEntity {
     /**
      * {@link User} group identifier.
      */
-    @Size(min = 2, max = 64, message = "Role size must be between 2 and 64")
-    @NotBlank(message = "Role name cannot be blank")
+	@NotBlank
+	@Size(min = 2, max = 64)
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

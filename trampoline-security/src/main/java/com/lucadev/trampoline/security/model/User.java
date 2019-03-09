@@ -29,8 +29,8 @@ import java.util.List;
 @Setter
 public class User extends TrampolineEntity implements UserDetails {
 
-    @NotBlank(message = "username cannot be blank")
-    @Length(min = 3, max = 32, message = "username must be between 3 and 32 characters")
+    @NotBlank
+    @Length(min = 3, max = 32)
     @Column(name = "username", nullable = false, unique = true, updatable = false)
     @Getter
     private String username;
