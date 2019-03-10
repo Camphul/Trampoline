@@ -43,7 +43,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 
 	@Transactional
 	@Override
-	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) {
+	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable {
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PostPolicy postPolicy = method.getAnnotation(PostPolicy.class);
@@ -52,13 +52,13 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 		try {
 			returnValue = joinPoint.proceed();
 		} catch (Throwable throwable) {
-			LOG.error("PostPolicy proxy received error", throwable);
-		} finally {
-			boolean permission = permissionEvaluator.hasPermission(authentication, returnValue, postPolicy.value());
-			if (permission) {
-				return returnValue;
-			}
-			throw new AccessDeniedException("Forbidden");
+			LOG.error("PostPolicy proxy received throwable.", throwable);
+			throw throwable;
 		}
+		boolean permission = permissionEvaluator.hasPermission(authentication, returnValue, postPolicy.value());
+		if (permission) {
+			return returnValue;
+		}
+		throw new AccessDeniedException("Forbidden");
 	}
 }

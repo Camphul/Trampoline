@@ -39,7 +39,7 @@ public class PolicyMethodSecurityAspect {
 	}
 
 	@Around("postPolicyDefinition()")
-	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) {
+	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable {
 		return policyMethodSecurityHandler.handlePostPolicy(joinPoint);
 	}
 

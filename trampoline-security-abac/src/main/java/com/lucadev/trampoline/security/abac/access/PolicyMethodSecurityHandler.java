@@ -24,5 +24,5 @@ public interface PolicyMethodSecurityHandler {
 	 * @param joinPoint
 	 * @return return value.
 	 */
-	Object handlePostPolicy(ProceedingJoinPoint joinPoint);
+	Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable;
 }
