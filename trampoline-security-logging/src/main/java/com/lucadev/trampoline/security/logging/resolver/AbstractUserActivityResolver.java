@@ -43,8 +43,8 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 		String className = ctx.getClassName();
 		String methodName = ctx.getMethodName();
 		boolean exceptionThrown = ctx.isExceptionThrown();
-		long startExec = ctx.getExecutionStart();
-		long finishExec = ctx.getExecutionFinish();
+		long startExec = ctx.getInvocationStart();
+		long finishExec = ctx.getInvocationEnd();
 		return new UserActivityInvocationDetails(className, methodName, exceptionThrown, startExec, finishExec);
 	}
 

@@ -15,8 +15,8 @@ import lombok.ToString;
 @ToString
 public class InterceptedUserActivityInvocationContext {
 
-	private final long executionStart;
-	private final long executionFinish;
+	private final long invocationStart;
+	private final long invocationEnd;
 	private final String className;
 	private final String methodName;
 	private final Object[] arguments;
