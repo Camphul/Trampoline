@@ -1,10 +1,9 @@
 package com.lucadev.trampoline.security.logging.activity.handler;
 
+import com.lucadev.trampoline.security.logging.activity.UserActivityMethodDetails;
 import com.lucadev.trampoline.security.logging.activity.UserActivity;
-import com.lucadev.trampoline.security.logging.activity.UserActivityInvocationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 /**
  * Simple {@link UserActivityHandler} which logs info.
@@ -18,16 +17,12 @@ public class LogUserActivityHandler implements UserActivityHandler {
 
 	@Override
 	public void handleUserActivity(UserActivity userActivity) {
-		String principalName = "null";
-		if(userActivity.getAuthentication() != null) {
-			principalName = userActivity.getAuthentication().getName();
-		}
-
-		UserActivityInvocationContext context = userActivity.getInvocationContext();
+		UserActivityMethodDetails context = userActivity.getInvocationDetails();
 
 		String identifier = userActivity.getIdentifier();
 		LOG.debug("{} triggered user activity {} through method {}#{} which took {}ms to complete",
-				principalName, identifier, context.getClassName(), context.getMethodName(),
-				(context.getExecutionFinish()-context.getExecutionStart()));
+				userActivity.getPrincipal(), identifier, context.getClassName(), context.getMethodName(),
+				(context.getFinishExecution()-context.getStartExecution()));
+		LOG.debug("Message: {}", userActivity.getDescription());
 	}
 }

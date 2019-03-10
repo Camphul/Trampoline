@@ -4,28 +4,23 @@ import com.lucadev.trampoline.security.logging.ActivityLayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.security.core.Authentication;
 
 /**
- * A wrapper for activity triggered by a user.
- *
+ * A single user activity.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
- * @since 3/9/19
+ * @since 3/10/19
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 @ToString
 public class UserActivity {
 
-	//Principal who triggered the action
-	private final Authentication authentication;
-	//Logging identifier to use
+	private final String principal;
 	private final String identifier;
-	//Category which was configured through the annotation
 	private final String category;
-	//Which layer is it executed.
 	private final ActivityLayer activityLayer;
+	private final UserActivityMethodDetails invocationDetails;
+	private final String description;
 
-	private final UserActivityInvocationContext invocationContext;
 
 }

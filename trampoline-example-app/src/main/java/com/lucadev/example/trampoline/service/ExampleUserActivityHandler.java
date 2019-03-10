@@ -1,6 +1,5 @@
 package com.lucadev.example.trampoline.service;
 
-import com.lucadev.example.trampoline.messaging.UserActivityMessage;
 import com.lucadev.trampoline.security.logging.activity.UserActivity;
 import com.lucadev.trampoline.security.logging.activity.handler.UserActivityHandler;
 import lombok.AllArgsConstructor;
@@ -27,6 +26,6 @@ public class ExampleUserActivityHandler implements UserActivityHandler {
 	public void handleUserActivity(UserActivity userActivity) {
 		LOG.info("Sending activity: {}::{}", userActivity.getCategory(), userActivity.getIdentifier());
 		LOG.info("Current security context: {}", SecurityContextHolder.getContext().getAuthentication());
-		jmsTemplate.convertAndSend("useractivity", new UserActivityMessage(userActivity));
+		jmsTemplate.convertAndSend("useractivity", userActivity);
 	}
 }
