@@ -29,7 +29,7 @@ public class WhoAmIController {
      * @return
      */
     @GetMapping("/whoami")
-	@PrePolicy("I_OWN_SWAG")
+	@PrePolicy("WHO_AM_I")
 	@LogUserActivity(value = "whoami", layer = ActivityLayer.CONTROLLER, resolver = WhoAmIUserActivityResolver.class)
     public User whoami() {
         return userService.currentUserOrThrow();
