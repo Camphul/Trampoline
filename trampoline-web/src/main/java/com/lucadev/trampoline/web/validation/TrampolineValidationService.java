@@ -17,6 +17,9 @@ public class TrampolineValidationService implements ValidationService {
 	 */
 	@Override
 	public BindingResultResponse createBindingResultResponse(BindingResult bindingResult) {
+		if(bindingResult == null) {
+			throw new NullPointerException("Could not create binding result response: bindingResult is null");
+		}
 		return new BindingResultResponse("Validation error has occurred.", bindingResult);
 	}
 }
