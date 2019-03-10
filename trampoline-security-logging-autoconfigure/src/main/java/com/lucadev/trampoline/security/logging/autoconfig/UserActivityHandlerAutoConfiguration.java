@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.logging.autoconfig;
 
-import com.lucadev.trampoline.security.logging.activity.handler.LogUserActivityHandler;
-import com.lucadev.trampoline.security.logging.activity.handler.UserActivityHandler;
+import com.lucadev.trampoline.security.logging.handler.LogUserActivityHandler;
+import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

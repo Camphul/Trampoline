@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.web.autoconfig;
 
-import com.lucadev.trampoline.web.internal.ResponseEntityResponseProcessor;
 import com.lucadev.trampoline.web.exception.handler.RestExceptionHandler;
+import com.lucadev.trampoline.web.exception.internal.ResponseEntityResponseProcessor;
 import com.lucadev.trampoline.web.exception.resolver.RestHandlerExceptionResolver;
 import com.lucadev.trampoline.web.exception.resolver.TrampolineRestHandlerExceptionResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

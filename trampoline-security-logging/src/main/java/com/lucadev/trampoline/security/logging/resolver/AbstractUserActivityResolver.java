@@ -1,15 +1,17 @@
-package com.lucadev.trampoline.security.logging.activity.resolver;
+package com.lucadev.trampoline.security.logging.resolver;
 
 import com.lucadev.trampoline.security.logging.ActivityLayer;
-import com.lucadev.trampoline.security.logging.activity.UserActivity;
-import com.lucadev.trampoline.security.logging.activity.UserActivityMethodDetails;
-import com.lucadev.trampoline.security.logging.activity.UserActivityResolver;
+import com.lucadev.trampoline.security.logging.UserActivity;
+import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
+import com.lucadev.trampoline.security.logging.UserActivityResolver;
 import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivity;
 import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivityInvocationContext;
 import com.lucadev.trampoline.security.model.User;
 import org.springframework.security.core.Authentication;
 
 /**
+ * Abstract {@link UserActivityResolver} which generates a simple description of the activity.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/10/19
  */
@@ -32,18 +34,18 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 		ActivityLayer activityLayer = activity.getActivityLayer();
 		String description = getReadableDescription(activity);
 		InterceptedUserActivityInvocationContext ctx = activity.getInvocationContext();
-		UserActivityMethodDetails mid = resolveInvocationDetails(ctx);
+		UserActivityInvocationDetails mid = resolveInvocationDetails(ctx);
 
 		return new UserActivity(principal, identifier, category, activityLayer, mid, description);
 	}
 
-	protected UserActivityMethodDetails resolveInvocationDetails(InterceptedUserActivityInvocationContext ctx) {
+	protected UserActivityInvocationDetails resolveInvocationDetails(InterceptedUserActivityInvocationContext ctx) {
 		String className = ctx.getClassName();
 		String methodName = ctx.getMethodName();
 		boolean exceptionThrown = ctx.isExceptionThrown();
 		long startExec = ctx.getExecutionStart();
 		long finishExec = ctx.getExecutionFinish();
-		return new UserActivityMethodDetails(className, methodName, exceptionThrown, startExec, finishExec);
+		return new UserActivityInvocationDetails(className, methodName, exceptionThrown, startExec, finishExec);
 	}
 
 	/**

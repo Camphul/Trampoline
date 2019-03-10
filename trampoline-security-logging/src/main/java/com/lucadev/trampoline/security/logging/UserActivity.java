@@ -1,12 +1,11 @@
-package com.lucadev.trampoline.security.logging.activity;
+package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.logging.ActivityLayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
- * A single user activity.
+ * A single user activity POJO.
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/10/19
  */
@@ -19,8 +18,7 @@ public class UserActivity {
 	private final String identifier;
 	private final String category;
 	private final ActivityLayer activityLayer;
-	private final UserActivityMethodDetails invocationDetails;
+	private final UserActivityInvocationDetails invocationDetails;
 	private final String description;
-
 
 }

@@ -2,7 +2,6 @@ package com.lucadev.trampoline.security.component;
 
 import com.lucadev.trampoline.security.configuration.AuthorizationSchemeConfiguration;
 import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

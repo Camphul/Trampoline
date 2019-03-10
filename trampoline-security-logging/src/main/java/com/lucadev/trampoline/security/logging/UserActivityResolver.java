@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.logging.activity;
+package com.lucadev.trampoline.security.logging;
 
 import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivity;
 

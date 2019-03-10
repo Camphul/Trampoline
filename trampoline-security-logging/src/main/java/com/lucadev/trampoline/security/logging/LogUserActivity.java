@@ -1,7 +1,6 @@
 package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.logging.activity.resolver.DefaultUserActivityResolver;
-import com.lucadev.trampoline.security.logging.activity.UserActivityResolver;
+import com.lucadev.trampoline.security.logging.resolver.DefaultUserActivityResolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation will trigger a {@link com.lucadev.trampoline.security.logging.activity.handler.UserActivityHandler}
+ * This annotation will trigger a {@link com.lucadev.trampoline.security.logging.handler.UserActivityHandler}
  *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/9/19

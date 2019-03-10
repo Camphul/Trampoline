@@ -2,8 +2,8 @@ package com.lucadev.trampoline.security.logging.aop;
 
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
-import com.lucadev.trampoline.security.logging.activity.UserActivity;
-import com.lucadev.trampoline.security.logging.activity.handler.UserActivityHandler;
+import com.lucadev.trampoline.security.logging.UserActivity;
+import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

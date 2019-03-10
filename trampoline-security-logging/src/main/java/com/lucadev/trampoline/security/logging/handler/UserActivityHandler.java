@@ -1,6 +1,6 @@
-package com.lucadev.trampoline.security.logging.activity.handler;
+package com.lucadev.trampoline.security.logging.handler;
 
-import com.lucadev.trampoline.security.logging.activity.UserActivity;
+import com.lucadev.trampoline.security.logging.UserActivity;
 
 /**
  * Interface which gets fired when user activity is recorded.

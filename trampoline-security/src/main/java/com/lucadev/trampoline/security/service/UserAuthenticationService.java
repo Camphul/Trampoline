@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.service;
 
-import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.model.User;
 
 /**

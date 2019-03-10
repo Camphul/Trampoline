@@ -1,6 +1,6 @@
 package com.lucadev.example.trampoline.controller;
 
-import com.lucadev.example.trampoline.service.WhoamiUserActivityResolver;
+import com.lucadev.example.trampoline.service.WhoAmIUserActivityResolver;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.model.User;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class WhoAmIController {
 
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * Evaluate if principal(current user) has access to this mapping.
@@ -30,7 +30,7 @@ public class WhoAmIController {
      */
     @GetMapping("/whoami")
     @PreAuthorize("hasPermission(null, 'WHO_AM_I')")
-	@LogUserActivity(value = "whoami", category = "whoami", layer = ActivityLayer.CONTROLLER, resolver = WhoamiUserActivityResolver.class)
+	@LogUserActivity(value = "whoami", layer = ActivityLayer.CONTROLLER, resolver = WhoAmIUserActivityResolver.class)
     public User whoami() {
         return userService.currentUserOrThrow();
     }
