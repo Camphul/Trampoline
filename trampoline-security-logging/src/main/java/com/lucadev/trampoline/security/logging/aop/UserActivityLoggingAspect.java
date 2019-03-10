@@ -5,6 +5,7 @@ import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.logging.UserActivity;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.service.time.TimeProvider;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.lang.reflect.Method;
 
 /**
+ * Spring AoP aspect to handle method invocations that have the {@link LogUserActivity} annotation.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/9/19
  */
@@ -78,6 +81,11 @@ public class UserActivityLoggingAspect implements ApplicationContextAware {
 		return returnObject;
 	}
 
+	/**
+	 * Invoked by spring context as we require to obtain a resolver bean for user activities.
+	 * @param applicationContext
+	 * @throws BeansException
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
