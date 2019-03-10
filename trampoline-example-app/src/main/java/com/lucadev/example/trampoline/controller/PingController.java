@@ -1,6 +1,7 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.model.MessageResponse;
+import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.service.time.TimeProvider;
@@ -38,7 +39,7 @@ public class PingController {
      * @return
      */
     @GetMapping("/ping/protected")
-    @PreAuthorize("hasPermission(null, 'PING_PROTECTED')")
+    @PrePolicy("PING_PROTECTED")
 	@LogUserActivity(value = "ping_protected", category = "ping", layer = ActivityLayer.CONTROLLER)
     public MessageResponse pingProtected() {
         return new MessageResponse("Pong protected: " + timeProvider.unix());

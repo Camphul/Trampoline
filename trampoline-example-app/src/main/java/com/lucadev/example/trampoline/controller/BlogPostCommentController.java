@@ -9,6 +9,8 @@ import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
 import com.lucadev.trampoline.data.pagination.MappedPage;
 import com.lucadev.trampoline.model.SuccessResponse;
 import com.lucadev.trampoline.model.UUIDSuccessResponse;
+import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
+import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -44,7 +46,7 @@ public class BlogPostCommentController {
      * @return
      */
     @GetMapping("/blogs/{blogId}/comments")
-    @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_LIST')")//Check for permission before invocation
+    @PrePolicy("BLOGPOST_COMMENTS_LIST")//Check for permission before invocation
     public Page<BlogPostCommentDto> getBlogPostComments(@PathVariable("blogId") UUID blogId, Pageable pageable) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         Page<BlogPostComment> blogPostCommentPage = blogPostService.findAllComments(blogPost, pageable);
@@ -59,7 +61,7 @@ public class BlogPostCommentController {
      * @return
      */
     @PostMapping("/blogs/{blogId}/comments")
-    @PreAuthorize("hasPermission(null, 'BLOGPOST_COMMENTS_CREATE')")
+    @PrePolicy("BLOGPOST_COMMENTS_CREATE")
     public UUIDSuccessResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody @Valid CreateBlogPostCommentRequest request) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         User currentUser = userService.currentUserOrThrow();
@@ -69,7 +71,7 @@ public class BlogPostCommentController {
     }
 
     @GetMapping("/blogs/{blogId}/comments/{commentId}")
-    @PostAuthorize("hasPermission(returnObject,'BLOGPOST_COMMENT_VIEW')")
+    @PostPolicy("BLOGPOST_COMMENT_VIEW")
     public BlogPostCommentDto viewBlogPostComment(@PathVariable("blogId") UUID blogId, @PathVariable("commentId") UUID commentId) {
         //BlogId is not requireed but we want to check if someone is not messing with the url
         BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));

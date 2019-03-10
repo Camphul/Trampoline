@@ -10,6 +10,8 @@ import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
 import com.lucadev.trampoline.data.pagination.MappedPage;
 import com.lucadev.trampoline.model.SuccessResponse;
 import com.lucadev.trampoline.model.UUIDSuccessResponse;
+import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
+import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import com.lucadev.trampoline.security.model.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -46,7 +48,7 @@ public class BlogPostController {
      * @return a mapped result of the blogs.
      */
     @GetMapping("/blogs")
-    @PreAuthorize("hasPermission(null, 'BLOGPOST_LIST')")
+    @PrePolicy("BLOGPOST_LIST")
     public Page<BlogPostSummaryDto> getBlogPosts(Pageable pageable) {
         Page<BlogPost> blogPostPage = blogPostService.findAll(pageable);
 
@@ -60,7 +62,7 @@ public class BlogPostController {
      * @return
      */
     @PostMapping("/blogs")
-    @PreAuthorize("hasPermission(null, 'BLOGPOST_CREATE')")
+    @PrePolicy("BLOGPOST_CREATE")
     public UUIDSuccessResponse createBlogPost(@RequestBody @Valid CreateBlogPostRequest request) {
         //Most likely not null since it has already authenticated.
         User user = userService.currentUserOrThrow();
@@ -79,7 +81,8 @@ public class BlogPostController {
      * @return
      */
     @GetMapping("/blogs/{id}")
-    @PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
+    //@PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
+	@PostPolicy("BLOGPOST_VIEW")
     public BlogPostDto viewBlogPost(@PathVariable("id") UUID id, Pageable pageable) {
         BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
         return new BlogPostDto(blogPost,

@@ -53,3 +53,8 @@ We have the following objects/methods available inside SpEL expressions:
 - `isAction(action)`: equality method for the action object.
 
 The `hasAuthority` method is built into Spring and will check if a Privilege/Role from trampoline-security is present.
+
+### Pre/PostPolicy annotation
+
+We have implemented our own security annotations which are comparable to `PreAuthorize` and `PostAuthorize`.
+These annotations use Spring AoP to check the permissions using the built in `PermissionEvaluator`.

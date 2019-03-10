@@ -13,6 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -23,6 +24,7 @@ import java.lang.reflect.Method;
  * @since 3/9/19
  */
 @Aspect
+@Order(20)
 public class UserActivityLoggingAspect implements ApplicationContextAware {
 
 	private final UserActivityHandler userActivityHandler;
