@@ -19,25 +19,25 @@ import java.util.Map;
  */
 public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEvaluator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineAbacPermissionEvaluator.class);
-    private final TimeProvider timeProvider;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineAbacPermissionEvaluator.class);
+	private final TimeProvider timeProvider;
 
-    public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement, TimeProvider timeProvider) {
-        super(policyEnforcement);
-        this.timeProvider = timeProvider;
-    }
+	public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement, TimeProvider timeProvider) {
+		super(policyEnforcement);
+		this.timeProvider = timeProvider;
+	}
 
-    @Override
-    public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        if (authentication == null) {
-            throw new AccessDeniedException("Not authenticated");
-        }
-        Object user = authentication.getPrincipal();
-        Map<String, Object> environment = new HashMap<>();
+	@Override
+	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
+		if (authentication == null) {
+			throw new AccessDeniedException("Not authenticated");
+		}
+		Object user = authentication.getPrincipal();
+		Map<String, Object> environment = new HashMap<>();
 
-        environment.put("time", timeProvider.now());
+		environment.put("time", timeProvider.now());
 
-        LOGGER.debug("hasPermission({}, {}, {})", user, targetDomainObject, permission);
-        return policyEnforcement.check(user, targetDomainObject, permission, environment);
-    }
+		LOGGER.debug("hasPermission({}, {}, {})", user, targetDomainObject, permission);
+		return policyEnforcement.check(user, targetDomainObject, permission, environment);
+	}
 }

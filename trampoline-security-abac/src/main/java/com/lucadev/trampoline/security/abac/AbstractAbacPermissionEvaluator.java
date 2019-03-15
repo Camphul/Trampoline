@@ -14,11 +14,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 public abstract class AbstractAbacPermissionEvaluator implements AbacPermissionEvaluator {
 
-    @Getter
-    protected final PolicyEnforcement policyEnforcement;
+	@Getter
+	protected final PolicyEnforcement policyEnforcement;
 
-    @Override
-    public boolean hasPermission(Authentication authentication, Serializable serializable, String s, Object o) {
-        return false;
-    }
+	@Override
+	public boolean hasPermission(Authentication authentication, Serializable serializable, String s, Object o) {
+		return false;
+	}
 }

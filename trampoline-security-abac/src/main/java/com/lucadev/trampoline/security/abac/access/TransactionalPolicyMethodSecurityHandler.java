@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Method;
 
 /**
+ * Transactional implementation of {@link PolicyMethodSecurityHandler} used to rollback transactions when unauthorized.
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 3/10/19
  */
@@ -34,7 +36,6 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrePolicy prePolicy = method.getAnnotation(PrePolicy.class);
 
-		LOG.debug("PrePolicy checking {}#{}", method.getDeclaringClass().getName(), method.getName());
 		boolean permission = permissionEvaluator.hasPermission(authentication, null, prePolicy.value());
 		if (!permission) {
 			throw new AccessDeniedException("Forbidden");
@@ -44,21 +45,25 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 	@Transactional
 	@Override
 	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable {
+		//Obtain method details
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PostPolicy postPolicy = method.getAnnotation(PostPolicy.class);
 
 		Object returnValue = null;
+		//Attempt to invocate method
 		try {
 			returnValue = joinPoint.proceed();
 		} catch (Throwable throwable) {
 			LOG.error("PostPolicy proxy received throwable.", throwable);
 			throw throwable;
 		}
+		//Check if invocated method has permissions
 		boolean permission = permissionEvaluator.hasPermission(authentication, returnValue, postPolicy.value());
 		if (permission) {
 			return returnValue;
 		}
+		//Throw 401 when permission check returned false.
 		throw new AccessDeniedException("Forbidden");
 	}
 }

@@ -14,32 +14,32 @@ import static org.junit.Assert.assertEquals;
  */
 public class SpelAttributeConverterTest {
 
-    private SpelAttributeConverter attributeConverter;
+	private SpelAttributeConverter attributeConverter;
 
-    @Before
-    public void setup() {
-        attributeConverter = new SpelAttributeConverter();
-    }
+	@Before
+	public void setup() {
+		attributeConverter = new SpelAttributeConverter();
+	}
 
-    @After
-    public void tearDown() {
-        attributeConverter = null;
-    }
+	@After
+	public void tearDown() {
+		attributeConverter = null;
+	}
 
-    @Test
-    public void shouldConvertToDatabaseColumn() {
-        ExpressionParser expressionParser = new SpelDeserializer().getElParser();
-        String expected = "true && true";
-        Expression expr = expressionParser.parseExpression(expected);
-        assertEquals(expected, attributeConverter.convertToDatabaseColumn(expr));
-    }
+	@Test
+	public void shouldConvertToDatabaseColumn() {
+		ExpressionParser expressionParser = new SpelDeserializer().getElParser();
+		String expected = "true && true";
+		Expression expr = expressionParser.parseExpression(expected);
+		assertEquals(expected, attributeConverter.convertToDatabaseColumn(expr));
+	}
 
-    @Test
-    public void shouldConvertToEntityAttribute() {
-        String expected = "true && true";
-        Expression result = attributeConverter.convertToEntityAttribute(expected);
-        assertEquals(expected, result.getExpressionString());
-    }
+	@Test
+	public void shouldConvertToEntityAttribute() {
+		String expected = "true && true";
+		Expression result = attributeConverter.convertToEntityAttribute(expected);
+		assertEquals(expected, result.getExpressionString());
+	}
 
 
 }

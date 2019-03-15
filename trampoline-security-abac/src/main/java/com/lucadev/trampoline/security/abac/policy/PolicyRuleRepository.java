@@ -10,19 +10,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PolicyRuleRepository extends TrampolineRepository<PolicyRule> {
 
-    /**
-     * Find one policy rule
-     *
-     * @param name
-     * @return
-     */
-    PolicyRule findOneByName(String name);
+	/**
+	 * Find one policy rule
+	 *
+	 * @param name
+	 * @return
+	 */
+	PolicyRule findOneByName(String name);
 
-    /**
-     * Count policy by name
-     *
-     * @param name
-     * @return
-     */
-    long countByName(String name);
+	/**
+	 * Count policy by name
+	 *
+	 * @param name
+	 * @return
+	 */
+	long countByName(String name);
 }

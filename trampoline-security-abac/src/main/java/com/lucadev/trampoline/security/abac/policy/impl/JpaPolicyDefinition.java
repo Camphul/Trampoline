@@ -20,55 +20,55 @@ import java.util.List;
 @AllArgsConstructor
 public class JpaPolicyDefinition implements PolicyDefinition {
 
-    public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
-    private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyDefinition.class);
-    private final PolicyRuleRepository policyRuleRepository;
+	public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
+	private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyDefinition.class);
+	private final PolicyRuleRepository policyRuleRepository;
 
-    /**
-     * Import parent policy rules into the JPA datasource.
-     *
-     * @param repository the repository to use.
-     * @param parent     the parent policy definition, null is accepted.
-     */
-    public JpaPolicyDefinition(PolicyRuleRepository repository, PolicyDefinition parent) {
-        this(repository);
-        if (parent != null) {
-            importPolicyRules(parent);
-        }
-    }
+	/**
+	 * Import parent policy rules into the JPA datasource.
+	 *
+	 * @param repository the repository to use.
+	 * @param parent     the parent policy definition, null is accepted.
+	 */
+	public JpaPolicyDefinition(PolicyRuleRepository repository, PolicyDefinition parent) {
+		this(repository);
+		if (parent != null) {
+			importPolicyRules(parent);
+		}
+	}
 
-    private void importPolicyRules(PolicyDefinition parent) {
-        LOGGER.info("Importing policy rules...");
-        List<PolicyRule> policyRules = parent.findAllPolicyRules();
+	private void importPolicyRules(PolicyDefinition parent) {
+		LOGGER.info("Importing policy rules...");
+		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
-        parent.findAllPolicyRules().stream()
-                //Only add when none exist with the same name
-                .filter(r -> !hasPolicyRule(r.getName()))
-                .forEach(this::addPolicyRule);
-    }
+		parent.findAllPolicyRules().stream()
+				//Only add when none exist with the same name
+				.filter(r -> !hasPolicyRule(r.getName()))
+				.forEach(this::addPolicyRule);
+	}
 
-    @Cacheable(POLICY_RULE_CACHE_REGION)
-    @Override
-    public List<PolicyRule> findAllPolicyRules() {
-        return policyRuleRepository.findAll();
-    }
+	@Cacheable(POLICY_RULE_CACHE_REGION)
+	@Override
+	public List<PolicyRule> findAllPolicyRules() {
+		return policyRuleRepository.findAll();
+	}
 
-    @Override
-    @Cacheable(POLICY_RULE_CACHE_REGION)
-    public boolean hasPolicyRule(String name) {
-        return policyRuleRepository.countByName(name) > 0;
-    }
+	@Override
+	@Cacheable(POLICY_RULE_CACHE_REGION)
+	public boolean hasPolicyRule(String name) {
+		return policyRuleRepository.countByName(name) > 0;
+	}
 
-    @Override
-    @CacheEvict(POLICY_RULE_CACHE_REGION)
-    public PolicyRule addPolicyRule(PolicyRule policyRule) {
-        LOGGER.debug("Saving policy rule {}", policyRule.getName());
-        return policyRuleRepository.save(policyRule);
-    }
+	@Override
+	@CacheEvict(POLICY_RULE_CACHE_REGION)
+	public PolicyRule addPolicyRule(PolicyRule policyRule) {
+		LOGGER.debug("Saving policy rule {}", policyRule.getName());
+		return policyRuleRepository.save(policyRule);
+	}
 
-    @Override
-    @CacheEvict(POLICY_RULE_CACHE_REGION)
-    public PolicyRule updatePolicyRule(PolicyRule policyRule) {
-        return addPolicyRule(policyRule);
-    }
+	@Override
+	@CacheEvict(POLICY_RULE_CACHE_REGION)
+	public PolicyRule updatePolicyRule(PolicyRule policyRule) {
+		return addPolicyRule(policyRule);
+	}
 }

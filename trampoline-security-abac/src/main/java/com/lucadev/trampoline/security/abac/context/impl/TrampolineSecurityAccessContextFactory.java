@@ -13,19 +13,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class TrampolineSecurityAccessContextFactory implements SecurityAccessContextFactory {
 
-    @Override
-    public SecurityAccessContext create(Object subject, Object resource, Object action, Object environment) {
-        Authentication authentication = getAuthenticationContext();
-        return new TrampolineSecurityAccessContext(authentication, subject, resource, action, environment);
-    }
+	@Override
+	public SecurityAccessContext create(Object subject, Object resource, Object action, Object environment) {
+		Authentication authentication = getAuthenticationContext();
+		return new TrampolineSecurityAccessContext(authentication, subject, resource, action, environment);
+	}
 
 
-    /**
-     * Security context
-     *
-     * @return {@link Authentication}
-     */
-    protected Authentication getAuthenticationContext() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+	/**
+	 * Security context
+	 *
+	 * @return {@link Authentication}
+	 */
+	protected Authentication getAuthenticationContext() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
 }

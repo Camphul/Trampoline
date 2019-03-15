@@ -18,31 +18,31 @@ import org.springframework.security.core.Authentication;
 @EqualsAndHashCode
 public class TrampolineSecurityAccessContext extends SecurityExpressionRoot implements SecurityAccessContext {
 
-    private Object subject;
-    private Object resource;
-    private Object action;
-    private Object environment;
+	private Object subject;
+	private Object resource;
+	private Object action;
+	private Object environment;
 
-    protected TrampolineSecurityAccessContext(Authentication authentication) {
-        super(authentication);
-    }
+	protected TrampolineSecurityAccessContext(Authentication authentication) {
+		super(authentication);
+	}
 
-    public TrampolineSecurityAccessContext(Authentication authentication, Object subject, Object resource, Object action, Object environment) {
-        this(authentication);
-        this.subject = subject;
-        this.resource = resource;
-        this.action = action;
-        this.environment = environment;
-    }
+	public TrampolineSecurityAccessContext(Authentication authentication, Object subject, Object resource, Object action, Object environment) {
+		this(authentication);
+		this.subject = subject;
+		this.resource = resource;
+		this.action = action;
+		this.environment = environment;
+	}
 
-    /**
-     * Check if actions match
-     *
-     * @param action the action to check
-     * @return
-     */
-    @Override
-    public boolean isAction(Object action) {
-        return this.action.equals(action);
-    }
+	/**
+	 * Check if actions match
+	 *
+	 * @param action the action to check
+	 * @return
+	 */
+	@Override
+	public boolean isAction(Object action) {
+		return this.action.equals(action);
+	}
 }

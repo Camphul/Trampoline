@@ -19,12 +19,12 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableCaching
 public class GlobalAbacMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
-    private final AbacPermissionEvaluator abacPermissionEvaluator;
+	private final AbacPermissionEvaluator abacPermissionEvaluator;
 
-    @Override
-    protected MethodSecurityExpressionHandler createExpressionHandler() {
-        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(abacPermissionEvaluator);
-        return expressionHandler;
-    }
+	@Override
+	protected MethodSecurityExpressionHandler createExpressionHandler() {
+		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+		expressionHandler.setPermissionEvaluator(abacPermissionEvaluator);
+		return expressionHandler;
+	}
 }

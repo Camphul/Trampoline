@@ -11,9 +11,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class SpelDeserializerTest {
 
-    @Test
-    public void shouldCreateElParser() {
-        assertTrue(new SpelDeserializer().getElParser() instanceof SpelExpressionParser);
-    }
+	@Test
+	public void shouldCreateElParser() {
+		assertTrue(new SpelDeserializer().getElParser() instanceof SpelExpressionParser);
+	}
 
 }

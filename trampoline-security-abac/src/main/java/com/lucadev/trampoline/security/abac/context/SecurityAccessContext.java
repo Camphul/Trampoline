@@ -10,32 +10,32 @@ import org.springframework.security.access.expression.SecurityExpressionOperatio
  */
 public interface SecurityAccessContext extends SecurityExpressionOperations {
 
-    /**
-     * @return Identity trying to access the resource
-     */
-    Object getSubject();
+	/**
+	 * @return Identity trying to access the resource
+	 */
+	Object getSubject();
 
-    /**
-     * @return the resource being accessed by the subject
-     */
-    Object getResource();
+	/**
+	 * @return the resource being accessed by the subject
+	 */
+	Object getResource();
 
-    /**
-     * @return the action being taken against the resource by the subject
-     */
-    Object getAction();
+	/**
+	 * @return the action being taken against the resource by the subject
+	 */
+	Object getAction();
 
-    /**
-     * @return the environment/context in which the action is being taken against the resource by the subject.
-     */
-    Object getEnvironment();
+	/**
+	 * @return the environment/context in which the action is being taken against the resource by the subject.
+	 */
+	Object getEnvironment();
 
-    /**
-     * Check if the given action is equal to the action in the parameters
-     *
-     * @param action the action to check
-     * @return if the actions match
-     */
-    boolean isAction(Object action);
+	/**
+	 * Check if the given action is equal to the action in the parameters
+	 *
+	 * @param action the action to check
+	 * @return if the actions match
+	 */
+	boolean isAction(Object action);
 
 }

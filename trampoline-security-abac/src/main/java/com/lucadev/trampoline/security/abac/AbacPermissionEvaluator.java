@@ -11,10 +11,10 @@ import org.springframework.security.access.PermissionEvaluator;
  */
 public interface AbacPermissionEvaluator extends PermissionEvaluator {
 
-    /**
-     * Get the policy enforcement being used by the evaluator.
-     *
-     * @return a {@link PolicyEnforcement}
-     */
-    PolicyEnforcement getPolicyEnforcement();
+	/**
+	 * Get the policy enforcement being used by the evaluator.
+	 *
+	 * @return a {@link PolicyEnforcement}
+	 */
+	PolicyEnforcement getPolicyEnforcement();
 }
