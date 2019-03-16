@@ -37,7 +37,7 @@ public interface UserService extends UserDetailsService {
     User currentUserOrThrow();
 
     /**
-     * Find a {@link User} by it's {@link User#id}
+     * Find a {@link User} by it's {@link User#getId()}
      *
      * @param subject the {@link UUID} to find.
      * @return null or the found {@link User}
@@ -61,7 +61,7 @@ public interface UserService extends UserDetailsService {
     User update(User user);
 
     /**
-     * Update {@link User#updated} value.
+     * Update {@link User#getUpdated()} value.
      *
      * @param user the {@link User} to update.
      * @return the updated {@link User}
@@ -84,7 +84,7 @@ public interface UserService extends UserDetailsService {
     Page<User> findAll(Pageable pageable);
 
     /**
-     * Set {@link User#enabled} to false.
+     * Set {@link User#isEnabled()} to false.
      *
      * @param user the {@link User} to disable.
      * @return the updated, now disabled {@link User}
@@ -92,7 +92,7 @@ public interface UserService extends UserDetailsService {
     User disable(User user);
 
     /**
-     * Set {@link User#enabled} to true.
+     * Set {@link User#isEnabled()} to true.
      *
      * @param user the {@link User} to enable.
      * @return the updated, enabled {@link User}
@@ -100,7 +100,7 @@ public interface UserService extends UserDetailsService {
     User enable(User user);
 
     /**
-     * Set the {@link User#enabled} flag
+     * Set the {@link User#isEnabled()} flag
      *
      * @param user    the {@link User} to set the flag of.
      * @param enabled enabled flag
@@ -117,7 +117,7 @@ public interface UserService extends UserDetailsService {
     User expire(User user);
 
     /**
-     * Set the {@link User#expired} flag
+     * Set the {@link User#isExpired()}  flag
      *
      * @param user    the {@link User} to set the flag on.
      * @param expired the new flag value.
@@ -142,7 +142,7 @@ public interface UserService extends UserDetailsService {
     User unlock(User user);
 
     /**
-     * Set the {@link User#locked} flag.
+     * Set the {@link User#isLocked()} flag.
      *
      * @param user   the {@link User} to apply the flag on.
      * @param locked the new locked value.
@@ -159,7 +159,7 @@ public interface UserService extends UserDetailsService {
     User expireCredentials(User user);
 
     /**
-     * Set the {@link User#credentialsExpired} flag.
+     * Set the {@link User#isCredentialsExpired()} flag.
      *
      * @param user    the {@link User} to apply the flag on.
      * @param expired the new flag value.

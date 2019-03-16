@@ -14,7 +14,7 @@ public interface RoleService {
     /**
      * Check if a certain {@link Role}exists.
      *
-     * @param roleName the {@link Role#name} attribute.
+     * @param roleName the {@link Role#getName()} attribute.
      * @return true when a {@link Role} exists with the specified {@code roleName}
      */
     boolean exists(String roleName);
@@ -22,7 +22,7 @@ public interface RoleService {
     /**
      * Find a {@link Role} by it's name.
      *
-     * @param roleName the {@link Role#name} attribute value.
+     * @param roleName the {@link Role#getName()} attribute value.
      * @return the found {@link Role} or null.
      */
     Role find(String roleName);
@@ -57,7 +57,7 @@ public interface RoleService {
     /**
      * Create a new {@link Role}
      *
-     * @param roleName the {@link Role#name}
+     * @param roleName the {@link Role#getName()}
      * @return the newly persisted {@link Role}
      */
     Role create(String roleName);

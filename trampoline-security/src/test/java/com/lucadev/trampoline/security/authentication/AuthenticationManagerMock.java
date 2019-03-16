@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Fake/mocked {@link AuthenticationManager} to test the authentication services using them
@@ -33,7 +34,7 @@ public class AuthenticationManagerMock implements AuthenticationManager {
             user.setPassword(password);
             user.setEmail(username + "@test.junit");
             return new UsernamePasswordAuthenticationToken(user, password,
-                    Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+					Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         }
         throw new BadCredentialsException("1000");
     }

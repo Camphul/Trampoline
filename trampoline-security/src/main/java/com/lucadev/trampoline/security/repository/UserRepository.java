@@ -16,9 +16,9 @@ import java.util.Optional;
 public interface UserRepository extends TrampolineRepository<User> {
 
     /**
-     * Find one {@link User} by it's {@link User#username}
+     * Find one {@link User} by it's {@link User#getUsername()}
      *
-     * @param username the {@link User#username}
+     * @param username the {@link User#getUsername()}
      * @return the found {@link User}
      */
     Optional<User> findOneByUsername(String username);

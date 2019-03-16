@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 21-4-18
  */
 @SpringBootApplication
-@ComponentScan
 public class MockApplication {
 
     public static void main(String[] args) {

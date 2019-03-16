@@ -27,38 +27,32 @@ import java.util.List;
 @Entity
 @Table(name = "TRAMPOLINE_USER")
 @Setter
+@Getter
 public class User extends TrampolineEntity implements UserDetails {
 
     @NotBlank
     @Length(min = 3, max = 32)
     @Column(name = "username", nullable = false, unique = true, updatable = false)
-    @Getter
     private String username;
 
     @Email
     @Column(name = "email", nullable = false, unique = true)
-    @Getter
     private String email;
 
     @NotBlank
     @Column(name = "password", nullable = false)
-    @Getter
     private String password;
 
     @Column(name = "is_expired", nullable = false)
-    @Getter(AccessLevel.PROTECTED)
     private boolean expired = false;
 
     @Column(name = "is_locked", nullable = false)
-    @Getter(AccessLevel.PROTECTED)
     private boolean locked = false;
 
     @Column(name = "is_credentials_expired", nullable = false)
-    @Getter(AccessLevel.PROTECTED)
     private boolean credentialsExpired = false;
 
     @Column(name = "is_enabled", nullable = false)
-    @Getter
     private boolean enabled = true;
 
     //UserDetails roles can never be null so we use eager loading for roles.
@@ -67,19 +61,16 @@ public class User extends TrampolineEntity implements UserDetails {
             name = "TRAMPOLINE_USER_ROLE",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "id"))
-    @Getter
     private List<Role> roles = new ArrayList<>();
 
     @Column(name = "last_password_reset_at", nullable = false)
     @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
-    @Getter
     private Date lastPasswordReset;
 
     @Column(name = "last_seen", nullable = false)
     @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
-    @Getter
     private Date lastSeen;
 
     /**

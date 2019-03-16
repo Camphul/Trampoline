@@ -28,7 +28,7 @@ public interface PrivilegeService {
     /**
      * Find a {@link Privilege} by it's name.
      *
-     * @param privilegeName the {@link Privilege#name} attribute value.
+     * @param privilegeName the {@link Privilege#getName()} attribute value.
      * @return the found {@link Privilege} or null.
      */
     Privilege find(String privilegeName);
