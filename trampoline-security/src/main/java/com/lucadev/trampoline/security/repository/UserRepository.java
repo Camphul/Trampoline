@@ -26,8 +26,8 @@ public interface UserRepository extends TrampolineRepository<User> {
     /**
      * Find user by its email.
      *
-     * @param email
-     * @return
+     * @param email user email
+     * @return resolved user in an optional.
      */
     Optional<User> findOneByEmail(String email);
 

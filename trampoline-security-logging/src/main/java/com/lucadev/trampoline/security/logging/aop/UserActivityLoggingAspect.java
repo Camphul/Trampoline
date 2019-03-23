@@ -83,8 +83,8 @@ public class UserActivityLoggingAspect implements ApplicationContextAware {
 
 	/**
 	 * Invoked by spring context as we require to obtain a resolver bean for user activities.
-	 * @param applicationContext
-	 * @throws BeansException
+	 * @param applicationContext app context.
+	 * @throws BeansException when we couldnt set the app context.
 	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

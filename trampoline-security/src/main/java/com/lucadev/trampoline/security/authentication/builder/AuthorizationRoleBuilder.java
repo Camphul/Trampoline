@@ -61,7 +61,7 @@ public class AuthorizationRoleBuilder {
      * Set the name for the {@link Role}. The name should start with ROLE_ prefix.
      *
      * @param name the name for the {@link Role}
-     * @return
+     * @return the builder.
      */
     public AuthorizationRoleBuilder withName(String name) {
         this.roleName = name;
@@ -85,7 +85,7 @@ public class AuthorizationRoleBuilder {
      *
      * @param privileges a String array of privilege strings to add.
      * @return the role builder.
-     * @see {@link Privilege}
+     * @see Privilege
      */
     public AuthorizationRoleBuilder withPrivileges(String... privileges) {
         AuthorizationRoleBuilder builder = this;
@@ -121,7 +121,7 @@ public class AuthorizationRoleBuilder {
      * Builds the role. Does not build when role already exists.
      * Also adds all roles.
      *
-     * @return
+     * @return the builder.
      */
     public AuthorizationRoleBuilder build() {
         if (roleName == null || roleName.isEmpty()) {

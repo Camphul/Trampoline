@@ -84,7 +84,7 @@ public interface UserService extends UserDetailsService {
     Page<User> findAll(Pageable pageable);
 
     /**
-     * Set {@link User#isEnabled()} to false.
+     * Set user enabled to false.
      *
      * @param user the {@link User} to disable.
      * @return the updated, now disabled {@link User}
@@ -92,7 +92,7 @@ public interface UserService extends UserDetailsService {
     User disable(User user);
 
     /**
-     * Set {@link User#isEnabled()} to true.
+     * Set user enabled to true.
      *
      * @param user the {@link User} to enable.
      * @return the updated, enabled {@link User}
@@ -100,7 +100,7 @@ public interface UserService extends UserDetailsService {
     User enable(User user);
 
     /**
-     * Set the {@link User#isEnabled()} flag
+     * Set the user enabled flag
      *
      * @param user    the {@link User} to set the flag of.
      * @param enabled enabled flag
@@ -117,7 +117,7 @@ public interface UserService extends UserDetailsService {
     User expire(User user);
 
     /**
-     * Set the {@link User#isExpired()}  flag
+     * Set the user expired. flag
      *
      * @param user    the {@link User} to set the flag on.
      * @param expired the new flag value.
@@ -142,7 +142,7 @@ public interface UserService extends UserDetailsService {
     User unlock(User user);
 
     /**
-     * Set the {@link User#isLocked()} flag.
+     * Set the user locked flag.
      *
      * @param user   the {@link User} to apply the flag on.
      * @param locked the new locked value.
@@ -159,7 +159,7 @@ public interface UserService extends UserDetailsService {
     User expireCredentials(User user);
 
     /**
-     * Set the {@link User#isCredentialsExpired()} flag.
+     * Set the user credentials expired flag.
      *
      * @param user    the {@link User} to apply the flag on.
      * @param expired the new flag value.
@@ -170,15 +170,15 @@ public interface UserService extends UserDetailsService {
     /**
      * Similar to {@link UserDetailsService#loadUserByUsername(String)}
      *
-     * @param email
-     * @return
+     * @param email user email.
+     * @return resolved user.
      */
     UserDetails loadUserByEmail(String email);
 
     /**
      * Current {@link IdentificationType} being used
      *
-     * @return
+     * @return method of identification(username/email)
      */
     IdentificationType getIdentificationType();
 

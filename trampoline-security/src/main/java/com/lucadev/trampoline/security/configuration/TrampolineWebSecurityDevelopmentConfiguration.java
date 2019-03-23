@@ -61,7 +61,7 @@ public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityCo
     /**
      * Strictly used in dev profile to load h2 console
      *
-     * @return
+     * @return h2 console bean.
      */
     @Bean
     public ServletRegistrationBean h2servletRegistration() {

@@ -22,9 +22,9 @@ public interface UserAuthenticationService {
     /**
      * Change {@link User} password.
      *
-     * @param user
-     * @param newPassword
-     * @return
+     * @param user user to change password on.
+     * @param newPassword new password.
+     * @return updated user.
      */
     User changePassword(User user, String newPassword);
 

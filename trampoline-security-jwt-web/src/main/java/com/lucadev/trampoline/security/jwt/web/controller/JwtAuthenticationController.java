@@ -32,8 +32,8 @@ public class JwtAuthenticationController {
     /**
      * Login with username-password
      *
-     * @param userAuthenticationRequest
-     * @return
+     * @param userAuthenticationRequest authorization request dto
+     * @return response of the authorization
      */
     @PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
     public ResponseEntity<JwtAuthenticationResponse> submitAuthenticationTokenRequest(
@@ -57,9 +57,9 @@ public class JwtAuthenticationController {
     /**
      * Refresh token from current logged in request
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request http req
+     * @param response http resp
+     * @return jwt auth response.
      */
     @GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
     public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {

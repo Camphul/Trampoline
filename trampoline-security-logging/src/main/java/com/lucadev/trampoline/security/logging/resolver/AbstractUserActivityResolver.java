@@ -50,8 +50,8 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 
 	/**
 	 * Obtain a readable message.
-	 * @param userActivity
-	 * @return
+	 * @param userActivity the method intercepted user activity.
+	 * @return a human readable description of the activity that was executed.
 	 */
 	public abstract String getReadableDescription(InterceptedUserActivity userActivity);
 }

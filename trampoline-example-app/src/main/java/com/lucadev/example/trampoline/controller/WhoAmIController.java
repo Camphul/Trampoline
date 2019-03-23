@@ -26,7 +26,7 @@ public class WhoAmIController {
      * Evaluate if principal(current user) has access to this mapping.
      * Then return the current user or throw a {@link com.lucadev.trampoline.security.exception.CurrentUserNotFoundException}
      *
-     * @return
+     * @return whoami dto response.
      */
     @GetMapping("/whoami")
 	@PrePolicy("WHO_AM_I")

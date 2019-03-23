@@ -108,12 +108,6 @@ public class TrampolineEntityJpaTest {
         assertTrue(result <= expected + bounds);
     }
 
-    /**
-     * Sleep to test if certain time based attributes work as expected.
-     *
-     * @param duration
-     * @param timeUnit
-     */
     private void sleep(long duration, TimeUnit timeUnit) {
         long startWait = System.currentTimeMillis();
         await().atMost(timeUnit.toMillis(duration) + TimeUnit.SECONDS.toMillis(1), TimeUnit.MILLISECONDS)

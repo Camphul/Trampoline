@@ -118,7 +118,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 *
 	 * @param matchedRules the rules to evaluate.
 	 * @param ctx          the {@link SecurityAccessContext} to evaluate against
-	 * @return
+	 * @return if the check passed.
 	 */
 	private boolean checkRules(List<PolicyRule> matchedRules, SecurityAccessContext ctx) {
 		for (PolicyRule rule : matchedRules) {

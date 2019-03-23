@@ -59,6 +59,9 @@
         <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
         <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
         <nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
+		<lombok.plugin.version>1.18.0.0</lombok.plugin.version>
+		<delombok.output>delombok</delombok.output>
+		<javadoc.source.version>8</javadoc.source.version>
     </properties>
 
     <dependencies>
@@ -113,6 +116,25 @@
     </distributionManagement>
     <build>
         <plugins>
+			<plugin>
+				<!-- Delombok -->
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>${lombok.plugin.version}</version>
+				<configuration>
+					<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+					<outputDirectory>${project.basedir}/target/${delombok.output}</outputDirectory>
+					<addOutputDirectory>false</addOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
             <!-- maven compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -137,20 +159,23 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- maven javadoc generation plugin -->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-            <!--<version>${maven.javadoc.plugin.version}</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>attach-javadocs</id>-->
-            <!--<goals>-->
-            <!--<goal>jar</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<configuration>
+					<source>${javadoc.source.version}</source>
+					<sourcepath>${delombok.output}</sourcepath>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+            </plugin>
         </plugins>
     </build>
 </project>

@@ -81,7 +81,7 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
     /**
      * Defining load order since Trampoline has an inner listener for ContextRefreshed which is used to configure the authorization scheme.
      *
-     * @return
+     * @return loading order.
      */
     @Override
     public int getOrder() {

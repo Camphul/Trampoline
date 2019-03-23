@@ -38,22 +38,22 @@ public interface AssetStore {
     /**
      * Remove asset
      *
-     * @param assetMetaData
+     * @param assetMetaData the metadata to remove.
      */
     void remove(AssetMetaData assetMetaData);
 
     /**
      * Remove asset
      *
-     * @param id
+     * @param id id of an asset to remove.
      */
     void remove(UUID id);
 
     /**
      * Get asset meta data
      *
-     * @param id
-     * @return
+     * @param id id of a metadata asset to find.
+     * @return resolved {@link AssetMetaData}
      */
     AssetMetaData getAssetMetaData(UUID id);
 

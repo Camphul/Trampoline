@@ -25,7 +25,7 @@ public class PingController {
     /**
      * Unprotected ping route since it is ignored through the configuration we set.
      *
-     * @return
+     * @return message response.
      */
     @GetMapping("/ping/unprotected")
 	@LogUserActivity(value = "ping_unprotected", category = "ping", layer = ActivityLayer.CONTROLLER)
@@ -36,7 +36,7 @@ public class PingController {
     /**
      * Protected ping which evaluates a policy on the current principal.
      *
-     * @return
+     * @return message response.
      */
     @GetMapping("/ping/protected")
     @PrePolicy("PING_PROTECTED")

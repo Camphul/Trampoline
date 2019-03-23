@@ -32,8 +32,8 @@ public class UserRegistrationController {
     /**
      * Should be done through the use of a dedicated handler but meh.
      *
-     * @param signupRequest
-     * @return
+     * @param signupRequest signup request dto.
+     * @return response.
      */
     @PostMapping("/signup")
     public UUIDSuccessResponse signup(@RequestBody @Valid UserRegisterRequest signupRequest) {

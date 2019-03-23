@@ -20,10 +20,10 @@ public class AssetStoreAutoConfiguration {
     /**
      * Configure default asset store.
      *
-     * @param providerType
-     * @param localStorageDirectory
-     * @param repository
-     * @return
+     * @param providerType which provider instance to use.
+     * @param localStorageDirectory local fs directory to use to store data.
+     * @param repository the repo for asset metadata.
+     * @return a new {@link AssetStore}
      */
     @Bean
     @ConditionalOnMissingBean(AssetStore.class)

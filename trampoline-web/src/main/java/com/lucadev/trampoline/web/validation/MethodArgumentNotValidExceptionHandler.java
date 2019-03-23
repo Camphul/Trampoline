@@ -33,7 +33,7 @@ public class MethodArgumentNotValidExceptionHandler extends AbstractRestExceptio
 	 * Construct our response.
 	 * @param exception the {@link Exception} that was triggered.
 	 * @param request   the request which triggered the exception.
-	 * @return
+	 * @return response built from the exception which was handled.
 	 */
 	@Override
 	public BindingResultResponse handle(MethodArgumentNotValidException exception, HttpServletRequest request) {

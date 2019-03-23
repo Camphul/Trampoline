@@ -62,7 +62,7 @@ public class SystemAuthentication implements Authentication {
     /**
      * Disallow updating
      * @param b the new state.
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException when invoked.
      */
     @Override
     public void setAuthenticated(boolean b) throws IllegalArgumentException {

@@ -23,8 +23,8 @@ public interface JwtConfiguration {
     /**
      * If we should set impersonate mode to true.
      *
-     * @param user
-     * @return
+     * @param user the user to auth.
+     * @return if we should impersonate.
      */
     boolean getImpersonateFlag(User user);
 

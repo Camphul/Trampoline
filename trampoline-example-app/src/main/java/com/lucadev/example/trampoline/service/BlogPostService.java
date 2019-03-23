@@ -38,8 +38,8 @@ public class BlogPostService {
     /**
      * Pageable find all
      *
-     * @param pageable
-     * @return
+     * @param pageable pagination.
+     * @return page of blogs.
      */
     @LogUserActivity(value = "find_blogposts", category = "blogpost", layer = ActivityLayer.SERVICE)
     public Page<BlogPost> findAll(Pageable pageable) {
@@ -67,7 +67,7 @@ public class BlogPostService {
      * Find {@link BlogPost} by id.
      *
      * @param id the {@link UUID} of the {@link BlogPost} since we use {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
-     * @return
+     * @return resolved blogpost.
      */
     public Optional<BlogPost> findById(UUID id) {
         return repository.findById(id);
@@ -76,7 +76,7 @@ public class BlogPostService {
     /**
      * Delete {@link BlogPost} by id.
      *
-     * @param id
+     * @param id blogpost id to delete.
      */
 	@LogUserActivity(value = "delete_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
     public void deleteById(UUID id) {
@@ -86,14 +86,21 @@ public class BlogPostService {
     /**
      * Update {@link BlogPost}.
      *
-     * @param blogPost
-     * @return
+     * @param blogPost the blogpost to update.
+     * @return updated blogpost.
      */
 	@LogUserActivity(value = "update_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
     public BlogPost update(BlogPost blogPost) {
         return repository.save(blogPost);
     }
 
+	/**
+	 * Add a comment
+	 * @param author the author of the comment.
+	 * @param blogPost the blogpost to put it on.
+	 * @param request the comment dto.
+	 * @return the created comment.
+	 */
     @Transactional
 	@LogUserActivity(value = "add_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
     public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
@@ -109,9 +116,9 @@ public class BlogPostService {
     /**
      * Find pageable comments
      *
-     * @param blogPost
-     * @param pageable
-     * @return
+     * @param blogPost blogpost to find comments on.
+     * @param pageable pagination.
+     * @return page of blog comments.
      */
 	@LogUserActivity(value = "find_blogpost_comments", category = "blogpost", layer = ActivityLayer.SERVICE)
     public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
@@ -121,8 +128,8 @@ public class BlogPostService {
     /**
      * Find comment by id
      *
-     * @param commentId
-     * @return
+     * @param commentId comment id.
+     * @return resolved comment.
      */
 	@LogUserActivity(value = "find_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
     public Optional<BlogPostComment> findCommentById(UUID commentId) {
@@ -132,7 +139,7 @@ public class BlogPostService {
     /**
      * Delete comment
      *
-     * @param commentId
+     * @param commentId comment id to delete.
      */
 	@LogUserActivity(value = "delete_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
     public void deleteCommentById(UUID commentId) {
@@ -142,7 +149,7 @@ public class BlogPostService {
     /**
      * Update comment
      *
-     * @param comment
+     * @param comment comment to update.
      */
 	@LogUserActivity(value = "update_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
     public void updateComment(BlogPostComment comment) {
@@ -152,7 +159,8 @@ public class BlogPostService {
     /**
      * Removes a comment
      *
-     * @param comment
+	 * @param blogPost blogpost
+     * @param comment comment to remove from blogpost.
      */
     @Transactional
 	@LogUserActivity(value = "delete_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)

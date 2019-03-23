@@ -54,8 +54,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Create a new token
      *
-     * @param user
-     * @return
+     * @param user user to create token for.
+     * @return jwt token.
      */
     @Override
     public String createToken(User user) {
@@ -74,8 +74,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Refresh an existing token without any checks
      *
-     * @param token
-     * @return
+     * @param token jwt
+     * @return refreshed jwt
      */
     @Override
     public String refreshToken(String token) {
@@ -113,8 +113,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Get all token information
      *
-     * @param token
-     * @return
+     * @param token jwt string
+     * @return jwt DTO representation.
      */
     @Override
     public JwtPayload getTokenData(String token) {
@@ -162,9 +162,9 @@ public class JwtTokenService implements TokenService {
     /**
      * Validate token data against the suspected User
      *
-     * @param jwtPayload
-     * @param user
-     * @return
+     * @param jwtPayload jwt dto.
+     * @param user user who the token belongs to.
+     * @return if the token is valid.
      */
     @Override
     public boolean isValidToken(JwtPayload jwtPayload, User user) {
@@ -179,8 +179,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Handle a request to refresh a token
      *
-     * @param request
-     * @return
+     * @param request http req
+     * @return jwt token string.
      */
     @Override
     public String processTokenRefreshRequest(HttpServletRequest request) {
@@ -203,8 +203,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Read the header containing our token and create an {@link Authentication} object from it.
      *
-     * @param request
-     * @return
+     * @param request http req
+     * @return auth object.
      */
     @Override
     public Authentication getAuthenticationToken(HttpServletRequest request) {
@@ -230,9 +230,9 @@ public class JwtTokenService implements TokenService {
     /**
      * Is created date before the given lastPasswordReset date.
      *
-     * @param created
-     * @param lastPasswordReset
-     * @return
+     * @param created date created
+     * @param lastPasswordReset last password reset date
+     * @return if the token dates are valid.
      */
     private boolean isCreatedDateTimeBeforeLastPasswordResetDateTime(Date created, Date lastPasswordReset) {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
@@ -241,8 +241,8 @@ public class JwtTokenService implements TokenService {
     /**
      * If the current date is higher than the given date
      *
-     * @param expiration
-     * @return
+     * @param expiration expiration date.
+     * @return if current datetime is before expiration.
      */
     private boolean isCurrentDateTimePastExpiryDateTime(Date expiration) {
         return expiration.before(timeProvider.now());
@@ -251,8 +251,8 @@ public class JwtTokenService implements TokenService {
     /**
      * Calculate expiry date based on the configured token timeout
      *
-     * @param createdDate
-     * @return
+     * @param createdDate jwt creation date.
+     * @return expiration date.
      */
     private Date calculateExpirationDate(Date createdDate) {
         return new Date(createdDate.getTime() + properties.getTokenTimeout() * 1000);

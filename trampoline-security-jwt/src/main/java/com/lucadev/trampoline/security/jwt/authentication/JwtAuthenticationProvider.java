@@ -40,7 +40,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
      *
      * @param authentication the {@link Authentication} object.
      * @return a new {@link Authentication} object based on the old one.
-     * @throws AuthenticationException
+     * @throws AuthenticationException when auth fails
      */
     @Override
     public Authentication authenticate(Authentication authentication) {
@@ -95,8 +95,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     /**
      * Authenticate
      *
-     * @param authentication
-     * @return
+     * @param authentication the auth object.
+     * @return a jwt auth object.
      */
     private Authentication createNewJwtAuthentication(Authentication authentication) {
         User user = getUser(authentication);
@@ -110,8 +110,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     /**
      * Validate the token against the actual user
      *
-     * @param userDetails
-     * @param jwtPayload
+     * @param userDetails user to validate.
+     * @param jwtPayload token to validate against user.
      */
     private void validateToken(UserDetails userDetails, JwtPayload jwtPayload) {
         if (!(userDetails instanceof User)) {
@@ -127,8 +127,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     /**
      * Get user from authentication
      *
-     * @param authentication
-     * @return
+     * @param authentication find user from auth object.
+     * @return the resolved user.
      */
     private User getUser(Authentication authentication) {
         String name = authentication.getName();

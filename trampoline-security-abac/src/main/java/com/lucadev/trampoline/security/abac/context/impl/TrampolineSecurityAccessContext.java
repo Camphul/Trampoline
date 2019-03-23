@@ -39,7 +39,7 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot impl
 	 * Check if actions match
 	 *
 	 * @param action the action to check
-	 * @return
+	 * @return if the current action is equal.
 	 */
 	@Override
 	public boolean isAction(Object action) {

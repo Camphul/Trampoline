@@ -72,8 +72,8 @@ public class LocalAssetStore extends AbstractAssetStore {
     /**
      * Get the actual asset file from metadata.
      *
-     * @param assetMetaData
-     * @return
+     * @param assetMetaData the metadata to obtain file info for
+     * @return file resource resolved through the metadata.
      */
     private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
         UUID id = assetMetaData.getId();

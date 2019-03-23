@@ -4,6 +4,8 @@ import com.lucadev.trampoline.data.repository.TrampolineRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * Repository for {@link PolicyRule}
+ *
  * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
  * @since 22-5-18
  */
@@ -13,16 +15,16 @@ public interface PolicyRuleRepository extends TrampolineRepository<PolicyRule> {
 	/**
 	 * Find one policy rule
 	 *
-	 * @param name
-	 * @return
+	 * @param name policy rule name.
+	 * @return resolved policy.
 	 */
 	PolicyRule findOneByName(String name);
 
 	/**
 	 * Count policy by name
 	 *
-	 * @param name
-	 * @return
+	 * @param name policy rule name.
+	 * @return amount of rules by the name.
 	 */
 	long countByName(String name);
 }

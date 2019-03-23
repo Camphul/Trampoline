@@ -41,7 +41,7 @@ public abstract class AbstractRestExceptionHandler<E extends Exception, R> imple
 	 *
 	 * @param exception the {@link Exception} that was triggered.
 	 * @param request   the request in which the exception was triggered.
-	 * @return
+	 * @return a response entity generated through the exception handled.
 	 */
 	@Override
 	public ResponseEntity<R> handleException(E exception, HttpServletRequest request) {

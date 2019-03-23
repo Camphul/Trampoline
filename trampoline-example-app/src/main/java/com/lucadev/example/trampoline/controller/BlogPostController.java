@@ -58,8 +58,8 @@ public class BlogPostController {
     /**
      * Evaluates if the principal can create blog posts by evaluating the BLOGPOST_CREATE policy.
      *
-     * @param request
-     * @return
+     * @param request blogpost create dto
+     * @return success response including id.
      */
     @PostMapping("/blogs")
     @PrePolicy("BLOGPOST_CREATE")
@@ -76,9 +76,9 @@ public class BlogPostController {
      * Evaluate BLOGPOST_VIEW with the returned BlogPost against the current principal.
      * Maybe the principal may only view his own blogposts!
      *
-     * @param id
+     * @param id blogpost to view.
      * @param pageable pageable for navigating through post comments.
-     * @return
+     * @return blogpost dto.
      */
     @GetMapping("/blogs/{id}")
     //@PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
@@ -92,8 +92,8 @@ public class BlogPostController {
     /**
      * Might be strange not to see an annotation to authorize but some actions require some more work.
      *
-     * @param id
-     * @return
+     * @param id blogpost id to delete.
+     * @return success response.
      */
     @DeleteMapping("/blogs/{id}")
     public SuccessResponse deleteBlogPost(@PathVariable("id") UUID id) {
@@ -111,9 +111,9 @@ public class BlogPostController {
     /**
      * This is nearly the same as the {@link #deleteBlogPost(UUID)}.
      *
-     * @param id
-     * @param request
-     * @return
+     * @param id blogpost id to patch.
+     * @param request dto
+     * @return response.
      */
     @PatchMapping("/blogs/{id}")
     public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody @Valid CreateBlogPostRequest request) {

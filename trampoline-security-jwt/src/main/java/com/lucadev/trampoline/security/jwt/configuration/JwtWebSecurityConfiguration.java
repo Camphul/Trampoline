@@ -59,8 +59,8 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * Websecurity to allow auth route.
      *
-     * @param web
-     * @throws Exception
+     * @param web web security.
+     * @throws Exception when we fail to configure.
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -85,7 +85,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * Construct the {@link JwtAuthenticationProvider} used for authentication.
      *
-     * @return
+     * @return JWT auth provider.
      */
     protected AuthenticationProvider authenticationProvider() {
         return new JwtAuthenticationProvider(tokenService, userService, userAuthenticationService);
@@ -94,8 +94,8 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * Configure security chains to work with JWT.
      *
-     * @param http
-     * @throws Exception
+     * @param http http security.
+     * @throws Exception when we fail to configure http security.
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {

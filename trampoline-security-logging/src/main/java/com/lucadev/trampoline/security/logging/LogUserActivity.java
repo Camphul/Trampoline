@@ -19,25 +19,25 @@ public @interface LogUserActivity {
 
 	/**
 	 * The identifier which discloses which type of activity it is.
-	 * @return
+	 * @return activity identifier.
 	 */
 	String value();
 
 	/**
 	 * Category the log should be submitted to.
-	 * @return
+	 * @return activity category.
 	 */
 	String category() default "logs";
 
 	/**
 	 * In which layer is this annotation place.
-	 * @return
+	 * @return activity layer.
 	 */
 	ActivityLayer layer() default ActivityLayer.UNDEFINED;
 
 	/**
 	 * Resolver for user activity message.
-	 * @return
+	 * @return resolver for the message.
 	 */
 	Class<? extends UserActivityResolver> resolver() default DefaultUserActivityResolver.class;
 

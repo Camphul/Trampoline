@@ -31,9 +31,9 @@ public class AuthorizationSchemeBuilder {
     /**
      * Private constructor to create the builder.
      *
-     * @param roleService
-     * @param privilegeService
-     * @param environment
+     * @param roleService the {@link RoleService} bean
+     * @param privilegeService the {@link PrivilegeService} bean
+     * @param environment the {@link Environment} bean
      */
     private AuthorizationSchemeBuilder(RoleService roleService, PrivilegeService privilegeService, Environment environment) {
         if (roleService == null || privilegeService == null) {
@@ -55,7 +55,8 @@ public class AuthorizationSchemeBuilder {
      *
      * @param roleService      the {@link Role} handler bean.
      * @param privilegeService the {@link Privilege} handler bean.
-     * @return
+	 * @param environment current environment.
+     * @return a new builder.
      */
     public static AuthorizationSchemeBuilder create(RoleService roleService, PrivilegeService privilegeService, Environment environment) {
         return new AuthorizationSchemeBuilder(roleService, privilegeService, environment);

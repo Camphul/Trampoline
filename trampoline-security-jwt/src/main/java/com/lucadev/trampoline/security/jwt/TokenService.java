@@ -13,35 +13,35 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface TokenService {
 
-    /**
-     * Creates a JWT token for the given user
-     *
-     * @param user
-     * @return
-     */
+	/**
+	 * Create a new token
+	 *
+	 * @param user user to create token for.
+	 * @return jwt token.
+	 */
     String createToken(User user);
 
-    /**
-     * Refreshes a token, used when the token is almost expired.
-     *
-     * @param token
-     * @return
-     */
+	/**
+	 * Refresh an existing token without any checks
+	 *
+	 * @param token jwt
+	 * @return refreshed jwt
+	 */
     String refreshToken(String token);
 
-    /**
-     * Read all data from the token into the given pojo
-     *
-     * @param token
-     * @return
-     */
+	/**
+	 * Get all token information
+	 *
+	 * @param token jwt string
+	 * @return jwt DTO representation.
+	 */
     JwtPayload getTokenData(String token);
 
     /**
      * Similar to {@link #getTokenData(String)} but this reads the request header instead of passing the raw token
      *
-     * @param request
-     * @return
+     * @param request http req
+     * @return jwt dto.
      */
     JwtPayload getTokenDataFromRequest(HttpServletRequest request);
 
@@ -54,20 +54,20 @@ public interface TokenService {
      */
     boolean isValidToken(JwtPayload jwtPayload, User user);
 
-    /**
-     * Processes a request to refresh a token
-     *
-     * @param request
-     * @return
-     */
+	/**
+	 * Handle a request to refresh a token
+	 *
+	 * @param request http req
+	 * @return jwt token string.
+	 */
     String processTokenRefreshRequest(HttpServletRequest request);
 
-    /**
-     * Get authentication token from request(not authenticated)
-     *
-     * @param request
-     * @return
-     */
+	/**
+	 * Read the header containing our token and create an {@link Authentication} object from it.
+	 *
+	 * @param request http req
+	 * @return auth object.
+	 */
     Authentication getAuthenticationToken(HttpServletRequest request);
 
 }

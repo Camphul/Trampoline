@@ -41,9 +41,9 @@ public class BlogPostCommentController {
     /**
      * Show all comments of a post in a paginated matter.
      *
-     * @param blogId
-     * @param pageable
-     * @return
+     * @param blogId blog id
+     * @param pageable pagination
+     * @return page of blogs
      */
     @GetMapping("/blogs/{blogId}/comments")
     @PrePolicy("BLOGPOST_COMMENTS_LIST")//Check for permission before invocation
@@ -56,9 +56,9 @@ public class BlogPostCommentController {
     /**
      * Add comment to post
      *
-     * @param blogId
-     * @param request
-     * @return
+     * @param blogId blog id
+     * @param request dto
+     * @return success response
      */
     @PostMapping("/blogs/{blogId}/comments")
     @PrePolicy("BLOGPOST_COMMENTS_CREATE")

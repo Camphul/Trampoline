@@ -51,7 +51,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     /**
      * Never pass credentials in JWT
      *
-     * @return
+     * @return user credentials. NA in JWT.
      */
     @Override
     public Object getCredentials() {

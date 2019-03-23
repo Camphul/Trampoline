@@ -25,9 +25,9 @@ import java.util.List;
 public class AssetResponseHttpMessageConverter implements HttpMessageConverter<AssetResponse> {
 
     /**
-     * @param aClass
-     * @param mediaType
-     * @return
+     * @param aClass the class to test support for.
+     * @param mediaType the media type of the incoming request
+     * @return if we support reading it.
      * @see HttpMessageConverter#canRead(Class, MediaType)
      */
     @Override
@@ -36,9 +36,9 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
     }
 
     /**
-     * @param aClass
-     * @param mediaType
-     * @return
+     * @param aClass if we can write a response for aClass.
+     * @param mediaType the media type.
+     * @return if we can write the response.
      * @see HttpMessageConverter#canWrite(Class, MediaType)
      */
     @Override
@@ -47,7 +47,7 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
     }
 
     /**
-     * @return
+     * @return supported media types.
      * @see HttpMessageConverter#getSupportedMediaTypes()
      */
     @Override
@@ -56,11 +56,11 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
     }
 
     /**
-     * @param aClass
-     * @param httpInputMessage
-     * @return
-     * @throws IOException
-     * @throws HttpMessageNotReadableException
+     * @param aClass read a response from class.
+     * @param httpInputMessage the input.
+     * @return a response
+     * @throws IOException possible exception
+     * @throws HttpMessageNotReadableException possible exception
      * @see HttpMessageConverter#read(Class, HttpInputMessage)
      */
     @Override
@@ -71,11 +71,11 @@ public class AssetResponseHttpMessageConverter implements HttpMessageConverter<A
     /**
      * Writes the asset to the output message.
      *
-     * @param assetResponse
-     * @param mediaType
-     * @param httpOutputMessage
-     * @throws IOException
-     * @throws HttpMessageNotWritableException
+     * @param assetResponse response to write.
+     * @param mediaType mediatype to use
+     * @param httpOutputMessage the final output message containing the asset.
+     * @throws IOException a possible exception.
+     * @throws HttpMessageNotWritableException if we failed to write a response.
      * @see HttpMessageConverter#write(Object, MediaType, HttpOutputMessage)
      */
     @Override
