@@ -91,8 +91,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 * @return environment built from Spring context.
 	 */
 	private Map<String, Object> environmentContext() {
-		Map<String, Object> environment = new HashMap<>();
-		return environment;
+		return new HashMap<>();
 	}
 
 	/**
