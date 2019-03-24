@@ -5,27 +5,19 @@ Prequisites:
 * Git 
 * Java 8
 
-## Build and Install
-
-To get started please run the following commands(assuming you're running linux/osx):
-
-```bash
-git clone https://github.com/Camphul/Trampoline.git
-cd Trampoline
-mvn clean install
-```
-
 ## Import into your project
 
 Please check the [example pom](../trampoline-example-app/pom.xml).
 
 As you can see you require the trampoline starter dependency. This dependency adds all of the trampoline starters.
 
+Trampoline is built upon `Spring Boot 2.1.3-RELEASE`
+
 ```xml
 <dependency>
-    <groupId>com.lucadev.trampoline</groupId>
-    <artifactId>trampoline-starter</artifactId>
-    <version>!!PROJECT VERSION HERE!!</version>
+       <groupId>com.lucadev.trampoline</groupId>
+       <artifactId>trampoline-starter</artifactId>
+       <version>20190308</version>
 </dependency>
 ```
 

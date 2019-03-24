@@ -21,6 +21,19 @@ Please read the documentation for a full list of features. I'll try to summarize
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.
 
+## Maven
+
+Trampoline is deployed on maven and is built upon `Spring Boot 2.1.3-RELEASE`
+
+Please use the following dependency to use all functionality Trampoline offers:
+```xml
+<dependency>
+       <groupId>com.lucadev.trampoline</groupId>
+       <artifactId>trampoline-starter</artifactId>
+       <version>20190308</version>
+</dependency>
+```
+
 ## Example project
 
 [trampoline-example-app](trampoline-example-app) is a REST api to maintain blogs and comments on blogs.
