@@ -27,7 +27,6 @@ import java.util.UUID;
  */
 public abstract class AbstractUserService implements UserService {
 
-    protected static final String CACHE_REGION = "trampoline_users_cache";
     @Getter(AccessLevel.PROTECTED)
     private final UserRepository userRepository;
     private IdentificationType identificationType = IdentificationType.USERNAME;
@@ -48,7 +47,6 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(CACHE_REGION)
     public UserDetails loadUserByUsername(String s) {
         if (identificationType == IdentificationType.EMAIL) {
             return loadUserByEmail(s);
@@ -58,7 +56,6 @@ public abstract class AbstractUserService implements UserService {
     }
 
     @Override
-    @Cacheable(CACHE_REGION)
     public UserDetails loadUserByEmail(String email) {
         Optional<User> user = userRepository.findOneByEmail(email);
         return user.orElseThrow(() -> new BadCredentialsException("Could not find user with email " + email));
@@ -94,7 +91,6 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(CACHE_REGION)
     public User findById(UUID subject) {
         return userRepository.findById(subject).orElse(null);
     }
@@ -111,7 +107,6 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @CacheEvict(CACHE_REGION)
     public User update(User user) {
         return userRepository.save(user);
     }
@@ -120,7 +115,6 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(CACHE_REGION)
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -129,7 +123,6 @@ public abstract class AbstractUserService implements UserService {
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(CACHE_REGION)
     public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
