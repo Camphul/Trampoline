@@ -5,7 +5,7 @@
     <parent>
         <artifactId>trampoline-parent</artifactId>
         <groupId>com.lucadev.trampoline</groupId>
-        <version>20190308</version>
+        <version>20190329</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

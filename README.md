@@ -30,7 +30,7 @@ Please use the following dependency to use all functionality Trampoline offers:
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190308</version>
+       <version>20190329</version>
 </dependency>
 ```
 
@@ -40,10 +40,18 @@ Please use the following dependency to use all functionality Trampoline offers:
 
 The readme provides a bunch of information regarding the endpoints, dummy users. I also added a PostMan collection so you can easily test the api through postman.
 
+## Changelog and Versioning
+
+A changelog can be found under [CHANGELOG.md](CHANGELOG.md).
 
 ## Contributing
 
 If you wish to contribute please read the guidelines as described in [CONTRIBUTING.md](/CONTRIBUTING.md)
+
+## Branches
+
+All the changes before publishing to maven central will be pushed to the `next-release` branch.
+This branch will be merged to `master` before building and deploying the maven central.
 
 ## License
 
