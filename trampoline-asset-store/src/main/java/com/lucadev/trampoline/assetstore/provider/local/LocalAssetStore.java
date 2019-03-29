@@ -13,8 +13,9 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * A {@link com.lucadev.trampoline.assetstore.AssetStore} implementation which operates on the local file system.
+ * An AssetStore implementation which operates on the local file system.
  *
+ * @see com.lucadev.trampoline.assetstore.AssetStore
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
@@ -24,6 +25,9 @@ public class LocalAssetStore extends AbstractAssetStore {
     private final String storageDirectory;
     private final AssetMetaDataRepository repository;
 
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public AssetMetaData put(byte[] data, AssetMetaData assetMetaData) {
         assetMetaData = repository.save(assetMetaData);
@@ -36,7 +40,10 @@ public class LocalAssetStore extends AbstractAssetStore {
         return assetMetaData;
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public Asset getAsset(AssetMetaData assetMetaData) {
         FileSystemResource resource = getFileSystemResource(assetMetaData);
         try {
@@ -54,7 +61,10 @@ public class LocalAssetStore extends AbstractAssetStore {
         }
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public void remove(AssetMetaData assetMetaData) {
         FileSystemResource resource = getFileSystemResource(assetMetaData);
         if (resource.getFile().delete()) {
@@ -64,7 +74,10 @@ public class LocalAssetStore extends AbstractAssetStore {
         }
     }
 
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
     public AssetMetaData getAssetMetaData(UUID id) {
         return repository.findById(id).orElse(null);
     }
