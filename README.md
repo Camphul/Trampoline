@@ -1,22 +1,23 @@
 # Trampoline
 
-Jump straight into serious Spring development through the use of multiple ready-to-use Spring Boot starters.
+Trampoline is a collection of Spring Boot starters to develop Spring Boot REST API's even faster.
+This is achieved by providing even more opinionated services and standard implementations of Spring Boot starters(security, etc..).
 
-## About
-
-Trampoline is a collection of Spring Boot 2 starters to speed up development by providing even more opinionated services.
-However, a lot of services/components maintain configurable through the use of auto-configurations.
+Trampoline still allows you to configure nearly everything by allowing you to override defaults(just like regular Spring Boot starts).
+The defaults are based off of my requirements(Camphul) and may not fit your needs.
 
 ## Features
 
 Please read the documentation for a full list of features. I'll try to summarize them here:
 
-- Bunch of common components: `TimeProvider` to get current datetime, `UUIDConverter` converts controller parameters automatically to `UUID`, bunch of models to keep your REST responses consistent.
-- Spring Data extension adding a base entity. JPA auditing(created, last updated at) and a `UUID` as `id`(you wont have to add an `id` column yourself).
-- Binary file upload/download. Don't store uploads as blobs but store them using a `AssetStore`. Only references to where the file is really stored is stored in the DB. Allows you to use S3, GCP. local fs.
-- Spring Security implementation which persists to a datasource using JPA.
-- JWT authorization which is achieved by implementing existing Spring Security interfaces. Meaning you can switch to JWT with only a couple lines of code!
-- Attribute based access control: achieve row-level security on resource by writing Spring Expression Language(SpEL). 
+- Bunch of default response POJO's(`SuccessResponse`, `MessageResponse`, etc..)
+- Extension of Spring Data which has a base entity with auditing enabled(date created/updated), a `UUID` as `id`
+- Default Spring Security implementation with a `UserDetails` implementation which is persisted through JPA
+- JWT security starter which extends `trampoline-security` to add JWT security without requiring you to write any code.
+- Attribute based access control using Spring Expression Language to provide row-level security(example: a user may only delete a blogpost if he's the owner of that blogpost)
+- Log user activity by adding a single annotation above a method(achieved using Spring AoP). Write your own activity handler or just use the default log output implementation.
+- Better exception handling for REST(better response for validation exceptions and whatnot)
+- 
 
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.
@@ -52,6 +53,8 @@ If you wish to contribute please read the guidelines as described in [CONTRIBUTI
 
 All the changes before publishing to maven central will be pushed to the `next-release` branch.
 This branch will be merged to `master` before building and deploying the maven central.
+
+See [CHANGELOG.md](CHANGELOG.md) for more information.
 
 ## License
 
