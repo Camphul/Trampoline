@@ -6,7 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 /**
  * Interface for handling method security using pre/post policy.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public interface PolicyMethodSecurityHandler {

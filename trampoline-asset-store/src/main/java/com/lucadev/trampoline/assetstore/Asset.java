@@ -7,7 +7,7 @@ import lombok.ToString;
 /**
  * Wraps the asset input stream together with the meta data.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 @Getter

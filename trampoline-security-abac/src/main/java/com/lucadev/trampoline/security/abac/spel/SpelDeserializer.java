@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Deserializes a String into a Spring expression object
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
 @Getter

@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Trampoline implementation of {@link AbstractHandlerExceptionResolver} to allow REST responses in the form of a {@code ResponseEntity}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Getter

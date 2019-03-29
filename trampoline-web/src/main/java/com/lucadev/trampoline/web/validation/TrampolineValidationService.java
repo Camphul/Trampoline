@@ -5,7 +5,7 @@ import org.springframework.validation.BindingResult;
 /**
  * Default {@link ValidationService} implementation.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 public class TrampolineValidationService implements ValidationService {

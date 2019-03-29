@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Interface which extends {@link HandlerExceptionResolver} to handle REST-like responses for exceptions.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 public interface RestHandlerExceptionResolver extends HandlerExceptionResolver {

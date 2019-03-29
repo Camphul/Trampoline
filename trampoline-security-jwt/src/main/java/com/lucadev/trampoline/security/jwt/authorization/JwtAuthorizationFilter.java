@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Filter which validates and authorizes the JWT token.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 11-5-18
  */
 @AllArgsConstructor

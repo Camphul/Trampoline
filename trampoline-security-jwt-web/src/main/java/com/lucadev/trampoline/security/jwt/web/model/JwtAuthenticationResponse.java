@@ -9,7 +9,7 @@ import lombok.ToString;
  * Response after sending an authentication request.
  * Contains the jwt token if the authentication attempt succeeded
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 14-4-18
  */
 @Getter

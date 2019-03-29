@@ -28,7 +28,7 @@ import java.util.List;
  * Some Spring interfaces still work with ModelAndView while we want to return a ResponseEntity. This is a solution.
  * Mostly used internally.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Component

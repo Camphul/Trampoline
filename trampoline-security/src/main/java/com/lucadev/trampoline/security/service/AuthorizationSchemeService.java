@@ -6,7 +6,7 @@ import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchem
 /**
  * Interface used to manage the authorization scheme
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 27-4-18
  */
 public interface AuthorizationSchemeService {

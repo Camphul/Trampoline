@@ -5,7 +5,7 @@ import org.springframework.security.access.expression.SecurityExpressionOperatio
 /**
  * Contains the context required to evaluate access
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
 public interface SecurityAccessContext extends SecurityExpressionOperations {

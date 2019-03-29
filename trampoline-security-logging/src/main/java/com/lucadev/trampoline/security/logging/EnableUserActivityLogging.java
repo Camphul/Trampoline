@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * Annotation which enables the aspect to handle user activity logging.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Target(ElementType.TYPE)

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Converts the asset to the correct content type and writes it to the model(instead of plaintext/html)
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 public class AssetResponseHttpMessageConverter implements HttpMessageConverter<AssetResponse> {

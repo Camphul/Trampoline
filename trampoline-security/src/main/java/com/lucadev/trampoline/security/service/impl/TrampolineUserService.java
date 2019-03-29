@@ -9,7 +9,7 @@ import com.lucadev.trampoline.service.time.TimeProvider;
  * {@link com.lucadev.trampoline.security.service.UserService} implementation.
  * Uses a {@link TimeProvider} for {@link TrampolineUserService#updateLastSeen(User)}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class TrampolineUserService extends AbstractUserService {

@@ -17,7 +17,7 @@ Trampoline is built upon `Spring Boot 2.1.3-RELEASE`
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190308</version>
+       <version>20190329</version>
 </dependency>
 ```
 

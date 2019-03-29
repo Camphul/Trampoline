@@ -5,7 +5,7 @@
 
     <groupId>com.lucadev.trampoline</groupId>
     <artifactId>trampoline-parent</artifactId>
-    <version>20190308</version>
+    <version>20190329</version>
     <modules>
         <module>trampoline-data</module>
         <module>trampoline-data-autoconfigure</module>
@@ -98,7 +98,7 @@
     <developers>
         <developer>
             <name>Luca Camphuisen</name>
-            <email>luca.camphuisen@hva.nl</email>
+            <email>luca@camphuisen.com</email>
             <url>https://github.com/Camphul</url>
             <organization>LucaDev</organization>
             <organizationUrl>http://lucadev.com/</organizationUrl>
@@ -114,6 +114,10 @@
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<site>
+			<id>website</id>
+			<url>https://lucadev.com/trampoline/docs/${project.version}</url>
+		</site>
 	</distributionManagement>
     <build>
         <plugins>

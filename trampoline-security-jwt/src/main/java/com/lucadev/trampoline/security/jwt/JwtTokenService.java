@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 /**
  * Implementation for {@link TokenService} used to manage JWT tokens.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @AllArgsConstructor

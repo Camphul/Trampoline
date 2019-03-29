@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Autoconfiguration for a jackson {@link ObjectMapper} bean.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 27-4-18
  */
 @Configuration

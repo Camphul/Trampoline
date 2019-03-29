@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * <p>
  * This configuration is ran when the application started(trampoline has an inner ContextRefreshed listener which has a high priority).
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Configuration

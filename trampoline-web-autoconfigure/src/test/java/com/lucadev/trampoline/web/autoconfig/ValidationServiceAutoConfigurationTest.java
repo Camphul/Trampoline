@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 /**
  * Tests to see if the autoconfig configures the correct bean.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public class ValidationServiceAutoConfigurationTest {

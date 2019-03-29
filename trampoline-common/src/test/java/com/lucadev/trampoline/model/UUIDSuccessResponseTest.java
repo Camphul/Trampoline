@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test {@link UUIDSuccessResponse}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
  */
 public class UUIDSuccessResponseTest {

@@ -15,7 +15,7 @@ import java.util.Collections;
 /**
  * Fake/mocked {@link AuthenticationManager} to test the authentication services using them
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @AllArgsConstructor

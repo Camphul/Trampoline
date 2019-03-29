@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * REST exception handle.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 public interface RestExceptionHandler<E extends Exception, R> {

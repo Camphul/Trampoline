@@ -11,9 +11,11 @@ import java.util.List;
 import static com.lucadev.trampoline.assetstore.configuration.AssetStoreWebConfiguration.ASSET_STORE_WEB_MVC_CONFIG_ORDER;
 
 /**
- * Register Http message converter to handle asset data output to a client.
+ * A WebMvcConfigurer to configure custom HttpMessageConverter.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @see WebMvcConfigurer
+ * @see HttpMessageConverter
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 @Configuration
@@ -22,7 +24,13 @@ public class AssetStoreWebConfiguration implements WebMvcConfigurer {
 
     public static final int ASSET_STORE_WEB_MVC_CONFIG_ORDER = 70;
 
-    @Override
+	/**
+	 * Registers our custom HttpMessageConverter
+	 *
+	 * @see HttpMessageConverter
+	 * @param converters a List of currently registered HttpMessageConverter instances.
+	 */
+	@Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new AssetResponseHttpMessageConverter());
     }

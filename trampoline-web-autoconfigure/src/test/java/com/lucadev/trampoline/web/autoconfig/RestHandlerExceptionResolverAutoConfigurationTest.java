@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Tests to see if the autoconfiguration delivers the correct bean.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public class RestHandlerExceptionResolverAutoConfigurationTest {

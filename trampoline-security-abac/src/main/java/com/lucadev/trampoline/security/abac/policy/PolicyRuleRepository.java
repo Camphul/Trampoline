@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Repository for {@link PolicyRule}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
 @Repository

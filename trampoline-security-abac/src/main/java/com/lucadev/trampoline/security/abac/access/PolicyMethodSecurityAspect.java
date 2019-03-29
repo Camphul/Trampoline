@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Proxy aspect for {@link PrePolicy}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 @Aspect

@@ -1,12 +1,13 @@
 package com.lucadev.trampoline.security.logging;
 
+import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
  * A single user activity POJO.
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 @Getter
@@ -14,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class UserActivity {
 
-	private final String principal;
+	private final User principal;
 	private final String identifier;
 	private final String category;
 	private final ActivityLayer activityLayer;

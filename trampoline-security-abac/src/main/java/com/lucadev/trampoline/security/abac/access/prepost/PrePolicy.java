@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Similar to {@link org.springframework.security.access.prepost.PreAuthorize}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 @Target(ElementType.METHOD)

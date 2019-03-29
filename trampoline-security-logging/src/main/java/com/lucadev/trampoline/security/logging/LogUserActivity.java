@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * This annotation will trigger a {@link com.lucadev.trampoline.security.logging.handler.UserActivityHandler}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Target(ElementType.METHOD)

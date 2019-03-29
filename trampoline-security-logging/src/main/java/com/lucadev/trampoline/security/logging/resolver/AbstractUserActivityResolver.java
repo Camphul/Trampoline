@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 /**
  * Abstract {@link UserActivityResolver} which generates a simple description of the activity.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public abstract class AbstractUserActivityResolver implements UserActivityResolver {
@@ -20,12 +20,10 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 	@Override
 	public UserActivity resolveInterceptedUserActivity(InterceptedUserActivity activity) {
 		Authentication auth = activity.getAuthentication();
-		String principal = null;
+		User principal = null;
 		if(auth != null) {
 			if(auth.getPrincipal() instanceof User) {
-				principal = String.valueOf(((User)auth.getPrincipal()).getId());
-			} else {
-				principal = auth.getName();
+				principal = (User)auth.getPrincipal();
 			}
 		}
 

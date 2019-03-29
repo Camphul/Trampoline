@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A {@link PolicyDefinition} which persists {@link PolicyRule} through JPA.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
 @AllArgsConstructor

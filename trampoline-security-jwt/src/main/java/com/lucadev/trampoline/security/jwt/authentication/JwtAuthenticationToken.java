@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * Authentication token for JWT
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 28-4-18
  */
 @ToString

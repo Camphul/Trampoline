@@ -16,7 +16,7 @@ import java.util.UUID;
  * Service to manage {@link User} entities.
  * Extends {@link UserDetailsService} to implement Spring Security.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public interface UserService extends UserDetailsService {

@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 /**
  * Spring AoP aspect to handle method invocations that have the {@link LogUserActivity} annotation.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Aspect

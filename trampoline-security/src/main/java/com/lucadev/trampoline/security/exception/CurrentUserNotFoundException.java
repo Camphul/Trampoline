@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * was not found. The route should already be secured when wanting to access the current user.
  * This means a server error caused the problem as it could not find the current user even though authorization succeeded.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
  */
 @Getter

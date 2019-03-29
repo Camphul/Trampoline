@@ -9,7 +9,7 @@ import java.util.UUID;
  * A {@link SuccessResponse} which contains a {@link UUID}.
  * This is useful when wanting to reference an id and a success state.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
  */
 @Getter
