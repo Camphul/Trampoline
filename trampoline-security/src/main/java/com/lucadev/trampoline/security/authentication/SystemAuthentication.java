@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * Authentication to bypass the authorization which requires authentication
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 12-5-18
  */
 public class SystemAuthentication implements Authentication {

@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 /**
  * Abstract {@link UserActivityResolver} which generates a simple description of the activity.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public abstract class AbstractUserActivityResolver implements UserActivityResolver {

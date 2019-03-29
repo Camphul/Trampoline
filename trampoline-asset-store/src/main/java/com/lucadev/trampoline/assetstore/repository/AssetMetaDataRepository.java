@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * {@link TrampolineRepository} for {@link AssetMetaData}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 @Repository

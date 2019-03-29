@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Interface that defines methods required to handle storage needs(crud file operations)
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 public interface AssetStore {

@@ -13,7 +13,7 @@ import static com.lucadev.trampoline.assetstore.configuration.AssetStoreWebConfi
 /**
  * Register Http message converter to handle asset data output to a client.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 @Configuration

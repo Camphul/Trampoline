@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * Controller which uses trampoline-security-abac
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
  */
 @RestController

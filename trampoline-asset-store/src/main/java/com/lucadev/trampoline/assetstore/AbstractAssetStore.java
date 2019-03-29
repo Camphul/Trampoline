@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Abstract implementation of the {@link AssetStore} interface.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 public abstract class AbstractAssetStore implements AssetStore {

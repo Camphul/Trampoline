@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * Request which contains credentials to authorize a user.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 14-4-18
  */
 @Getter

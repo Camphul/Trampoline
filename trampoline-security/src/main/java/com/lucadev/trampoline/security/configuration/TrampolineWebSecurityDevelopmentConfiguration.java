@@ -16,7 +16,7 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 /**
  * Configure websecurity for dev profile to disable security on the H2 console, etc..
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Configuration

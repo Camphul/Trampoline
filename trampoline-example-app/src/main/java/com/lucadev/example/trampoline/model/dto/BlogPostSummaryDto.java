@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * A shorter DTO than {@link BlogPostDto} which is used to display lists of blogposts.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Getter

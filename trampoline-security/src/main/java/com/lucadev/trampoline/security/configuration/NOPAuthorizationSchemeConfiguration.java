@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * NOP implementation of {@link AuthorizationSchemeConfiguration}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 public class NOPAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {

@@ -12,7 +12,7 @@ import java.util.Collection;
  * The entity for the blog post.
  * Extends a {@link TrampolineEntity} to enable auditing and {@link java.util.UUID} id.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Entity

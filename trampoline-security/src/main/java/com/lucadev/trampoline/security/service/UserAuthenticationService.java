@@ -5,7 +5,7 @@ import com.lucadev.trampoline.security.model.User;
 /**
  * Service interface that defines methods required to manage user passwords.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 27-4-18
  */
 public interface UserAuthenticationService {

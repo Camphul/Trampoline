@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.abac.context;
 /**
  * Interface that defines a method to create a {@link SecurityAccessContext}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
 public interface SecurityAccessContextFactory {

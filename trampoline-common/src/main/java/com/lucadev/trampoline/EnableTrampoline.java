@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * Spring meta-annotation for loading trampoline services correctly.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 26-4-18
  */
 @Target(ElementType.TYPE)

@@ -12,7 +12,7 @@ import java.util.UUID;
  * <p>
  * This model specifically tells Spring to return a 404 error code to the client.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * This class allows you to easily map a {@link Page} type into another type.
  * Useful when wanting to return a page of DTOs instead of JPA entities in your REST endpoint.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
  */
 public class MappedPage<R> extends PageImpl<R> {

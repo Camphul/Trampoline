@@ -29,7 +29,7 @@ import static com.lucadev.trampoline.security.jwt.configuration.JwtWebSecurityCo
 /**
  * Have 2 configurations, in this one we configure the coupled parts such as auth path
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Configuration

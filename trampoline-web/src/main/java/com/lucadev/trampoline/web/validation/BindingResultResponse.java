@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link MessageResponse} extension for validation errors found through a {@link }
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Getter

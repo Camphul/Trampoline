@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
  * Entities who extend {@link com.lucadev.trampoline.data.entity.TrampolineEntity} should
  * have repositories that extend {@link TrampolineRepository}.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Repository

@@ -8,7 +8,7 @@ import lombok.ToString;
 /**
  * Model to use when wanting to return an asset to a model client with the correct content type.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
 @Getter

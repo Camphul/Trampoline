@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * A Spring {@link Converter} to converter a {@link String} into a {@link UUID}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class UUIDConverter implements Converter<String, UUID> {

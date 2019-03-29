@@ -5,7 +5,7 @@ import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivity;
 /**
  * Interface used to map user activity.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 public interface UserActivityResolver {

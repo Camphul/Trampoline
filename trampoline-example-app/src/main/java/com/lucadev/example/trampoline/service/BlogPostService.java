@@ -25,7 +25,7 @@ import java.util.UUID;
  * on ContextRefreshed(startup) we must set a {@link org.springframework.security.core.context.SecurityContext}
  * to use {@link com.lucadev.trampoline.security.authentication.SystemAuthentication}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
 @Service

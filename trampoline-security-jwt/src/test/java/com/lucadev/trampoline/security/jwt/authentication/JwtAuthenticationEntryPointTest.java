@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 /**
  * Test the authentication entry point
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class JwtAuthenticationEntryPointTest {

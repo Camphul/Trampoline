@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 /**
  * A wrapper for activity triggered by a user.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @AllArgsConstructor

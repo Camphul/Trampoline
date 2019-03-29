@@ -15,7 +15,7 @@ import static com.lucadev.trampoline.web.configuration.TrampolineWebMvcConfigura
 /**
  * Configures a new {@link HandlerExceptionResolver}
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Configuration

@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 /**
  * JpaTest to test the base entity functionality
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @RunWith(SpringRunner.class)

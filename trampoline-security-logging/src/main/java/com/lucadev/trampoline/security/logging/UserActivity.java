@@ -6,7 +6,7 @@ import lombok.ToString;
 
 /**
  * A single user activity POJO.
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 @Getter

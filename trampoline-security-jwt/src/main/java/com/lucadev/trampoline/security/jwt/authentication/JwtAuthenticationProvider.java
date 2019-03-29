@@ -24,7 +24,7 @@ import java.util.Collection;
 /**
  * A {@link AuthenticationProvider} implementation to verify and create JWT's.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 28-4-18
  */
 @AllArgsConstructor

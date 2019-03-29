@@ -6,7 +6,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 19-12-18
  */
 public class SpelDeserializerTest {

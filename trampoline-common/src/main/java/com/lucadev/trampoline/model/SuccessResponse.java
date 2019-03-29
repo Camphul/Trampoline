@@ -6,7 +6,7 @@ import lombok.ToString;
 /**
  * Extension of {@link MessageResponse} to include a status flag to notify of success or failure.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Getter

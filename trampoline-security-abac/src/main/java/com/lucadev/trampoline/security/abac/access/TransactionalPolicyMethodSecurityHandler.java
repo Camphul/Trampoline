@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 /**
  * Transactional implementation of {@link PolicyMethodSecurityHandler} used to rollback transactions when unauthorized.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
  */
 @Component

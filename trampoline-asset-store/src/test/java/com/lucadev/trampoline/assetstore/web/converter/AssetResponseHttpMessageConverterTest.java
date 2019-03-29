@@ -15,7 +15,7 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 /**
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3-11-18
  */
 public class AssetResponseHttpMessageConverterTest {

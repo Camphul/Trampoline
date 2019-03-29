@@ -5,7 +5,7 @@ import com.lucadev.trampoline.security.model.Privilege;
 /**
  * Service for managing {@link Privilege} entities.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public interface PrivilegeService {

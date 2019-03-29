@@ -7,7 +7,7 @@ import lombok.ToString;
 /**
  * Context in which user activity took place.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Getter

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Autoconfiguration for defining a default {@link TimeProvider} bean.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Configuration

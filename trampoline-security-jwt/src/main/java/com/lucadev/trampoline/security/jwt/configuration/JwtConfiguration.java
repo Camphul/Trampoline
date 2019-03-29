@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Interface which helps configure the jwt token, allows to set expiry value for claims etc...
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
 public interface JwtConfiguration {
