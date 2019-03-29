@@ -114,6 +114,10 @@
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<site>
+			<id>website</id>
+			<url>https://lucadev.com/trampoline/docs/${project.version}</url>
+		</site>
 	</distributionManagement>
     <build>
         <plugins>

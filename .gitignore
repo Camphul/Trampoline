@@ -2,6 +2,7 @@ local-asset-store
 experimental-*
 public.key
 private.key
+site
 
 # Maven wrapper
 .mvn/timing.properties
