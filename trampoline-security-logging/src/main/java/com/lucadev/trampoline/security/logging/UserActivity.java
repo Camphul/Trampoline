@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.logging;
 
+import com.lucadev.trampoline.security.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class UserActivity {
 
-	private final String principal;
+	private final User prinicipal;
 	private final String identifier;
 	private final String category;
 	private final ActivityLayer activityLayer;

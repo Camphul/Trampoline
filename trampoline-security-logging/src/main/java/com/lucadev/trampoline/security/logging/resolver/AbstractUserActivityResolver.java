@@ -20,12 +20,10 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 	@Override
 	public UserActivity resolveInterceptedUserActivity(InterceptedUserActivity activity) {
 		Authentication auth = activity.getAuthentication();
-		String principal = null;
+		User principal = null;
 		if(auth != null) {
 			if(auth.getPrincipal() instanceof User) {
-				principal = String.valueOf(((User)auth.getPrincipal()).getId());
-			} else {
-				principal = auth.getName();
+				principal = (User)auth.getPrincipal();
 			}
 		}
 
