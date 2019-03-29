@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class UserActivity {
 
-	private final User prinicipal;
+	private final User principal;
 	private final String identifier;
 	private final String category;
 	private final ActivityLayer activityLayer;
