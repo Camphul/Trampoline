@@ -4,9 +4,6 @@ This is the development roadmap for release 20190507.
 
 ## Refactors
 
-- trampoline-core will be refactored to trampoline-core
-- models and web related services in trampoline-core will be moved to trampoline-web-rest
-- trampoline-security-jwt should not depend on trampoline-security(not sure if this will be possible)
 - redo jwt mechanism
 - trampoline-security-abac should be more decoupled and easier to swap mechanisms. Possibly replace SPeL mechanism with something more professional
 - trampoline-security-logging needs to be better(the architecture is not really scalable atm, maybe use SPeL for formatting messages).
@@ -33,3 +30,7 @@ If you require to implement multiple interfaces for default implementation creat
 
 Use constructor injection.
 
+## Done
+
+- trampoline-core will be refactored to trampoline-core
+- models and web related services in trampoline-core will be moved to trampoline-web-rest

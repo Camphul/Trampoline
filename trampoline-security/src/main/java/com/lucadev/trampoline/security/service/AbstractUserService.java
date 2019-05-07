@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.service;
 
 import com.lucadev.trampoline.security.authentication.IdentificationType;
-import com.lucadev.trampoline.security.exception.CurrentUserNotFoundException;
+import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import lombok.AccessLevel;
@@ -12,6 +12,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,13 +51,13 @@ public abstract class AbstractUserService implements UserService {
 			return loadUserByEmail(s);
 		}
 		Optional<User> user = userRepository.findOneByUsername(s);
-		return user.orElseThrow(() -> new BadCredentialsException("Could not find user with username " + s));
+		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
 	}
 
 	@Override
 	public UserDetails loadUserByEmail(String email) {
 		Optional<User> user = userRepository.findOneByEmail(email);
-		return user.orElseThrow(() -> new BadCredentialsException("Could not find user with email " + email));
+		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with email " + email));
 	}
 
 	/**

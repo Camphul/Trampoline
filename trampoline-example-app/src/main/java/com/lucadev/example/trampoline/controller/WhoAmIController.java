@@ -1,6 +1,7 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.service.WhoAmIUserActivityResolver;
+import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
@@ -24,7 +25,7 @@ public class WhoAmIController {
 
     /**
      * Evaluate if principal(current user) has access to this mapping.
-     * Then return the current user or throw a {@link com.lucadev.trampoline.security.exception.CurrentUserNotFoundException}
+     * Then return the current user or throw a {@link CurrentUserNotFoundException}
      *
      * @return whoami dto response.
      */

@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.exception;
+package com.lucadev.trampoline.security;
 
 import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.Getter;
