@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.abac.policy;
+package com.lucadev.trampoline.security.abac.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.security.abac.spel.SpelAttributeConverter;

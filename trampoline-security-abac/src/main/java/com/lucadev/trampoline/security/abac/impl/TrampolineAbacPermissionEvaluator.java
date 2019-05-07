@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.abac.impl;
 
 import com.lucadev.trampoline.security.abac.AbstractAbacPermissionEvaluator;
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.enforcement.PolicyEnforcement;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +32,15 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 		if (authentication == null) {
 			throw new AccessDeniedException("Not authenticated");
 		}
-		Object user = authentication.getPrincipal();
 		Map<String, Object> environment = new HashMap<>();
 
 		environment.put("time", timeProvider.now());
-
-		LOGGER.debug("hasPermission({}, {}, {})", user, targetDomainObject, permission);
-		return policyEnforcement.check(user, targetDomainObject, permission, environment);
+		try {
+			policyEnforcement.check(authentication, targetDomainObject, (String) permission, environment);
+			return true;
+		} catch (AccessDeniedException accessDenied) {
+			LOGGER.error("Received access denied from policy enforcement.", accessDenied);
+			return false;
+		}
 	}
 }

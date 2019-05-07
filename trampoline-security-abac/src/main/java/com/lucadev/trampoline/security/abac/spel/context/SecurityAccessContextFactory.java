@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.abac.context;
+package com.lucadev.trampoline.security.abac.spel.context;
 
 /**
  * Interface that defines a method to create a {@link SecurityAccessContext}

@@ -11,9 +11,8 @@ import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.web.model.SuccessResponse;
 import com.lucadev.trampoline.web.model.UUIDDto;
-import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.enforcement.PolicyEnforcement;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.UUID;
 
 /**

@@ -1,4 +1,6 @@
-package com.lucadev.trampoline.security.abac.policy;
+package com.lucadev.trampoline.security.abac;
+
+import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
-public interface PolicyDefinition {
+public interface PolicyContainer {
 
 	/**
 	 * Get all the defined policy rules

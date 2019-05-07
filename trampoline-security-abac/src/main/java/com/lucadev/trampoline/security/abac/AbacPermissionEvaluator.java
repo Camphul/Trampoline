@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.abac;
 
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.enforcement.PolicyEnforcement;
 import org.springframework.security.access.PermissionEvaluator;
 
 /**

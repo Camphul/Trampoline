@@ -1,6 +1,6 @@
-package com.lucadev.trampoline.security.abac.context.impl;
+package com.lucadev.trampoline.security.abac.spel.context.impl;
 
-import com.lucadev.trampoline.security.abac.context.SecurityAccessContext;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContext;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

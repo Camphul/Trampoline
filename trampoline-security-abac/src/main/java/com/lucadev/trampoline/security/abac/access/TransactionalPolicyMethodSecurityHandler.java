@@ -2,14 +2,13 @@ package com.lucadev.trampoline.security.abac.access;
 
 import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
+import com.lucadev.trampoline.security.abac.enforcement.PolicyEnforcement;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -28,18 +27,14 @@ import java.lang.reflect.Method;
 public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSecurityHandler {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TransactionalPolicyMethodSecurityHandler.class);
-	private final PermissionEvaluator permissionEvaluator;
+	private final PolicyEnforcement policyEnforcement;
 
 	@Override
 	public void handlePrePolicy(JoinPoint joinPoint) {
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrePolicy prePolicy = method.getAnnotation(PrePolicy.class);
 
-		boolean permission = permissionEvaluator.hasPermission(authentication, null, prePolicy.value());
-		if (!permission) {
-			throw new AccessDeniedException("Forbidden");
-		}
+		policyEnforcement.check("", prePolicy.value());
 	}
 
 	@Transactional
@@ -59,11 +54,8 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 			throw throwable;
 		}
 		//Check if invocated method has permissions
-		boolean permission = permissionEvaluator.hasPermission(authentication, returnValue, postPolicy.value());
-		if (permission) {
-			return returnValue;
-		}
-		//Throw 401 when permission check returned false.
-		throw new AccessDeniedException("Forbidden");
+		policyEnforcement.check(authentication, returnValue, postPolicy.value(), null);
+
+		return returnValue;
 	}
 }

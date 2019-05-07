@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.abac.context;
+package com.lucadev.trampoline.security.abac.spel.context;
 
 import org.springframework.security.access.expression.SecurityExpressionOperations;
 
