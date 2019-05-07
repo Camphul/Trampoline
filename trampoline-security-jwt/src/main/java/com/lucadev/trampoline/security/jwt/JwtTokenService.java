@@ -10,15 +10,21 @@ import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,7 +34,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenService.class);
@@ -42,6 +48,14 @@ public class JwtTokenService implements TokenService {
 	private final TimeProvider timeProvider;
 	private final UserService userService;
 	private final JwtSecurityProperties properties;
+	@Getter(AccessLevel.PRIVATE)
+	private Key signKey;
+
+	@PostConstruct
+	public void postConstruct() {
+		byte[] encodedSecret = Base64.getEncoder().encode(this.properties.getSecret().getBytes());
+		this.signKey = Keys.hmacShaKeyFor(encodedSecret);
+	}
 
 	/**
 	 * Create a new token
@@ -78,7 +92,7 @@ public class JwtTokenService implements TokenService {
 				.setClaims(claims)
 				.setIssuedAt(createdDate)
 				.setExpiration(calculateExpirationDate(createdDate))
-				.signWith(Keys.hmacShaKeyFor(properties.getSecret().getBytes()))
+				.signWith(getSignKey())
 				.compact();
 	}
 
@@ -91,7 +105,7 @@ public class JwtTokenService implements TokenService {
 				.setSubject(subject)
 				.setIssuedAt(createdDate)
 				.setExpiration(expirationDate)
-				.signWith(Keys.hmacShaKeyFor(properties.getSecret().getBytes()))
+				.signWith(getSignKey())
 				.compact();
 	}
 
@@ -207,7 +221,7 @@ public class JwtTokenService implements TokenService {
 
 	private Claims getAllTokenClaims(String token) {
 		return Jwts.parser()
-				.setSigningKey(properties.getSecret().getBytes())
+				.setSigningKey(getSignKey())
 				.parseClaimsJws(token)
 				.getBody();
 	}

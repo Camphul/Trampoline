@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,10 +35,15 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
     private final RoleService roleService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final Environment environment;
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    	if("update".equalsIgnoreCase(environment.getProperty("spring.jpa.hibernate.ddl-auto"))) {
+			LOGGER.info("Skipping user imports..");
+			return;
+		}
         try {
             //Required if you were to use abac on a handler level.
             SecurityContext ctx = SecurityContextHolder.createEmptyContext();
