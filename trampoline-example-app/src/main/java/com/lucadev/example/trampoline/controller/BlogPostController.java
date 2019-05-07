@@ -8,6 +8,7 @@ import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import com.lucadev.trampoline.data.MappedPage;
+import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.web.model.SuccessResponse;
 import com.lucadev.trampoline.web.model.UUIDDto;
 import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -74,15 +76,14 @@ public class BlogPostController {
      * Evaluate BLOGPOST_VIEW with the returned BlogPost against the current principal.
      * Maybe the principal may only view his own blogposts!
      *
-     * @param id blogpost to view.
+     * @param blogPost blogpost to view.
      * @param pageable pageable for navigating through post comments.
      * @return blogpost dto.
      */
-    @GetMapping("/blogs/{id}")
+    @GetMapping("/blogs/{blogPost}")
     //@PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
-	@PostPolicy("BLOGPOST_VIEW")
-    public BlogPostDto viewBlogPost(@PathVariable("id") UUID id, Pageable pageable) {
-        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	@PrePolicy("BLOGPOST_VIEW")
+    public BlogPostDto viewBlogPost(@FindById BlogPost blogPost, Pageable pageable) {
         return new BlogPostDto(blogPost,
                 MappedPage.of(blogPostService.findAllComments(blogPost, pageable), BlogPostCommentDto::new));
     }
@@ -90,18 +91,16 @@ public class BlogPostController {
     /**
      * Might be strange not to see an annotation to authorize but some actions require some more work.
      *
-     * @param id blogpost id to delete.
+     * @param blogPost Blogpost to delete.
      * @return success response.
      */
-    @DeleteMapping("/blogs/{id}")
-    public SuccessResponse deleteBlogPost(@PathVariable("id") UUID id) {
+    @DeleteMapping("/blogs/{blogPost}")
+    public SuccessResponse deleteBlogPost(@FindById BlogPost blogPost) {
         //Find the blog post we want to delete
-        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-
         //If this fails it will throw an AccessDenied or other Exception which will stop the deleteById to be invoked.
         policyEnforcement.check(blogPost, "BLOGPOST_DELETE");
 
-        blogPostService.deleteById(id);
+        blogPostService.deleteById(blogPost.getId());
 
         return new SuccessResponse();
     }

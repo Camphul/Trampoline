@@ -36,6 +36,7 @@
 		<module>trampoline-web</module>
 		<module>trampoline-web-autoconfigure</module>
 		<module>trampoline-web-starter</module>
+		<module>trampoline-data-web</module>
 	</modules>
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
