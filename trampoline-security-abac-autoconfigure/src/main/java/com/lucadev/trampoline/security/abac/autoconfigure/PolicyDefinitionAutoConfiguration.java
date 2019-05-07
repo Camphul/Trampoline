@@ -24,28 +24,28 @@ import java.io.IOException;
 @ConditionalOnClass(PolicyDefinition.class)
 public class PolicyDefinitionAutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDefinitionAutoConfiguration.class);
-    private final String jsonFilePath;
-    private final PolicyRuleRepository policyRuleRepository;
+	private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDefinitionAutoConfiguration.class);
+	private final String jsonFilePath;
+	private final PolicyRuleRepository policyRuleRepository;
 
-    @Autowired
-    public PolicyDefinitionAutoConfiguration(PolicyRuleRepository policyRuleRepository,
-                                             @Value("${trampoline.security.abac.policy.definition.json.filepath:default-policy.json}") String jsonFilePath) {
-        this.policyRuleRepository = policyRuleRepository;
-        this.jsonFilePath = jsonFilePath;
-    }
+	@Autowired
+	public PolicyDefinitionAutoConfiguration(PolicyRuleRepository policyRuleRepository,
+											 @Value("${trampoline.security.abac.policy.definition.json.filepath:default-policy.json}") String jsonFilePath) {
+		this.policyRuleRepository = policyRuleRepository;
+		this.jsonFilePath = jsonFilePath;
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(PolicyDefinition.class)
-    public PolicyDefinition policyDefinition() {
-        LOGGER.debug("Creating autoconfigured policy definition");
-        JsonFilePolicyDefinition parent = null;
-        try {
-            parent = new JsonFilePolicyDefinition(jsonFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new JpaPolicyDefinition(policyRuleRepository, parent);
+	@Bean
+	@ConditionalOnMissingBean(PolicyDefinition.class)
+	public PolicyDefinition policyDefinition() {
+		LOGGER.debug("Creating autoconfigured policy definition");
+		JsonFilePolicyDefinition parent = null;
+		try {
+			parent = new JsonFilePolicyDefinition(jsonFilePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new JpaPolicyDefinition(policyRuleRepository, parent);
 
-    }
+	}
 }

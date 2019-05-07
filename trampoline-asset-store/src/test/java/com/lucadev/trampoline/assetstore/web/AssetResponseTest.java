@@ -11,16 +11,16 @@ import static org.junit.Assert.assertEquals;
  */
 public class AssetResponseTest {
 
-    @Test
-    public void shouldSucceedFrom() {
-        Asset asset = new Asset(new byte[10], null);
-        AssetResponse resp = AssetResponse.from(asset);
-        assertEquals(asset, resp.getAsset());
-    }
+	@Test
+	public void shouldSucceedFrom() {
+		Asset asset = new Asset(new byte[10], null);
+		AssetResponse resp = AssetResponse.from(asset);
+		assertEquals(asset, resp.getAsset());
+	}
 
-    @Test(expected = NullPointerException.class)
-    public void shouldFailFromNPE() {
-        AssetResponse.from(null);
-    }
+	@Test(expected = NullPointerException.class)
+	public void shouldFailFromNPE() {
+		AssetResponse.from(null);
+	}
 
 }

@@ -1,6 +1,6 @@
 package com.lucadev.example.trampoline.model.dto;
 
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.Getter;
 import lombok.ToString;
 

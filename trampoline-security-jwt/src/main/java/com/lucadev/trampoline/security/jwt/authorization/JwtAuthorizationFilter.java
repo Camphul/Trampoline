@@ -24,27 +24,27 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private static final Logger JWT_LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
-    private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+	private static final Logger JWT_LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+	private final AuthenticationManager authenticationManager;
+	private final TokenService tokenService;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            Authentication token = tokenService.getAuthenticationToken(httpServletRequest);
-            if (token == null) {
-                JWT_LOGGER.debug("Could not authenticate null JWT token.");
-                filterChain.doFilter(httpServletRequest, httpServletResponse);
-                return;
-            }
+	@Override
+	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+		try {
+			Authentication token = tokenService.getAuthenticationToken(httpServletRequest);
+			if (token == null) {
+				JWT_LOGGER.debug("Could not authenticate null JWT token.");
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
+				return;
+			}
 
-            Authentication authentication = authenticationManager.authenticate(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            JWT_LOGGER.debug("Set the authentication object.");
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        } catch (Exception ex) {
-            JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(), ex.getMessage());
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        }
-    }
+			Authentication authentication = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			JWT_LOGGER.debug("Set the authentication object.");
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
+		} catch (Exception ex) {
+			JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(), ex.getMessage());
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
+		}
+	}
 }

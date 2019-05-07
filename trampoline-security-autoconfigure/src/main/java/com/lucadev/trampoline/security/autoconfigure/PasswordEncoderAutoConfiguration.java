@@ -15,10 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ConditionalOnClass(PasswordEncoder.class)
 public class PasswordEncoderAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }

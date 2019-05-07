@@ -12,37 +12,37 @@ import static org.junit.Assert.assertTrue;
  */
 public class SystemTimeProviderTest {
 
-    private SystemTimeProvider systemTimeProvider;
+	private SystemTimeProvider systemTimeProvider;
 
-    @Before
-    public void before() {
-        this.systemTimeProvider = new SystemTimeProvider();
-    }
+	@Before
+	public void before() {
+		this.systemTimeProvider = new SystemTimeProvider();
+	}
 
-    @After
-    public void after() {
-        this.systemTimeProvider = null;
-    }
+	@After
+	public void after() {
+		this.systemTimeProvider = null;
+	}
 
-    @Test
-    public void shouldSucceedMatchUnix() {
-        long expected = System.currentTimeMillis();
-        long result = systemTimeProvider.unix();
-        assertAcceptedRange(expected, result);
-    }
+	@Test
+	public void shouldSucceedMatchUnix() {
+		long expected = System.currentTimeMillis();
+		long result = systemTimeProvider.unix();
+		assertAcceptedRange(expected, result);
+	}
 
-    @Test
-    public void shouldSucceedMatchDate() {
-        long expected = System.currentTimeMillis();
-        long result = systemTimeProvider.now().getTime();
-        assertAcceptedRange(expected, result);
-    }
+	@Test
+	public void shouldSucceedMatchDate() {
+		long expected = System.currentTimeMillis();
+		long result = systemTimeProvider.now().getTime();
+		assertAcceptedRange(expected, result);
+	}
 
-    private void assertAcceptedRange(long expected, long result) {
-        //100ms difference accepted
-        long ACCEPTED_DIFFERENCE = 100;
-        assertTrue("Measured result too low", result >= expected - ACCEPTED_DIFFERENCE);
-        assertTrue("Measured result too high", result <= expected + ACCEPTED_DIFFERENCE);
-    }
+	private void assertAcceptedRange(long expected, long result) {
+		//100ms difference accepted
+		long ACCEPTED_DIFFERENCE = 100;
+		assertTrue("Measured result too low", result >= expected - ACCEPTED_DIFFERENCE);
+		assertTrue("Measured result too high", result <= expected + ACCEPTED_DIFFERENCE);
+	}
 
 }

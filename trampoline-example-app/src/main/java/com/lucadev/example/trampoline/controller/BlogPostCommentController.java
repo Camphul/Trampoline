@@ -5,20 +5,18 @@ import com.lucadev.example.trampoline.model.dto.BlogPostCommentDto;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
 import com.lucadev.example.trampoline.service.BlogPostService;
-import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
-import com.lucadev.trampoline.data.pagination.MappedPage;
-import com.lucadev.trampoline.model.SuccessResponse;
-import com.lucadev.trampoline.model.UUIDSuccessResponse;
+import com.lucadev.trampoline.data.ResourceNotFoundException;
+import com.lucadev.trampoline.data.MappedPage;
+import com.lucadev.trampoline.web.model.SuccessResponse;
+import com.lucadev.trampoline.web.model.UUIDDto;
 import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -62,12 +60,12 @@ public class BlogPostCommentController {
      */
     @PostMapping("/blogs/{blogId}/comments")
     @PrePolicy("BLOGPOST_COMMENTS_CREATE")
-    public UUIDSuccessResponse getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody @Valid CreateBlogPostCommentRequest request) {
+    public UUIDDto getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody @Valid CreateBlogPostCommentRequest request) {
         BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
         User currentUser = userService.currentUserOrThrow();
 
         BlogPostComment comment = blogPostService.addComment(currentUser, blogPost, request);
-        return new UUIDSuccessResponse(comment.getId(), true);
+        return new UUIDDto(comment.getId());
     }
 
     @GetMapping("/blogs/{blogId}/comments/{commentId}")
@@ -96,7 +94,7 @@ public class BlogPostCommentController {
 
         blogPostService.removeComment(blogPost, comment);
 
-        return new SuccessResponse(true);
+        return new SuccessResponse();
     }
 
     @PatchMapping("/blogs/{blogId}/comments/{commentId}")
@@ -115,7 +113,7 @@ public class BlogPostCommentController {
 
         blogPostService.updateComment(comment);
 
-        return new SuccessResponse(true);
+        return new SuccessResponse();
     }
 
 }

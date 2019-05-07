@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfiguration;
 import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,54 +19,54 @@ import static org.junit.Assert.assertThat;
  * @since 21-4-18
  */
 public class JwtConfigurationAutoConfigurationTest {
-    private AnnotationConfigApplicationContext context;
+	private AnnotationConfigApplicationContext context;
 
-    @Before
-    public void setUp() throws Exception {
-        context = new AnnotationConfigApplicationContext();
-    }
+	@Before
+	public void setUp() throws Exception {
+		context = new AnnotationConfigApplicationContext();
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        if (this.context != null) {
-            this.context.close();
-        }
-    }
+	@After
+	public void tearDown() throws Exception {
+		if (this.context != null) {
+			this.context.close();
+		}
+	}
 
-    @Test
-    public void registersDefaultJwtConfigurationAutomatically() {
-        this.context.register(JwtConfigurationAutoConfiguration.class);
-        this.context.refresh();
-        JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
-        assertThat(jwtConfiguration, instanceOf(DefaultJwtConfiguration.class));
-    }
+	@Test
+	public void registersDefaultJwtConfigurationAutomatically() {
+		this.context.register(JwtConfigurationAutoConfiguration.class);
+		this.context.refresh();
+		JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
+		assertThat(jwtConfiguration, instanceOf(DefaultJwtConfiguration.class));
+	}
 
-    @Test
-    public void customJwtConfigurationBean() {
-        this.context.register(SomeRandomJwtConfiguration.class);
-        this.context.register(JwtConfigurationAutoConfiguration.class);
-        this.context.refresh();
-        JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
-        assertThat(jwtConfiguration, instanceOf(SomeRandomJwtConfiguration.class));
-    }
+	@Test
+	public void customJwtConfigurationBean() {
+		this.context.register(SomeRandomJwtConfiguration.class);
+		this.context.register(JwtConfigurationAutoConfiguration.class);
+		this.context.refresh();
+		JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
+		assertThat(jwtConfiguration, instanceOf(SomeRandomJwtConfiguration.class));
+	}
 
-    @Configuration
-    protected static class SomeRandomJwtConfiguration implements JwtConfiguration {
+	@Configuration
+	protected static class SomeRandomJwtConfiguration implements JwtConfiguration {
 
-        @Override
-        public boolean getIgnoreExpirationFlag(User user) {
-            return false;
-        }
+		@Override
+		public boolean getIgnoreExpirationFlag(User user) {
+			return false;
+		}
 
-        @Override
-        public boolean getImpersonateFlag(User user) {
-            return false;
-        }
+		@Override
+		public boolean getImpersonateFlag(User user) {
+			return false;
+		}
 
-        @Override
-        public void createToken(User user, Map<String, Object> claims) {
+		@Override
+		public void createToken(User user, Map<String, Object> claims) {
 
-        }
+		}
 
-    }
+	}
 }

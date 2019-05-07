@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.service.impl;
 
-import com.lucadev.trampoline.security.model.User;
-import com.lucadev.trampoline.security.repository.UserRepository;
+import com.lucadev.trampoline.security.persistence.entity.User;
+import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 
@@ -14,27 +14,27 @@ import com.lucadev.trampoline.service.time.TimeProvider;
  */
 public class TrampolineUserService extends AbstractUserService {
 
-    private final TimeProvider timeProvider;
+	private final TimeProvider timeProvider;
 
-    /**
-     * Construct the handler.
-     *
-     * @param userRepository the repository to persist {@link User} entities.
-     * @param timeProvider   {@link TimeProvider} instance.
-     */
-    public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider, boolean emailIdentification) {
-        super(userRepository, emailIdentification);
-        this.timeProvider = timeProvider;
-    }
+	/**
+	 * Construct the handler.
+	 *
+	 * @param userRepository the repository to persist {@link User} entities.
+	 * @param timeProvider   {@link TimeProvider} instance.
+	 */
+	public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider, boolean emailIdentification) {
+		super(userRepository, emailIdentification);
+		this.timeProvider = timeProvider;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public User updateLastSeen(User user) {
-        user.setLastSeen(timeProvider.now());
-        return update(user);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User updateLastSeen(User user) {
+		user.setLastSeen(timeProvider.now());
+		return update(user);
+	}
 
 
 }

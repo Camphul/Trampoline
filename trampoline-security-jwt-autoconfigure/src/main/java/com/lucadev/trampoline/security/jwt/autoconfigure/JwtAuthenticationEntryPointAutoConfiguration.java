@@ -17,10 +17,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @ConditionalOnClass(AuthenticationEntryPoint.class)
 public class JwtAuthenticationEntryPointAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return new JwtAuthenticationEntryPoint();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return new JwtAuthenticationEntryPoint();
+	}
 
 }

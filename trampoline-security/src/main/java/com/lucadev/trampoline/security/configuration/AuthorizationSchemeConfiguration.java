@@ -10,10 +10,10 @@ import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchem
  */
 public interface AuthorizationSchemeConfiguration {
 
-    /**
-     * Build the authorization scheme using the Java builder.
-     *
-     * @param builder the {@link AuthorizationSchemeBuilder}
-     */
-    void build(AuthorizationSchemeBuilder builder);
+	/**
+	 * Build the authorization scheme using the Java builder.
+	 *
+	 * @param builder the {@link AuthorizationSchemeBuilder}
+	 */
+	void build(AuthorizationSchemeBuilder builder);
 }

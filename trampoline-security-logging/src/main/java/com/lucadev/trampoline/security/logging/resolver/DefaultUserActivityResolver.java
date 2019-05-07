@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @since 3/10/19
  */
 @Component
-public class DefaultUserActivityResolver extends AbstractUserActivityResolver{
+public class DefaultUserActivityResolver extends AbstractUserActivityResolver {
 	@Override
 	public String getReadableDescription(InterceptedUserActivity userActivity) {
 		return "Activity: " + userActivity.getCategory() + "::" + userActivity.getIdentifier();

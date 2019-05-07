@@ -21,13 +21,13 @@ import java.io.Serializable;
 public class UserAuthenticationRequest implements Serializable {
 
 	@NotNull
-	@Size(min=2, max=256)
+	@Size(min = 2, max = 256)
 	@NotBlank
-    private String identifier;
+	private String identifier;
 
 	@NotNull
 	@NotBlank
-	@Size(min=2, max=256)
-    private String password;
+	@Size(min = 2, max = 256)
+	private String password;
 
 }

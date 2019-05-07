@@ -19,15 +19,15 @@ import org.springframework.core.Ordered;
 @Configuration
 public class TrampolineSecurityContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
-    /**
-     * Order on which listener gets invoked first.
-     */
-    public static final int TRAMPOLINE_SECURITY_CONTEXT_REFRESHED_LISTENER_ORDER = 10;
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineSecurityContextRefreshedListener.class);
+	/**
+	 * Order on which listener gets invoked first.
+	 */
+	public static final int TRAMPOLINE_SECURITY_CONTEXT_REFRESHED_LISTENER_ORDER = 10;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineSecurityContextRefreshedListener.class);
 
-    private final AuthorizationSchemeConfiguration authorizationSchemeConfiguration;
-    private final AuthorizationSchemeService authorizationSchemeService;
-    private final boolean runConfiguration;
+	private final AuthorizationSchemeConfiguration authorizationSchemeConfiguration;
+	private final AuthorizationSchemeService authorizationSchemeService;
+	private final boolean runConfiguration;
 
 	public TrampolineSecurityContextRefreshedListener(AuthorizationSchemeConfiguration authorizationSchemeConfiguration,
 													  AuthorizationSchemeService authorizationSchemeService,
@@ -39,24 +39,26 @@ public class TrampolineSecurityContextRefreshedListener implements ApplicationLi
 
 	/**
 	 * Run the configured {@link AuthorizationSchemeConfiguration}
+	 *
 	 * @param contextRefreshedEvent the {@link ContextRefreshedEvent} which was fired.
 	 */
 	@Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-		if(runConfiguration) {
+	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+		if (runConfiguration) {
 			LOGGER.debug("ContextRefreshedEvent triggered: running {}", authorizationSchemeConfiguration.getClass().getName());
 			authorizationSchemeConfiguration.build(authorizationSchemeService.builder());
 		} else {
 			LOGGER.debug("AuthorizationSchemeConfiguration is disabled. Not running configuration.");
 		}
-    }
+	}
 
 	/**
 	 * Configures the order of which listener get triggered first.
+	 *
 	 * @return 90 as we are simply a library.
 	 */
 	@Override
-    public int getOrder() {
-        return TRAMPOLINE_SECURITY_CONTEXT_REFRESHED_LISTENER_ORDER;
-    }
+	public int getOrder() {
+		return TRAMPOLINE_SECURITY_CONTEXT_REFRESHED_LISTENER_ORDER;
+	}
 }

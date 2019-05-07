@@ -1,9 +1,9 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.model.UserRegisterRequest;
-import com.lucadev.trampoline.model.UUIDSuccessResponse;
-import com.lucadev.trampoline.security.model.Role;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.web.model.UUIDDto;
+import com.lucadev.trampoline.security.persistence.entity.Role;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,7 @@ public class UserRegistrationController {
      * @return response.
      */
     @PostMapping("/signup")
-    public UUIDSuccessResponse signup(@RequestBody @Valid UserRegisterRequest signupRequest) {
+    public UUIDDto signup(@RequestBody @Valid UserRegisterRequest signupRequest) {
         String username = signupRequest.getUsername();
         String email = signupRequest.getEmail();
         //Passwords must be hashed.
@@ -61,7 +61,7 @@ public class UserRegistrationController {
 
         user = userService.update(user);
 
-        return new UUIDSuccessResponse(user.getId(), true);
+        return new UUIDDto(user.getId());
     }
 
 }

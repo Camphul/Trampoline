@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(JwtConfiguration.class)
 public class JwtConfigurationAutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigurationAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigurationAutoConfiguration.class);
 
 
-    @Bean
-    @ConditionalOnMissingBean
-    public JwtConfiguration jwtConfiguration() {
-        LOGGER.debug("Using default jwt configuration");
-        return new DefaultJwtConfiguration();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public JwtConfiguration jwtConfiguration() {
+		LOGGER.debug("Using default jwt configuration");
+		return new DefaultJwtConfiguration();
+	}
 
 }

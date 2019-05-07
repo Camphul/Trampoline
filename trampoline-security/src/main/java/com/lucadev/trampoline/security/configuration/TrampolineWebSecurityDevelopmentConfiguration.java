@@ -24,49 +24,49 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 @Order(DEV_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityConfigurerAdapter {
 
-    /**
-     * The {@link Order} of this configuration
-     */
-    public static final int DEV_SECURITY_CONFIGURATION_ORDER = 90;
-    /**
-     * The profile which activates this configuration
-     */
-    public static final String DEV_SECURITY_CONFIGURATION_PROFILE = "dev";
+	/**
+	 * The {@link Order} of this configuration
+	 */
+	public static final int DEV_SECURITY_CONFIGURATION_ORDER = 90;
+	/**
+	 * The profile which activates this configuration
+	 */
+	public static final String DEV_SECURITY_CONFIGURATION_PROFILE = "dev";
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/console/**/**");
-        super.configure(web);
-    }
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web
+				.ignoring()
+				.antMatchers("/console/**/**");
+		super.configure(web);
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
 
-                // Un-secure H2 Database
-                .antMatchers("/console/**/**").permitAll();
-        // disable page caching
-        http
-                .headers()
-                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
-                .cacheControl();
+				// Un-secure H2 Database
+				.antMatchers("/console/**/**").permitAll();
+		// disable page caching
+		http
+				.headers()
+				.frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+				.cacheControl();
 
-        http.authorizeRequests().antMatchers("/console/**").permitAll()
-                .and()
-                .headers().frameOptions().disable();
-    }
+		http.authorizeRequests().antMatchers("/console/**").permitAll()
+				.and()
+				.headers().frameOptions().disable();
+	}
 
-    /**
-     * Strictly used in dev profile to load h2 console
-     *
-     * @return h2 console bean.
-     */
-    @Bean
-    public ServletRegistrationBean h2servletRegistration() {
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-        registrationBean.addUrlMappings("/console/*");
-        return registrationBean;
-    }
+	/**
+	 * Strictly used in dev profile to load h2 console
+	 *
+	 * @return h2 console bean.
+	 */
+	@Bean
+	public ServletRegistrationBean h2servletRegistration() {
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+		registrationBean.addUrlMappings("/console/*");
+		return registrationBean;
+	}
 }

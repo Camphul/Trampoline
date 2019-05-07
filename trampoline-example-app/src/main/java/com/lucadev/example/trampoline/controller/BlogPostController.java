@@ -6,20 +6,18 @@ import com.lucadev.example.trampoline.model.dto.BlogPostDto;
 import com.lucadev.example.trampoline.model.dto.BlogPostSummaryDto;
 import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.service.BlogPostService;
-import com.lucadev.trampoline.data.exception.ResourceNotFoundException;
-import com.lucadev.trampoline.data.pagination.MappedPage;
-import com.lucadev.trampoline.model.SuccessResponse;
-import com.lucadev.trampoline.model.UUIDSuccessResponse;
+import com.lucadev.trampoline.data.ResourceNotFoundException;
+import com.lucadev.trampoline.data.MappedPage;
+import com.lucadev.trampoline.web.model.SuccessResponse;
+import com.lucadev.trampoline.web.model.UUIDDto;
 import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -63,13 +61,13 @@ public class BlogPostController {
      */
     @PostMapping("/blogs")
     @PrePolicy("BLOGPOST_CREATE")
-    public UUIDSuccessResponse createBlogPost(@RequestBody @Valid CreateBlogPostRequest request) {
+    public UUIDDto createBlogPost(@RequestBody @Valid CreateBlogPostRequest request) {
         //Most likely not null since it has already authenticated.
         User user = userService.currentUserOrThrow();
 
         BlogPost post = blogPostService.createBlogPost(user, request);
 
-        return new UUIDSuccessResponse(post.getId(), true);
+        return new UUIDDto(post.getId());
     }
 
     /**
@@ -105,7 +103,7 @@ public class BlogPostController {
 
         blogPostService.deleteById(id);
 
-        return new SuccessResponse(true);
+        return new SuccessResponse();
     }
 
     /**
@@ -131,6 +129,6 @@ public class BlogPostController {
 
         blogPostService.update(blogPost);
 
-        return new SuccessResponse(true);
+        return new SuccessResponse();
     }
 }

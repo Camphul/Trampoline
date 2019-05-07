@@ -11,11 +11,11 @@ import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchem
  */
 public interface AuthorizationSchemeService {
 
-    /**
-     * Use java builder pattern for creating authorization scheme.
-     *
-     * @return the builder
-     */
-    AuthorizationSchemeBuilder builder();
+	/**
+	 * Use java builder pattern for creating authorization scheme.
+	 *
+	 * @return the builder
+	 */
+	AuthorizationSchemeBuilder builder();
 
 }

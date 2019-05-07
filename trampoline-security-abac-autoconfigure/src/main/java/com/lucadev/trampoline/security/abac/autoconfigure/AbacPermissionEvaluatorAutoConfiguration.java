@@ -21,15 +21,15 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class AbacPermissionEvaluatorAutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbacPermissionEvaluatorAutoConfiguration.class);
-    private final PolicyEnforcement policyEnforcement;
-    private final TimeProvider timeProvider;
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbacPermissionEvaluatorAutoConfiguration.class);
+	private final PolicyEnforcement policyEnforcement;
+	private final TimeProvider timeProvider;
 
-    @Bean
-    @ConditionalOnMissingBean(AbacPermissionEvaluator.class)
-    public AbacPermissionEvaluator abacPermissionEvaluator() {
-        LOGGER.debug("Creating autoconfigured abac permission evaluator");
-        return new TrampolineAbacPermissionEvaluator(policyEnforcement, timeProvider);
-    }
+	@Bean
+	@ConditionalOnMissingBean(AbacPermissionEvaluator.class)
+	public AbacPermissionEvaluator abacPermissionEvaluator() {
+		LOGGER.debug("Creating autoconfigured abac permission evaluator");
+		return new TrampolineAbacPermissionEvaluator(policyEnforcement, timeProvider);
+	}
 
 }

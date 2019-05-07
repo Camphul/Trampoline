@@ -1,12 +1,11 @@
 package com.lucadev.example.trampoline.controller;
 
-import com.lucadev.trampoline.model.MessageResponse;
+import com.lucadev.trampoline.web.model.MessageResponse;
 import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

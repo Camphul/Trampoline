@@ -10,18 +10,18 @@ import java.util.Date;
  */
 public interface TimeProvider {
 
-    /**
-     * Returns {@link #unix()} in a {@link Date} object.
-     *
-     * @return current time inside a {@link Date} object.
-     */
-    Date now();
+	/**
+	 * Returns {@link #unix()} in a {@link Date} object.
+	 *
+	 * @return current time inside a {@link Date} object.
+	 */
+	Date now();
 
-    /**
-     * Returns the current unix timestamp.
-     *
-     * @return unix timestamp
-     */
-    long unix();
+	/**
+	 * Returns the current unix timestamp.
+	 *
+	 * @return unix timestamp
+	 */
+	long unix();
 
 }

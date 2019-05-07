@@ -10,19 +10,19 @@ import java.util.Date;
  */
 public class SystemTimeProvider implements TimeProvider {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date now() {
-        return new Date(unix());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Date now() {
+		return new Date(unix());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long unix() {
-        return System.currentTimeMillis();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long unix() {
+		return System.currentTimeMillis();
+	}
 }

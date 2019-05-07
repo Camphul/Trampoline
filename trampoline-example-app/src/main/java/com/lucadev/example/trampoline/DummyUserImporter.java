@@ -1,9 +1,9 @@
 package com.lucadev.example.trampoline;
 
 import com.lucadev.trampoline.security.authentication.SystemAuthentication;
-import com.lucadev.trampoline.security.model.Role;
-import com.lucadev.trampoline.security.model.User;
-import com.lucadev.trampoline.security.repository.UserRepository;
+import com.lucadev.trampoline.security.persistence.entity.Role;
+import com.lucadev.trampoline.security.persistence.entity.User;
+import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import com.lucadev.trampoline.security.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

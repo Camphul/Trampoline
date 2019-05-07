@@ -12,6 +12,7 @@ public interface UserActivityResolver {
 
 	/**
 	 * Map to a readable UserActivity.
+	 *
 	 * @param activity intercepted user activity.
 	 * @return mapped user activity dto.
 	 */

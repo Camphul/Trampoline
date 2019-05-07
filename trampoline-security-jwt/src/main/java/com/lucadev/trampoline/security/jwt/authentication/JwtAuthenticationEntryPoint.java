@@ -15,17 +15,17 @@ import java.io.IOException;
  */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    /**
-     * Always deny access when no authentication is configured
-     *
-     * @param httpServletRequest http req
-     * @param httpServletResponse http resp
-     * @param e auth exception
-     * @throws IOException possible exception
-     */
-    @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                         AuthenticationException e) throws IOException {
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-    }
+	/**
+	 * Always deny access when no authentication is configured
+	 *
+	 * @param httpServletRequest  http req
+	 * @param httpServletResponse http resp
+	 * @param e                   auth exception
+	 * @throws IOException possible exception
+	 */
+	@Override
+	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+						 AuthenticationException e) throws IOException {
+		httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+	}
 }

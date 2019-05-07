@@ -20,14 +20,14 @@ import org.springframework.core.env.Environment;
 @AllArgsConstructor
 public class AuthorizationSchemeServiceAutoConfiguration {
 
-    private final Environment environment;
-    private final RoleService roleService;
-    private final PrivilegeService privilegeService;
+	private final Environment environment;
+	private final RoleService roleService;
+	private final PrivilegeService privilegeService;
 
-    @Bean
-    @ConditionalOnMissingBean
-    public AuthorizationSchemeService authorizationSchemeService() {
-        return new TrampolineAuthorizationSchemeService(environment, roleService, privilegeService);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public AuthorizationSchemeService authorizationSchemeService() {
+		return new TrampolineAuthorizationSchemeService(environment, roleService, privilegeService);
+	}
 
 }

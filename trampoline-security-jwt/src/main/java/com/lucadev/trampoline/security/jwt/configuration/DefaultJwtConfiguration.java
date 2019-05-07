@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 
 import java.util.Map;
 
@@ -12,18 +12,18 @@ import java.util.Map;
  */
 public class DefaultJwtConfiguration implements JwtConfiguration {
 
-    @Override
-    public boolean getIgnoreExpirationFlag(User user) {
-        return false;
-    }
+	@Override
+	public boolean getIgnoreExpirationFlag(User user) {
+		return false;
+	}
 
-    @Override
-    public boolean getImpersonateFlag(User user) {
-        return false;
-    }
+	@Override
+	public boolean getImpersonateFlag(User user) {
+		return false;
+	}
 
-    @Override
-    public void createToken(User user, Map<String, Object> claims) {
-        //Dont do anything by default
-    }
+	@Override
+	public void createToken(User user, Map<String, Object> claims) {
+		//Dont do anything by default
+	}
 }

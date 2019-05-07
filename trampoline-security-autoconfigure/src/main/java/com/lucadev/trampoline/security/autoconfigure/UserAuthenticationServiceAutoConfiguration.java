@@ -17,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ConditionalOnClass(UserAuthenticationService.class)
 public class UserAuthenticationServiceAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public UserAuthenticationService userPasswordService(UserService userService, PasswordEncoder passwordEncoder) {
-        return new TrampolineUserAuthenticationService(userService, passwordEncoder);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public UserAuthenticationService userPasswordService(UserService userService, PasswordEncoder passwordEncoder) {
+		return new TrampolineUserAuthenticationService(userService, passwordEncoder);
+	}
 
 }

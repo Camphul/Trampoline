@@ -16,20 +16,20 @@ import lombok.ToString;
 @AllArgsConstructor
 public class AssetResponse {
 
-    private final Asset asset;
+	private final Asset asset;
 
-    /**
-     * Construct {@code AssetResponse}
-     *
-     * @param asset {@link Asset} to create a model for.
-     * @return a {@link AssetResponse} instance.
-     */
-    public static AssetResponse from(Asset asset) {
-        if (asset == null)
-            throw new NullPointerException("Cannot create model from null asset.");
+	/**
+	 * Construct {@code AssetResponse}
+	 *
+	 * @param asset {@link Asset} to create a model for.
+	 * @return a {@link AssetResponse} instance.
+	 */
+	public static AssetResponse from(Asset asset) {
+		if (asset == null)
+			throw new NullPointerException("Cannot create model from null asset.");
 
-        return new AssetResponse(asset);
-    }
+		return new AssetResponse(asset);
+	}
 
 
 }

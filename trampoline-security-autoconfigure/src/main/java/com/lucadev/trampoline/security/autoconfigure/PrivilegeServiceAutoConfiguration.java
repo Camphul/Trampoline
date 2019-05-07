@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
-import com.lucadev.trampoline.security.repository.PrivilegeRepository;
+import com.lucadev.trampoline.security.persistence.repository.PrivilegeRepository;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.impl.TrampolinePrivilegeService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(PrivilegeService.class)
 public class PrivilegeServiceAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public PrivilegeService privilegeService(PrivilegeRepository repository) {
-        return new TrampolinePrivilegeService(repository);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public PrivilegeService privilegeService(PrivilegeRepository repository) {
+		return new TrampolinePrivilegeService(repository);
+	}
 
 }

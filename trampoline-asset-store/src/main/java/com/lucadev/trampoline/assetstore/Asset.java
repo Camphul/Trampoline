@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Asset {
 
-    private final byte[] data;
-    private final AssetMetaData metaData;
+	private final byte[] data;
+	private final AssetMetaData metaData;
 
 }

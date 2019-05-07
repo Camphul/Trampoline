@@ -8,7 +8,7 @@ import com.lucadev.example.trampoline.persistence.repository.BlogPostCommentRepo
 import com.lucadev.example.trampoline.persistence.repository.BlogPostRepository;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

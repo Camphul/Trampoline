@@ -15,6 +15,7 @@ Please reference the following modules for documentation:
 - [trampoline-security-jwt-web](../trampoline-security-jwt-web)
 - [trampoline-security-logging](../trampoline-security-logging)
 - [trampoline-web](../trampoline-web)
+- [trampoline-web-rest](../trampoline-web-rest)
 
 ## Javadoc
 
@@ -27,6 +28,7 @@ Please reference the following modules for documentation:
 - [trampoline-security-jwt-web](https://lucadev.com/trampoline/docs/trampoline-security-jwt-web)
 - [trampoline-security-logging](https://lucadev.com/trampoline/docs/trampoline-security-logging)
 - [trampoline-web](https://lucadev.com/trampoline/docs/trampoline-web)
+- [trampoline-web-rest](https://lucadev.com/trampoline/docs/trampoline-web-rest)
 
 ## Configuration Values
 

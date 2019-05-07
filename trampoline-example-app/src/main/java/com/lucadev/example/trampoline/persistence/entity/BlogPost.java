@@ -1,7 +1,7 @@
 package com.lucadev.example.trampoline.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.*;
 
 import javax.persistence.*;

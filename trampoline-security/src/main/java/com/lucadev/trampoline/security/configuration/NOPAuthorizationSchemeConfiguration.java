@@ -12,14 +12,15 @@ import org.slf4j.LoggerFactory;
  */
 public class NOPAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NOPAuthorizationSchemeConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(NOPAuthorizationSchemeConfiguration.class);
 
 	/**
 	 * NOP implementation of {@link AuthorizationSchemeConfiguration#build(AuthorizationSchemeBuilder)}
+	 *
 	 * @param builder the {@link AuthorizationSchemeBuilder}
 	 */
 	@Override
-    public void build(AuthorizationSchemeBuilder builder) {
-        LOGGER.debug("No AuthorizationSchemeConfiguration has been defined. Skipping.");
-    }
+	public void build(AuthorizationSchemeBuilder builder) {
+		LOGGER.debug("No AuthorizationSchemeConfiguration has been defined. Skipping.");
+	}
 }

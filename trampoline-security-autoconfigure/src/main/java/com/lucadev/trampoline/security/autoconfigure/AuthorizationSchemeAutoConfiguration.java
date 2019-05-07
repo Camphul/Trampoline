@@ -17,13 +17,13 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(AuthorizationSchemeConfiguration.class)
 public class AuthorizationSchemeAutoConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationSchemeAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationSchemeAutoConfiguration.class);
 
-    @Bean
-    @ConditionalOnMissingBean
-    public AuthorizationSchemeConfiguration authorizationSchemeBuilderConfiguration() {
-        LOGGER.debug("Using default AuthorizationSchemeConfiguration");
-        return new NOPAuthorizationSchemeConfiguration();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public AuthorizationSchemeConfiguration authorizationSchemeBuilderConfiguration() {
+		LOGGER.debug("Using default AuthorizationSchemeConfiguration");
+		return new NOPAuthorizationSchemeConfiguration();
+	}
 
 }

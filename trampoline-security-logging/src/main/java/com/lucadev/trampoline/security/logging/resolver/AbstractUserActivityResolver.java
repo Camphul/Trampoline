@@ -6,7 +6,7 @@ import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
 import com.lucadev.trampoline.security.logging.UserActivityResolver;
 import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivity;
 import com.lucadev.trampoline.security.logging.aop.InterceptedUserActivityInvocationContext;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -21,9 +21,9 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 	public UserActivity resolveInterceptedUserActivity(InterceptedUserActivity activity) {
 		Authentication auth = activity.getAuthentication();
 		User principal = null;
-		if(auth != null) {
-			if(auth.getPrincipal() instanceof User) {
-				principal = (User)auth.getPrincipal();
+		if (auth != null) {
+			if (auth.getPrincipal() instanceof User) {
+				principal = (User) auth.getPrincipal();
 			}
 		}
 
@@ -48,6 +48,7 @@ public abstract class AbstractUserActivityResolver implements UserActivityResolv
 
 	/**
 	 * Obtain a readable message.
+	 *
 	 * @param userActivity the method intercepted user activity.
 	 * @return a human readable description of the activity that was executed.
 	 */

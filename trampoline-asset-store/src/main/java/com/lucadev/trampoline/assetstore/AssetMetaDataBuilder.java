@@ -10,24 +10,24 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class AssetMetaDataBuilder {
 
-    /**
-     * Disable instance creation
-     */
-    private AssetMetaDataBuilder() {
-        throw new IllegalAccessError("This builder should not be constructable.");
-    }
+	/**
+	 * Disable instance creation
+	 */
+	private AssetMetaDataBuilder() {
+		throw new IllegalAccessError("This builder should not be constructable.");
+	}
 
-    /**
-     * Create a {@link AssetMetaData} from a multipart file.
-     *
-     * @param multipartFile the {@link MultipartFile} to create metadata from
-     * @return the {@link AssetMetaData} built from the {@code multipartFile}
-     */
-    public static AssetMetaData fromMultipartFile(MultipartFile multipartFile) {
-        if (multipartFile == null)
-            throw new NullPointerException("Cannot create asset metadata from null multipartFile");
+	/**
+	 * Create a {@link AssetMetaData} from a multipart file.
+	 *
+	 * @param multipartFile the {@link MultipartFile} to create metadata from
+	 * @return the {@link AssetMetaData} built from the {@code multipartFile}
+	 */
+	public static AssetMetaData fromMultipartFile(MultipartFile multipartFile) {
+		if (multipartFile == null)
+			throw new NullPointerException("Cannot create asset metadata from null multipartFile");
 
-        return new AssetMetaData(multipartFile.getName(), multipartFile.getOriginalFilename(),
-                multipartFile.getContentType(), multipartFile.getSize());
-    }
+		return new AssetMetaData(multipartFile.getName(), multipartFile.getOriginalFilename(),
+				multipartFile.getContentType(), multipartFile.getSize());
+	}
 }

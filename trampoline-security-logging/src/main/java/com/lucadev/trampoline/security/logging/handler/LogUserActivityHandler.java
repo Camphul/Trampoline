@@ -20,6 +20,6 @@ public class LogUserActivityHandler implements UserActivityHandler {
 		UserActivityInvocationDetails context = userActivity.getInvocationDetails();
 		LOG.debug("{}: {}#{} {}::{} {} {}ms", userActivity.getPrincipal().getId(), context.getClassName(),
 				context.getMethodName(), userActivity.getCategory(), userActivity.getIdentifier(),
-				userActivity.getDescription(), (context.getInvocationEnd()-context.getInvocationStart()));
+				userActivity.getDescription(), (context.getInvocationEnd() - context.getInvocationStart()));
 	}
 }

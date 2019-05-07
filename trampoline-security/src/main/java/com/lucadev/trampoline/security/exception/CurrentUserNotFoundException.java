@@ -1,12 +1,13 @@
 package com.lucadev.trampoline.security.exception;
 
+import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A {@link RuntimeException} which gets thrown when the current {@link com.lucadev.trampoline.security.model.User}
+ * A {@link RuntimeException} which gets thrown when the current {@link User}
  * was not found. The route should already be secured when wanting to access the current user.
  * This means a server error caused the problem as it could not find the current user even though authorization succeeded.
  *
@@ -18,22 +19,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 public class CurrentUserNotFoundException extends RuntimeException {
 
-    private final String message;
+	private final String message;
 
-    /**
-     * Describe the model in another way.
-     *
-     * @param message error description
-     */
-    public CurrentUserNotFoundException(String message) {
-        this.message = message;
-    }
+	/**
+	 * Describe the model in another way.
+	 *
+	 * @param message error description
+	 */
+	public CurrentUserNotFoundException(String message) {
+		this.message = message;
+	}
 
-    /**
-     * Standard error description.
-     */
-    public CurrentUserNotFoundException() {
-        this("The server could not find the user behind this request.");
-    }
+	/**
+	 * Standard error description.
+	 */
+	public CurrentUserNotFoundException() {
+		this("The server could not find the user behind this request.");
+	}
 
 }

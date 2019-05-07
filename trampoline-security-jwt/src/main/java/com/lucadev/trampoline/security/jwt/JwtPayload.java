@@ -22,45 +22,45 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class JwtPayload implements Serializable {
 
-    /**
-     * Raw token data
-     */
-    private String rawToken;
-    /**
-     * Subject ID(UUID)
-     */
-    private UUID subject;
-    /**
-     * Subject username
-     */
-    private String username;
-    /**
-     * Subject email
-     */
-    private String email;
-    /**
-     * Subject roles
-     */
-    private List<String> roles;
-    /**
-     * Token issue date
-     */
-    private Date issuedDate;
-    /**
-     * Token expiry date
-     */
-    private Date expirationDate;
-    /**
-     * Token flag to see if this token is used to impersonate someone
-     */
-    private boolean impersonateMode;
-    /**
-     * The UUID of the user who started the impersonate
-     */
-    private UUID impersonateInitiatorId;
-    /**
-     * Can we ignore expirydate?
-     */
-    private boolean ignorableExpiration;
+	/**
+	 * Raw token data
+	 */
+	private String rawToken;
+	/**
+	 * Subject ID(UUID)
+	 */
+	private UUID subject;
+	/**
+	 * Subject username
+	 */
+	private String username;
+	/**
+	 * Subject email
+	 */
+	private String email;
+	/**
+	 * Subject roles
+	 */
+	private List<String> roles;
+	/**
+	 * Token issue date
+	 */
+	private Date issuedDate;
+	/**
+	 * Token expiry date
+	 */
+	private Date expirationDate;
+	/**
+	 * Token flag to see if this token is used to impersonate someone
+	 */
+	private boolean impersonateMode;
+	/**
+	 * The UUID of the user who started the impersonate
+	 */
+	private UUID impersonateInitiatorId;
+	/**
+	 * Can we ignore expirydate?
+	 */
+	private boolean ignorableExpiration;
 
 }

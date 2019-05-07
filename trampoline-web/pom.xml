@@ -14,12 +14,6 @@
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<dependencies>
-		<dependency>
-			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-core</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
 		<!-- required to register the controlleradvice -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
