@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Filter which validates and authorizes the JWT token.
@@ -31,18 +32,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 		try {
-			Authentication token = tokenService.getAuthenticationToken(httpServletRequest);
-			if (token == null) {
+			Optional<Authentication> token = tokenService.getAuthenticationToken(httpServletRequest);
+
+			if (!token.isPresent()) {
 				JWT_LOGGER.debug("Could not authenticate null JWT token.");
 				filterChain.doFilter(httpServletRequest, httpServletResponse);
 				return;
 			}
 
-			Authentication authentication = authenticationManager.authenticate(token);
+			Authentication authentication = authenticationManager.authenticate(token.get());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			JWT_LOGGER.debug("Set the authentication object.");
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		} catch (Exception ex) {
+			SecurityContextHolder.clearContext();
 			JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(), ex.getMessage());
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}

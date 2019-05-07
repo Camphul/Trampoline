@@ -10,7 +10,7 @@ import java.util.Map;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-public interface JwtConfiguration {
+public interface JwtConfigurationAdapter {
 
 	/**
 	 * Should we ignore token expiry
@@ -18,15 +18,7 @@ public interface JwtConfiguration {
 	 * @param user the user we're creating the token for.
 	 * @return value of the expiry ignore claim
 	 */
-	boolean getIgnoreExpirationFlag(User user);
-
-	/**
-	 * If we should set impersonate mode to true.
-	 *
-	 * @param user the user to auth.
-	 * @return if we should impersonate.
-	 */
-	boolean getImpersonateFlag(User user);
+	boolean shouldIgnoreExpiration(User user);
 
 	/**
 	 * Modify the claims before a token is created.

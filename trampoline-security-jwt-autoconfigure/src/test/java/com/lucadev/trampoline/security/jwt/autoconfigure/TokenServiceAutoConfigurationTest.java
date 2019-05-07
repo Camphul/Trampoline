@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -28,7 +30,7 @@ import static org.mockito.Mockito.mock;
  */
 public class TokenServiceAutoConfigurationTest {
 	private AnnotationConfigApplicationContext context;
-	private JwtConfiguration jwtConfiguration;
+	private JwtConfigurationAdapter jwtConfiguration;
 	private JwtSecurityProperties jwtSecurityProperties;
 	private TimeProvider timeProvider;
 	private UserService userService;
@@ -38,7 +40,7 @@ public class TokenServiceAutoConfigurationTest {
 		jwtSecurityProperties = mock(JwtSecurityProperties.class);
 		timeProvider = mock(TimeProvider.class);
 		userService = mock(UserService.class);
-		jwtConfiguration = mock(JwtConfiguration.class);
+		jwtConfiguration = mock(JwtConfigurationAdapter.class);
 		context = new AnnotationConfigApplicationContext();
 	}
 
@@ -107,7 +109,7 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
+		public JwtPayload getTokenData(HttpServletRequest request) {
 			return null;
 		}
 
@@ -117,12 +119,12 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public String processTokenRefreshRequest(HttpServletRequest request) {
+		public String refreshTokenFromRequest(HttpServletRequest request) {
 			return null;
 		}
 
 		@Override
-		public Authentication getAuthenticationToken(HttpServletRequest request) {
+		public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
 			return null;
 		}
 	}

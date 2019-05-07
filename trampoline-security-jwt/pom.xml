@@ -14,7 +14,7 @@
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<properties>
-		<jjwt.version>0.9.0</jjwt.version>
+		<jjwt.version>0.10.5</jjwt.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,8 +24,20 @@
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
+			<artifactId>jjwt-api</artifactId>
 			<version>${jjwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

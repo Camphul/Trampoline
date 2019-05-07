@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.persistence.entity.User;
@@ -10,7 +10,7 @@ import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,20 +33,12 @@ public class JwtTokenService implements TokenService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenService.class);
 
-	private static final String CLAIM_USERNAME = "trampolineUsername";
-	private static final String CLAIM_EMAIL = "trampolineEmail";
-	private static final String CLAIM_ROLES = "trampolineUserRoles";
-	private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "tokenIgnoreExpiration";
-	/**
-	 * Boolean value to see if the token is used as impersonate
-	 */
-	private static final String CLAIM_IS_IMPERSONATING = "tokenImpersonateMode";
-	/**
-	 * The UUID of the User who initiated the impersonate mode
-	 */
-	private static final String CLAIM_IMPERSONATE_INITIATOR = "tokenImpersonateInitiator";
+	private static final String CLAIM_USERNAME = "t_username";
+	private static final String CLAIM_EMAIL = "t_mail";
+	private static final String CLAIM_ROLES = "t_roles";
+	private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "t_ignore_timout";
 
-	private final JwtConfiguration jwtConfiguration;
+	private final JwtConfigurationAdapter jwtConfiguration;
 	private final TimeProvider timeProvider;
 	private final UserService userService;
 	private final JwtSecurityProperties properties;
@@ -65,8 +57,7 @@ public class JwtTokenService implements TokenService {
 		claims.put(CLAIM_ROLES, user.getRoles().stream()
 				.map(Role::getName)
 				.collect(Collectors.toList()));
-		claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, jwtConfiguration.getIgnoreExpirationFlag(user));
-		claims.put(CLAIM_IS_IMPERSONATING, false);
+		claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT, jwtConfiguration.shouldIgnoreExpiration(user));
 		jwtConfiguration.createToken(user, claims);
 		return generateToken(claims, user.getId().toString());
 	}
@@ -80,15 +71,14 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public String refreshToken(String token) {
 		final Date createdDate = timeProvider.now();
-		final Date expirationDate = calculateExpirationDate(createdDate);
 		//copy over old claims
 		final Claims claims = getAllTokenClaims(token);
-		claims.setIssuedAt(createdDate);
-		claims.setExpiration(expirationDate);
 
 		return Jwts.builder()
 				.setClaims(claims)
-				.signWith(SignatureAlgorithm.forName(properties.getSigningAlgorithm()), properties.getSecret())
+				.setIssuedAt(createdDate)
+				.setExpiration(calculateExpirationDate(createdDate))
+				.signWith(Keys.hmacShaKeyFor(properties.getSecret().getBytes()))
 				.compact();
 	}
 
@@ -101,13 +91,13 @@ public class JwtTokenService implements TokenService {
 				.setSubject(subject)
 				.setIssuedAt(createdDate)
 				.setExpiration(expirationDate)
-				.signWith(SignatureAlgorithm.forName(properties.getSigningAlgorithm()), properties.getSecret())
+				.signWith(Keys.hmacShaKeyFor(properties.getSecret().getBytes()))
 				.compact();
 	}
 
 	private boolean isTokenRefreshable(JwtPayload token, Date lastPasswordReset) {
 		return !isCreatedDateTimeBeforeLastPasswordResetDateTime(token.getIssuedDate(), lastPasswordReset)
-				&& (!isCurrentDateTimePastExpiryDateTime(token.getExpirationDate()) || token.isIgnorableExpiration());
+				&& (!isDateExpired(token.getExpirationDate()) || token.isIgnorableExpiration());
 	}
 
 	/**
@@ -126,23 +116,18 @@ public class JwtTokenService implements TokenService {
 		jwtPayload.setEmail(claims.get(CLAIM_EMAIL, String.class));
 		jwtPayload.setIssuedDate(claims.getIssuedAt());
 		jwtPayload.setExpirationDate(claims.getExpiration());
-		jwtPayload.setImpersonateMode(claims.get(CLAIM_IS_IMPERSONATING, Boolean.class));
-		if (jwtPayload.isImpersonateMode()) {
-			jwtPayload.setImpersonateInitiatorId(UUID.fromString(
-					claims.get(CLAIM_IMPERSONATE_INITIATOR, String.class)));
-		}
 		jwtPayload.setIgnorableExpiration(claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
 		jwtPayload.setRoles((List<String>) claims.get(CLAIM_ROLES, ArrayList.class));
 		return jwtPayload;
 	}
 
 	@Override
-	public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
-		final String requestHeader = request.getHeader(properties.getTokenHeader());
+	public JwtPayload getTokenData(HttpServletRequest request) {
+		final String requestHeader = request.getHeader(JwtSecurityProperties.TOKEN_HEADER);
 		if (requestHeader == null || requestHeader.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException("Could not find token header.");
 		}
-		if (requestHeader.startsWith(properties.getTokenHeaderPrefix())) {
+		if (requestHeader.startsWith(JwtSecurityProperties.HEADER_PREFIX)) {
 			String authToken = getTokenFromHeader(requestHeader);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException("Auth token is null.");
@@ -171,7 +156,7 @@ public class JwtTokenService implements TokenService {
 		return (
 				user.getId().equals(jwtPayload.getSubject())
 						&& user.getUsername().equals(jwtPayload.getUsername())
-						&& (!isCurrentDateTimePastExpiryDateTime(jwtPayload.getExpirationDate()) || jwtPayload.isIgnorableExpiration())
+						&& (!isDateExpired(jwtPayload.getExpirationDate()) || jwtPayload.isIgnorableExpiration())
 						&& !isCreatedDateTimeBeforeLastPasswordResetDateTime(jwtPayload.getIssuedDate(), user.getLastPasswordReset())
 		);
 	}
@@ -183,8 +168,8 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt token string.
 	 */
 	@Override
-	public String processTokenRefreshRequest(HttpServletRequest request) {
-		String authHeader = request.getHeader(properties.getTokenHeader());
+	public String refreshTokenFromRequest(HttpServletRequest request) {
+		String authHeader = request.getHeader(JwtSecurityProperties.TOKEN_HEADER);
 		final String token = getTokenFromHeader(authHeader);
 		JwtPayload jwtPayload = getTokenData(token);
 		String username = jwtPayload.getUsername();
@@ -207,22 +192,22 @@ public class JwtTokenService implements TokenService {
 	 * @return auth object.
 	 */
 	@Override
-	public Authentication getAuthenticationToken(HttpServletRequest request) {
+	public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
 		try {
-			JwtPayload jwtPayload = getTokenDataFromRequest(request);
+			JwtPayload jwtPayload = getTokenData(request);
 			if (jwtPayload == null) {
-				return null;
+				return Optional.empty();
 			}
-			return new JwtAuthenticationToken(jwtPayload);
+			return Optional.of(new JwtAuthenticationToken(jwtPayload));
 		} catch (Exception ex) {
 			LOGGER.error("Failed to obtain JWT authentication object.", ex);
+			return Optional.empty();
 		}
-		return null;
 	}
 
 	private Claims getAllTokenClaims(String token) {
 		return Jwts.parser()
-				.setSigningKey(properties.getSecret())
+				.setSigningKey(properties.getSecret().getBytes())
 				.parseClaimsJws(token)
 				.getBody();
 	}
@@ -244,7 +229,7 @@ public class JwtTokenService implements TokenService {
 	 * @param expiration expiration date.
 	 * @return if current datetime is before expiration.
 	 */
-	private boolean isCurrentDateTimePastExpiryDateTime(Date expiration) {
+	private boolean isDateExpired(Date expiration) {
 		return expiration.before(timeProvider.now());
 	}
 
@@ -265,7 +250,7 @@ public class JwtTokenService implements TokenService {
 	 * @return the un-prefixed, ready to parse jwt token
 	 */
 	private String getTokenFromHeader(String headerValue) {
-		String authToken = headerValue.substring(properties.getTokenHeaderPrefix().length());
+		String authToken = headerValue.substring(JwtSecurityProperties.HEADER_PREFIX.length());
 		//Remove first whitespace
 		while (authToken.startsWith(" ")) {
 			authToken = authToken.substring(1);

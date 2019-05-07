@@ -4,11 +4,8 @@ This is the development roadmap for release 20190507.
 
 ## Refactors
 
-- redo jwt mechanism
 - trampoline-security-abac should be more decoupled and easier to swap mechanisms. Possibly replace SPeL mechanism with something more professional
 - trampoline-security-logging needs to be better(the architecture is not really scalable atm, maybe use SPeL for formatting messages).
-- rethink role/privilege system for trampoline-security
-- create jpa implementation for UserDetails and UserDetailsService so you may use another provider.
 
 ## Code styling
 
@@ -32,5 +29,6 @@ Use constructor injection.
 
 ## Done
 
+- redo jwt mechanism
 - trampoline-core will be refactored to trampoline-core
 - models and web related services in trampoline-core will be moved to trampoline-web-rest

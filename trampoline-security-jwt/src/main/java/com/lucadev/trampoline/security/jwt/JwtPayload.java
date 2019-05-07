@@ -1,9 +1,6 @@
 package com.lucadev.trampoline.security.jwt;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,10 +13,7 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-@ToString
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class JwtPayload implements Serializable {
 
 	/**
@@ -50,14 +44,6 @@ public class JwtPayload implements Serializable {
 	 * Token expiry date
 	 */
 	private Date expirationDate;
-	/**
-	 * Token flag to see if this token is used to impersonate someone
-	 */
-	private boolean impersonateMode;
-	/**
-	 * The UUID of the user who started the impersonate
-	 */
-	private UUID impersonateInitiatorId;
 	/**
 	 * Can we ignore expirydate?
 	 */

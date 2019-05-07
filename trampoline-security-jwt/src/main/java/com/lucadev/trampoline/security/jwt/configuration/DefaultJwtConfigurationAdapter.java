@@ -10,15 +10,10 @@ import java.util.Map;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-public class DefaultJwtConfiguration implements JwtConfiguration {
+public class DefaultJwtConfigurationAdapter implements JwtConfigurationAdapter {
 
 	@Override
-	public boolean getIgnoreExpirationFlag(User user) {
-		return false;
-	}
-
-	@Override
-	public boolean getImpersonateFlag(User user) {
+	public boolean shouldIgnoreExpiration(User user) {
 		return false;
 	}
 

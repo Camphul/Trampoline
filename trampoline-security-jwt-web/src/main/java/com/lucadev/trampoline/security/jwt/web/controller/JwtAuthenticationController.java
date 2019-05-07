@@ -62,7 +62,7 @@ public class JwtAuthenticationController {
 	@GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
 	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String refreshedToken = tokenService.processTokenRefreshRequest(request);
+			String refreshedToken = tokenService.refreshTokenFromRequest(request);
 			return new JwtAuthenticationResponse(refreshedToken);
 		} catch (Exception e) {
 			//Catch model to always return correct format

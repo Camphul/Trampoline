@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * Interface for interacting with JWT tokens
@@ -43,7 +44,7 @@ public interface TokenService {
 	 * @param request http req
 	 * @return jwt dto.
 	 */
-	JwtPayload getTokenDataFromRequest(HttpServletRequest request);
+	JwtPayload getTokenData(HttpServletRequest request);
 
 	/**
 	 * Validate a token
@@ -60,7 +61,7 @@ public interface TokenService {
 	 * @param request http req
 	 * @return jwt token string.
 	 */
-	String processTokenRefreshRequest(HttpServletRequest request);
+	String refreshTokenFromRequest(HttpServletRequest request);
 
 	/**
 	 * Read the header containing our token and create an {@link Authentication} object from it.
@@ -68,6 +69,6 @@ public interface TokenService {
 	 * @param request http req
 	 * @return auth object.
 	 */
-	Authentication getAuthenticationToken(HttpServletRequest request);
+	Optional<Authentication> getAuthenticationToken(HttpServletRequest request);
 
 }

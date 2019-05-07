@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfiguration;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
+import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class JwtConfigurationAutoConfigurationTest {
+public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 	private AnnotationConfigApplicationContext context;
 
 	@Before
@@ -35,31 +35,26 @@ public class JwtConfigurationAutoConfigurationTest {
 
 	@Test
 	public void registersDefaultJwtConfigurationAutomatically() {
-		this.context.register(JwtConfigurationAutoConfiguration.class);
+		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
-		assertThat(jwtConfiguration, instanceOf(DefaultJwtConfiguration.class));
+		JwtConfigurationAdapter jwtConfiguration = this.context.getBean(JwtConfigurationAdapter.class);
+		assertThat(jwtConfiguration, instanceOf(DefaultJwtConfigurationAdapter.class));
 	}
 
 	@Test
 	public void customJwtConfigurationBean() {
 		this.context.register(SomeRandomJwtConfiguration.class);
-		this.context.register(JwtConfigurationAutoConfiguration.class);
+		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfiguration jwtConfiguration = this.context.getBean(JwtConfiguration.class);
+		JwtConfigurationAdapter jwtConfiguration = this.context.getBean(JwtConfigurationAdapter.class);
 		assertThat(jwtConfiguration, instanceOf(SomeRandomJwtConfiguration.class));
 	}
 
 	@Configuration
-	protected static class SomeRandomJwtConfiguration implements JwtConfiguration {
+	protected static class SomeRandomJwtConfiguration implements JwtConfigurationAdapter {
 
 		@Override
-		public boolean getIgnoreExpirationFlag(User user) {
-			return false;
-		}
-
-		@Override
-		public boolean getImpersonateFlag(User user) {
+		public boolean shouldIgnoreExpiration(User user) {
 			return false;
 		}
 
