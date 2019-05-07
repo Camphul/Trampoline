@@ -5,8 +5,11 @@
 
     <groupId>com.lucadev.trampoline</groupId>
     <artifactId>trampoline-parent</artifactId>
-    <version>20190329</version>
+    <version>20190507</version>
     <modules>
+		<module>trampoline-core</module>
+		<module>trampoline-core-autoconfigure</module>
+		<module>trampoline-core-starter</module>
         <module>trampoline-data</module>
         <module>trampoline-data-autoconfigure</module>
         <module>trampoline-data-starter</module>
@@ -17,9 +20,6 @@
         <module>trampoline-security-jwt-web</module>
         <module>trampoline-security-jwt-autoconfigure</module>
         <module>trampoline-security-jwt-starter</module>
-        <module>trampoline-common</module>
-        <module>trampoline-common-autoconfigure</module>
-        <module>trampoline-common-starter</module>
         <module>trampoline-starter</module>
         <module>trampoline-security-abac</module>
         <module>trampoline-security-abac-autoconfigure</module>

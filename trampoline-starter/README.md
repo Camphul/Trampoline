@@ -2,7 +2,7 @@
 
 Selection of starters that are ready-to-use:
 
-- [trampoline-common-starter](../trampoline-common-starter)
+- [trampoline-core-starter](../trampoline-core-starter)
 - [trampoline-data-starter](../trampoline-data-starter) 
 - [trampoline-security-starter](../trampoline-security-starter)
 - [trampoline-security-abac-starter](../trampoline-security-abac-starter)

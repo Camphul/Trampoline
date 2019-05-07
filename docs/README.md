@@ -7,7 +7,7 @@
 Please reference the following modules for documentation:
 
 - [trampoline-asset-store](../trampoline-asset-store)
-- [trampoline-common](../trampoline-common)
+- [trampoline-core](../trampoline-core)
 - [trampoline-data](../trampoline-data)
 - [trampoline-security](../trampoline-security)
 - [trampoline-security-abac](../trampoline-security-abac)
@@ -19,7 +19,7 @@ Please reference the following modules for documentation:
 ## Javadoc
 
 - [trampoline-asset-store](https://lucadev.com/trampoline/docs/trampoline-asset-store)
-- [trampoline-common](https://lucadev.com/trampoline/docs/trampoline-common)
+- [trampoline-core](https://lucadev.com/trampoline/docs/trampoline-core)
 - [trampoline-data](https://lucadev.com/trampoline/docs/trampoline-data)
 - [trampoline-security](https://lucadev.com/trampoline/docs/trampoline-security)
 - [trampoline-security-abac](https://lucadev.com/trampoline/docs/trampoline-security-abac)

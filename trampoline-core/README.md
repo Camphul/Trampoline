@@ -1,4 +1,4 @@
-# trampoline-common
+# trampoline-core
 
 Common components that are used in nearly all trampoline modules.
 

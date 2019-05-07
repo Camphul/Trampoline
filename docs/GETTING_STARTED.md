@@ -17,7 +17,7 @@ Trampoline is built upon `Spring Boot 2.1.3-RELEASE`
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190329</version>
+       <version>20190507</version>
 </dependency>
 ```
 
@@ -30,7 +30,7 @@ You may also add the separately or could exclude unwanted dependencies from the 
 ## Enable Trampoline
 
 To enable trampoline services and components in your applications please add the `@EnableTrampoline` annotation. This will scan and load all trampoline components.
-This annotation is inside the `trampoline-common` dependency.
+This annotation is inside the `trampoline-core` dependency.
 
 Example:
 

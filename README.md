@@ -17,7 +17,11 @@ Please read the documentation for a full list of features. I'll try to summarize
 - Attribute based access control using Spring Expression Language to provide row-level security(example: a user may only delete a blogpost if he's the owner of that blogpost)
 - Log user activity by adding a single annotation above a method(achieved using Spring AoP). Write your own activity handler or just use the default log output implementation.
 - Better exception handling for REST(better response for validation exceptions and whatnot)
-- 
+
+## Roadmap
+
+I want to refactor most of the code for the next release 20190507.
+Please see [ROADMAP.md](/ROADMAP.md)
 
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.
@@ -31,7 +35,7 @@ Please use the following dependency to use all functionality Trampoline offers:
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190329</version>
+       <version>20190507</version>
 </dependency>
 ```
 
