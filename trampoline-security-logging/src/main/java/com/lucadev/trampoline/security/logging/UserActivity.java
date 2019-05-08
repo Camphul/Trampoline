@@ -31,6 +31,6 @@ public class UserActivity {
 	/**
 	 * On which object did the activity take place
 	 */
-	private final Object activityContext;
+	private final Object actedUpon;
 
 }

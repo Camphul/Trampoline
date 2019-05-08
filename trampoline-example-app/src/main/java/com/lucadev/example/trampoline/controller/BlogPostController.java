@@ -11,7 +11,7 @@ import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
-import com.lucadev.trampoline.security.logging.ActivityContext;
+import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -82,7 +82,7 @@ public class BlogPostController {
 	@GetMapping("/blogs/{blogPost}")
 	@PrePolicy("BLOGPOST_VIEW")
 	@LogUserActivity(value = "'View page ' + pageable.getPageNumber()", spel = true)
-	public BlogPostDto viewBlogPost(@ActivityContext @PolicyResource @FindById BlogPost blogPost, Pageable pageable) {
+	public BlogPostDto viewBlogPost(@ActingUpon @PolicyResource @FindById BlogPost blogPost, Pageable pageable) {
 		return new BlogPostDto(blogPost,
 				MappedPage.of(blogPostService.findAllComments(blogPost, pageable), BlogPostCommentDto::new));
 	}
@@ -96,7 +96,7 @@ public class BlogPostController {
 	@PrePolicy("BLOGPOST_DELETE")
 	@DeleteMapping("/blogs/{blogPost}")
 	@LogUserActivity("Deleted blogpost.")
-	public SuccessResponse deleteBlogPost(@ActivityContext @PolicyResource @FindById BlogPost blogPost) {
+	public SuccessResponse deleteBlogPost(@ActingUpon @PolicyResource @FindById BlogPost blogPost) {
 		//Find the blog post we want to delete
 		//If this fails it will throw an AccessDenied or other Exception which will stop the deleteById to be invoked.
 
@@ -115,7 +115,7 @@ public class BlogPostController {
 	@PatchMapping("/blogs/{blogPost}")
 	@PrePolicy("BLOGPOST_EDIT")
 	@LogUserActivity("Edit a blogpost")
-	public SuccessResponse patchBlogPost(@ActivityContext @PolicyResource @FindById BlogPost blogPost, @RequestBody @Valid CreateBlogPostRequest request) {
+	public SuccessResponse patchBlogPost(@ActingUpon @PolicyResource @FindById BlogPost blogPost, @RequestBody @Valid CreateBlogPostRequest request) {
 		//Only change when set in the request body
 		if (request.getTitle() != null) {
 			blogPost.setTitle(request.getTitle());

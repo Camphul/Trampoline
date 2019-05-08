@@ -6,14 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Apply this to the parameter on which we want to log activity.
- * Example: project parameter annotated when we want to log activity regarding a product.
+ * When a method is annotated with {@link LogUserActivity} you may want to know the object being acted upon.
+ * Add this annotation to a parameter to specify the object related to the activity.
+ * The object will be set as {@code actedUpon} inside the {@link UserActivity}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ActivityContext {
+public @interface ActingUpon {
 
 }

@@ -1,14 +1,13 @@
 package com.lucadev.trampoline.security.logging.aop;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
-import com.lucadev.trampoline.security.logging.ActivityContext;
+import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.logging.UserActivity;
 import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +17,6 @@ import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.Order;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
-import org.springframework.expression.ParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.security.core.Authentication;
@@ -65,13 +63,13 @@ public class UserActivityLoggingAspect {
 		Method method = methodSignature.getMethod();
 		LogUserActivity logUserActivity = method.getDeclaredAnnotation(LogUserActivity.class);
 		User principal = getCurrentUser();
-		Object activityContext = null;
+		Object actedUpon = null;
 		Map<String, Object> argumentMap = new HashMap<>();
 
 		for (int i = 0; i < method.getParameters().length; i++) {
 			Parameter param = method.getParameters()[i];
-			if(param.isAnnotationPresent(ActivityContext.class)) {
-				activityContext = joinPoint.getArgs()[i];
+			if(param.isAnnotationPresent(ActingUpon.class)) {
+				actedUpon = joinPoint.getArgs()[i];
 			}
 			argumentMap.put(param.getName(), joinPoint.getArgs()[i]);
 		}
@@ -83,7 +81,7 @@ public class UserActivityLoggingAspect {
 			description = evaluateSpelDescription(description, argumentMap);
 		}
 
-		UserActivity userActivity = new UserActivity(result.getInvocationDetails(), principal, description, activityContext);
+		UserActivity userActivity = new UserActivity(result.getInvocationDetails(), principal, description, actedUpon);
 
 		try {
 			userActivityHandler.handleUserActivity(userActivity);
