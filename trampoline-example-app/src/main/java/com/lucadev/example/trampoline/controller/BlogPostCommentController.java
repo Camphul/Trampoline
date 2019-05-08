@@ -7,6 +7,8 @@ import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
 import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import com.lucadev.trampoline.data.MappedPage;
+import com.lucadev.trampoline.data.web.annotation.FindById;
+import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.web.model.SuccessResponse;
 import com.lucadev.trampoline.web.model.UUIDDto;
 import com.lucadev.trampoline.security.abac.access.annotation.PostPolicy;
@@ -39,14 +41,13 @@ public class BlogPostCommentController {
     /**
      * Show all comments of a post in a paginated matter.
      *
-     * @param blogId blog id
+     * @param blogPost the blogpost
      * @param pageable pagination
      * @return page of blogs
      */
-    @GetMapping("/blogs/{blogId}/comments")
+    @GetMapping("/blogs/{blogPost}/comments")
     @PrePolicy("BLOGPOST_COMMENTS_LIST")//Check for permission before invocation
-    public Page<BlogPostCommentDto> getBlogPostComments(@PathVariable("blogId") UUID blogId, Pageable pageable) {
-        BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
+    public Page<BlogPostCommentDto> getBlogPostComments(@PolicyResource @FindById BlogPost blogPost, Pageable pageable) {
         Page<BlogPostComment> blogPostCommentPage = blogPostService.findAllComments(blogPost, pageable);
         return MappedPage.of(blogPostCommentPage, BlogPostCommentDto::new);
     }
@@ -54,27 +55,25 @@ public class BlogPostCommentController {
     /**
      * Add comment to post
      *
-     * @param blogId blog id
+     * @param blogPost the blogpost
      * @param request dto
      * @return success response
      */
-    @PostMapping("/blogs/{blogId}/comments")
+    @PostMapping("/blogs/{blogPost}/comments")
     @PrePolicy("BLOGPOST_COMMENTS_CREATE")
-    public UUIDDto getBlogPostComments(@PathVariable("blogId") UUID blogId, @RequestBody @Valid CreateBlogPostCommentRequest request) {
-        BlogPost blogPost = blogPostService.findById(blogId).orElseThrow(() -> new ResourceNotFoundException(blogId));
+    public UUIDDto getBlogPostComments(@PolicyResource @FindById BlogPost blogPost, @RequestBody @Valid CreateBlogPostCommentRequest request) {
         User currentUser = userService.currentUserOrThrow();
 
         BlogPostComment comment = blogPostService.addComment(currentUser, blogPost, request);
         return new UUIDDto(comment.getId());
     }
 
-    @GetMapping("/blogs/{blogId}/comments/{commentId}")
-    @PostPolicy("BLOGPOST_COMMENT_VIEW")
-    public BlogPostCommentDto viewBlogPostComment(@PathVariable("blogId") UUID blogId, @PathVariable("commentId") UUID commentId) {
+    @GetMapping("/blogs/{blogPost}/comments/{comment}")
+    @PrePolicy("BLOGPOST_COMMENT_VIEW")
+    public BlogPostCommentDto viewBlogPostComment(@FindById BlogPost blogPost, @FindById BlogPostComment comment) {
         //BlogId is not requireed but we want to check if someone is not messing with the url
-        BlogPostComment comment = blogPostService.findCommentById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
-        if (!comment.getBlogPost().getId().equals(blogId)) {
-            throw new ResourceNotFoundException("Could not find comment " + commentId + " for blog post " + blogId);
+        if (!comment.getBlogPost().equals(blogPost)) {
+            throw new ResourceNotFoundException("Could not find comment for blog post " + blogPost.getId());
         }
         return new BlogPostCommentDto(comment);
     }

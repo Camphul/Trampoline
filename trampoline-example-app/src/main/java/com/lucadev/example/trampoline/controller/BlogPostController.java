@@ -107,15 +107,13 @@ public class BlogPostController {
     /**
      * This is nearly the same as the {@link #deleteBlogPost(BlogPost)}.
      *
-     * @param id blogpost id to patch.
+     * @param blogPost blogpost to patch.
      * @param request dto
      * @return response.
      */
-    @PatchMapping("/blogs/{id}")
-    public SuccessResponse patchBlogPost(@PathVariable("id") UUID id, @RequestBody @Valid CreateBlogPostRequest request) {
-        BlogPost blogPost = blogPostService.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-        policyEnforcement.check(blogPost, "BLOGPOST_EDIT");
-
+    @PatchMapping("/blogs/{blogPost}")
+	@PrePolicy("BLOGPOST_EDIT")
+    public SuccessResponse patchBlogPost(@PolicyResource @FindById BlogPost blogPost, @RequestBody @Valid CreateBlogPostRequest request) {
         //Only change when set in the request body
         if (request.getTitle() != null) {
             blogPost.setTitle(request.getTitle());
