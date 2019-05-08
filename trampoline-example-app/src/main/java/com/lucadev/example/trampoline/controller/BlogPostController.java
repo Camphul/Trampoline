@@ -11,6 +11,7 @@ import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
+import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.web.model.SuccessResponse;
@@ -79,6 +80,7 @@ public class BlogPostController {
 	 */
 	@GetMapping("/blogs/{blogPost}")
 	//@PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
+	@LogUserActivity(value = "BLOGPOST_VIEW", category = "blogPost", description = "blogPost.id")
 	@PrePolicy("BLOGPOST_VIEW")
 	public BlogPostDto viewBlogPost(@PolicyResource @FindById BlogPost blogPost, Pageable pageable) {
 		return new BlogPostDto(blogPost,

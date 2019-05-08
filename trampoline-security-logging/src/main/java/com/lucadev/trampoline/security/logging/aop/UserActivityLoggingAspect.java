@@ -3,7 +3,9 @@ package com.lucadev.trampoline.security.logging.aop;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.logging.UserActivity;
+import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,11 +15,21 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.Order;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.EvaluationException;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Spring AoP aspect to handle method invocations that have the {@link LogUserActivity} annotation.
@@ -27,15 +39,16 @@ import java.lang.reflect.Method;
  */
 @Aspect
 @Order(20)
-public class UserActivityLoggingAspect implements ApplicationContextAware {
+public class UserActivityLoggingAspect {
 
 	private final UserActivityHandler userActivityHandler;
 	private final TimeProvider timeProvider;
-	private ApplicationContext applicationContext;
+	private final SpelExpressionParser expressionParser;
 
 	public UserActivityLoggingAspect(UserActivityHandler userActivityHandler, TimeProvider timeProvider) {
 		this.userActivityHandler = userActivityHandler;
 		this.timeProvider = timeProvider;
+		this.expressionParser = new SpelExpressionParser();
 	}
 
 	@Pointcut("@annotation(com.lucadev.trampoline.security.logging.LogUserActivity)")
@@ -54,6 +67,8 @@ public class UserActivityLoggingAspect implements ApplicationContextAware {
 		LogUserActivity logUserActivity = method.getAnnotation(LogUserActivity.class);
 		String logIdentifier = logUserActivity.value();
 		String category = logUserActivity.category();
+		String logDescription = logUserActivity.description();
+		boolean spelDescription = logUserActivity.spelDescription();
 		ActivityLayer activityLayer = logUserActivity.layer();
 
 		Object returnObject = null;
@@ -65,11 +80,28 @@ public class UserActivityLoggingAspect implements ApplicationContextAware {
 			throwable = t;
 		} finally {
 			long invocationEnd = timeProvider.unix();
-			InterceptedUserActivityInvocationContext interceptedUserActivityInvocationContext = new InterceptedUserActivityInvocationContext(invocationStart, invocationEnd,
-					className, method.getName(), methodInvocationArguments, returnObject, throwable != null);
 
-			InterceptedUserActivity interceptedUserActivity = new InterceptedUserActivity(authentication, logIdentifier, category, activityLayer, interceptedUserActivityInvocationContext);
-			UserActivity userActivity = applicationContext.getBean(logUserActivity.resolver()).resolveInterceptedUserActivity(interceptedUserActivity);
+			String description = logDescription;
+
+			if(spelDescription) {
+				Expression expression = expressionParser.parseExpression(description);
+				Map<String,Object> argsMap = createArgsMap(joinPoint.getArgs(), method);
+				argsMap.put("returnObject", returnObject);
+				StandardEvaluationContext evaluationContext = new StandardEvaluationContext(argsMap);
+				evaluationContext.addPropertyAccessor(new MapAccessor());
+				try {
+					description = expression.getValue(evaluationContext, String.class);
+				} catch (EvaluationException ex) {
+					throw ex;
+				}
+			}
+
+			UserActivityInvocationDetails invocationDetails = new UserActivityInvocationDetails(
+					className, method.getName(), throwable!= null, invocationStart, invocationEnd
+			);
+			UserActivity userActivity = new UserActivity((User)authentication.getPrincipal(),
+					logIdentifier, category,activityLayer, invocationDetails, description);
+
 			userActivityHandler.handleUserActivity(userActivity);
 		}
 
@@ -80,14 +112,13 @@ public class UserActivityLoggingAspect implements ApplicationContextAware {
 		return returnObject;
 	}
 
-	/**
-	 * Invoked by spring context as we require to obtain a resolver bean for user activities.
-	 *
-	 * @param applicationContext app context.
-	 * @throws BeansException when we couldnt set the app context.
-	 */
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
+	private Map<String, Object> createArgsMap(Object[] args, Method method) {
+		Map<String, Object> argsMap = new HashMap<>();
+		for (int i = 0; i < method.getParameters().length; i++) {
+			Parameter parameter = method.getParameters()[i];
+			argsMap.put(parameter.getName(), args[i]);
+		}
+		return argsMap;
 	}
+
 }

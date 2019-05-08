@@ -1,6 +1,5 @@
 package com.lucadev.example.trampoline.controller;
 
-import com.lucadev.example.trampoline.service.WhoAmIUserActivityResolver;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
@@ -31,7 +30,7 @@ public class WhoAmIController {
 	 */
 	@GetMapping("/whoami")
 	@PrePolicy("WHO_AM_I")
-	@LogUserActivity(value = "whoami", layer = ActivityLayer.CONTROLLER, resolver = WhoAmIUserActivityResolver.class)
+	@LogUserActivity(value = "whoami", layer = ActivityLayer.CONTROLLER)
 	public User whoami() {
 		return userService.currentUserOrThrow();
 	}

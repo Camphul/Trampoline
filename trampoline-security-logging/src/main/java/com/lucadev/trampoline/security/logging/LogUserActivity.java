@@ -1,7 +1,5 @@
 package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.logging.resolver.DefaultUserActivityResolver;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -43,6 +41,12 @@ public @interface LogUserActivity {
 	 *
 	 * @return resolver for the message.
 	 */
-	Class<? extends UserActivityResolver> resolver() default DefaultUserActivityResolver.class;
+	String description() default "'No description available'";
+
+	/**
+	 * Parse description using SPeL
+	 * @return use SPeL parser.
+	 */
+	boolean spelDescription() default true;
 
 }
