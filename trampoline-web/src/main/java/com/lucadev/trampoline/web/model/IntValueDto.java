@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class IntValueDto {
 
 	private int value;
-
 }

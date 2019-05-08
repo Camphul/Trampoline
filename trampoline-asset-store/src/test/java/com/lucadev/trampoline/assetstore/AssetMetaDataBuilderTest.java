@@ -18,8 +18,7 @@ public class AssetMetaDataBuilderTest {
 		final String ORIGINAL_FN = "hello.txt";
 		final byte[] CONTENT = "Hello Trampoline".getBytes();
 		final String CONTENT_TYPE = "text/plain";
-		MultipartFile mf = new MockMultipartFile(NEW_FN, ORIGINAL_FN, CONTENT_TYPE,
-				CONTENT);
+		MultipartFile mf = new MockMultipartFile(NEW_FN, ORIGINAL_FN, CONTENT_TYPE, CONTENT);
 
 		AssetMetaData meta = AssetMetaDataBuilder.fromMultipartFile(mf);
 
@@ -33,5 +32,4 @@ public class AssetMetaDataBuilderTest {
 	public void shouldFailFromMultipartFileNPE() {
 		AssetMetaDataBuilder.fromMultipartFile(null);
 	}
-
 }

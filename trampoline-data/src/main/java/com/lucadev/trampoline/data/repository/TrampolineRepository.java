@@ -15,7 +15,5 @@ import java.util.UUID;
  */
 @Transactional
 @NoRepositoryBean
-public interface TrampolineRepository<T extends TrampolineEntity>
-		extends JpaRepository<T, UUID> {
-
+public interface TrampolineRepository<T extends TrampolineEntity> extends JpaRepository<T, UUID> {
 }

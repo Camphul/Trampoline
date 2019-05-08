@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 public class UUIDConverterAutoConfigurationTest {
 
 	private static final String STATIC_UUID_STRING = "439948e5-192f-4980-8d70-71787265e1a5";
-
 	private AnnotationConfigApplicationContext context;
 
 	@Before
@@ -41,31 +40,26 @@ public class UUIDConverterAutoConfigurationTest {
 		this.context.register(UuidConverterAutoConfiguration.class);
 		this.context.refresh();
 
-		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter",
-				Converter.class);
+		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter", Converter.class);
 		assertTrue(uuidConverter instanceof UUIDConverter);
 	}
 
 	@Test
 	public void customUuidConverterBean() {
-		this.context.register(CustomUuidConfiguration.class,
-				UuidConverterAutoConfiguration.class);
+		this.context.register(CustomUuidConfiguration.class, UuidConverterAutoConfiguration.class);
 		this.context.refresh();
 
-		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter",
-				Converter.class);
+		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter", Converter.class);
 		assertEquals(STATIC_UUID_STRING, uuidConverter.convert("test").toString());
 		assertEquals(STATIC_UUID_STRING, uuidConverter.convert("test2").toString());
 	}
 
 	@Configuration
 	protected static class CustomUuidConfiguration {
-
 		@Bean
 		public Converter<String, UUID> uuidConverter() {
 			return s -> UUID.fromString(STATIC_UUID_STRING);
 		}
-
 	}
 
 }

@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class TrampolineUserAuthenticationService implements UserAuthenticationService {
 
 	private final UserService userService;
-
 	private final PasswordEncoder passwordEncoder;
 
 	/**
@@ -45,24 +44,21 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	@Override
 	public void validateUserState(User user) {
 		if (!user.isEnabled()) {
-			throw new DisabledException(
-					"Could not authorize user because the account is disabled.");
+			throw new DisabledException("Could not authorize user because the account is disabled.");
 		}
 
 		if (!user.isAccountNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the account is expired.");
+			throw new AccountExpiredException("Could not authorize user because the account is expired.");
 		}
 
 		if (!user.isCredentialsNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the credentials are expired.");
+			throw new AccountExpiredException("Could not authorize user because the credentials are expired.");
 		}
 
 		if (!user.isAccountNonLocked()) {
-			throw new LockedException(
-					"Could not authorize user because the account is locked.");
+			throw new LockedException("Could not authorize user because the account is locked.");
 		}
 	}
+
 
 }

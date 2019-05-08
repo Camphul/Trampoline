@@ -18,13 +18,12 @@ import java.util.List;
 public class ListResponse {
 
 	private final List content;
-
 	private final int size;
-
 	private final boolean empty;
 
 	/**
 	 * Construct list response.
+	 *
 	 * @param list list to wrap.
 	 */
 	public ListResponse(List list) {
@@ -32,5 +31,4 @@ public class ListResponse {
 		this.size = list.size();
 		this.empty = list.isEmpty();
 	}
-
 }

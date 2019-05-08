@@ -16,5 +16,4 @@ import java.lang.annotation.*;
 @Documented
 @Import(UserActivityLoggingAspect.class)
 public @interface EnableUserActivityLogging {
-
 }

@@ -25,7 +25,6 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
 	 * The compiler mode for SpeL
 	 */
 	public static final SpelCompilerMode SPEL_COMPILER_MODE = SpelCompilerMode.MIXED;
-
 	private final ExpressionParser elParser;
 
 	public SpelDeserializer() {
@@ -38,8 +37,7 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
 	}
 
 	private ExpressionParser createSpelParser() {
-		SpelParserConfiguration parserConfiguration = new SpelParserConfiguration(
-				SPEL_COMPILER_MODE, null);
+		SpelParserConfiguration parserConfiguration = new SpelParserConfiguration(SPEL_COMPILER_MODE, null);
 		return new SpelExpressionParser(parserConfiguration);
 	}
 

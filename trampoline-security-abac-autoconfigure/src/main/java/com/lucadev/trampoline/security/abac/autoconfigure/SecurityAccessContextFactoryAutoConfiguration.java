@@ -19,8 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(SecurityAccessContextFactory.class)
 public class SecurityAccessContextFactoryAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(SecurityAccessContextFactoryAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityAccessContextFactoryAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityAccessContextFactory.class)
@@ -28,5 +27,6 @@ public class SecurityAccessContextFactoryAutoConfiguration {
 		LOGGER.debug("Creating autoconfigured security access context factory");
 		return new TrampolineSecurityAccessContextFactory();
 	}
+
 
 }

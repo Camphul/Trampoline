@@ -46,8 +46,7 @@ public class TrampolineRoleService implements RoleService {
 		if (role == null || privilege == null) {
 			return false;
 		}
-		return role.getPrivileges().stream()
-				.anyMatch(p -> p.getName().equals(privilege.getName()));
+		return role.getPrivileges().stream().anyMatch(p -> p.getName().equals(privilege.getName()));
 	}
 
 	/**
@@ -84,5 +83,4 @@ public class TrampolineRoleService implements RoleService {
 	public Role update(Role role) {
 		return roleRepository.save(role);
 	}
-
 }

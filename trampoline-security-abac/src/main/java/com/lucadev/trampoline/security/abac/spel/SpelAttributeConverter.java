@@ -32,5 +32,4 @@ public class SpelAttributeConverter implements AttributeConverter<Expression, St
 		}
 		return PARSER.parseExpression(s);
 	}
-
 }

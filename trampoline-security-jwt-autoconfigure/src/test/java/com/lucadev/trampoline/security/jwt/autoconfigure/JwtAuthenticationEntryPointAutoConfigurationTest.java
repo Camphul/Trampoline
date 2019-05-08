@@ -18,7 +18,6 @@ import static org.junit.Assert.assertThat;
  * @since 21-4-18
  */
 public class JwtAuthenticationEntryPointAutoConfigurationTest {
-
 	private AnnotationConfigApplicationContext context;
 
 	@Before
@@ -37,8 +36,7 @@ public class JwtAuthenticationEntryPointAutoConfigurationTest {
 	public void registersJwtAuthenticationEntryPointAutomatically() {
 		this.context.register(JwtAuthenticationEntryPointAutoConfiguration.class);
 		this.context.refresh();
-		AuthenticationEntryPoint entryPoint = context
-				.getBean(AuthenticationEntryPoint.class);
+		AuthenticationEntryPoint entryPoint = context.getBean(AuthenticationEntryPoint.class);
 		assertThat(entryPoint, instanceOf(JwtAuthenticationEntryPoint.class));
 	}
 
@@ -47,20 +45,18 @@ public class JwtAuthenticationEntryPointAutoConfigurationTest {
 		this.context.register(CustomEntrypointConfig.class,
 				JwtAuthenticationEntryPointAutoConfiguration.class);
 		this.context.refresh();
-		AuthenticationEntryPoint entryPoint = context
-				.getBean(AuthenticationEntryPoint.class);
+		AuthenticationEntryPoint entryPoint = context.getBean(AuthenticationEntryPoint.class);
 		assertThat(entryPoint, not(instanceOf(JwtAuthenticationEntryPoint.class)));
 	}
 
 	@Configuration
 	protected static class CustomEntrypointConfig {
-
 		@Bean
 		public AuthenticationEntryPoint authenticationEntryPoint() {
 			return (httpServletRequest, httpServletResponse, e) -> {
 			};
 		}
-
 	}
+
 
 }

@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class StringValueDto {
 
 	private String value;
-
 }

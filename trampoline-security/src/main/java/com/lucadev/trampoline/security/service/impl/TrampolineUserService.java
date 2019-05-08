@@ -6,8 +6,8 @@ import com.lucadev.trampoline.security.service.AbstractUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 
 /**
- * {@link com.lucadev.trampoline.security.service.UserService} implementation. Uses a
- * {@link TimeProvider} for {@link TrampolineUserService#updateLastSeen(User)}
+ * {@link com.lucadev.trampoline.security.service.UserService} implementation.
+ * Uses a {@link TimeProvider} for {@link TrampolineUserService#updateLastSeen(User)}
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -18,11 +18,11 @@ public class TrampolineUserService extends AbstractUserService {
 
 	/**
 	 * Construct the handler.
+	 *
 	 * @param userRepository the repository to persist {@link User} entities.
-	 * @param timeProvider {@link TimeProvider} instance.
+	 * @param timeProvider   {@link TimeProvider} instance.
 	 */
-	public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider,
-			boolean emailIdentification) {
+	public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider, boolean emailIdentification) {
 		super(userRepository, emailIdentification);
 		this.timeProvider = timeProvider;
 	}
@@ -35,5 +35,6 @@ public class TrampolineUserService extends AbstractUserService {
 		user.setLastSeen(timeProvider.now());
 		return update(user);
 	}
+
 
 }

@@ -21,19 +21,15 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class PolicyEnforcementAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PolicyEnforcementAutoConfiguration.class);
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(PolicyEnforcementAutoConfiguration.class);
 	private final SecurityAccessContextFactory securityAccessContextFactory;
-
 	private final PolicyContainer policyContainer;
 
 	@Bean
 	@ConditionalOnMissingBean(PolicyEnforcement.class)
 	public PolicyEnforcement policyEnforcement() {
 		LOGGER.debug("Creating autoconfigured policy enforcement");
-		return new TrampolinePolicyEnforcement(securityAccessContextFactory,
-				policyContainer);
+		return new TrampolinePolicyEnforcement(securityAccessContextFactory, policyContainer);
 	}
 
 }

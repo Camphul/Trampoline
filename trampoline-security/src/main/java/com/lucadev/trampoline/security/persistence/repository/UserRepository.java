@@ -17,6 +17,7 @@ public interface UserRepository extends TrampolineRepository<User> {
 
 	/**
 	 * Find one {@link User} by it's {@link User#getUsername()}
+	 *
 	 * @param username the {@link User#getUsername()}
 	 * @return the found {@link User}
 	 */
@@ -24,6 +25,7 @@ public interface UserRepository extends TrampolineRepository<User> {
 
 	/**
 	 * Find user by its email.
+	 *
 	 * @param email user email
 	 * @return resolved user in an optional.
 	 */

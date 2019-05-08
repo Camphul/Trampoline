@@ -33,8 +33,7 @@ public class TrampolineDataAutoConfigurationTest {
 	public void registersTrampolineDataConfigurationAutomatically() {
 		this.context.register(TrampolineDataAutoConfiguration.class);
 		this.context.refresh();
-		TrampolinePersistenceConfiguration config = this.context
-				.getBean(TrampolinePersistenceConfiguration.class);
+		TrampolinePersistenceConfiguration config = this.context.getBean(TrampolinePersistenceConfiguration.class);
 		assertThat(config, instanceOf(TrampolinePersistenceConfiguration.class));
 	}
 

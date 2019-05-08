@@ -19,17 +19,15 @@ public class AssetMetaDataBuilder {
 
 	/**
 	 * Create a {@link AssetMetaData} from a multipart file.
+	 *
 	 * @param multipartFile the {@link MultipartFile} to create metadata from
 	 * @return the {@link AssetMetaData} built from the {@code multipartFile}
 	 */
 	public static AssetMetaData fromMultipartFile(MultipartFile multipartFile) {
 		if (multipartFile == null)
-			throw new NullPointerException(
-					"Cannot create asset metadata from null multipartFile");
+			throw new NullPointerException("Cannot create asset metadata from null multipartFile");
 
-		return new AssetMetaData(multipartFile.getName(),
-				multipartFile.getOriginalFilename(), multipartFile.getContentType(),
-				multipartFile.getSize());
+		return new AssetMetaData(multipartFile.getName(), multipartFile.getOriginalFilename(),
+				multipartFile.getContentType(), multipartFile.getSize());
 	}
-
 }

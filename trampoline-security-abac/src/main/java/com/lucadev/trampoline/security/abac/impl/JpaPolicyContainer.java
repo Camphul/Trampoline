@@ -21,16 +21,14 @@ import java.util.List;
 public class JpaPolicyContainer implements PolicyContainer {
 
 	public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JpaPolicyContainer.class);
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyContainer.class);
 	private final PolicyRuleRepository policyRuleRepository;
 
 	/**
 	 * Import parent policy rules into the JPA datasource.
+	 *
 	 * @param repository the repository to use.
-	 * @param parent the parent policy definition, null is accepted.
+	 * @param parent     the parent policy definition, null is accepted.
 	 */
 	public JpaPolicyContainer(PolicyRuleRepository repository, PolicyContainer parent) {
 		this(repository);
@@ -44,8 +42,9 @@ public class JpaPolicyContainer implements PolicyContainer {
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
 		parent.findAllPolicyRules().stream()
-				// Only add when none exist with the same name
-				.filter(r -> !hasPolicyRule(r.getName())).forEach(this::addPolicyRule);
+				//Only add when none exist with the same name
+				.filter(r -> !hasPolicyRule(r.getName()))
+				.forEach(this::addPolicyRule);
 	}
 
 	@Cacheable(POLICY_RULE_CACHE_REGION)
@@ -72,5 +71,4 @@ public class JpaPolicyContainer implements PolicyContainer {
 	public PolicyRule updatePolicyRule(PolicyRule policyRule) {
 		return addPolicyRule(policyRule);
 	}
-
 }

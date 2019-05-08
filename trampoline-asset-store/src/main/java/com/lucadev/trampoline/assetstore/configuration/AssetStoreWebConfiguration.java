@@ -26,6 +26,7 @@ public class AssetStoreWebConfiguration implements WebMvcConfigurer {
 
 	/**
 	 * Registers our custom HttpMessageConverter
+	 *
 	 * @param converters a List of currently registered HttpMessageConverter instances.
 	 * @see HttpMessageConverter
 	 */
@@ -33,5 +34,4 @@ public class AssetStoreWebConfiguration implements WebMvcConfigurer {
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(new AssetResponseHttpMessageConverter());
 	}
-
 }

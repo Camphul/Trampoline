@@ -12,8 +12,8 @@ public interface AuthorizationSchemeConfiguration {
 
 	/**
 	 * Build the authorization scheme using the Java builder.
+	 *
 	 * @param builder the {@link AuthorizationSchemeBuilder}
 	 */
 	void build(AuthorizationSchemeBuilder builder);
-
 }

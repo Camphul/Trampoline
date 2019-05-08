@@ -36,14 +36,17 @@ public class Role extends TrampolineEntity {
 	 * {@code Collection} of {@link Privilege} that this group contains.
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "TRAMPOLINE_ROLE_PRIVILEGE",
-			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "privilege_id",
-					referencedColumnName = "id"))
+	@JoinTable(
+			name = "TRAMPOLINE_ROLE_PRIVILEGE",
+			joinColumns = @JoinColumn(
+					name = "role_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(
+					name = "privilege_id", referencedColumnName = "id"))
 	private Collection<Privilege> privileges = new ArrayList<>();
 
 	/**
 	 * Construct a new {@code Role}
+	 *
 	 * @param name the {@code Role} identifier/name.
 	 */
 	public Role(String name) {
@@ -52,19 +55,14 @@ public class Role extends TrampolineEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Role))
-			return false;
-		if (!super.equals(o))
-			return false;
+		if (this == o) return true;
+		if (!(o instanceof Role)) return false;
+		if (!super.equals(o)) return false;
 
 		Role role = (Role) o;
 
-		if (name != null ? !name.equals(role.name) : role.name != null)
-			return false;
-		return privileges != null ? privileges.equals(role.privileges)
-				: role.privileges == null;
+		if (name != null ? !name.equals(role.name) : role.name != null) return false;
+		return privileges != null ? privileges.equals(role.privileges) : role.privileges == null;
 
 	}
 
@@ -75,5 +73,4 @@ public class Role extends TrampolineEntity {
 		result = 31 * result + (privileges != null ? privileges.hashCode() : 0);
 		return result;
 	}
-
 }

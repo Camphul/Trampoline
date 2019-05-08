@@ -15,6 +15,7 @@ public interface PolicyRuleRepository extends TrampolineRepository<PolicyRule> {
 
 	/**
 	 * Find one policy rule
+	 *
 	 * @param name policy rule name.
 	 * @return resolved policy.
 	 */
@@ -22,9 +23,9 @@ public interface PolicyRuleRepository extends TrampolineRepository<PolicyRule> {
 
 	/**
 	 * Count policy by name
+	 *
 	 * @param name policy rule name.
 	 * @return amount of rules by the name.
 	 */
 	long countByName(String name);
-
 }

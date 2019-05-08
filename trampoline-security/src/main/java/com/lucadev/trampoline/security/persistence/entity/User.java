@@ -54,12 +54,12 @@ public class User extends TrampolineEntity implements UserDetails {
 	@Column(name = "is_enabled", nullable = false)
 	private boolean enabled = true;
 
-	// UserDetails roles can never be null so we use eager loading for roles.
+	//UserDetails roles can never be null so we use eager loading for roles.
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "TRAMPOLINE_USER_ROLE",
+	@JoinTable(
+			name = "TRAMPOLINE_USER_ROLE",
 			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "ROLE_ID",
-					referencedColumnName = "id"))
+			inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<>();
 
 	@Column(name = "last_password_reset_at", nullable = false)
@@ -79,10 +79,13 @@ public class User extends TrampolineEntity implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		getRoles().forEach(role -> {
-			authorities.add(new SimpleGrantedAuthority(role.getName()));
-			role.getPrivileges().forEach(privilege -> authorities
-					.add(new SimpleGrantedAuthority(privilege.getName())));
-		});
+					authorities.add(new SimpleGrantedAuthority(role.getName()));
+					role.getPrivileges()
+							.forEach(privilege -> authorities.add(
+									new SimpleGrantedAuthority(privilege.getName()))
+							);
+				}
+		);
 		return authorities;
 	}
 
@@ -103,12 +106,9 @@ public class User extends TrampolineEntity implements UserDetails {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof User))
-			return false;
-		if (!super.equals(o))
-			return false;
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		if (!super.equals(o)) return false;
 
 		User user = (User) o;
 
@@ -122,5 +122,4 @@ public class User extends TrampolineEntity implements UserDetails {
 		result = 31 * result + (username != null ? username.hashCode() : 0);
 		return result;
 	}
-
 }

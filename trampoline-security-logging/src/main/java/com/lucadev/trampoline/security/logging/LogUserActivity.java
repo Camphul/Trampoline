@@ -17,6 +17,7 @@ public @interface LogUserActivity {
 
 	/**
 	 * Activity description.
+	 *
 	 * @return string representation of the activity that has executed.
 	 */
 	String value();
@@ -28,11 +29,10 @@ public @interface LogUserActivity {
 	boolean spel() default false;
 
 	/**
-	 * Should we still consider logging an activity when the method we log throws a
-	 * throwable(exception?)
-	 * @return true by default. To ignore methods that threw an exception set this to
-	 * false.
+	 * Should we still consider logging an activity when the method we log throws a throwable(exception?)
+	 * @return true by default. To ignore methods that threw an exception set this to false.
 	 */
 	boolean logThrowables() default true;
+
 
 }

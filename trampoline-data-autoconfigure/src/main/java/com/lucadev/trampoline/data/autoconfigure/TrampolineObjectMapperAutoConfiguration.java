@@ -17,6 +17,7 @@ public class TrampolineObjectMapperAutoConfiguration {
 
 	/**
 	 * Jackson {@link ObjectMapper} bean definition.
+	 *
 	 * @return {@link ObjectMapper} bean
 	 */
 	@Bean
@@ -24,5 +25,6 @@ public class TrampolineObjectMapperAutoConfiguration {
 	public ObjectMapper objectMapper() {
 		return new ObjectMapper();
 	}
+
 
 }

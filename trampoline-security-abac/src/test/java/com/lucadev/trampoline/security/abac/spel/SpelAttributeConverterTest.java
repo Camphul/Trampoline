@@ -41,4 +41,5 @@ public class SpelAttributeConverterTest {
 		assertEquals(expected, result.getExpressionString());
 	}
 
+
 }

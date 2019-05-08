@@ -38,8 +38,7 @@ public class UserActivityHandlerAutoConfigurationTest {
 		this.context.register(UserActivityHandlerAutoConfiguration.class);
 		this.context.refresh();
 
-		UserActivityHandler userActivityHandler = context
-				.getBean(UserActivityHandler.class);
+		UserActivityHandler userActivityHandler = context.getBean(UserActivityHandler.class);
 
 		assertThat(userActivityHandler, instanceOf(LogUserActivityHandler.class));
 	}
@@ -50,20 +49,17 @@ public class UserActivityHandlerAutoConfigurationTest {
 		this.context.register(UserActivityHandlerAutoConfiguration.class);
 		this.context.refresh();
 
-		UserActivityHandler userActivityHandler = context
-				.getBean(UserActivityHandler.class);
+		UserActivityHandler userActivityHandler = context.getBean(UserActivityHandler.class);
 
 		assertThat(userActivityHandler, instanceOf(CustomUserActivityHandler.class));
 	}
 
 	@Configuration
 	protected static class CustomUserActivityHandlerConfig {
-
 		@Bean
 		public UserActivityHandler userActivityHandler() {
 			return new CustomUserActivityHandler();
 		}
-
 	}
 
 	protected static class CustomUserActivityHandler implements UserActivityHandler {
@@ -72,7 +68,6 @@ public class UserActivityHandlerAutoConfigurationTest {
 		public void handleUserActivity(UserActivity userActivity) {
 
 		}
-
 	}
 
 }

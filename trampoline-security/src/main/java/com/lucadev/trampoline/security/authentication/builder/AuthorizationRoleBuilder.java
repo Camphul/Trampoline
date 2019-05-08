@@ -18,51 +18,48 @@ import java.util.List;
  */
 public class AuthorizationRoleBuilder {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AuthorizationRoleBuilder.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRoleBuilder.class);
 
 	private final AuthorizationSchemeBuilder authorizationSchemeBuilder;
-
 	private final RoleService roleService;
-
 	private final PrivilegeService privilegeService;
 
 	private String roleName;
-
 	private List<String> privileges;
 
 	/**
 	 * Construct without a role name
+	 *
 	 * @param authorizationSchemeBuilder the main scheme builder
-	 * @param roleService the Role handler
-	 * @param privilegeService the Privilege handler
+	 * @param roleService                the Role handler
+	 * @param privilegeService           the Privilege handler
 	 */
-	public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder,
-			RoleService roleService, PrivilegeService privilegeService) {
+	public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService) {
 		this.authorizationSchemeBuilder = authorizationSchemeBuilder;
 		this.roleService = roleService;
 		this.privilegeService = privilegeService;
 
-		// Initialize empty privilege list
+		//Initialize empty privilege list
 		this.privileges = new ArrayList<>();
 		LOGGER.debug("Constructed AuthorizationRoleBuilder");
 	}
 
 	/**
 	 * Construct with an initial role name.
+	 *
 	 * @param authorizationSchemeBuilder the main builder
-	 * @param roleService the Role handler
-	 * @param privilegeService the Privilege handler
-	 * @param name the name for the {@link Role} to create.
+	 * @param roleService                the Role handler
+	 * @param privilegeService           the Privilege handler
+	 * @param name                       the name for the {@link Role} to create.
 	 */
-	public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder,
-			RoleService roleService, PrivilegeService privilegeService, String name) {
+	public AuthorizationRoleBuilder(AuthorizationSchemeBuilder authorizationSchemeBuilder, RoleService roleService, PrivilegeService privilegeService, String name) {
 		this(authorizationSchemeBuilder, roleService, privilegeService);
 		this.roleName = name;
 	}
 
 	/**
 	 * Set the name for the {@link Role}. The name should start with ROLE_ prefix.
+	 *
 	 * @param name the name for the {@link Role}
 	 * @return the builder.
 	 */
@@ -73,6 +70,7 @@ public class AuthorizationRoleBuilder {
 
 	/**
 	 * Add a {@link Privilege} to the {@link Role}
+	 *
 	 * @param privilege the String version of the {@link Privilege}
 	 * @return the role builder.
 	 */
@@ -84,6 +82,7 @@ public class AuthorizationRoleBuilder {
 
 	/**
 	 * Add list of {@link Privilege} to {@link Role}.
+	 *
 	 * @param privileges a String array of privilege strings to add.
 	 * @return the role builder.
 	 * @see Privilege
@@ -98,14 +97,14 @@ public class AuthorizationRoleBuilder {
 
 	/**
 	 * Get {@link Privilege} list from existing {@link Role} and add them to this role.
+	 *
 	 * @param roleName name of the existing {@link Role} to get privileges from.
 	 * @return the role builder.
 	 */
 	public AuthorizationRoleBuilder withExistingRolePrivileges(String roleName) {
 		Role role = roleService.find(roleName);
 		if (role == null) {
-			throw new NullPointerException(
-					"Could not add roles from existing role. The role name specified was not found.");
+			throw new NullPointerException("Could not add roles from existing role. The role name specified was not found.");
 		}
 
 		LOGGER.debug("Adding privileges from existing role with name: {}", roleName);
@@ -119,13 +118,14 @@ public class AuthorizationRoleBuilder {
 	}
 
 	/**
-	 * Builds the role. Does not build when role already exists. Also adds all roles.
+	 * Builds the role. Does not build when role already exists.
+	 * Also adds all roles.
+	 *
 	 * @return the builder.
 	 */
 	public AuthorizationRoleBuilder build() {
 		if (roleName == null || roleName.isEmpty()) {
-			throw new IllegalArgumentException(
-					"Cannot create role: name must not be null or empty");
+			throw new IllegalArgumentException("Cannot create role: name must not be null or empty");
 		}
 		if (roleService.exists(roleName)) {
 			return this;
@@ -134,7 +134,7 @@ public class AuthorizationRoleBuilder {
 		LOGGER.debug("Building Role from builder.");
 		Role role = roleService.create(roleName);
 
-		// Add roles
+		//Add roles
 		for (String privilegeStr : privileges) {
 			Privilege privilege = privilegeService.find(privilegeStr);
 
@@ -153,8 +153,9 @@ public class AuthorizationRoleBuilder {
 	}
 
 	/**
-	 * Get back to the {@link AuthorizationSchemeBuilder} To persist the built role you
-	 * must first invoke {@link #build()} or use {@link #buildAnd()}
+	 * Get back to the {@link AuthorizationSchemeBuilder}
+	 * To persist the built role you must first invoke {@link #build()} or use {@link #buildAnd()}
+	 *
 	 * @return the origin of this role builder.
 	 */
 	public AuthorizationSchemeBuilder and() {
@@ -163,6 +164,7 @@ public class AuthorizationRoleBuilder {
 
 	/**
 	 * Wrap {@link #build()} and {@link #and()}
+	 *
 	 * @return the origin of this role builder.
 	 */
 	public AuthorizationSchemeBuilder buildAnd() {

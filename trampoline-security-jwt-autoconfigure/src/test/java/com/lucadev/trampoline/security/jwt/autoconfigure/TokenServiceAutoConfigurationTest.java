@@ -29,22 +29,16 @@ import static org.mockito.Mockito.when;
  * @since 21-4-18
  */
 public class TokenServiceAutoConfigurationTest {
-
 	private AnnotationConfigApplicationContext context;
-
 	private JwtConfigurationAdapter jwtConfiguration;
-
 	private JwtSecurityProperties jwtSecurityProperties;
-
 	private TimeProvider timeProvider;
-
 	private UserService userService;
 
 	@Before
 	public void setUp() throws Exception {
 		jwtSecurityProperties = mock(JwtSecurityProperties.class);
-		when(jwtSecurityProperties.getSecret())
-				.thenReturn("averylongstringasjwtsecurity");
+		when(jwtSecurityProperties.getSecret()).thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
 		userService = mock(UserService.class);
 		jwtConfiguration = mock(JwtConfigurationAdapter.class);
@@ -72,8 +66,8 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityProperties, timeProvider, userService);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
+				timeProvider, userService);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(JwtTokenService.class));
@@ -82,8 +76,8 @@ public class TokenServiceAutoConfigurationTest {
 	@Test
 	public void customTokenServiceBean() {
 		this.context.register(CustomTokenServiceConfig.class);
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityProperties, timeProvider, userService);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
+				timeProvider, userService);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(TestTokenService.class));
@@ -96,7 +90,6 @@ public class TokenServiceAutoConfigurationTest {
 		public TokenService tokenService() {
 			return new TestTokenService();
 		}
-
 	}
 
 	protected static class TestTokenService implements TokenService {
@@ -132,11 +125,8 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public Optional<Authentication> getAuthenticationToken(
-				HttpServletRequest request) {
+		public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
 			return null;
 		}
-
 	}
-
 }

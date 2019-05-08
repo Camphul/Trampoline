@@ -21,15 +21,13 @@ import static org.junit.Assert.*;
 public class AssetResponseHttpMessageConverterTest {
 
 	private AssetResponseHttpMessageConverter conv;
-
 	private Asset asset;
 
 	@Before
 	public void setUp() {
 		conv = new AssetResponseHttpMessageConverter();
 		byte[] content = "hello world".getBytes();
-		AssetMetaData assetMetaData = new AssetMetaData("hello.txt", "hello.txt",
-				MediaType.TEXT_PLAIN_VALUE, content.length);
+		AssetMetaData assetMetaData = new AssetMetaData("hello.txt", "hello.txt", MediaType.TEXT_PLAIN_VALUE, content.length);
 		asset = new Asset(content, assetMetaData);
 	}
 
@@ -54,10 +52,8 @@ public class AssetResponseHttpMessageConverterTest {
 		AssetResponse assetResponse = new AssetResponse(asset);
 		MockHttpOutputMessage outputMessage = new MockHttpOutputMessage();
 		conv.write(assetResponse, MediaType.TEXT_PLAIN, outputMessage);
-		assertEquals(asset.getMetaData().getContentType(),
-				outputMessage.getHeaders().getContentType().toString());
+		assertEquals(asset.getMetaData().getContentType(), outputMessage.getHeaders().getContentType().toString());
 		assertTrue(outputMessage.getHeaders().getAccept().contains(MediaType.TEXT_PLAIN));
 		assertArrayEquals(asset.getData(), outputMessage.getBodyAsBytes());
 	}
-
 }

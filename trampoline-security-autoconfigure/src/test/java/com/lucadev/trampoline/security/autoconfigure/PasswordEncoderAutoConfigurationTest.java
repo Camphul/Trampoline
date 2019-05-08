@@ -18,7 +18,6 @@ import static org.junit.Assert.assertThat;
  * @since 21-4-18
  */
 public class PasswordEncoderAutoConfigurationTest {
-
 	private AnnotationConfigApplicationContext context;
 
 	@Before
@@ -43,8 +42,7 @@ public class PasswordEncoderAutoConfigurationTest {
 
 	@Test
 	public void customPasswordEncoderBean() {
-		this.context.register(CustomPassEncoderBeanConfig.class,
-				PasswordEncoderAutoConfiguration.class);
+		this.context.register(CustomPassEncoderBeanConfig.class, PasswordEncoderAutoConfiguration.class);
 		this.context.refresh();
 		PasswordEncoder encoder = this.context.getBean(PasswordEncoder.class);
 		assertThat(encoder, not(instanceOf(BCryptPasswordEncoder.class)));
@@ -52,7 +50,6 @@ public class PasswordEncoderAutoConfigurationTest {
 
 	@Configuration
 	protected static class CustomPassEncoderBeanConfig {
-
 		@Bean
 		public PasswordEncoder passwordEncoder() {
 			return new PasswordEncoder() {
@@ -67,7 +64,5 @@ public class PasswordEncoderAutoConfigurationTest {
 				}
 			};
 		}
-
 	}
-
 }

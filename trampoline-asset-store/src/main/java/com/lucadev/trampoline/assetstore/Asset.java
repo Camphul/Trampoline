@@ -16,7 +16,6 @@ import lombok.ToString;
 public class Asset {
 
 	private final byte[] data;
-
 	private final AssetMetaData metaData;
 
 }

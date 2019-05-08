@@ -35,8 +35,10 @@ public class Privilege extends TrampolineEntity {
 	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 
+
 	/**
 	 * Construct a new {@code Privilege}
+	 *
 	 * @param name the {@code Privilege} identifier.
 	 */
 	public Privilege(String name) {
@@ -45,12 +47,9 @@ public class Privilege extends TrampolineEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Privilege))
-			return false;
-		if (!super.equals(o))
-			return false;
+		if (this == o) return true;
+		if (!(o instanceof Privilege)) return false;
+		if (!super.equals(o)) return false;
 		Privilege privilege = (Privilege) o;
 		return Objects.equals(name, privilege.name);
 	}
@@ -60,5 +59,4 @@ public class Privilege extends TrampolineEntity {
 
 		return Objects.hash(super.hashCode(), name);
 	}
-
 }

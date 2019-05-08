@@ -23,12 +23,10 @@ import javax.persistence.Table;
 @Setter
 @ToString
 public class SimpleTrampolineEntity extends TrampolineEntity {
-
 	@Column(name = "payload", nullable = false)
 	private String payload;
 
 	public SimpleTrampolineEntity(String payload) {
 		this.payload = payload;
 	}
-
 }

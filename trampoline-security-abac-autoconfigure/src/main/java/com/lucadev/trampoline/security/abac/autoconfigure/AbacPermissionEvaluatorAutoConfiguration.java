@@ -21,11 +21,8 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class AbacPermissionEvaluatorAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AbacPermissionEvaluatorAutoConfiguration.class);
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbacPermissionEvaluatorAutoConfiguration.class);
 	private final PolicyEnforcement policyEnforcement;
-
 	private final TimeProvider timeProvider;
 
 	@Bean

@@ -17,5 +17,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @EnableCaching
 class TrampolineConfiguration {
-
 }

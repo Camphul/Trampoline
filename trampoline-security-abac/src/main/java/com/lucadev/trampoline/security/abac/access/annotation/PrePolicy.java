@@ -17,8 +17,8 @@ public @interface PrePolicy {
 
 	/**
 	 * The policy identifier which is used to ask permission.
+	 *
 	 * @return the policyrule
 	 */
 	String value();
-
 }

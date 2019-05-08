@@ -21,7 +21,8 @@ public class UserServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public UserService userService(UserRepository repository, TimeProvider timeProvider,
-			@Value("${trampoline.security.authentication.emailIdentification:false}") boolean emailIdentification) {
+								   @Value("${trampoline.security.authentication.emailIdentification:false}")
+										   boolean emailIdentification) {
 		return new TrampolineUserService(repository, timeProvider, emailIdentification);
 	}
 

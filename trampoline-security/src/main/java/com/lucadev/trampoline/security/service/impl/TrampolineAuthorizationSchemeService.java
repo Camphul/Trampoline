@@ -16,20 +16,14 @@ import org.springframework.core.env.Environment;
 @AllArgsConstructor
 public class TrampolineAuthorizationSchemeService implements AuthorizationSchemeService {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TrampolineAuthorizationSchemeService.class);
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineAuthorizationSchemeService.class);
 	private final Environment environment;
-
 	private final RoleService roleService;
-
 	private final PrivilegeService privilegeService;
 
 	@Override
 	public AuthorizationSchemeBuilder builder() {
 		LOGGER.debug("Creating builder...");
-		return AuthorizationSchemeBuilder.create(roleService, privilegeService,
-				environment);
+		return AuthorizationSchemeBuilder.create(roleService, privilegeService, environment);
 	}
-
 }

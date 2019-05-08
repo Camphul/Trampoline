@@ -20,37 +20,30 @@ public class JwtPayload implements Serializable {
 	 * Raw token data
 	 */
 	private String rawToken;
-
 	/**
 	 * Subject ID(UUID)
 	 */
 	private UUID subject;
-
 	/**
 	 * Subject username
 	 */
 	private String username;
-
 	/**
 	 * Subject email
 	 */
 	private String email;
-
 	/**
 	 * Subject roles
 	 */
 	private List<String> roles;
-
 	/**
 	 * Token issue date
 	 */
 	private Date issuedDate;
-
 	/**
 	 * Token expiry date
 	 */
 	private Date expirationDate;
-
 	/**
 	 * Can we ignore expirydate?
 	 */

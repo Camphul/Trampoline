@@ -27,15 +27,14 @@ public abstract class AbstractUserService implements UserService {
 
 	@Getter(AccessLevel.PROTECTED)
 	private final UserRepository userRepository;
-
 	private IdentificationType identificationType = IdentificationType.USERNAME;
 
 	/**
 	 * Construct the abstract handler.
+	 *
 	 * @param userRepository the {@code Repository} used to persist {@link User} entities.
 	 */
-	public AbstractUserService(UserRepository userRepository,
-			boolean emailIdentification) {
+	public AbstractUserService(UserRepository userRepository, boolean emailIdentification) {
 		this.userRepository = userRepository;
 		if (emailIdentification) {
 			identificationType = IdentificationType.EMAIL;
@@ -51,15 +50,13 @@ public abstract class AbstractUserService implements UserService {
 			return loadUserByEmail(s);
 		}
 		Optional<User> user = userRepository.findOneByUsername(s);
-		return user.orElseThrow(() -> new UsernameNotFoundException(
-				"Could not find user with username " + s));
+		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
 	}
 
 	@Override
 	public UserDetails loadUserByEmail(String email) {
 		Optional<User> user = userRepository.findOneByEmail(email);
-		return user.orElseThrow(() -> new UsernameNotFoundException(
-				"Could not find user with email " + email));
+		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with email " + email));
 	}
 
 	/**
@@ -86,6 +83,7 @@ public abstract class AbstractUserService implements UserService {
 	public User currentUserOrThrow() {
 		return currentUser().orElseThrow(CurrentUserNotFoundException::new);
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -213,8 +211,8 @@ public abstract class AbstractUserService implements UserService {
 
 	/**
 	 * Get the current context's {@link Authentication}
-	 * @return the current thread's
-	 * {@link org.springframework.security.core.context.SecurityContext} authentication.
+	 *
+	 * @return the current thread's {@link org.springframework.security.core.context.SecurityContext} authentication.
 	 */
 	protected Authentication authenticationContext() {
 		return SecurityContextHolder.getContext().getAuthentication();

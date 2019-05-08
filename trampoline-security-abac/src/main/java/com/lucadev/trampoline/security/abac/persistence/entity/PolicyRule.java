@@ -45,16 +45,16 @@ public class PolicyRule extends TrampolineEntity {
 	@Column(name = "condition_expression", nullable = false)
 	private Expression condition;
 
+
 	/**
 	 * Create a policy
-	 * @param name the name of the policy
+	 *
+	 * @param name        the name of the policy
 	 * @param description the description of what the policy does
-	 * @param target the expression defining when to apply the condition(check if the
-	 * action matches, etc..)
-	 * @param condition the rule to apply(your logic goes here)
+	 * @param target      the expression defining when to apply the condition(check if the action matches, etc..)
+	 * @param condition   the rule to apply(your logic goes here)
 	 */
-	public PolicyRule(String name, String description, Expression target,
-			Expression condition) {
+	public PolicyRule(String name, String description, Expression target, Expression condition) {
 		this(target, condition);
 		this.name = name;
 		this.description = description;
@@ -62,8 +62,8 @@ public class PolicyRule extends TrampolineEntity {
 
 	/**
 	 * Create a policy
-	 * @param target the expression defining when to apply the condition(check if the
-	 * action matches, etc..)
+	 *
+	 * @param target    the expression defining when to apply the condition(check if the action matches, etc..)
 	 * @param condition the rule to apply(your logic goes here)
 	 */
 	protected PolicyRule(Expression target, Expression condition) {
@@ -71,5 +71,6 @@ public class PolicyRule extends TrampolineEntity {
 		this.target = target;
 		this.condition = condition;
 	}
+
 
 }

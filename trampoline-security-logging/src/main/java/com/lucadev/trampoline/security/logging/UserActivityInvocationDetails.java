@@ -16,13 +16,9 @@ import lombok.ToString;
 public class UserActivityInvocationDetails {
 
 	private final String className;
-
 	private final String methodName;
-
 	private final boolean exceptionThrown;
-
 	private final long invocationStart;
-
 	private final long invocationEnd;
 
 }

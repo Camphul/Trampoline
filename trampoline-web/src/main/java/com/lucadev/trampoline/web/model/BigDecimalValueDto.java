@@ -21,6 +21,7 @@ public class BigDecimalValueDto {
 
 	/**
 	 * If the number is 0 or higher.
+	 *
 	 * @return larger or equal to 0
 	 */
 	public boolean isPositive() {
@@ -29,6 +30,7 @@ public class BigDecimalValueDto {
 
 	/**
 	 * If the number is 0 or lower.
+	 *
 	 * @return lower or equal to 0
 	 */
 	public boolean isNegative() {
@@ -37,6 +39,7 @@ public class BigDecimalValueDto {
 
 	/**
 	 * If the number is zero.
+	 *
 	 * @return is zero
 	 */
 	public boolean isZero() {
@@ -45,6 +48,7 @@ public class BigDecimalValueDto {
 
 	/**
 	 * If the number is above 0
+	 *
 	 * @return larger than 0
 	 */
 	public boolean isNonZeroPositive() {
@@ -53,10 +57,10 @@ public class BigDecimalValueDto {
 
 	/**
 	 * Number is under 0
+	 *
 	 * @return lower than 0
 	 */
 	public boolean isNonZeroNegative() {
 		return BigDecimal.ZERO.compareTo(value) > 0;
 	}
-
 }

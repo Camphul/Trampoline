@@ -19,7 +19,6 @@ import static org.junit.Assert.assertThat;
  * @since 21-4-18
  */
 public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
-
 	private AnnotationConfigApplicationContext context;
 
 	@Before
@@ -38,8 +37,7 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 	public void registersDefaultJwtConfigurationAutomatically() {
 		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfigurationAdapter jwtConfiguration = this.context
-				.getBean(JwtConfigurationAdapter.class);
+		JwtConfigurationAdapter jwtConfiguration = this.context.getBean(JwtConfigurationAdapter.class);
 		assertThat(jwtConfiguration, instanceOf(DefaultJwtConfigurationAdapter.class));
 	}
 
@@ -48,8 +46,7 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 		this.context.register(SomeRandomJwtConfiguration.class);
 		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfigurationAdapter jwtConfiguration = this.context
-				.getBean(JwtConfigurationAdapter.class);
+		JwtConfigurationAdapter jwtConfiguration = this.context.getBean(JwtConfigurationAdapter.class);
 		assertThat(jwtConfiguration, instanceOf(SomeRandomJwtConfiguration.class));
 	}
 
@@ -67,5 +64,4 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 		}
 
 	}
-
 }
