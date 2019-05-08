@@ -22,20 +22,28 @@ import javax.annotation.PostConstruct;
 public class JwtSecurityProperties {
 
 	public static final String DEFAULT_SECRET = "trampolineSecret";
+
 	public static final String TOKEN_HEADER = "Authorization";
+
 	public static final String HEADER_PREFIX = "Bearer";
+
 	public static final long TOKEN_TIMEOUT = 3600L;
+
 	public static final String AUTH_PATH = "/auth";
+
 	/**
-	 * Errormessage that gets thrown when you try to modify this object through a setter method.
+	 * Errormessage that gets thrown when you try to modify this object through a setter
+	 * method.
 	 */
 	private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 
-	//Signing secret
+	// Signing secret
 	private String secret;
-	//Timeout for token invalidation
+
+	// Timeout for token invalidation
 	private long tokenTimeout;
-	//Auth basepath
+
+	// Auth basepath
 	private String authPath;
 
 	/**
@@ -77,4 +85,5 @@ public class JwtSecurityProperties {
 		}
 		this.authPath = authPath;
 	}
+
 }

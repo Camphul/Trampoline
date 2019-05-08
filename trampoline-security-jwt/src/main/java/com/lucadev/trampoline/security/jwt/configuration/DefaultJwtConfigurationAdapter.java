@@ -19,6 +19,7 @@ public class DefaultJwtConfigurationAdapter implements JwtConfigurationAdapter {
 
 	@Override
 	public void createToken(User user, Map<String, Object> claims) {
-		//Dont do anything by default
+		// Dont do anything by default
 	}
+
 }

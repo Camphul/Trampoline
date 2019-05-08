@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.service;
 
-
 import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchemeBuilder;
 
 /**
@@ -13,7 +12,6 @@ public interface AuthorizationSchemeService {
 
 	/**
 	 * Use java builder pattern for creating authorization scheme.
-	 *
 	 * @return the builder
 	 */
 	AuthorizationSchemeBuilder builder();

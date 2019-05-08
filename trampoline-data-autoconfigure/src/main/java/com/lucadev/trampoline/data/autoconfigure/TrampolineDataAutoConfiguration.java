@@ -18,7 +18,6 @@ public class TrampolineDataAutoConfiguration {
 
 	/**
 	 * Bean definition for persistence configuration.
-	 *
 	 * @return default persistence configuration.
 	 */
 	@Bean

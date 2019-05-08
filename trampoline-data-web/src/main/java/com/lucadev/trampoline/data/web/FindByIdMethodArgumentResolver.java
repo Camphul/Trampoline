@@ -30,7 +30,6 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 
 	/**
 	 * Check if parameter is valid
-	 *
 	 * @param parameter the method parameter
 	 * @return if it's a trampoline entity with @Entity
 	 */
@@ -38,18 +37,18 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 	public boolean supportsParameter(MethodParameter parameter) {
 		FindById findAnnotation = parameter.getParameterAnnotation(FindById.class);
 
-		//Only work when this annotation is present.
+		// Only work when this annotation is present.
 		if (findAnnotation == null) {
 			return false;
 		}
 
 		Class paramType = parameter.getParameterType();
-		//Require @Entity annotation
+		// Require @Entity annotation
 		if (!paramType.isAnnotationPresent(Entity.class)) {
 			return false;
 		}
 
-		//Require superclass to be TrampolineEntity due to UUID id.
+		// Require superclass to be TrampolineEntity due to UUID id.
 		if (!TrampolineEntity.class.isAssignableFrom(paramType)) {
 			return false;
 		}
@@ -59,41 +58,38 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 
 	/**
 	 * Fetch entity by id
-	 *
-	 * @param parameter             method param
+	 * @param parameter method param
 	 * @param modelAndViewContainer unused mv container.
-	 * @param request               the request
-	 * @param webDataBinderFactory  databinder.
+	 * @param request the request
+	 * @param webDataBinderFactory databinder.
 	 * @return fetched entity
 	 * @throws Exception if we fail to fetch the entity
 	 */
 	@Override
 	public Object resolveArgument(MethodParameter parameter,
-								  ModelAndViewContainer modelAndViewContainer,
-								  NativeWebRequest request,
-								  WebDataBinderFactory webDataBinderFactory) throws Exception {
+			ModelAndViewContainer modelAndViewContainer, NativeWebRequest request,
+			WebDataBinderFactory webDataBinderFactory) throws Exception {
 		FindById findAnnotation = parameter.getParameterAnnotation(FindById.class);
 		Class paramType = parameter.getParameterType();
 		String name = getPathVariableName(parameter, findAnnotation);
-		final Map<String, String> templateVariables
-				= (Map<String, String>) request.getAttribute(
-				HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE,
-				RequestAttributes.SCOPE_REQUEST);
+		final Map<String, String> templateVariables = (Map<String, String>) request
+				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE,
+						RequestAttributes.SCOPE_REQUEST);
 
 		String idString = templateVariables.get(name);
 		UUID id = UUID.fromString(idString);
 		Object entity = entityManager.find(paramType, id);
 
 		if (entity == null && findAnnotation.required()) {
-			throw new ResourceNotFoundException("Could not find " + paramType.getSimpleName() + " with id: " + id);
+			throw new ResourceNotFoundException(
+					"Could not find " + paramType.getSimpleName() + " with id: " + id);
 		}
 		return entity;
 	}
 
 	/**
 	 * Get the name of the path variable to locate the id at.
-	 *
-	 * @param parameter  method param
+	 * @param parameter method param
 	 * @param annotation the annotation ontop of the parameter.
 	 * @return name of the path variable
 	 */
@@ -106,4 +102,5 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 
 		return name;
 	}
+
 }

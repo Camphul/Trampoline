@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 @ActiveProfiles(profiles = "test")
 public class TrampolineEntityJpaTest {
 
-	//Max time difference in tests. in ms
+	// Max time difference in tests. in ms
 	private static final long TIME_BOUNDS = 100;
 
 	@Autowired
@@ -110,7 +110,9 @@ public class TrampolineEntityJpaTest {
 
 	private void sleep(long duration, TimeUnit timeUnit) {
 		long startWait = System.currentTimeMillis();
-		await().atMost(timeUnit.toMillis(duration) + TimeUnit.SECONDS.toMillis(1), TimeUnit.MILLISECONDS)
-				.until(System::currentTimeMillis, greaterThan(startWait + timeUnit.toMillis(duration)));
+		await().atMost(timeUnit.toMillis(duration) + TimeUnit.SECONDS.toMillis(1),
+				TimeUnit.MILLISECONDS).until(System::currentTimeMillis,
+						greaterThan(startWait + timeUnit.toMillis(duration)));
 	}
+
 }

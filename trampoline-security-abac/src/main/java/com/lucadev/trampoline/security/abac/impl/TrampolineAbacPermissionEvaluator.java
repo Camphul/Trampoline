@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Default {@link com.lucadev.trampoline.security.abac.AbacPermissionEvaluator} implementation.
+ * Default {@link com.lucadev.trampoline.security.abac.AbacPermissionEvaluator}
+ * implementation.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
@@ -19,13 +20,15 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
 	private final TimeProvider timeProvider;
 
-	public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement, TimeProvider timeProvider) {
+	public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement,
+			TimeProvider timeProvider) {
 		super(policyEnforcement);
 		this.timeProvider = timeProvider;
 	}
 
 	@Override
-	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
+	public boolean hasPermission(Authentication authentication, Object targetDomainObject,
+			Object permission) {
 		if (authentication == null) {
 			throw new AccessDeniedException("Not authenticated");
 		}
@@ -34,7 +37,8 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
 		environment.put("time", timeProvider.now());
 
-		boolean allowed = policyEnforcement.check(user, targetDomainObject, permission, environment);
+		boolean allowed = policyEnforcement.check(user, targetDomainObject, permission,
+				environment);
 
 		if (!allowed) {
 			throw new AccessDeniedException("Principal is denied access to resource.");
@@ -42,4 +46,5 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
 		return true;
 	}
+
 }

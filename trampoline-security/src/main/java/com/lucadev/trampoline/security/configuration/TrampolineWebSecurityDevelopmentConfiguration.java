@@ -22,12 +22,14 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 @Configuration
 @Profile(DEV_SECURITY_CONFIGURATION_PROFILE)
 @Order(DEV_SECURITY_CONFIGURATION_ORDER)
-public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityConfigurerAdapter {
+public class TrampolineWebSecurityDevelopmentConfiguration
+		extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * The {@link Order} of this configuration
 	 */
 	public static final int DEV_SECURITY_CONFIGURATION_ORDER = 90;
+
 	/**
 	 * The profile which activates this configuration
 	 */
@@ -35,9 +37,7 @@ public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityCo
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web
-				.ignoring()
-				.antMatchers("/console/**/**");
+		web.ignoring().antMatchers("/console/**/**");
 		super.configure(web);
 	}
 
@@ -48,25 +48,24 @@ public class TrampolineWebSecurityDevelopmentConfiguration extends WebSecurityCo
 				// Un-secure H2 Database
 				.antMatchers("/console/**/**").permitAll();
 		// disable page caching
-		http
-				.headers()
-				.frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+		http.headers().frameOptions().sameOrigin() // required to set for H2 else H2
+													// Console will be blank.
 				.cacheControl();
 
-		http.authorizeRequests().antMatchers("/console/**").permitAll()
-				.and()
-				.headers().frameOptions().disable();
+		http.authorizeRequests().antMatchers("/console/**").permitAll().and().headers()
+				.frameOptions().disable();
 	}
 
 	/**
 	 * Strictly used in dev profile to load h2 console
-	 *
 	 * @return h2 console bean.
 	 */
 	@Bean
 	public ServletRegistrationBean h2servletRegistration() {
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean(
+				new WebServlet());
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
 	}
+
 }

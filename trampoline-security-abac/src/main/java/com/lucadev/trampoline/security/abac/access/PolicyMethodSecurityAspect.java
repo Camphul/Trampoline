@@ -43,5 +43,4 @@ public class PolicyMethodSecurityAspect {
 		return policyMethodSecurityHandler.handlePostPolicy(joinPoint);
 	}
 
-
 }

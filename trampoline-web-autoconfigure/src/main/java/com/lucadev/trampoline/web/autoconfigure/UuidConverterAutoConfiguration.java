@@ -20,8 +20,8 @@ import java.util.UUID;
 public class UuidConverterAutoConfiguration {
 
 	/**
-	 * Bean definition for our {@link UUID} converter. In this case our {@link UUIDConverter}
-	 *
+	 * Bean definition for our {@link UUID} converter. In this case our
+	 * {@link UUIDConverter}
 	 * @return a converter for converting a {@link String} into a {@link UUID}
 	 */
 	@Bean

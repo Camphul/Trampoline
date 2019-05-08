@@ -14,7 +14,6 @@ public class UUIDConverter implements Converter<String, UUID> {
 
 	/**
 	 * Convert a String to a {@link UUID}
-	 *
 	 * @param s the source String
 	 * @return null if s is null or empty. Else the UUID from s
 	 */
@@ -25,4 +24,5 @@ public class UUIDConverter implements Converter<String, UUID> {
 
 		return UUID.fromString(s);
 	}
+
 }

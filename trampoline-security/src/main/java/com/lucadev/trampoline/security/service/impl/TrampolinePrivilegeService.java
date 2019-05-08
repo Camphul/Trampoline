@@ -40,4 +40,5 @@ public class TrampolinePrivilegeService implements PrivilegeService {
 	public Privilege find(String privilegeName) {
 		return privilegeRepository.findOneByName(privilegeName);
 	}
+
 }

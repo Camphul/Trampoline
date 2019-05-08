@@ -21,11 +21,11 @@ import java.util.Collection;
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	private final JwtPayload jwtPayload;
+
 	private final Object principal;
 
 	/**
 	 * Construct the token with raw jwt data. Not setting authenticated.
-	 *
 	 * @param jwtPayload the JWT representation.
 	 */
 	public JwtAuthenticationToken(JwtPayload jwtPayload) {
@@ -36,12 +36,12 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Construct an authenticated token.
-	 *
 	 * @param authorities the user authorities.
-	 * @param user        the actual user.
-	 * @param jwtPayload  the jwt linked to the user.
+	 * @param user the actual user.
+	 * @param jwtPayload the jwt linked to the user.
 	 */
-	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities, User user, JwtPayload jwtPayload) {
+	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities,
+			User user, JwtPayload jwtPayload) {
 		super(authorities);
 		this.jwtPayload = jwtPayload;
 		this.principal = user;
@@ -50,7 +50,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Never pass credentials in JWT
-	 *
 	 * @return user credentials. NA in JWT.
 	 */
 	@Override
@@ -60,7 +59,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * {@inheritDoc}
-	 *
 	 * @return either username or {@link User} object when authenticated.
 	 */
 	@Override
@@ -70,7 +68,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Username inside the jwt token.
-	 *
 	 * @return JWT username.
 	 */
 	@Override
@@ -80,7 +77,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Auth details, jwt token when authenticated. Else {@code super.getDetails();}
-	 *
 	 * @return user details.
 	 */
 	@Override
@@ -90,7 +86,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Get the user.
-	 *
 	 * @return null if the principal is not a {@link User}
 	 */
 	public User getUser() {
@@ -99,4 +94,5 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 		}
 		return (User) principal;
 	}
+
 }

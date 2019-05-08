@@ -19,7 +19,8 @@ public class UserAuthenticationServiceAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserAuthenticationService userPasswordService(UserService userService, PasswordEncoder passwordEncoder) {
+	public UserAuthenticationService userPasswordService(UserService userService,
+			PasswordEncoder passwordEncoder) {
 		return new TrampolineUserAuthenticationService(userService, passwordEncoder);
 	}
 

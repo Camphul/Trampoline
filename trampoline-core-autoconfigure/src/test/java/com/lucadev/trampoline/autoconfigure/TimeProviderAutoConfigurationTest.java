@@ -46,7 +46,8 @@ public class TimeProviderAutoConfigurationTest {
 
 	@Test
 	public void customTimeProviderBean() {
-		this.context.register(TimeProviderConfiguration.class, TimeProviderAutoConfiguration.class);
+		this.context.register(TimeProviderConfiguration.class,
+				TimeProviderAutoConfiguration.class);
 		this.context.refresh();
 		TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
 		assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
@@ -58,6 +59,7 @@ public class TimeProviderAutoConfigurationTest {
 	 */
 	@Configuration
 	protected static class TimeProviderConfiguration {
+
 		@Bean
 		public TimeProvider timeProvider() {
 			return new TimeProvider() {
@@ -72,5 +74,7 @@ public class TimeProviderAutoConfigurationTest {
 				}
 			};
 		}
+
 	}
+
 }

@@ -13,8 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Service to manage {@link User} entities.
- * Extends {@link UserDetailsService} to implement Spring Security.
+ * Service to manage {@link User} entities. Extends {@link UserDetailsService} to
+ * implement Spring Security.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -23,22 +23,19 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}
-	 *
 	 * @return currently active {@link User} inside an {@link Optional}
 	 */
 	Optional<User> currentUser();
 
 	/**
-	 * Obtains the {@link User} from the current {@link Thread}.
-	 * Throws a {@link CurrentUserNotFoundException} when null.
-	 *
+	 * Obtains the {@link User} from the current {@link Thread}. Throws a
+	 * {@link CurrentUserNotFoundException} when null.
 	 * @return currently active {@link User}
 	 */
 	User currentUserOrThrow();
 
 	/**
 	 * Find a {@link User} by it's {@link User#getId()}
-	 *
 	 * @param subject the {@link UUID} to find.
 	 * @return null or the found {@link User}
 	 */
@@ -46,7 +43,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Persist new {@link User}
-	 *
 	 * @param user the {@link User} to persist
 	 * @return the persisted {@link User}
 	 */
@@ -54,7 +50,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Update a {@link User}
-	 *
 	 * @param user the {@link User} containing updated data.
 	 * @return the updated {@link User} after being updated.
 	 */
@@ -62,7 +57,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Update {@link User#getUpdated()} value.
-	 *
 	 * @param user the {@link User} to update.
 	 * @return the updated {@link User}
 	 */
@@ -70,14 +64,12 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Get a {@link List} of all users
-	 *
 	 * @return a {@link List} of all {@link User} entities.
 	 */
 	List<User> findAll();
 
 	/**
 	 * Find all users but paged.
-	 *
 	 * @param pageable paging information.
 	 * @return a {@link Page} of {@link User} entities.
 	 */
@@ -85,7 +77,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set user enabled to false.
-	 *
 	 * @param user the {@link User} to disable.
 	 * @return the updated, now disabled {@link User}
 	 */
@@ -93,7 +84,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set user enabled to true.
-	 *
 	 * @param user the {@link User} to enable.
 	 * @return the updated, enabled {@link User}
 	 */
@@ -101,8 +91,7 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set the user enabled flag
-	 *
-	 * @param user    the {@link User} to set the flag of.
+	 * @param user the {@link User} to set the flag of.
 	 * @param enabled enabled flag
 	 * @return the updated {@link User}
 	 */
@@ -110,7 +99,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Expire a {@link User}
-	 *
 	 * @param user the {@link User} to expire.
 	 * @return the updated, expired {@link User}
 	 */
@@ -118,8 +106,7 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set the user expired. flag
-	 *
-	 * @param user    the {@link User} to set the flag on.
+	 * @param user the {@link User} to set the flag on.
 	 * @param expired the new flag value.
 	 * @return the updated {@link User}
 	 */
@@ -127,7 +114,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Lock a {@link User}
-	 *
 	 * @param user the {@link User} to lock.
 	 * @return the updated {@link User}
 	 */
@@ -135,7 +121,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Unlock a {@link User}
-	 *
 	 * @param user the {@link User} to unlock.
 	 * @return the updated {@link User}
 	 */
@@ -143,8 +128,7 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set the user locked flag.
-	 *
-	 * @param user   the {@link User} to apply the flag on.
+	 * @param user the {@link User} to apply the flag on.
 	 * @param locked the new locked value.
 	 * @return the updated {@link User}
 	 */
@@ -152,7 +136,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Expires the {@link User} credentials.
-	 *
 	 * @param user the {@link User} to expire the credentials on.
 	 * @return the updated {@link User}
 	 */
@@ -160,8 +143,7 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Set the user credentials expired flag.
-	 *
-	 * @param user    the {@link User} to apply the flag on.
+	 * @param user the {@link User} to apply the flag on.
 	 * @param expired the new flag value.
 	 * @return the updated {@link User}
 	 */
@@ -169,7 +151,6 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Similar to {@link UserDetailsService#loadUserByUsername(String)}
-	 *
 	 * @param email user email.
 	 * @return resolved user.
 	 */
@@ -177,15 +158,14 @@ public interface UserService extends UserDetailsService {
 
 	/**
 	 * Current {@link IdentificationType} being used
-	 *
 	 * @return method of identification(username/email)
 	 */
 	IdentificationType getIdentificationType();
 
 	/**
 	 * Set a new {@link IdentificationType}
-	 *
 	 * @param identificationType if we use username or email for authorization.
 	 */
 	void setIdentificationType(IdentificationType identificationType);
+
 }

@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Extension of {@link MessageResponse} to include a status flag to notify of success or failure.
+ * Extension of {@link MessageResponse} to include a status flag to notify of success or
+ * failure.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -21,4 +22,5 @@ public class SuccessResponse extends MessageResponse {
 	public SuccessResponse() {
 		super("ok");
 	}
+
 }

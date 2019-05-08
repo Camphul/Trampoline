@@ -18,17 +18,20 @@ import static org.mockito.Mockito.*;
  */
 public class JwtAuthenticationEntryPointTest {
 
-
 	@Test
-	public void shouldSucceedSendUnauthorizedErrorResponse() throws IOException, ServletException {
+	public void shouldSucceedSendUnauthorizedErrorResponse()
+			throws IOException, ServletException {
 		JwtAuthenticationEntryPoint entryPoint = new JwtAuthenticationEntryPoint();
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		HttpServletResponse mockResponse = mock(HttpServletResponse.class);
 
-		entryPoint.commence(mockRequest, mockResponse, null);//Validate that all responses are set unauthorized
+		entryPoint.commence(mockRequest, mockResponse, null);// Validate that all
+																// responses are set
+																// unauthorized
 
-		//Does not matter which text model, as long as it's UNAUTHORIZED
-		verify(mockResponse, atLeastOnce()).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), any());
+		// Does not matter which text model, as long as it's UNAUTHORIZED
+		verify(mockResponse, atLeastOnce())
+				.sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), any());
 	}
 
 }

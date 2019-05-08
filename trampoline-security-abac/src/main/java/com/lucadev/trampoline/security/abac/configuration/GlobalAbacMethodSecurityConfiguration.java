@@ -17,7 +17,8 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableCaching
-public class GlobalAbacMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+public class GlobalAbacMethodSecurityConfiguration
+		extends GlobalMethodSecurityConfiguration {
 
 	private final AbacPermissionEvaluator abacPermissionEvaluator;
 
@@ -27,4 +28,5 @@ public class GlobalAbacMethodSecurityConfiguration extends GlobalMethodSecurityC
 		expressionHandler.setPermissionEvaluator(abacPermissionEvaluator);
 		return expressionHandler;
 	}
+
 }

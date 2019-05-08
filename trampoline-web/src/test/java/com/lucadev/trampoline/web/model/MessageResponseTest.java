@@ -26,4 +26,5 @@ public class MessageResponseTest {
 		MessageResponse messageResponse = new MessageResponse(null);
 		assertNull(messageResponse.getMessage());
 	}
+
 }

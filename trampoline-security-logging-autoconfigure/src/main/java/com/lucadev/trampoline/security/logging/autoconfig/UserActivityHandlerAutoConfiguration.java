@@ -24,4 +24,5 @@ public class UserActivityHandlerAutoConfiguration {
 	public UserActivityHandler userActivityHandler() {
 		return new LogUserActivityHandler();
 	}
+
 }

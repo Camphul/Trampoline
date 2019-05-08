@@ -22,7 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineDataWebMvcConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(TrampolineDataWebMvcConfiguration.class);
+
 	private final EntityManager entityManager;
 
 	@Override
@@ -31,9 +33,9 @@ public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Orde
 		LOGGER.debug("Added custom argument resolvers.");
 	}
 
-
 	@Override
 	public int getOrder() {
 		return 34;
 	}
+
 }

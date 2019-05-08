@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Model to use when wanting to return an asset to a model client with the correct content type.
+ * Model to use when wanting to return an asset to a model client with the correct content
+ * type.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
@@ -20,7 +21,6 @@ public class AssetResponse {
 
 	/**
 	 * Construct {@code AssetResponse}
-	 *
 	 * @param asset {@link Asset} to create a model for.
 	 * @return a {@link AssetResponse} instance.
 	 */
@@ -30,6 +30,5 @@ public class AssetResponse {
 
 		return new AssetResponse(asset);
 	}
-
 
 }

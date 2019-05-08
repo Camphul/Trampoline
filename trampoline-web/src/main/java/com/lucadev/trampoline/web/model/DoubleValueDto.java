@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class DoubleValueDto {
 
 	private double value;
+
 }

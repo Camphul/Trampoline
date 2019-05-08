@@ -23,6 +23,7 @@ import java.util.UUID;
 public class LocalAssetStore extends AbstractAssetStore {
 
 	private final String storageDirectory;
+
 	private final AssetMetaDataRepository repository;
 
 	/**
@@ -34,7 +35,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		try {
 			resource.getOutputStream().write(data);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		return assetMetaData;
@@ -56,7 +58,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 			dis.readFully(assetData);
 
 			return new Asset(assetData, assetMetaData);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException("Could not load asset", e);
 		}
 	}
@@ -69,7 +72,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		if (resource.getFile().delete()) {
 			repository.delete(assetMetaData);
-		} else {
+		}
+		else {
 			throw new RuntimeException("Could not delete asset(no permission to fs?)");
 		}
 	}
@@ -84,15 +88,16 @@ public class LocalAssetStore extends AbstractAssetStore {
 
 	/**
 	 * Get the actual asset file from metadata.
-	 *
 	 * @param assetMetaData the metadata to obtain file info for
 	 * @return file resource resolved through the metadata.
 	 */
 	private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
 		UUID id = assetMetaData.getId();
 		if (id == null) {
-			throw new IllegalArgumentException("Cannot find asset which has not been saved yet.");
+			throw new IllegalArgumentException(
+					"Cannot find asset which has not been saved yet.");
 		}
 		return new FileSystemResource(storageDirectory + id.toString());
 	}
+
 }

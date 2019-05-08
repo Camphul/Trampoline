@@ -13,6 +13,9 @@ import lombok.Data;
 public class ActivityMethodInvocationResult {
 
 	private final UserActivityInvocationDetails invocationDetails;
+
 	private final Object result;
+
 	private final Throwable throwable;
+
 }

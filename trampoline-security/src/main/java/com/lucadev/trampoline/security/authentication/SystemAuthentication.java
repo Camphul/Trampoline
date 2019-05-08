@@ -16,7 +16,6 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * System authorities.
-	 *
 	 * @return No authorities in this case.
 	 */
 	@Override
@@ -26,7 +25,6 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * System credentials
-	 *
 	 * @return null
 	 */
 	@Override
@@ -36,7 +34,6 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * System details
-	 *
 	 * @return null
 	 */
 	@Override
@@ -46,7 +43,6 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * System principal
-	 *
 	 * @return the authentication name.
 	 */
 	@Override
@@ -56,7 +52,6 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * If we are authenticated.
-	 *
 	 * @return true
 	 */
 	@Override
@@ -66,22 +61,22 @@ public class SystemAuthentication implements Authentication {
 
 	/**
 	 * Disallow updating
-	 *
 	 * @param b the new state.
 	 * @throws IllegalArgumentException when invoked.
 	 */
 	@Override
 	public void setAuthenticated(boolean b) throws IllegalArgumentException {
-		throw new IllegalArgumentException("Cannot update authenticated state of SystemAuthentication");
+		throw new IllegalArgumentException(
+				"Cannot update authenticated state of SystemAuthentication");
 	}
 
 	/**
 	 * Name of this principal
-	 *
 	 * @return SYSTEM.
 	 */
 	@Override
 	public String getName() {
 		return "SYSTEM";
 	}
+
 }

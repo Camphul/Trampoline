@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PrivilegeRepository extends TrampolineRepository<Privilege> {
+
 	void deleteByName(String privilage);
 
 	Privilege findOneByName(String privilegeName);
+
 }

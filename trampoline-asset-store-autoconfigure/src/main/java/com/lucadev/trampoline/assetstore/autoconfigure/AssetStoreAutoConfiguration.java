@@ -19,22 +19,22 @@ public class AssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store.
-	 *
-	 * @param providerType          which provider instance to use.
+	 * @param providerType which provider instance to use.
 	 * @param localStorageDirectory local fs directory to use to store data.
-	 * @param repository            the repo for asset metadata.
+	 * @param repository the repo for asset metadata.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AssetStore.class)
-	public AssetStore assetStore(@Value("${trampoline.assetstore.provider:local}") String providerType,
-								 @Value("${trampoline.assetstore.provider.local.directory:./local-asset-store/}")
-										 String localStorageDirectory, AssetMetaDataRepository repository) {
+	public AssetStore assetStore(
+			@Value("${trampoline.assetstore.provider:local}") String providerType,
+			@Value("${trampoline.assetstore.provider.local.directory:./local-asset-store/}") String localStorageDirectory,
+			AssetMetaDataRepository repository) {
 		switch (providerType) {
-			case "local":
-				return new LocalAssetStore(localStorageDirectory, repository);
-			default:
-				return new LocalAssetStore(localStorageDirectory, repository);
+		case "local":
+			return new LocalAssetStore(localStorageDirectory, repository);
+		default:
+			return new LocalAssetStore(localStorageDirectory, repository);
 		}
 	}
 

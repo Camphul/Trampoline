@@ -29,7 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Spring AoP aspect to handle method invocations that have the {@link LogUserActivity} annotation.
+ * Spring AoP aspect to handle method invocations that have the {@link LogUserActivity}
+ * annotation.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
@@ -39,12 +40,17 @@ import java.util.Map;
 public class UserActivityLoggingAspect {
 
 	private final UserActivityHandler userActivityHandler;
+
 	private final TimeProvider timeProvider;
+
 	private final SpelExpressionParser expressionParser;
+
 	private final StandardEvaluationContext spelEvaluationContext;
+
 	private final Map<String, Expression> spelDescriptions;
 
-	public UserActivityLoggingAspect(UserActivityHandler userActivityHandler, TimeProvider timeProvider) {
+	public UserActivityLoggingAspect(UserActivityHandler userActivityHandler,
+			TimeProvider timeProvider) {
 		this.userActivityHandler = userActivityHandler;
 		this.timeProvider = timeProvider;
 		this.expressionParser = new SpelExpressionParser();
@@ -61,14 +67,15 @@ public class UserActivityLoggingAspect {
 	public Object logUserActivity(ProceedingJoinPoint joinPoint) throws Throwable {
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Method method = methodSignature.getMethod();
-		LogUserActivity logUserActivity = method.getDeclaredAnnotation(LogUserActivity.class);
+		LogUserActivity logUserActivity = method
+				.getDeclaredAnnotation(LogUserActivity.class);
 		User principal = getCurrentUser();
 		Object actedUpon = null;
 		Map<String, Object> argumentMap = new HashMap<>();
 
 		for (int i = 0; i < method.getParameters().length; i++) {
 			Parameter param = method.getParameters()[i];
-			if(param.isAnnotationPresent(ActingUpon.class)) {
+			if (param.isAnnotationPresent(ActingUpon.class)) {
 				actedUpon = joinPoint.getArgs()[i];
 			}
 			argumentMap.put(param.getName(), joinPoint.getArgs()[i]);
@@ -77,18 +84,21 @@ public class UserActivityLoggingAspect {
 		ActivityMethodInvocationResult result = runWrappedMethod(joinPoint);
 
 		String description = logUserActivity.value();
-		if(logUserActivity.spel()) {
+		if (logUserActivity.spel()) {
 			description = evaluateSpelDescription(description, argumentMap);
 		}
 
-		UserActivity userActivity = new UserActivity(result.getInvocationDetails(), principal, description, actedUpon);
+		UserActivity userActivity = new UserActivity(result.getInvocationDetails(),
+				principal, description, actedUpon);
 
 		try {
 			userActivityHandler.handleUserActivity(userActivity);
-		} finally {
-			if(result.getThrowable() != null) {
+		}
+		finally {
+			if (result.getThrowable() != null) {
 				throw result.getThrowable();
-			} else {
+			}
+			else {
 				return result.getResult();
 			}
 		}
@@ -96,25 +106,28 @@ public class UserActivityLoggingAspect {
 	}
 
 	/**
-	 * Evaluates description defined in {@link LogUserActivity}.
-	 * Uses a hashmap to prevent having to re-parse expressions.
-	 *
+	 * Evaluates description defined in {@link LogUserActivity}. Uses a hashmap to prevent
+	 * having to re-parse expressions.
 	 * @param description the SPeL expression.
 	 * @param methodArguments the arguments passed to the method we're intercepting.
 	 * @return the evaluated expression.
 	 */
-	private String evaluateSpelDescription(String description, Map<String,Object> methodArguments) {
+	private String evaluateSpelDescription(String description,
+			Map<String, Object> methodArguments) {
 		Expression expression;
-		if(spelDescriptions.containsKey(description)) {
+		if (spelDescriptions.containsKey(description)) {
 			expression = spelDescriptions.get(description);
-		} else {
+		}
+		else {
 			expression = expressionParser.parseExpression(description);
 			spelDescriptions.put(description, expression);
 		}
 
 		try {
-			return expression.getValue(spelEvaluationContext, methodArguments, String.class);
-		} catch (EvaluationException evaluationException) {
+			return expression.getValue(spelEvaluationContext, methodArguments,
+					String.class);
+		}
+		catch (EvaluationException evaluationException) {
 			return description;
 		}
 	}
@@ -125,11 +138,13 @@ public class UserActivityLoggingAspect {
 	 * @return a result containing our invocation results.
 	 * @throws Throwable when we dont want to log methods that throw exceptions.
 	 */
-	private ActivityMethodInvocationResult runWrappedMethod(ProceedingJoinPoint joinPoint) throws Throwable{
+	private ActivityMethodInvocationResult runWrappedMethod(ProceedingJoinPoint joinPoint)
+			throws Throwable {
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Method method = methodSignature.getMethod();
 		Class clazz = method.getDeclaringClass();
-		LogUserActivity logUserActivity = method.getDeclaredAnnotation(LogUserActivity.class);
+		LogUserActivity logUserActivity = method
+				.getDeclaredAnnotation(LogUserActivity.class);
 
 		long invocationStart = timeProvider.unix();
 		long invocationEnd;
@@ -137,24 +152,23 @@ public class UserActivityLoggingAspect {
 		Throwable throwable = null;
 		try {
 			returnValue = joinPoint.proceed();
-		} catch (Throwable ex) {
-			//Still throw if we're skipping them
-			if(!logUserActivity.logThrowables()) {
+		}
+		catch (Throwable ex) {
+			// Still throw if we're skipping them
+			if (!logUserActivity.logThrowables()) {
 				throw ex;
 			}
 			throwable = ex;
-		} finally {
+		}
+		finally {
 			invocationEnd = timeProvider.unix();
 		}
 		boolean exceptionThrown = throwable != null;
 		UserActivityInvocationDetails invocationDetails = new UserActivityInvocationDetails(
-				clazz.getName(),
-				method.getName(),
-				exceptionThrown,
-				invocationStart,
-				invocationEnd
-		);
-		return new ActivityMethodInvocationResult(invocationDetails, returnValue, throwable);
+				clazz.getName(), method.getName(), exceptionThrown, invocationStart,
+				invocationEnd);
+		return new ActivityMethodInvocationResult(invocationDetails, returnValue,
+				throwable);
 	}
 
 	/**
@@ -163,18 +177,18 @@ public class UserActivityLoggingAspect {
 	 */
 	private User getCurrentUser() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
-		if(securityContext == null) {
+		if (securityContext == null) {
 			throw new CurrentUserNotFoundException();
 		}
 		Authentication auth = securityContext.getAuthentication();
-		if(auth == null) {
+		if (auth == null) {
 			throw new CurrentUserNotFoundException();
 		}
 		Object principal = auth.getPrincipal();
-		if(!(principal instanceof User)) {
+		if (!(principal instanceof User)) {
 			throw new CurrentUserNotFoundException("Principal not of supported type.");
 		}
-		return (User)principal;
+		return (User) principal;
 	}
 
 }

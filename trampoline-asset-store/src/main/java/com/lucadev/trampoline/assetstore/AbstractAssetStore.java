@@ -28,4 +28,5 @@ public abstract class AbstractAssetStore implements AssetStore {
 	public Asset getAsset(UUID id) {
 		return getAsset(getAssetMetaData(id));
 	}
+
 }

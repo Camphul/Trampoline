@@ -12,8 +12,7 @@ public interface UserAuthenticationService {
 
 	/**
 	 * Is {@code password} the {@link User} password.
-	 *
-	 * @param user     the {@link User} to check on.
+	 * @param user the {@link User} to check on.
 	 * @param password the expected password.
 	 * @return if the password matches.
 	 */
@@ -21,8 +20,7 @@ public interface UserAuthenticationService {
 
 	/**
 	 * Change {@link User} password.
-	 *
-	 * @param user        user to change password on.
+	 * @param user user to change password on.
 	 * @param newPassword new password.
 	 * @return updated user.
 	 */
@@ -31,7 +29,6 @@ public interface UserAuthenticationService {
 	/**
 	 * Required checks to see if the user is not disable, locked, etc...<br>
 	 * Will throw runtime exceptions if disabled, expired, cred expired, locked.
-	 *
 	 * @param user the {@link User} to check against.
 	 */
 	void validateUserState(User user);

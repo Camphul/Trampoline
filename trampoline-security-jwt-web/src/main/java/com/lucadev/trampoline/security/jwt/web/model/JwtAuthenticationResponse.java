@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Response after sending an authentication request.
- * Contains the jwt token if the authentication attempt succeeded
+ * Response after sending an authentication request. Contains the jwt token if the
+ * authentication attempt succeeded
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 14-4-18

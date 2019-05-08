@@ -10,17 +10,20 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
-public class NOPAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
+public class NOPAuthorizationSchemeConfiguration
+		implements AuthorizationSchemeConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(NOPAuthorizationSchemeConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(NOPAuthorizationSchemeConfiguration.class);
 
 	/**
-	 * NOP implementation of {@link AuthorizationSchemeConfiguration#build(AuthorizationSchemeBuilder)}
-	 *
+	 * NOP implementation of
+	 * {@link AuthorizationSchemeConfiguration#build(AuthorizationSchemeBuilder)}
 	 * @param builder the {@link AuthorizationSchemeBuilder}
 	 */
 	@Override
 	public void build(AuthorizationSchemeBuilder builder) {
 		LOGGER.debug("No AuthorizationSchemeConfiguration has been defined. Skipping.");
 	}
+
 }

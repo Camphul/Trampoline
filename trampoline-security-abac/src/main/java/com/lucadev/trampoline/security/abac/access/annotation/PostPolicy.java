@@ -15,7 +15,6 @@ public @interface PostPolicy {
 
 	/**
 	 * The policy identifier which is used to ask permission.
-	 *
 	 * @return the policy rule action
 	 */
 	String value();

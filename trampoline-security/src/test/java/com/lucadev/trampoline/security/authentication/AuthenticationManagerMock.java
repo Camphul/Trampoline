@@ -12,7 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collections;
 
 /**
- * Fake/mocked {@link AuthenticationManager} to test the authentication services using them
+ * Fake/mocked {@link AuthenticationManager} to test the authentication services using
+ * them
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -21,10 +22,12 @@ import java.util.Collections;
 public class AuthenticationManagerMock implements AuthenticationManager {
 
 	private String acceptedUsername;
+
 	private String acceptedPassword;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException {
 		String username = authentication.getPrincipal() + "";
 		String password = authentication.getCredentials() + "";
 		if (acceptedUsername.equals(username) && acceptedPassword.equals(password)) {
@@ -37,4 +40,5 @@ public class AuthenticationManagerMock implements AuthenticationManager {
 		}
 		throw new BadCredentialsException("1000");
 	}
+
 }

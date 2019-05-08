@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(JwtConfigurationAdapter.class)
 public class JwtConfigurationAdapterAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigurationAdapterAutoConfiguration.class);
-
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JwtConfigurationAdapterAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean

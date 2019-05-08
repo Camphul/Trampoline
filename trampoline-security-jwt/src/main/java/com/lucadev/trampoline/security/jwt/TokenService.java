@@ -16,7 +16,6 @@ public interface TokenService {
 
 	/**
 	 * Create a new token
-	 *
 	 * @param user user to create token for.
 	 * @return jwt token.
 	 */
@@ -24,7 +23,6 @@ public interface TokenService {
 
 	/**
 	 * Refresh an existing token without any checks
-	 *
 	 * @param token jwt
 	 * @return refreshed jwt
 	 */
@@ -32,15 +30,14 @@ public interface TokenService {
 
 	/**
 	 * Get all token information
-	 *
 	 * @param token jwt string
 	 * @return jwt DTO representation.
 	 */
 	JwtPayload getTokenData(String token);
 
 	/**
-	 * Similar to {@link #getTokenData(String)} but this reads the request header instead of passing the raw token
-	 *
+	 * Similar to {@link #getTokenData(String)} but this reads the request header instead
+	 * of passing the raw token
 	 * @param request http req
 	 * @return jwt dto.
 	 */
@@ -48,24 +45,22 @@ public interface TokenService {
 
 	/**
 	 * Validate a token
-	 *
 	 * @param jwtPayload the data read from the token
-	 * @param user       the user to validate the data on
+	 * @param user the user to validate the data on
 	 * @return if the token is valid with the given user
 	 */
 	boolean isValidToken(JwtPayload jwtPayload, User user);
 
 	/**
 	 * Handle a request to refresh a token
-	 *
 	 * @param request http req
 	 * @return jwt token string.
 	 */
 	String refreshTokenFromRequest(HttpServletRequest request);
 
 	/**
-	 * Read the header containing our token and create an {@link Authentication} object from it.
-	 *
+	 * Read the header containing our token and create an {@link Authentication} object
+	 * from it.
 	 * @param request http req
 	 * @return auth object.
 	 */

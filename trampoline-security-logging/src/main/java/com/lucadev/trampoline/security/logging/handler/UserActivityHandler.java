@@ -12,7 +12,6 @@ public interface UserActivityHandler {
 
 	/**
 	 * Handle user activity advices.
-	 *
 	 * @param userActivity user activity that has been ran.
 	 */
 	void handleUserActivity(UserActivity userActivity);
