@@ -15,7 +15,6 @@ Please reference the following modules for documentation:
 - [trampoline-security-jwt-web](../trampoline-security-jwt-web)
 - [trampoline-security-logging](../trampoline-security-logging)
 - [trampoline-web](../trampoline-web)
-- [trampoline-web-rest](../trampoline-web-rest)
 
 ## Javadoc
 
@@ -28,7 +27,6 @@ Please reference the following modules for documentation:
 - [trampoline-security-jwt-web](https://lucadev.com/trampoline/docs/trampoline-security-jwt-web)
 - [trampoline-security-logging](https://lucadev.com/trampoline/docs/trampoline-security-logging)
 - [trampoline-web](https://lucadev.com/trampoline/docs/trampoline-web)
-- [trampoline-web-rest](https://lucadev.com/trampoline/docs/trampoline-web-rest)
 
 ## Configuration Values
 
@@ -46,9 +44,6 @@ Other properties being used are:
 - `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
 - `trampoline.security.authorization.schema.run.configuration`: should we run the `AuthorizationSchemaConfiguration`, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
-- `trampoline.security.jwt.signingAlgorithm`: algorithm used to sign, default is HS512
-- `trampoline.security.jwt.tokenHeader`: header containing token, default is Authorization
-- `trampoline.security.jwt.tokenHeaderPrefix`: Prefix before jwt, default is Bearer
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
 

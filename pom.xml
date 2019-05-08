@@ -27,9 +27,6 @@
         <module>trampoline-asset-store</module>
         <module>trampoline-asset-store-autoconfigure</module>
         <module>trampoline-asset-store-starter</module>
-		<module>trampoline-web-rest</module>
-		<module>trampoline-web-rest-autoconfigure</module>
-		<module>trampoline-web-rest-starter</module>
 		<module>trampoline-security-logging</module>
 		<module>trampoline-security-logging-autoconfigure</module>
 		<module>trampoline-security-logging-starter</module>
