@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(TrampolinePersistenceConfiguration.class)
 public class TrampolineDataAutoConfiguration {
 
-    /**
-     * Bean definition for persistence configuration.
-     *
-     * @return default persistence configuration.
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public TrampolinePersistenceConfiguration trampolineDataConfiguration() {
-        return new TrampolinePersistenceConfiguration();
-    }
+	/**
+	 * Bean definition for persistence configuration.
+	 *
+	 * @return default persistence configuration.
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public TrampolinePersistenceConfiguration trampolineDataConfiguration() {
+		return new TrampolinePersistenceConfiguration();
+	}
 
 }

@@ -23,21 +23,21 @@ import javax.persistence.*;
 @ToString
 public class BlogPostComment extends TrampolineEntity {
 
-    @Setter
+	@Setter
 	@ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blogpost_id")
-    private BlogPost blogPost;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "blogpost_id")
+	private BlogPost blogPost;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blogpost_comment_author")
-    private User author;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "blogpost_comment_author")
+	private User author;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+	@Column(name = "content", nullable = false)
+	private String content;
 
-    public BlogPostComment(User author, String content) {
-        this.author = author;
-        this.content = content;
-    }
+	public BlogPostComment(User author, String content) {
+		this.author = author;
+		this.content = content;
+	}
 }

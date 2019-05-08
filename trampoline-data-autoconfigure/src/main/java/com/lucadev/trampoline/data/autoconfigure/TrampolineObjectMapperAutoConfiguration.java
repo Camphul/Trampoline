@@ -15,16 +15,16 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnMissingBean(ObjectMapper.class)
 public class TrampolineObjectMapperAutoConfiguration {
 
-    /**
-     * Jackson {@link ObjectMapper} bean definition.
-     *
-     * @return {@link ObjectMapper} bean
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+	/**
+	 * Jackson {@link ObjectMapper} bean definition.
+	 *
+	 * @return {@link ObjectMapper} bean
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
 
 
 }

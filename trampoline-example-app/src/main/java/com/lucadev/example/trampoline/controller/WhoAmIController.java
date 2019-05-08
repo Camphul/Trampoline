@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class WhoAmIController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    /**
-     * Evaluate if principal(current user) has access to this mapping.
-     * Then return the current user or throw a {@link CurrentUserNotFoundException}
-     *
-     * @return whoami dto response.
-     */
-    @GetMapping("/whoami")
+	/**
+	 * Evaluate if principal(current user) has access to this mapping.
+	 * Then return the current user or throw a {@link CurrentUserNotFoundException}
+	 *
+	 * @return whoami dto response.
+	 */
+	@GetMapping("/whoami")
 	@PrePolicy("WHO_AM_I")
 	@LogUserActivity(value = "whoami", layer = ActivityLayer.CONTROLLER, resolver = WhoAmIUserActivityResolver.class)
-    public User whoami() {
-        return userService.currentUserOrThrow();
-    }
+	public User whoami() {
+		return userService.currentUserOrThrow();
+	}
 
 }

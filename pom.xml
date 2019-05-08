@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.lucadev.trampoline</groupId>
-    <artifactId>trampoline-parent</artifactId>
-    <version>20190507</version>
-    <modules>
+	<groupId>com.lucadev.trampoline</groupId>
+	<artifactId>trampoline-parent</artifactId>
+	<version>20190507</version>
+	<modules>
 		<module>trampoline-core</module>
 		<module>trampoline-core-autoconfigure</module>
 		<module>trampoline-core-starter</module>
-        <module>trampoline-data</module>
-        <module>trampoline-data-autoconfigure</module>
-        <module>trampoline-data-starter</module>
-        <module>trampoline-security</module>
-        <module>trampoline-security-autoconfigure</module>
-        <module>trampoline-security-starter</module>
-        <module>trampoline-security-jwt</module>
-        <module>trampoline-security-jwt-web</module>
-        <module>trampoline-security-jwt-autoconfigure</module>
-        <module>trampoline-security-jwt-starter</module>
-        <module>trampoline-starter</module>
-        <module>trampoline-security-abac</module>
-        <module>trampoline-security-abac-autoconfigure</module>
-        <module>trampoline-security-abac-starter</module>
-        <module>trampoline-asset-store</module>
-        <module>trampoline-asset-store-autoconfigure</module>
-        <module>trampoline-asset-store-starter</module>
+		<module>trampoline-data</module>
+		<module>trampoline-data-autoconfigure</module>
+		<module>trampoline-data-starter</module>
+		<module>trampoline-security</module>
+		<module>trampoline-security-autoconfigure</module>
+		<module>trampoline-security-starter</module>
+		<module>trampoline-security-jwt</module>
+		<module>trampoline-security-jwt-web</module>
+		<module>trampoline-security-jwt-autoconfigure</module>
+		<module>trampoline-security-jwt-starter</module>
+		<module>trampoline-starter</module>
+		<module>trampoline-security-abac</module>
+		<module>trampoline-security-abac-autoconfigure</module>
+		<module>trampoline-security-abac-starter</module>
+		<module>trampoline-asset-store</module>
+		<module>trampoline-asset-store-autoconfigure</module>
+		<module>trampoline-asset-store-starter</module>
 		<module>trampoline-security-logging</module>
 		<module>trampoline-security-logging-autoconfigure</module>
 		<module>trampoline-security-logging-starter</module>
@@ -35,88 +35,88 @@
 		<module>trampoline-web-starter</module>
 		<module>trampoline-data-web</module>
 	</modules>
-    <packaging>pom</packaging>
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
-        module
-    </description>
-    <url>https://github.com/Camphul/Trampoline</url>
+	<packaging>pom</packaging>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
+		module
+	</description>
+	<url>https://github.com/Camphul/Trampoline</url>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-        <javax.servlet.version>3.0.1</javax.servlet.version>
-        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-        <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
-        <maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
-        <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
-        <nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+		<javax.servlet.version>3.0.1</javax.servlet.version>
+		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
+		<maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
+		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
+		<nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
 		<lombok.plugin.version>1.18.0.0</lombok.plugin.version>
 		<delombok.output>/generated-sources/delombok</delombok.output>
 		<javadoc.source.version>8</javadoc.source.version>
 		<nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
 		<mapstruct.version>1.3.0.Final</mapstruct.version>
-    </properties>
+	</properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<!-- MapStruct is used to easily convert JPA entities to DTO's which are sent back to the client. -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-jdk8</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet.version}</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>Luca Camphuisen</name>
-            <email>luca@camphuisen.com</email>
-            <url>https://github.com/Camphul</url>
-            <organization>LucaDev</organization>
-            <organizationUrl>http://lucadev.com/</organizationUrl>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git:git://github.com/Camphul/Trampoline.git</connection>
-        <developerConnection>scm:git:ssh://github.com:Camphul/Trampoline.git</developerConnection>
-        <url>https://github.com/Camphul/Trampoline</url>
-    </scm>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Luca Camphuisen</name>
+			<email>luca@camphuisen.com</email>
+			<url>https://github.com/Camphul</url>
+			<organization>LucaDev</organization>
+			<organizationUrl>http://lucadev.com/</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/Camphul/Trampoline.git</connection>
+		<developerConnection>scm:git:ssh://github.com:Camphul/Trampoline.git</developerConnection>
+		<url>https://github.com/Camphul/Trampoline</url>
+	</scm>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -127,8 +127,8 @@
 			<url>https://lucadev.com/trampoline/docs/${project.version}</url>
 		</site>
 	</distributionManagement>
-    <build>
-        <plugins>
+	<build>
+		<plugins>
 			<plugin>
 				<!-- Delombok -->
 				<groupId>org.projectlombok</groupId>
@@ -148,14 +148,14 @@
 					</execution>
 				</executions>
 			</plugin>
-            <!-- maven compiler plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+			<!-- maven compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -172,22 +172,22 @@
 						<arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
 						<arg>-Amapstruct.defaultComponentModel=spring</arg>
 					</compilerArgs>
-                </configuration>
-            </plugin>
-            <!-- maven project source export plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				</configuration>
+			</plugin>
+			<!-- maven project source export plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- Surefire testing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -196,7 +196,7 @@
 					<useSystemClassLoader>false</useSystemClassLoader>
 				</configuration>
 			</plugin>
-            <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven.javadoc.plugin.version}</version>
@@ -212,7 +212,7 @@
 						</goals>
 					</execution>
 				</executions>
-            </plugin>
+			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -244,6 +244,6 @@
 					</execution>
 				</executions>
 			</plugin>
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 </project>

@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.AbacPermissionEvaluator;
-import com.lucadev.trampoline.security.abac.impl.TrampolineAbacPermissionEvaluator;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.impl.TrampolineAbacPermissionEvaluator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

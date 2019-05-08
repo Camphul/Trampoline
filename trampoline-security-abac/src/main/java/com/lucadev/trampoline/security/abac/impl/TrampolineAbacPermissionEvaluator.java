@@ -3,8 +3,6 @@ package com.lucadev.trampoline.security.abac.impl;
 import com.lucadev.trampoline.security.abac.AbstractAbacPermissionEvaluator;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 
@@ -38,7 +36,7 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
 		boolean allowed = policyEnforcement.check(user, targetDomainObject, permission, environment);
 
-		if(!allowed) {
+		if (!allowed) {
 			throw new AccessDeniedException("Principal is denied access to resource.");
 		}
 

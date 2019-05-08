@@ -32,7 +32,6 @@ public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Orde
 	}
 
 
-
 	@Override
 	public int getOrder() {
 		return 34;

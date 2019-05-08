@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimpleTrampolineEntityRepository extends TrampolineRepository<SimpleTrampolineEntity> {
 
-    SimpleTrampolineEntity findOneByPayload(String payload);
+	SimpleTrampolineEntity findOneByPayload(String payload);
 
 }

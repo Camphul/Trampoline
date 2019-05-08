@@ -22,55 +22,55 @@ import static org.junit.Assert.assertThat;
  */
 public class TimeProviderAutoConfigurationTest {
 
-    private AnnotationConfigApplicationContext context;
+	private AnnotationConfigApplicationContext context;
 
-    @Before
-    public void setUp() throws Exception {
-        context = new AnnotationConfigApplicationContext();
-    }
+	@Before
+	public void setUp() throws Exception {
+		context = new AnnotationConfigApplicationContext();
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        if (this.context != null) {
-            this.context.close();
-        }
-    }
+	@After
+	public void tearDown() throws Exception {
+		if (this.context != null) {
+			this.context.close();
+		}
+	}
 
-    @Test
-    public void registersSystemTimeProviderAutomatically() {
-        this.context.register(TimeProviderAutoConfiguration.class);
-        this.context.refresh();
-        TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-        assertThat(timeProvider, instanceOf(SystemTimeProvider.class));
-    }
+	@Test
+	public void registersSystemTimeProviderAutomatically() {
+		this.context.register(TimeProviderAutoConfiguration.class);
+		this.context.refresh();
+		TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
+		assertThat(timeProvider, instanceOf(SystemTimeProvider.class));
+	}
 
-    @Test
-    public void customTimeProviderBean() {
-        this.context.register(TimeProviderConfiguration.class, TimeProviderAutoConfiguration.class);
-        this.context.refresh();
-        TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-        assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
-        assertEquals(0L, timeProvider.unix());
-    }
+	@Test
+	public void customTimeProviderBean() {
+		this.context.register(TimeProviderConfiguration.class, TimeProviderAutoConfiguration.class);
+		this.context.refresh();
+		TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
+		assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
+		assertEquals(0L, timeProvider.unix());
+	}
 
-    /**
-     * Custom config to override default bean
-     */
-    @Configuration
-    protected static class TimeProviderConfiguration {
-        @Bean
-        public TimeProvider timeProvider() {
-            return new TimeProvider() {
-                @Override
-                public Date now() {
-                    return new Date(0);
-                }
+	/**
+	 * Custom config to override default bean
+	 */
+	@Configuration
+	protected static class TimeProviderConfiguration {
+		@Bean
+		public TimeProvider timeProvider() {
+			return new TimeProvider() {
+				@Override
+				public Date now() {
+					return new Date(0);
+				}
 
-                @Override
-                public long unix() {
-                    return 0;
-                }
-            };
-        }
-    }
+				@Override
+				public long unix() {
+					return 0;
+				}
+			};
+		}
+	}
 }

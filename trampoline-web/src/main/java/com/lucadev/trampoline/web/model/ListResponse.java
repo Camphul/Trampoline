@@ -23,6 +23,7 @@ public class ListResponse {
 
 	/**
 	 * Construct list response.
+	 *
 	 * @param list list to wrap.
 	 */
 	public ListResponse(List list) {

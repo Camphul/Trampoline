@@ -22,13 +22,13 @@ public class UserRegisterRequest {
 
 	@NotBlank
 	@NotNull
-	@Size(min=2, max=32)
-    private String username;
+	@Size(min = 2, max = 32)
+	private String username;
 	@Email
-    private String email;
+	private String email;
 	@NotBlank
 	@NotNull
-	@Size(min = 2, max=256)
-    private String password;
+	@Size(min = 2, max = 256)
+	private String password;
 
 }

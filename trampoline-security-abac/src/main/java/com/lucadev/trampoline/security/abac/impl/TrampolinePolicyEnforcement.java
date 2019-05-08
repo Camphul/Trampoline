@@ -2,9 +2,9 @@ package com.lucadev.trampoline.security.abac.impl;
 
 import com.lucadev.trampoline.security.abac.PolicyContainer;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContext;
 import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
-import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,8 +57,8 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 * Check if we have access to the given resource.
 	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
 	 *
-	 * @param resource   the resource which is being accessed
-	 * @param action the permission required by the action against the resource.
+	 * @param resource the resource which is being accessed
+	 * @param action   the permission required by the action against the resource.
 	 */
 	@Override
 	public void check(Object resource, Object action) {

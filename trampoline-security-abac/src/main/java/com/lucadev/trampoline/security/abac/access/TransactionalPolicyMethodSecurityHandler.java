@@ -10,10 +10,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.PermissionEvaluator;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +31,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 
 	/**
 	 * Get parameter value which is annotation with @PolicyResource or get null.
+	 *
 	 * @param joinPoint method invocation
 	 * @return parameter value or null
 	 */
@@ -44,7 +41,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 		for (int paramCounter = 0; paramCounter < method.getParameters().length; paramCounter++) {
 			Parameter parameter = method.getParameters()[paramCounter];
 			PolicyResource policyResource = parameter.getAnnotation(PolicyResource.class);
-			if(policyResource != null) {
+			if (policyResource != null) {
 				//policy resource found
 				return joinPoint.getArgs()[paramCounter];
 			}
@@ -79,7 +76,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 			throw throwable;
 		}
 		//If @PolicyResource is applied use that instead of return value.
-		if(policyResource != null) {
+		if (policyResource != null) {
 			policyEnforcement.check(returnValue, postPolicy.value());
 		} else {
 			policyEnforcement.check(returnValue, postPolicy.value());

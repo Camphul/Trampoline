@@ -17,15 +17,15 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(TimeProvider.class)
 public class TimeProviderAutoConfiguration {
 
-    /**
-     * Auto configured bean definition. In this case the {@link SystemTimeProvider}
-     *
-     * @return default {@link TimeProvider} bean.
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public TimeProvider timeProvider() {
-        return new SystemTimeProvider();
-    }
+	/**
+	 * Auto configured bean definition. In this case the {@link SystemTimeProvider}
+	 *
+	 * @return default {@link TimeProvider} bean.
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public TimeProvider timeProvider() {
+		return new SystemTimeProvider();
+	}
 
 }

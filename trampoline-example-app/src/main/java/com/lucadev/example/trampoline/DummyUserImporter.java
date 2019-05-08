@@ -30,67 +30,67 @@ import java.util.Date;
 @AllArgsConstructor
 public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);
 
-    private final RoleService roleService;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final Environment environment;
+	private final RoleService roleService;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final Environment environment;
 
-    @Override
-    @Transactional
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-    	if("update".equalsIgnoreCase(environment.getProperty("spring.jpa.hibernate.ddl-auto"))) {
+	@Override
+	@Transactional
+	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+		if ("update".equalsIgnoreCase(environment.getProperty("spring.jpa.hibernate.ddl-auto"))) {
 			LOGGER.info("Skipping user imports..");
 			return;
 		}
-        try {
-            //Required if you were to use abac on a handler level.
-            SecurityContext ctx = SecurityContextHolder.createEmptyContext();
-            SecurityContextHolder.setContext(ctx);
-            ctx.setAuthentication(new SystemAuthentication());
+		try {
+			//Required if you were to use abac on a handler level.
+			SecurityContext ctx = SecurityContextHolder.createEmptyContext();
+			SecurityContextHolder.setContext(ctx);
+			ctx.setAuthentication(new SystemAuthentication());
 
-            //Do what ever you want to do
-            LOGGER.info("Running dummy user imports");
-            Role userRole = roleService.find("ROLE_USER");
-            Role adminRole = roleService.find("ROLE_ADMIN");
-            User user = makeUser("user", userRole);
-            User user2 = makeUser("jeff", userRole);
-            User admin = makeUser("admin", userRole, adminRole);
-        } finally {
-            SecurityContextHolder.clearContext();
-        }
-    }
+			//Do what ever you want to do
+			LOGGER.info("Running dummy user imports");
+			Role userRole = roleService.find("ROLE_USER");
+			Role adminRole = roleService.find("ROLE_ADMIN");
+			User user = makeUser("user", userRole);
+			User user2 = makeUser("jeff", userRole);
+			User admin = makeUser("admin", userRole, adminRole);
+		} finally {
+			SecurityContextHolder.clearContext();
+		}
+	}
 
-    private User makeUser(String name, Role... roles) {
-        User user = new User();
-        user.setUsername(name);
-        user.setCredentialsExpired(false);
-        user.setEnabled(true);
-        user.setExpired(false);
-        user.setLastSeen(new Date());
-        user.setLastPasswordReset(new Date());
-        user.setLocked(false);
-        user.setEmail(name + "@example.com");
-        user.setPassword(passwordEncoder.encode("test"));
-        user = userRepository.save(user);
-        for (Role role : roles) {
-            user.getRoles().add(role);
-        }
-        user = userRepository.saveAndFlush(user);
-        if (user == null) {
-            LOGGER.error("Could not persist user!");
-        }
-        return user;
-    }
+	private User makeUser(String name, Role... roles) {
+		User user = new User();
+		user.setUsername(name);
+		user.setCredentialsExpired(false);
+		user.setEnabled(true);
+		user.setExpired(false);
+		user.setLastSeen(new Date());
+		user.setLastPasswordReset(new Date());
+		user.setLocked(false);
+		user.setEmail(name + "@example.com");
+		user.setPassword(passwordEncoder.encode("test"));
+		user = userRepository.save(user);
+		for (Role role : roles) {
+			user.getRoles().add(role);
+		}
+		user = userRepository.saveAndFlush(user);
+		if (user == null) {
+			LOGGER.error("Could not persist user!");
+		}
+		return user;
+	}
 
-    /**
-     * Defining load order since Trampoline has an inner listener for ContextRefreshed which is used to configure the authorization scheme.
-     *
-     * @return loading order.
-     */
-    @Override
-    public int getOrder() {
-        return 90;
-    }
+	/**
+	 * Defining load order since Trampoline has an inner listener for ContextRefreshed which is used to configure the authorization scheme.
+	 *
+	 * @return loading order.
+	 */
+	@Override
+	public int getOrder() {
+		return 90;
+	}
 }

@@ -32,145 +32,146 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BlogPostService {
 
-    private final BlogPostRepository repository;
-    private final BlogPostCommentRepository commentRepository;
+	private final BlogPostRepository repository;
+	private final BlogPostCommentRepository commentRepository;
 
-    /**
-     * Pageable find all
-     *
-     * @param pageable pagination.
-     * @return page of blogs.
-     */
-    @LogUserActivity(value = "find_blogposts", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public Page<BlogPost> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
-    }
+	/**
+	 * Pageable find all
+	 *
+	 * @param pageable pagination.
+	 * @return page of blogs.
+	 */
+	@LogUserActivity(value = "find_blogposts", category = "blogpost", layer = ActivityLayer.SERVICE)
+	public Page<BlogPost> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
 
-    /**
-     * Create a new blog post
-     *
-     * @param user    author of the blogpost
-     * @param request the request containing our blogpost information.
-     * @return the persisted {@link BlogPost}
-     */
+	/**
+	 * Create a new blog post
+	 *
+	 * @param user    author of the blogpost
+	 * @param request the request containing our blogpost information.
+	 * @return the persisted {@link BlogPost}
+	 */
 	@LogUserActivity(value = "create_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public BlogPost createBlogPost(User user, CreateBlogPostRequest request) {
-        BlogPost blogPost = new BlogPost();
-        blogPost.setAuthor(user);
-        blogPost.setTitle(request.getTitle());
-        blogPost.setContent(request.getContent());
+	public BlogPost createBlogPost(User user, CreateBlogPostRequest request) {
+		BlogPost blogPost = new BlogPost();
+		blogPost.setAuthor(user);
+		blogPost.setTitle(request.getTitle());
+		blogPost.setContent(request.getContent());
 
-        return repository.save(blogPost);
-    }
+		return repository.save(blogPost);
+	}
 
-    /**
-     * Find {@link BlogPost} by id.
-     *
-     * @param id the {@link UUID} of the {@link BlogPost} since we use {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
-     * @return resolved blogpost.
-     */
-    public Optional<BlogPost> findById(UUID id) {
-        return repository.findById(id);
-    }
+	/**
+	 * Find {@link BlogPost} by id.
+	 *
+	 * @param id the {@link UUID} of the {@link BlogPost} since we use {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
+	 * @return resolved blogpost.
+	 */
+	public Optional<BlogPost> findById(UUID id) {
+		return repository.findById(id);
+	}
 
-    /**
-     * Delete {@link BlogPost} by id.
-     *
-     * @param id blogpost id to delete.
-     */
+	/**
+	 * Delete {@link BlogPost} by id.
+	 *
+	 * @param id blogpost id to delete.
+	 */
 	@LogUserActivity(value = "delete_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public void deleteById(UUID id) {
-        repository.deleteById(id);
-    }
+	public void deleteById(UUID id) {
+		repository.deleteById(id);
+	}
 
-    /**
-     * Update {@link BlogPost}.
-     *
-     * @param blogPost the blogpost to update.
-     * @return updated blogpost.
-     */
+	/**
+	 * Update {@link BlogPost}.
+	 *
+	 * @param blogPost the blogpost to update.
+	 * @return updated blogpost.
+	 */
 	@LogUserActivity(value = "update_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public BlogPost update(BlogPost blogPost) {
-        return repository.save(blogPost);
-    }
+	public BlogPost update(BlogPost blogPost) {
+		return repository.save(blogPost);
+	}
 
 	/**
 	 * Add a comment
-	 * @param author the author of the comment.
+	 *
+	 * @param author   the author of the comment.
 	 * @param blogPost the blogpost to put it on.
-	 * @param request the comment dto.
+	 * @param request  the comment dto.
 	 * @return the created comment.
 	 */
-    @Transactional
+	@Transactional
 	@LogUserActivity(value = "add_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
-        BlogPostComment comment = new BlogPostComment(author, request.getContent());
-        comment = commentRepository.save(comment);
+	public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
+		BlogPostComment comment = new BlogPostComment(author, request.getContent());
+		comment = commentRepository.save(comment);
 
-        comment.setBlogPost(blogPost);
-        blogPost.getComments().add(comment);
-        repository.save(blogPost);
-        return comment;
-    }
+		comment.setBlogPost(blogPost);
+		blogPost.getComments().add(comment);
+		repository.save(blogPost);
+		return comment;
+	}
 
-    /**
-     * Find pageable comments
-     *
-     * @param blogPost blogpost to find comments on.
-     * @param pageable pagination.
-     * @return page of blog comments.
-     */
+	/**
+	 * Find pageable comments
+	 *
+	 * @param blogPost blogpost to find comments on.
+	 * @param pageable pagination.
+	 * @return page of blog comments.
+	 */
 	@LogUserActivity(value = "find_blogpost_comments", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
-        return commentRepository.findAllByBlogPost(blogPost, pageable);
-    }
+	public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
+		return commentRepository.findAllByBlogPost(blogPost, pageable);
+	}
 
-    /**
-     * Find comment by id
-     *
-     * @param commentId comment id.
-     * @return resolved comment.
-     */
+	/**
+	 * Find comment by id
+	 *
+	 * @param commentId comment id.
+	 * @return resolved comment.
+	 */
 	@LogUserActivity(value = "find_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public Optional<BlogPostComment> findCommentById(UUID commentId) {
-        return commentRepository.findById(commentId);
-    }
+	public Optional<BlogPostComment> findCommentById(UUID commentId) {
+		return commentRepository.findById(commentId);
+	}
 
-    /**
-     * Delete comment
-     *
-     * @param commentId comment id to delete.
-     */
+	/**
+	 * Delete comment
+	 *
+	 * @param commentId comment id to delete.
+	 */
 	@LogUserActivity(value = "delete_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public void deleteCommentById(UUID commentId) {
-        commentRepository.deleteById(commentId);
-    }
+	public void deleteCommentById(UUID commentId) {
+		commentRepository.deleteById(commentId);
+	}
 
-    /**
-     * Update comment
-     *
-     * @param comment comment to update.
-     */
+	/**
+	 * Update comment
+	 *
+	 * @param comment comment to update.
+	 */
 	@LogUserActivity(value = "update_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public void updateComment(BlogPostComment comment) {
-        commentRepository.save(comment);
-    }
+	public void updateComment(BlogPostComment comment) {
+		commentRepository.save(comment);
+	}
 
-    /**
-     * Removes a comment
-     *
+	/**
+	 * Removes a comment
+	 *
 	 * @param blogPost blogpost
-     * @param comment comment to remove from blogpost.
-     */
-    @Transactional
+	 * @param comment  comment to remove from blogpost.
+	 */
+	@Transactional
 	@LogUserActivity(value = "delete_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
-    public void removeComment(BlogPost blogPost, BlogPostComment comment) {
-        //Unlink relations
-        comment.setBlogPost(null);
-        blogPost.getComments().remove(comment);
-        //Save blogpost
-        update(blogPost);
-        //Now it's save to delete
-        commentRepository.delete(comment);
-    }
+	public void removeComment(BlogPost blogPost, BlogPostComment comment) {
+		//Unlink relations
+		comment.setBlogPost(null);
+		blogPost.getComments().remove(comment);
+		//Save blogpost
+		update(blogPost);
+		//Now it's save to delete
+		commentRepository.delete(comment);
+	}
 }

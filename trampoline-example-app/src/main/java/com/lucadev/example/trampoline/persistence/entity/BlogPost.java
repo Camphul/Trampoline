@@ -24,20 +24,20 @@ import java.util.Collection;
 @ToString
 public class BlogPost extends TrampolineEntity {
 
-    //The user who persisted this blogpost.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blogpost_author")
-    private User author;
+	//The user who persisted this blogpost.
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "blogpost_author")
+	private User author;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+	@Column(name = "title", nullable = false)
+	private String title;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+	@Column(name = "content", nullable = false)
+	private String content;
 
-    //A blogpost may have 0 or more comments.
-    @OneToMany(
-            orphanRemoval = true
-    )
-    private Collection<BlogPostComment> comments = new ArrayList<>();
+	//A blogpost may have 0 or more comments.
+	@OneToMany(
+			orphanRemoval = true
+	)
+	private Collection<BlogPostComment> comments = new ArrayList<>();
 }

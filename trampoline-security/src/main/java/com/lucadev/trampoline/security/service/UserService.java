@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.service;
 
-import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

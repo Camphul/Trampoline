@@ -1,9 +1,9 @@
 package com.lucadev.trampoline.security.abac.autoconfigure;
 
-import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
 import com.lucadev.trampoline.security.abac.PolicyContainer;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.abac.impl.TrampolinePolicyEnforcement;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

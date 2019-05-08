@@ -19,12 +19,14 @@ public @interface FindById {
 
 	/**
 	 * Path variable id.
+	 *
 	 * @return requestmapping path variable.
 	 */
 	String value() default "";
 
 	/**
 	 * If we are allowed to return null.
+	 *
 	 * @return when true it will throw a resource not found exception if the entity could not be found.
 	 */
 	boolean required() default true;

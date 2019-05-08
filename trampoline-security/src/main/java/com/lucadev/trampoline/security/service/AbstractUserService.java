@@ -1,14 +1,13 @@
 package com.lucadev.trampoline.security.service;
 
-import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
+import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

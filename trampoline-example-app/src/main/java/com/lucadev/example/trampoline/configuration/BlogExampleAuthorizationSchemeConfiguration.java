@@ -17,24 +17,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BlogExampleAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
 
-    /**
-     * Build the authorization scheme
-     *
-     * @param builder please see {@link AuthorizationSchemeBuilder} for more information.
-     */
-    @Override
-    public void build(AuthorizationSchemeBuilder builder) {
-        //Wrap creation inside system authentication(you most likely wont need this for this purpose).
-        builder.wrapSystemAuthentication((wrappedBuilder) ->
-                //Create user role
-                wrappedBuilder.createRole("ROLE_USER").withPrivileges("GET_WHOAMI", "GET_PING_PROTECTED").buildAnd()
-                        //Create admin role
-                        .createRole("ROLE_ADMIN").withPrivileges("MANAGE_USERS").buildAnd()
-                        //Only do the following when dev profile is enabled
-                        .forProfile("dev", (devBuilder) ->
-                                //Add developer role
-                                devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()
-                        )
-        );
-    }
+	/**
+	 * Build the authorization scheme
+	 *
+	 * @param builder please see {@link AuthorizationSchemeBuilder} for more information.
+	 */
+	@Override
+	public void build(AuthorizationSchemeBuilder builder) {
+		//Wrap creation inside system authentication(you most likely wont need this for this purpose).
+		builder.wrapSystemAuthentication((wrappedBuilder) ->
+				//Create user role
+				wrappedBuilder.createRole("ROLE_USER").withPrivileges("GET_WHOAMI", "GET_PING_PROTECTED").buildAnd()
+						//Create admin role
+						.createRole("ROLE_ADMIN").withPrivileges("MANAGE_USERS").buildAnd()
+						//Only do the following when dev profile is enabled
+						.forProfile("dev", (devBuilder) ->
+								//Add developer role
+								devBuilder.createRole("ROLE_DEVELOPER").withPrivilege("DEVELOPER_ACCESS").buildAnd()
+						)
+		);
+	}
 }

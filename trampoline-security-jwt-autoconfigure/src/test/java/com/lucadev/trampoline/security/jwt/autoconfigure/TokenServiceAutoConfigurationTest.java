@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

@@ -15,26 +15,26 @@ import static org.junit.Assert.assertThat;
  */
 public class TrampolineDataAutoConfigurationTest {
 
-    private AnnotationConfigApplicationContext context;
+	private AnnotationConfigApplicationContext context;
 
-    @Before
-    public void setUp() throws Exception {
-        context = new AnnotationConfigApplicationContext();
-    }
+	@Before
+	public void setUp() throws Exception {
+		context = new AnnotationConfigApplicationContext();
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        if (this.context != null) {
-            this.context.close();
-        }
-    }
+	@After
+	public void tearDown() throws Exception {
+		if (this.context != null) {
+			this.context.close();
+		}
+	}
 
-    @Test
-    public void registersTrampolineDataConfigurationAutomatically() {
-        this.context.register(TrampolineDataAutoConfiguration.class);
-        this.context.refresh();
-        TrampolinePersistenceConfiguration config = this.context.getBean(TrampolinePersistenceConfiguration.class);
-        assertThat(config, instanceOf(TrampolinePersistenceConfiguration.class));
-    }
+	@Test
+	public void registersTrampolineDataConfigurationAutomatically() {
+		this.context.register(TrampolineDataAutoConfiguration.class);
+		this.context.refresh();
+		TrampolinePersistenceConfiguration config = this.context.getBean(TrampolinePersistenceConfiguration.class);
+		assertThat(config, instanceOf(TrampolinePersistenceConfiguration.class));
+	}
 
 }

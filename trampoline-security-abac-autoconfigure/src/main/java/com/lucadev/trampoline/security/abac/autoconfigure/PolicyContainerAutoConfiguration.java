@@ -1,9 +1,9 @@
 package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.PolicyContainer;
-import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
 import com.lucadev.trampoline.security.abac.impl.JpaPolicyContainer;
 import com.lucadev.trampoline.security.abac.impl.JsonFilePolicyContainer;
+import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

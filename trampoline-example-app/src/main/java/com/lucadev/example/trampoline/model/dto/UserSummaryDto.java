@@ -16,12 +16,12 @@ import java.util.UUID;
 @ToString
 public class UserSummaryDto {
 
-    private final UUID id;
-    private final String username;
+	private final UUID id;
+	private final String username;
 
-    public UserSummaryDto(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-    }
+	public UserSummaryDto(User user) {
+		this.id = user.getId();
+		this.username = user.getUsername();
+	}
 
 }

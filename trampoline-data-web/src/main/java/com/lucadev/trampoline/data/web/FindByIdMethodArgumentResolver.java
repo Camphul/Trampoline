@@ -33,18 +33,18 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		FindById findAnnotation = parameter.getParameterAnnotation(FindById.class);
 
 		//Only work when this annotation is present.
-		if(findAnnotation == null) {
+		if (findAnnotation == null) {
 			return false;
 		}
 
 		Class paramType = parameter.getParameterType();
 		//Require @Entity annotation
-		if(!paramType.isAnnotationPresent(Entity.class)) {
+		if (!paramType.isAnnotationPresent(Entity.class)) {
 			return false;
 		}
 
 		//Require superclass to be TrampolineEntity due to UUID id.
-		if(!TrampolineEntity.class.isAssignableFrom(paramType)) {
+		if (!TrampolineEntity.class.isAssignableFrom(paramType)) {
 			return false;
 		}
 
@@ -69,7 +69,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		UUID id = UUID.fromString(idString);
 		Object entity = entityManager.find(paramType, id);
 
-		if(entity == null && findAnnotation.required()) {
+		if (entity == null && findAnnotation.required()) {
 			throw new ResourceNotFoundException("Could not find " + paramType.getSimpleName() + " with id: " + id);
 		}
 		return entity;
@@ -78,7 +78,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 	public String getPathVariableName(MethodParameter parameter, FindById annotation) {
 		String name = annotation.value();
 
-		if(name == null || name.isEmpty()) {
+		if (name == null || name.isEmpty()) {
 			name = parameter.getParameterName();
 		}
 

@@ -17,14 +17,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TrampolineApplication {
 
-    /*
-     * Added to automatically import some dummy users into the project.
-     */
-    @Autowired
-    private DummyUserImporter dummyUserImporter;
+	/*
+	 * Added to automatically import some dummy users into the project.
+	 */
+	@Autowired
+	private DummyUserImporter dummyUserImporter;
 
-    public static void main(String[] args) {
-        SpringApplication.run(TrampolineApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(TrampolineApplication.class, args);
+	}
 
 }

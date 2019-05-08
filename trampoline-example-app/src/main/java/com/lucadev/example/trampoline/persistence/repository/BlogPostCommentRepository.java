@@ -17,6 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogPostCommentRepository extends TrampolineRepository<BlogPostComment> {
 
-    Page<BlogPostComment> findAllByBlogPost(BlogPost blogPost, Pageable pageable);
+	Page<BlogPostComment> findAllByBlogPost(BlogPost blogPost, Pageable pageable);
 
 }
