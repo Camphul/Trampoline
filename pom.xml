@@ -170,7 +170,6 @@
 						<inherited>true</inherited>
 						<configuration>
 							<configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>
-							<suppressionsLocation>checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
 							<includeTestSourceDirectory>true</includeTestSourceDirectory>
 						</configuration>
 						<goals>
