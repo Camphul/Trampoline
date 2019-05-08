@@ -1,8 +1,8 @@
-package com.lucadev.trampoline.security.abac.impl;
+package com.lucadev.trampoline.security.abac.policy.impl;
 
-import com.lucadev.trampoline.security.abac.PolicyContainer;
-import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
-import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
+import com.lucadev.trampoline.security.abac.policy.PolicyDefinition;
+import com.lucadev.trampoline.security.abac.policy.PolicyRule;
+import com.lucadev.trampoline.security.abac.policy.PolicyRuleRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +12,16 @@ import org.springframework.cache.annotation.Cacheable;
 import java.util.List;
 
 /**
- * A {@link PolicyContainer} which persists {@link PolicyRule} through JPA.
+ * A {@link PolicyDefinition} which persists {@link PolicyRule} through JPA.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
 @AllArgsConstructor
-public class JpaPolicyContainer implements PolicyContainer {
+public class JpaPolicyDefinition implements PolicyDefinition {
 
 	public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
-	private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyContainer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyDefinition.class);
 	private final PolicyRuleRepository policyRuleRepository;
 
 	/**
@@ -30,14 +30,14 @@ public class JpaPolicyContainer implements PolicyContainer {
 	 * @param repository the repository to use.
 	 * @param parent     the parent policy definition, null is accepted.
 	 */
-	public JpaPolicyContainer(PolicyRuleRepository repository, PolicyContainer parent) {
+	public JpaPolicyDefinition(PolicyRuleRepository repository, PolicyDefinition parent) {
 		this(repository);
 		if (parent != null) {
 			importPolicyRules(parent);
 		}
 	}
 
-	private void importPolicyRules(PolicyContainer parent) {
+	private void importPolicyRules(PolicyDefinition parent) {
 		LOGGER.info("Importing policy rules...");
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 

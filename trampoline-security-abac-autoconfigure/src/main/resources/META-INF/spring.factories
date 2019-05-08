@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.lucadev.trampoline.security.abac.autoconfigure.PolicyContainerAutoConfiguration,\
+com.lucadev.trampoline.security.abac.autoconfigure.PolicyDefinitionAutoConfiguration,\
 com.lucadev.trampoline.security.abac.autoconfigure.PolicyEnforcementAutoConfiguration,\
 com.lucadev.trampoline.security.abac.autoconfigure.SecurityAccessContextFactoryAutoConfiguration,\
 com.lucadev.trampoline.security.abac.autoconfigure.AbacPermissionEvaluatorAutoConfiguration

@@ -1,7 +1,6 @@
-package com.lucadev.trampoline.security.abac.persistence.repository;
+package com.lucadev.trampoline.security.abac.policy;
 
 import com.lucadev.trampoline.data.repository.TrampolineRepository;
-import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import org.springframework.stereotype.Repository;
 
 /**
