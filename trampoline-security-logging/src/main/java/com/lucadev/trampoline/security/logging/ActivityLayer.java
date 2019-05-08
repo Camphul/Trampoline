@@ -18,17 +18,7 @@ public enum ActivityLayer {
 	SERVICE,
 
 	/**
-	 * Filter layer
-	 */
-	FILTER,
-
-	/**
 	 * Other, maybe security, etc...
 	 */
-	OTHER,
-
-	/**
-	 * Not configured.
-	 */
-	UNDEFINED
+	OTHER
 }

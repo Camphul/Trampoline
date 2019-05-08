@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation will trigger a {@link com.lucadev.trampoline.security.logging.handler.UserActivityHandler}
+ * This annotation will log activity to a handler,
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
@@ -16,38 +16,23 @@ import java.lang.annotation.Target;
 public @interface LogUserActivity {
 
 	/**
-	 * Log action identifier
+	 * Activity description.
 	 *
-	 * @return activity identifier.
+	 * @return string representation of the activity that has executed.
 	 */
 	String value();
 
 	/**
-	 * Category to assign the action to
-	 *
-	 * @return action category.
+	 * The {@link #value()} is a SPeL expression which needs to be evaluated.
+	 * @return false by default. To use spel expressions set this to true.
 	 */
-	String category() default "";
+	boolean spel() default false;
 
 	/**
-	 * The layer where the activity was ran.
-	 *
-	 * @return activity layer.
+	 * Should we still consider logging an activity when the method we log throws a throwable(exception?)
+	 * @return true by default. To ignore methods that threw an exception set this to false.
 	 */
-	ActivityLayer layer() default ActivityLayer.UNDEFINED;
+	boolean logThrowables() default true;
 
-	/**
-	 * Description to get a readable logging activity string.
-	 *
-	 * @return resolver for the message.
-	 */
-	String description() default "'No description available'";
-
-	/**
-	 * Should we parse the description with SPeL?
-	 *
-	 * @return use SPeL parser for parsing description.
-	 */
-	boolean spelDescription() default true;
 
 }

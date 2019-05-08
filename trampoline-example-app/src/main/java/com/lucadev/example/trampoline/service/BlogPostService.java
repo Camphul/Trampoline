@@ -6,8 +6,6 @@ import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.persistence.entity.BlogPostComment;
 import com.lucadev.example.trampoline.persistence.repository.BlogPostCommentRepository;
 import com.lucadev.example.trampoline.persistence.repository.BlogPostRepository;
-import com.lucadev.trampoline.security.logging.ActivityLayer;
-import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,7 +39,6 @@ public class BlogPostService {
 	 * @param pageable pagination.
 	 * @return page of blogs.
 	 */
-	@LogUserActivity(value = "find_blogposts", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public Page<BlogPost> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
@@ -53,7 +50,6 @@ public class BlogPostService {
 	 * @param request the request containing our blogpost information.
 	 * @return the persisted {@link BlogPost}
 	 */
-	@LogUserActivity(value = "create_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public BlogPost createBlogPost(User user, CreateBlogPostRequest request) {
 		BlogPost blogPost = new BlogPost();
 		blogPost.setAuthor(user);
@@ -78,7 +74,6 @@ public class BlogPostService {
 	 *
 	 * @param id blogpost id to delete.
 	 */
-	@LogUserActivity(value = "delete_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public void deleteById(UUID id) {
 		repository.deleteById(id);
 	}
@@ -89,7 +84,6 @@ public class BlogPostService {
 	 * @param blogPost the blogpost to update.
 	 * @return updated blogpost.
 	 */
-	@LogUserActivity(value = "update_blogpost", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public BlogPost update(BlogPost blogPost) {
 		return repository.save(blogPost);
 	}
@@ -103,7 +97,6 @@ public class BlogPostService {
 	 * @return the created comment.
 	 */
 	@Transactional
-	@LogUserActivity(value = "add_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public BlogPostComment addComment(User author, BlogPost blogPost, CreateBlogPostCommentRequest request) {
 		BlogPostComment comment = new BlogPostComment(author, request.getContent());
 		comment = commentRepository.save(comment);
@@ -121,7 +114,6 @@ public class BlogPostService {
 	 * @param pageable pagination.
 	 * @return page of blog comments.
 	 */
-	@LogUserActivity(value = "find_blogpost_comments", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
 		return commentRepository.findAllByBlogPost(blogPost, pageable);
 	}
@@ -132,7 +124,6 @@ public class BlogPostService {
 	 * @param commentId comment id.
 	 * @return resolved comment.
 	 */
-	@LogUserActivity(value = "find_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public Optional<BlogPostComment> findCommentById(UUID commentId) {
 		return commentRepository.findById(commentId);
 	}
@@ -142,7 +133,6 @@ public class BlogPostService {
 	 *
 	 * @param commentId comment id to delete.
 	 */
-	@LogUserActivity(value = "delete_blogpost_comment_by_id", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public void deleteCommentById(UUID commentId) {
 		commentRepository.deleteById(commentId);
 	}
@@ -152,7 +142,6 @@ public class BlogPostService {
 	 *
 	 * @param comment comment to update.
 	 */
-	@LogUserActivity(value = "update_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public void updateComment(BlogPostComment comment) {
 		commentRepository.save(comment);
 	}
@@ -164,7 +153,6 @@ public class BlogPostService {
 	 * @param comment  comment to remove from blogpost.
 	 */
 	@Transactional
-	@LogUserActivity(value = "delete_blogpost_comment", category = "blogpost", layer = ActivityLayer.SERVICE)
 	public void removeComment(BlogPost blogPost, BlogPostComment comment) {
 		//Unlink relations
 		comment.setBlogPost(null);
