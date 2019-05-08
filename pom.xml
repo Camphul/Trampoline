@@ -13,6 +13,7 @@
 		<module>trampoline-data</module>
 		<module>trampoline-data-autoconfigure</module>
 		<module>trampoline-data-starter</module>
+		<module>trampoline-data-web</module>
 		<module>trampoline-security</module>
 		<module>trampoline-security-autoconfigure</module>
 		<module>trampoline-security-starter</module>
@@ -33,7 +34,6 @@
 		<module>trampoline-web</module>
 		<module>trampoline-web-autoconfigure</module>
 		<module>trampoline-web-starter</module>
-		<module>trampoline-data-web</module>
 	</modules>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>

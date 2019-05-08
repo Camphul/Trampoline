@@ -22,6 +22,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
@@ -37,6 +38,7 @@ public class TokenServiceAutoConfigurationTest {
 	@Before
 	public void setUp() throws Exception {
 		jwtSecurityProperties = mock(JwtSecurityProperties.class);
+		when(jwtSecurityProperties.getSecret()).thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
 		userService = mock(UserService.class);
 		jwtConfiguration = mock(JwtConfigurationAdapter.class);

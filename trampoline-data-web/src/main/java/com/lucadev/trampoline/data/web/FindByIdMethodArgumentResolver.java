@@ -28,6 +28,11 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 
 	private final EntityManager entityManager;
 
+	/**
+	 * Check if parameter is valid
+	 * @param parameter the method parameter
+	 * @return if it's a trampoline entity with @Entity
+	 */
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		FindById findAnnotation = parameter.getParameterAnnotation(FindById.class);
@@ -51,12 +56,20 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		return true;
 	}
 
+	/**
+	 * Fetch entity by id
+	 * @param parameter method param
+	 * @param modelAndViewContainer unused mv container.
+	 * @param request the request
+	 * @param webDataBinderFactory databinder.
+	 * @return fetched entity
+	 * @throws Exception if we fail to fetch the entity
+	 */
 	@Override
 	public Object resolveArgument(MethodParameter parameter,
 								  ModelAndViewContainer modelAndViewContainer,
 								  NativeWebRequest request,
 								  WebDataBinderFactory webDataBinderFactory) throws Exception {
-
 		FindById findAnnotation = parameter.getParameterAnnotation(FindById.class);
 		Class paramType = parameter.getParameterType();
 		String name = getPathVariableName(parameter, findAnnotation);
@@ -75,6 +88,12 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		return entity;
 	}
 
+	/**
+	 * Get the name of the path variable to locate the id at.
+	 * @param parameter method param
+	 * @param annotation the annotation ontop of the parameter.
+	 * @return name of the path variable
+	 */
 	public String getPathVariableName(MethodParameter parameter, FindById annotation) {
 		String name = annotation.value();
 

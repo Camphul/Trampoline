@@ -8,7 +8,9 @@ import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFa
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.EvaluationException;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,14 +61,27 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 *
 	 * @param resource the resource which is being accessed
 	 * @param action   the permission required by the action against the resource.
+	 * @param environment the current context in which the action is taking place
+	 */
+	@Override
+	public void check(Object resource, Object action, Object environment) {
+		Authentication auth = authenticationContext().orElseThrow(() -> new AccessDeniedException("Not authenticated."));
+
+		if (!check(auth.getPrincipal(), resource, action, environment)) {
+			throw new AccessDeniedException("Principal has no access to resource.");
+		}
+	}
+
+	/**
+	 * Check if we have access to the given resource.
+	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
+	 *
+	 * @param resource the resource which is being accessed
+	 * @param action   the permission required by the action against the resource.
 	 */
 	@Override
 	public void check(Object resource, Object action) {
-		Authentication auth = authenticationContext().orElseThrow(() -> new AccessDeniedException("Not authenticated."));
-
-		if (!check(auth.getPrincipal(), resource, action, environmentContext())) {
-			throw new AccessDeniedException("Principal has no access to resource.");
-		}
+		check(resource, action, environmentContext());
 	}
 
 	/**
@@ -123,9 +138,11 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 * @return if the check passed.
 	 */
 	private boolean checkRules(List<PolicyRule> matchedRules, SecurityAccessContext ctx) {
+		StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
+		evaluationContext.addPropertyAccessor(new MapAccessor());
 		for (PolicyRule rule : matchedRules) {
 			try {
-				if (rule.getCondition().getValue(ctx, Boolean.class)) {
+				if (rule.getCondition().getValue(evaluationContext, ctx, Boolean.class)) {
 					return true;
 				}
 			} catch (EvaluationException ex) {

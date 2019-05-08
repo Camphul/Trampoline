@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Transactional implementation of {@link PolicyMethodSecurityHandler} used to rollback transactions when unauthorized.
@@ -55,8 +57,17 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 
 		PrePolicy prePolicy = method.getAnnotation(PrePolicy.class);
 		Object resource = getPolicyResource(joinPoint);
+		Map<String,Object> env = createEnvironment(joinPoint.getArgs(), method);
+		policyEnforcement.check(resource, prePolicy.value(), env);
+	}
 
-		policyEnforcement.check(resource, prePolicy.value());
+	private Map<String, Object> createEnvironment(Object[] args, Method method) {
+		Map<String, Object> environment = new HashMap<>();
+		for (int paramCount = 0; paramCount < method.getParameters().length; paramCount++) {
+			Parameter parameter = method.getParameters()[paramCount];
+			environment.put(parameter.getName(), args[paramCount]);
+		}
+		return environment;
 	}
 
 	@Transactional
@@ -75,11 +86,13 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 			LOG.error("PostPolicy proxy received throwable.", throwable);
 			throw throwable;
 		}
+		Map<String,Object> env = createEnvironment(joinPoint.getArgs(), method);
+
 		//If @PolicyResource is applied use that instead of return value.
 		if (policyResource != null) {
-			policyEnforcement.check(returnValue, postPolicy.value());
+			policyEnforcement.check(policyResource, postPolicy.value(), env);
 		} else {
-			policyEnforcement.check(returnValue, postPolicy.value());
+			policyEnforcement.check(returnValue, postPolicy.value(), env);
 		}
 		return returnValue;
 	}
