@@ -28,8 +28,8 @@ public interface PolicyEnforcement {
 	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
 	 * This requires the security context to be available.
 	 *
-	 * @param resource the resource which is being accessed
-	 * @param action   the permission required by the action against the resource.
+	 * @param resource    the resource which is being accessed
+	 * @param action      the permission required by the action against the resource.
 	 * @param environment the current context in which the action is taking place
 	 */
 	void check(Object resource, Object action, Object environment);

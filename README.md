@@ -10,18 +10,14 @@ The defaults are based off of my requirements(Camphul) and may not fit your need
 
 Please read the documentation for a full list of features. I'll try to summarize them here:
 
-- Bunch of default response POJO's(`SuccessResponse`, `MessageResponse`, etc..)
-- Extension of Spring Data which has a base entity with auditing enabled(date created/updated), a `UUID` as `id`
-- Default Spring Security implementation with a `UserDetails` implementation which is persisted through JPA
-- JWT security starter which extends `trampoline-security` to add JWT security without requiring you to write any code.
-- Attribute based access control using Spring Expression Language to provide row-level security(example: a user may only delete a blogpost if he's the owner of that blogpost)
-- Log user activity by adding a single annotation above a method(achieved using Spring AoP). Write your own activity handler or just use the default log output implementation.
-- Better exception handling for REST(better response for validation exceptions and whatnot)
-
-## Roadmap
-
-I want to refactor most of the code for the next release 20190507.
-Please see [ROADMAP.md](/ROADMAP.md)
+- Prewritten POJO/DTOs
+- Databased backed spring security implementation
+- Base entity with auditing and UUID id's
+- Attribute based access control using SPeL and custom authorize annotations such as `@PrePolicy`, `@PostPolicy` `@PolicyResource`
+- Map path variables directly to entities using `@FindById`
+- Easily setup roles
+- Implement JWT auth without any code
+- Lots more to make everything easier
 
 ## Getting started
 Please read the [docs](/docs/README.md) for more information.

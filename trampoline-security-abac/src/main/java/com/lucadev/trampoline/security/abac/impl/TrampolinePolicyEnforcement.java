@@ -59,8 +59,8 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 * Check if we have access to the given resource.
 	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
 	 *
-	 * @param resource the resource which is being accessed
-	 * @param action   the permission required by the action against the resource.
+	 * @param resource    the resource which is being accessed
+	 * @param action      the permission required by the action against the resource.
 	 * @param environment the current context in which the action is taking place
 	 */
 	@Override

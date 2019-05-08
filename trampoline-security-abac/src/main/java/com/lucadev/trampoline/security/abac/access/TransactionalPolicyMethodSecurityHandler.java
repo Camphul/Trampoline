@@ -57,7 +57,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 
 		PrePolicy prePolicy = method.getAnnotation(PrePolicy.class);
 		Object resource = getPolicyResource(joinPoint);
-		Map<String,Object> env = createEnvironment(joinPoint.getArgs(), method);
+		Map<String, Object> env = createEnvironment(joinPoint.getArgs(), method);
 		policyEnforcement.check(resource, prePolicy.value(), env);
 	}
 
@@ -86,7 +86,7 @@ public class TransactionalPolicyMethodSecurityHandler implements PolicyMethodSec
 			LOG.error("PostPolicy proxy received throwable.", throwable);
 			throw throwable;
 		}
-		Map<String,Object> env = createEnvironment(joinPoint.getArgs(), method);
+		Map<String, Object> env = createEnvironment(joinPoint.getArgs(), method);
 
 		//If @PolicyResource is applied use that instead of return value.
 		if (policyResource != null) {
