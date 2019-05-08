@@ -1,9 +1,9 @@
 package com.lucadev.trampoline.security.abac.autoconfigure;
 
-import com.lucadev.trampoline.security.abac.context.SecurityAccessContextFactory;
-import com.lucadev.trampoline.security.abac.policy.PolicyDefinition;
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
-import com.lucadev.trampoline.security.abac.policy.impl.TrampolinePolicyEnforcement;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
+import com.lucadev.trampoline.security.abac.PolicyContainer;
+import com.lucadev.trampoline.security.abac.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.impl.TrampolinePolicyEnforcement;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,13 @@ public class PolicyEnforcementAutoConfiguration {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PolicyEnforcementAutoConfiguration.class);
 	private final SecurityAccessContextFactory securityAccessContextFactory;
-	private final PolicyDefinition policyDefinition;
+	private final PolicyContainer policyContainer;
 
 	@Bean
 	@ConditionalOnMissingBean(PolicyEnforcement.class)
 	public PolicyEnforcement policyEnforcement() {
 		LOGGER.debug("Creating autoconfigured policy enforcement");
-		return new TrampolinePolicyEnforcement(securityAccessContextFactory, policyDefinition);
+		return new TrampolinePolicyEnforcement(securityAccessContextFactory, policyContainer);
 	}
 
 }

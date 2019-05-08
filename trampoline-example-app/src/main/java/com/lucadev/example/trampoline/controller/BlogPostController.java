@@ -9,11 +9,11 @@ import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
+import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.web.model.SuccessResponse;
 import com.lucadev.trampoline.web.model.UUIDDto;
-import com.lucadev.trampoline.security.abac.access.prepost.PostPolicy;
-import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
+import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -83,7 +82,7 @@ public class BlogPostController {
     @GetMapping("/blogs/{blogPost}")
     //@PostAuthorize("hasPermission(returnObject,'BLOGPOST_VIEW')")
 	@PrePolicy("BLOGPOST_VIEW")
-    public BlogPostDto viewBlogPost(@FindById BlogPost blogPost, Pageable pageable) {
+    public BlogPostDto viewBlogPost(@PolicyResource @FindById BlogPost blogPost, Pageable pageable) {
         return new BlogPostDto(blogPost,
                 MappedPage.of(blogPostService.findAllComments(blogPost, pageable), BlogPostCommentDto::new));
     }
@@ -94,11 +93,11 @@ public class BlogPostController {
      * @param blogPost Blogpost to delete.
      * @return success response.
      */
+    @PrePolicy("BLOGPOST_DELETE")
     @DeleteMapping("/blogs/{blogPost}")
-    public SuccessResponse deleteBlogPost(@FindById BlogPost blogPost) {
+    public SuccessResponse deleteBlogPost(@PolicyResource @FindById BlogPost blogPost) {
         //Find the blog post we want to delete
         //If this fails it will throw an AccessDenied or other Exception which will stop the deleteById to be invoked.
-        policyEnforcement.check(blogPost, "BLOGPOST_DELETE");
 
         blogPostService.deleteById(blogPost.getId());
 
@@ -106,7 +105,7 @@ public class BlogPostController {
     }
 
     /**
-     * This is nearly the same as the {@link #deleteBlogPost(UUID)}.
+     * This is nearly the same as the {@link #deleteBlogPost(BlogPost)}.
      *
      * @param id blogpost id to patch.
      * @param request dto

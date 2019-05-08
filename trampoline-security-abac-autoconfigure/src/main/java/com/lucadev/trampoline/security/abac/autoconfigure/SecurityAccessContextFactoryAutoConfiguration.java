@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.abac.autoconfigure;
 
-import com.lucadev.trampoline.security.abac.context.SecurityAccessContextFactory;
-import com.lucadev.trampoline.security.abac.context.impl.TrampolineSecurityAccessContextFactory;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
+import com.lucadev.trampoline.security.abac.spel.context.impl.TrampolineSecurityAccessContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

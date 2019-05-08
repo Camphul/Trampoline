@@ -1,4 +1,6 @@
-package com.lucadev.trampoline.security.abac.policy;
+package com.lucadev.trampoline.security.abac;
+
+import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface PolicyEnforcement {
 	/**
 	 * Check if we have access to the given resource.
 	 *
-	 * @param subject     the identity trying to access the resource.
+	 * @param subject     the principal trying to access the resource.
 	 * @param resource    the resource which is being accessed
 	 * @param action      the action that is taken against the resource
 	 * @param environment the current context in which the action is taking place
@@ -24,11 +26,12 @@ public interface PolicyEnforcement {
 	/**
 	 * Check if we have access to the given resource.
 	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
+	 * This requires the security context to be available.
 	 *
 	 * @param resource   the resource which is being accessed
-	 * @param permission the permission required by the action against the resource.
+	 * @param action the permission required by the action against the resource.
 	 */
-	void check(Object resource, String permission);
+	void check(Object resource, Object action);
 
 	/**
 	 * Filter the list for access

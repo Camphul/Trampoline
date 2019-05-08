@@ -1,7 +1,7 @@
 package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.trampoline.web.model.MessageResponse;
-import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
+import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.service.time.TimeProvider;

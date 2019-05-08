@@ -1,10 +1,10 @@
-package com.lucadev.trampoline.security.abac.policy.impl;
+package com.lucadev.trampoline.security.abac.impl;
 
-import com.lucadev.trampoline.security.abac.context.SecurityAccessContext;
-import com.lucadev.trampoline.security.abac.context.SecurityAccessContextFactory;
-import com.lucadev.trampoline.security.abac.policy.PolicyDefinition;
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
-import com.lucadev.trampoline.security.abac.policy.PolicyRule;
+import com.lucadev.trampoline.security.abac.PolicyContainer;
+import com.lucadev.trampoline.security.abac.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContext;
+import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
+import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * Default Trampoline policy enforcement implementation.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
@@ -28,7 +30,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 
 	private static final Logger logger = LoggerFactory.getLogger(TrampolinePolicyEnforcement.class);
 	private final SecurityAccessContextFactory securityAccessContextFactory;
-	private final PolicyDefinition policyDefinition;
+	private final PolicyContainer policyContainer;
 
 	/**
 	 * Check if we have access to the given resource.
@@ -42,7 +44,7 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	@Override
 	public boolean check(Object subject, Object resource, Object action, Object environment) {
 		//Get all policy rules
-		List<PolicyRule> allRules = policyDefinition.findAllPolicyRules();
+		List<PolicyRule> allRules = policyContainer.findAllPolicyRules();
 		//Wrap the context
 		SecurityAccessContext cxt = securityAccessContextFactory.create(subject, resource, action, environment);
 		//Filter the rules according to context.
@@ -56,14 +58,15 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	 * In this method the Spring {@link org.springframework.security.core.context.SecurityContext} will be used.
 	 *
 	 * @param resource   the resource which is being accessed
-	 * @param permission the permission required by the action against the resource.
+	 * @param action the permission required by the action against the resource.
 	 */
 	@Override
-	public void check(Object resource, String permission) {
+	public void check(Object resource, Object action) {
 		Authentication auth = authenticationContext().orElseThrow(() -> new AccessDeniedException("Not authenticated."));
 
-		if (!check(auth.getPrincipal(), resource, permission, environmentContext()))
-			throw new AccessDeniedException("Access is denied");
+		if (!check(auth.getPrincipal(), resource, action, environmentContext())) {
+			throw new AccessDeniedException("Principal has no access to resource.");
+		}
 	}
 
 	/**
@@ -107,8 +110,8 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 				return rule.getTarget().getValue(ctx, Boolean.class);
 			} catch (EvaluationException ex) {
 				logger.error("Failed to evaluate PolicyRule target", ex);
+				return false;
 			}
-			return false;
 		}).collect(Collectors.toList());
 	}
 

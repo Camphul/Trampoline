@@ -2,7 +2,7 @@ package com.lucadev.example.trampoline.controller;
 
 import com.lucadev.example.trampoline.service.WhoAmIUserActivityResolver;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
-import com.lucadev.trampoline.security.abac.access.prepost.PrePolicy;
+import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActivityLayer;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;

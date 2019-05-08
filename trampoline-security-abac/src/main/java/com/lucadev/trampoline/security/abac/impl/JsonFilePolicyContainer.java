@@ -1,10 +1,10 @@
-package com.lucadev.trampoline.security.abac.policy.impl;
+package com.lucadev.trampoline.security.abac.impl;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.lucadev.trampoline.security.abac.policy.PolicyDefinition;
-import com.lucadev.trampoline.security.abac.policy.PolicyRule;
+import com.lucadev.trampoline.security.abac.PolicyContainer;
+import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import com.lucadev.trampoline.security.abac.spel.SpelDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,14 +25,14 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
-public class JsonFilePolicyDefinition implements PolicyDefinition {
+public class JsonFilePolicyContainer implements PolicyContainer {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonFilePolicyDefinition.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonFilePolicyContainer.class);
 
 	private final String policyFilePath;
 	private List<PolicyRule> rules;
 
-	public JsonFilePolicyDefinition(String jsonFilePath) throws IOException {
+	public JsonFilePolicyContainer(String jsonFilePath) throws IOException {
 		this.policyFilePath = jsonFilePath;
 		loadPolicyRules();
 	}
