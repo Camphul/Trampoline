@@ -4,6 +4,7 @@ import com.lucadev.trampoline.assetstore.AbstractAssetStore;
 import com.lucadev.trampoline.assetstore.Asset;
 import com.lucadev.trampoline.assetstore.AssetMetaData;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
+import com.lucadev.trampoline.data.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 
@@ -79,7 +80,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 	 */
 	@Override
 	public AssetMetaData getAssetMetaData(UUID id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(() ->
+				new ResourceNotFoundException("Could not find asset by specified id."));
 	}
 
 	/**

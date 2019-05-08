@@ -8,7 +8,6 @@ import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.service.BlogPostService;
 import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
-import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActingUpon;
@@ -36,7 +35,6 @@ public class BlogPostController {
 
 	private final UserService userService;
 	private final BlogPostService blogPostService;
-	private final PolicyEnforcement policyEnforcement;
 
 	/**
 	 * Evaluate the BLOGPOST_LIST policy against the current principal.
