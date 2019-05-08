@@ -4,8 +4,7 @@ This is the development roadmap for release 20190507.
 
 ## Refactors
 
-- trampoline-security-abac should be more decoupled and easier to swap mechanisms. Possibly replace SPeL mechanism with something more professional
-- trampoline-security-logging needs to be better(the architecture is not really scalable atm, maybe use SPeL for formatting messages).
+- pass environment to policyenforcer with method params.
 
 ## Code styling
 
@@ -32,3 +31,5 @@ Use constructor injection.
 - redo jwt mechanism
 - trampoline-core will be refactored to trampoline-core
 - models and web related services in trampoline-core will be moved to trampoline-web-rest
+- trampoline-security-logging needs to be better(the architecture is not really scalable atm, maybe use SPeL for formatting messages).
+

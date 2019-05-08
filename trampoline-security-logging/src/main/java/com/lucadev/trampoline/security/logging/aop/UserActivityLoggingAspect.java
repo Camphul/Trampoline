@@ -12,12 +12,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.Order;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -25,7 +21,6 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
@@ -57,20 +52,9 @@ public class UserActivityLoggingAspect {
 
 	@Around("logUserActivityDefinition()")
 	public Object logUserActivity(ProceedingJoinPoint joinPoint) throws Throwable {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Method method = methodSignature.getMethod();
-		String className = joinPoint.getSignature().getDeclaringTypeName();
 		Object[] methodInvocationArguments = joinPoint.getArgs();
-
-		LogUserActivity logUserActivity = method.getAnnotation(LogUserActivity.class);
-		String logIdentifier = logUserActivity.value();
-		String category = logUserActivity.category();
-		String logDescription = logUserActivity.description();
-		boolean spelDescription = logUserActivity.spelDescription();
-		ActivityLayer activityLayer = logUserActivity.layer();
-
 		Object returnObject = null;
 		Throwable throwable = null;
 		long invocationStart = timeProvider.unix();
@@ -80,27 +64,8 @@ public class UserActivityLoggingAspect {
 			throwable = t;
 		} finally {
 			long invocationEnd = timeProvider.unix();
-
-			String description = logDescription;
-
-			if(spelDescription) {
-				Expression expression = expressionParser.parseExpression(description);
-				Map<String,Object> argsMap = createArgsMap(joinPoint.getArgs(), method);
-				argsMap.put("returnObject", returnObject);
-				StandardEvaluationContext evaluationContext = new StandardEvaluationContext(argsMap);
-				evaluationContext.addPropertyAccessor(new MapAccessor());
-				try {
-					description = expression.getValue(evaluationContext, String.class);
-				} catch (EvaluationException ex) {
-					throw ex;
-				}
-			}
-
-			UserActivityInvocationDetails invocationDetails = new UserActivityInvocationDetails(
-					className, method.getName(), throwable!= null, invocationStart, invocationEnd
-			);
-			UserActivity userActivity = new UserActivity((User)authentication.getPrincipal(),
-					logIdentifier, category,activityLayer, invocationDetails, description);
+			UserActivity userActivity = mapUserActivity(method, methodInvocationArguments,
+					returnObject, throwable, invocationStart, invocationEnd);
 
 			userActivityHandler.handleUserActivity(userActivity);
 		}
@@ -110,6 +75,45 @@ public class UserActivityLoggingAspect {
 			throw throwable;
 		}
 		return returnObject;
+	}
+
+	private UserActivity mapUserActivity(Method method, Object[] methodInvocationArguments, Object returnObject,
+										 Throwable throwable, long invocationStart, long invocationEnd) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+		String className = method.getDeclaringClass().getName();
+
+
+		LogUserActivity logUserActivity = method.getAnnotation(LogUserActivity.class);
+		String logIdentifier = logUserActivity.value();
+		String category = logUserActivity.category();
+		String logDescription = logUserActivity.description();
+		boolean spelDescription = logUserActivity.spelDescription();
+		ActivityLayer activityLayer = logUserActivity.layer();
+		String description = logDescription;
+
+		//Parse SPeL expression
+		if (spelDescription) {
+			Expression expression = expressionParser.parseExpression(description);
+			Map<String, Object> argsMap = createArgsMap(methodInvocationArguments, method);
+			argsMap.put("returnObject", returnObject);
+			StandardEvaluationContext evaluationContext = new StandardEvaluationContext(argsMap);
+			evaluationContext.addPropertyAccessor(new MapAccessor());
+			try {
+				description = expression.getValue(evaluationContext, String.class);
+			} catch (EvaluationException ex) {
+				throw ex;
+			}
+		}
+
+		UserActivityInvocationDetails invocationDetails = new UserActivityInvocationDetails(
+				className, method.getName(), throwable != null, invocationStart, invocationEnd
+		);
+		UserActivity userActivity = new UserActivity((User) authentication.getPrincipal(),
+				logIdentifier, category, activityLayer, invocationDetails, description);
+
+		return userActivity;
 	}
 
 	private Map<String, Object> createArgsMap(Object[] args, Method method) {

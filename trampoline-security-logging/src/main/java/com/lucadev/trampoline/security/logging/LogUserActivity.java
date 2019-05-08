@@ -16,36 +16,37 @@ import java.lang.annotation.Target;
 public @interface LogUserActivity {
 
 	/**
-	 * The identifier which discloses which type of activity it is.
+	 * Log action identifier
 	 *
 	 * @return activity identifier.
 	 */
 	String value();
 
 	/**
-	 * Category the log should be submitted to.
+	 * Category to assign the action to
 	 *
-	 * @return activity category.
+	 * @return action category.
 	 */
-	String category() default "logs";
+	String category() default "";
 
 	/**
-	 * In which layer is this annotation place.
+	 * The layer where the activity was ran.
 	 *
 	 * @return activity layer.
 	 */
 	ActivityLayer layer() default ActivityLayer.UNDEFINED;
 
 	/**
-	 * Resolver for user activity message.
+	 * Description to get a readable logging activity string.
 	 *
 	 * @return resolver for the message.
 	 */
 	String description() default "'No description available'";
 
 	/**
-	 * Parse description using SPeL
-	 * @return use SPeL parser.
+	 * Should we parse the description with SPeL?
+	 *
+	 * @return use SPeL parser for parsing description.
 	 */
 	boolean spelDescription() default true;
 
