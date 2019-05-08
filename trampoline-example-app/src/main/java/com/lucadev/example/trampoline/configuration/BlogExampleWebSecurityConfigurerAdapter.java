@@ -1,6 +1,7 @@
 package com.lucadev.example.trampoline.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -19,4 +20,6 @@ public class BlogExampleWebSecurityConfigurerAdapter extends WebSecurityConfigur
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/ping/unprotected", "/signup");
     }
+
+
 }

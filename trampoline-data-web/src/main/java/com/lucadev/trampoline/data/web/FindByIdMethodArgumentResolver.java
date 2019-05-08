@@ -44,7 +44,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		}
 
 		//Require superclass to be TrampolineEntity due to UUID id.
-		if(!paramType.isAssignableFrom(TrampolineEntity.class)) {
+		if(!TrampolineEntity.class.isAssignableFrom(paramType)) {
 			return false;
 		}
 

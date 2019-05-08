@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -15,33 +16,15 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
 @Getter
 @ToString
-public class ResourceNotFoundException extends RuntimeException {
-
-	private final UUID resourceId;
-	private final String message;
+public class ResourceNotFoundException extends ResponseStatusException {
 
 	/**
-	 * Construct the model with the resource id that could not be found together with an informative message.
-	 *
-	 * @param resourceId the id which was used to try and fetch the resource.
-	 * @param message    a description explaining the error in detail.
+	 * Construct not found exception
 	 */
-	public ResourceNotFoundException(UUID resourceId, String message) {
-		this.resourceId = resourceId;
-		this.message = message;
-	}
-
-	/**
-	 * Construct the model with the resource id that could not be found.
-	 * Uses a default message as error description.
-	 *
-	 * @param resourceId the id which was used to try and fetch the resource.
-	 */
-	public ResourceNotFoundException(UUID resourceId) {
-		this(resourceId, "Resource with id " + resourceId + " not found");
+	public ResourceNotFoundException() {
+		this("Could not find resource.");
 	}
 
 	/**
@@ -53,7 +36,27 @@ public class ResourceNotFoundException extends RuntimeException {
 	 * @param message a description of the error message in detail.
 	 */
 	public ResourceNotFoundException(String message) {
-		this(null, "Resource not found");
+		super(HttpStatus.NOT_FOUND, message);
+	}
+
+	/**
+	 * Construct the model with the resource id that could not be found.
+	 * Uses a default message as error description.
+	 *
+	 * @param resourceId the id which was used to try and fetch the resource.
+	 */
+	public ResourceNotFoundException(UUID resourceId) {
+		this("Resource with id " + resourceId + " not found");
+	}
+
+	/**
+	 * Construct the model with the resource id that could not be found together with an informative message.
+	 *
+	 * @param resourceId the id which was used to try and fetch the resource.
+	 * @param message    a description explaining the error in detail.
+	 */
+	public ResourceNotFoundException(UUID resourceId, String message) {
+		this("ID: " + resourceId + " Messaqe: " + message);
 	}
 
 }

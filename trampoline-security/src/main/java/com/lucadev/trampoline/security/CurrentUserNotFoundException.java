@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * A {@link RuntimeException} which gets thrown when the current {@link User}
@@ -16,10 +17,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @Getter
 @ToString
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class CurrentUserNotFoundException extends RuntimeException {
+public class CurrentUserNotFoundException extends ResponseStatusException {
 
-	private final String message;
+
+	/**
+	 * Standard error description.
+	 */
+	public CurrentUserNotFoundException() {
+		this("The server could not find the user behind this request.");
+	}
 
 	/**
 	 * Describe the model in another way.
@@ -27,14 +33,7 @@ public class CurrentUserNotFoundException extends RuntimeException {
 	 * @param message error description
 	 */
 	public CurrentUserNotFoundException(String message) {
-		this.message = message;
-	}
-
-	/**
-	 * Standard error description.
-	 */
-	public CurrentUserNotFoundException() {
-		this("The server could not find the user behind this request.");
+		super(HttpStatus.INTERNAL_SERVER_ERROR, message);
 	}
 
 }

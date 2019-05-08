@@ -31,6 +31,8 @@ public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Orde
 		LOGGER.debug("Added custom argument resolvers.");
 	}
 
+
+
 	@Override
 	public int getOrder() {
 		return 34;
