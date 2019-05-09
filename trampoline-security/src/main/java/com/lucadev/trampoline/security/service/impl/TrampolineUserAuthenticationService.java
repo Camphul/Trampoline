@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class TrampolineUserAuthenticationService implements UserAuthenticationService {
 
 	private final UserService userService;
+
 	private final PasswordEncoder passwordEncoder;
 
 	/**
@@ -26,7 +27,7 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	 */
 	@Override
 	public boolean isPassword(User user, String password) {
-		return passwordEncoder.matches(password, user.getPassword());
+		return this.passwordEncoder.matches(password, user.getPassword());
 	}
 
 	/**
@@ -34,8 +35,8 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	 */
 	@Override
 	public User changePassword(User user, String newPassword) {
-		user.setPassword(passwordEncoder.encode(newPassword));
-		return userService.update(user);
+		user.setPassword(this.passwordEncoder.encode(newPassword));
+		return this.userService.update(user);
 	}
 
 	/**
@@ -44,21 +45,24 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	@Override
 	public void validateUserState(User user) {
 		if (!user.isEnabled()) {
-			throw new DisabledException("Could not authorize user because the account is disabled.");
+			throw new DisabledException(
+					"Could not authorize user because the account is disabled.");
 		}
 
 		if (!user.isAccountNonExpired()) {
-			throw new AccountExpiredException("Could not authorize user because the account is expired.");
+			throw new AccountExpiredException(
+					"Could not authorize user because the account is expired.");
 		}
 
 		if (!user.isCredentialsNonExpired()) {
-			throw new AccountExpiredException("Could not authorize user because the credentials are expired.");
+			throw new AccountExpiredException(
+					"Could not authorize user because the credentials are expired.");
 		}
 
 		if (!user.isAccountNonLocked()) {
-			throw new LockedException("Could not authorize user because the account is locked.");
+			throw new LockedException(
+					"Could not authorize user because the account is locked.");
 		}
 	}
-
 
 }

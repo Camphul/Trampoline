@@ -35,7 +35,7 @@ public class TrampolineRoleService implements RoleService {
 		if (roleName == null || roleName.isEmpty()) {
 			return null;
 		}
-		return roleRepository.findOneByName(roleName);
+		return this.roleRepository.findOneByName(roleName);
 	}
 
 	/**
@@ -46,7 +46,8 @@ public class TrampolineRoleService implements RoleService {
 		if (role == null || privilege == null) {
 			return false;
 		}
-		return role.getPrivileges().stream().anyMatch(p -> p.getName().equals(privilege.getName()));
+		return role.getPrivileges().stream()
+				.anyMatch(p -> p.getName().equals(privilege.getName()));
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class TrampolineRoleService implements RoleService {
 	@Override
 	public Role addPrivilege(Role role, Privilege privilege) {
 		role.getPrivileges().add(privilege);
-		return roleRepository.save(role);
+		return this.roleRepository.save(role);
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class TrampolineRoleService implements RoleService {
 	@Override
 	public Role removePrivilege(Role role, Privilege privilege) {
 		role.getPrivileges().remove(privilege);
-		return roleRepository.save(role);
+		return this.roleRepository.save(role);
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class TrampolineRoleService implements RoleService {
 	@Override
 	public Role create(String roleName) {
 		Role role = new Role(roleName);
-		return roleRepository.save(role);
+		return this.roleRepository.save(role);
 	}
 
 	/**
@@ -81,6 +82,7 @@ public class TrampolineRoleService implements RoleService {
 	 */
 	@Override
 	public Role update(Role role) {
-		return roleRepository.save(role);
+		return this.roleRepository.save(role);
 	}
+
 }

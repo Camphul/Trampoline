@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
  * @since 21-4-18
  */
 @Repository
-public interface SimpleTrampolineEntityRepository extends TrampolineRepository<SimpleTrampolineEntity> {
+public interface SimpleTrampolineEntityRepository
+		extends TrampolineRepository<SimpleTrampolineEntity> {
 
 	SimpleTrampolineEntity findOneByPayload(String payload);
 

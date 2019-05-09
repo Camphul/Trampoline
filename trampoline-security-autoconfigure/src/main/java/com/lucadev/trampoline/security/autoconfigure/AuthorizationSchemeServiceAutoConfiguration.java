@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
+ * Autoconfigure the service to configure roles and privileges.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 27-4-18
  */
@@ -21,13 +23,16 @@ import org.springframework.core.env.Environment;
 public class AuthorizationSchemeServiceAutoConfiguration {
 
 	private final Environment environment;
+
 	private final RoleService roleService;
+
 	private final PrivilegeService privilegeService;
 
 	@Bean
 	@ConditionalOnMissingBean
 	public AuthorizationSchemeService authorizationSchemeService() {
-		return new TrampolineAuthorizationSchemeService(environment, roleService, privilegeService);
+		return new TrampolineAuthorizationSchemeService(this.environment, this.roleService,
+				this.privilegeService);
 	}
 
 }

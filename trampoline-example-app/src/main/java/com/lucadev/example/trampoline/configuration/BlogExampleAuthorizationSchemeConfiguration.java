@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class BlogExampleAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
 
 	/**
-	 * Build the authorization scheme
+	 * Build the authorization scheme.
 	 *
 	 * @param builder please see {@link AuthorizationSchemeBuilder} for more information.
 	 */

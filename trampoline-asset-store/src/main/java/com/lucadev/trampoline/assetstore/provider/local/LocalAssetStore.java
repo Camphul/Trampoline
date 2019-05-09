@@ -24,6 +24,7 @@ import java.util.UUID;
 public class LocalAssetStore extends AbstractAssetStore {
 
 	private final String storageDirectory;
+
 	private final AssetMetaDataRepository repository;
 
 	/**
@@ -31,11 +32,12 @@ public class LocalAssetStore extends AbstractAssetStore {
 	 */
 	@Override
 	public AssetMetaData put(byte[] data, AssetMetaData assetMetaData) {
-		assetMetaData = repository.save(assetMetaData);
+		assetMetaData = this.repository.save(assetMetaData);
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		try {
 			resource.getOutputStream().write(data);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		return assetMetaData;
@@ -57,7 +59,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 			dis.readFully(assetData);
 
 			return new Asset(assetData, assetMetaData);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException("Could not load asset", e);
 		}
 	}
@@ -69,8 +72,9 @@ public class LocalAssetStore extends AbstractAssetStore {
 	public void remove(AssetMetaData assetMetaData) {
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		if (resource.getFile().delete()) {
-			repository.delete(assetMetaData);
-		} else {
+			this.repository.delete(assetMetaData);
+		}
+		else {
 			throw new RuntimeException("Could not delete asset(no permission to fs?)");
 		}
 	}
@@ -80,21 +84,22 @@ public class LocalAssetStore extends AbstractAssetStore {
 	 */
 	@Override
 	public AssetMetaData getAssetMetaData(UUID id) {
-		return repository.findById(id).orElseThrow(() ->
-				new ResourceNotFoundException("Could not find asset by specified id."));
+		return this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+				"Could not find asset by specified id."));
 	}
 
 	/**
 	 * Get the actual asset file from metadata.
-	 *
 	 * @param assetMetaData the metadata to obtain file info for
 	 * @return file resource resolved through the metadata.
 	 */
 	private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
 		UUID id = assetMetaData.getId();
 		if (id == null) {
-			throw new IllegalArgumentException("Cannot find asset which has not been saved yet.");
+			throw new IllegalArgumentException(
+					"Cannot find asset which has not been saved yet.");
 		}
-		return new FileSystemResource(storageDirectory + id.toString());
+		return new FileSystemResource(this.storageDirectory + id.toString());
 	}
+
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
 /**
- * Asset meta data
+ * Asset meta data entity which acts as a reference to the binary data.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
@@ -47,6 +47,8 @@ public class AssetMetaData extends TrampolineEntity {
 	private long fileSize;
 
 	/**
+	 * Size of the binary file.
+	 *
 	 * @return {@link DataSize} as it's preferred in the newer Spring releases.
 	 */
 	public DataSize getDataSize() {
@@ -55,27 +57,43 @@ public class AssetMetaData extends TrampolineEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof AssetMetaData)) return false;
-		if (!super.equals(o)) return false;
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof AssetMetaData)) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
 
 		AssetMetaData that = (AssetMetaData) o;
 
-		if (fileSize != that.fileSize) return false;
-		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-		if (originalFilename != null ? !originalFilename.equals(that.originalFilename) : that.originalFilename != null)
+		if (this.fileSize != that.fileSize) {
 			return false;
-		return contentType != null ? contentType.equals(that.contentType) : that.contentType == null;
+		}
+		if (this.name != null ? !this.name.equals(that.name) : that.name != null) {
+			return false;
+		}
+		if (this.originalFilename != null ? !this.originalFilename.equals(that.originalFilename)
+				: that.originalFilename != null) {
+			return false;
+		}
+
+		return this.contentType != null ? this.contentType.equals(that.contentType)
+				: that.contentType == null;
 
 	}
 
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (originalFilename != null ? originalFilename.hashCode() : 0);
-		result = 31 * result + (contentType != null ? contentType.hashCode() : 0);
-		result = 31 * result + (int) (fileSize ^ (fileSize >>> 32));
+		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
+		result = 31 * result
+				+ (this.originalFilename != null ? this.originalFilename.hashCode() : 0);
+		result = 31 * result + (this.contentType != null ? this.contentType.hashCode() : 0);
+		result = 31 * result + (int) (this.fileSize ^ (this.fileSize >>> 32));
 		return result;
 	}
+
 }

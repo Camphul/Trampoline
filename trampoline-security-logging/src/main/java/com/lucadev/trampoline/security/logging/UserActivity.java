@@ -19,17 +19,17 @@ public class UserActivity {
 	private UserActivityInvocationDetails invocationDetails;
 
 	/**
-	 * User who caused the activity
+	 * User who caused the activity.
 	 */
 	private final User principal;
 
 	/**
-	 * Description of the activity
+	 * Description of the activity.
 	 */
 	private final String description;
 
 	/**
-	 * On which object did the activity take place
+	 * On which object did the activity take place.
 	 */
 	private final Object actedUpon;
 

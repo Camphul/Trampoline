@@ -5,7 +5,7 @@ import com.lucadev.trampoline.security.persistence.entity.User;
 import java.util.Map;
 
 /**
- * Default Jwt configuration
+ * Default Jwt configuration.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
@@ -19,6 +19,7 @@ public class DefaultJwtConfigurationAdapter implements JwtConfigurationAdapter {
 
 	@Override
 	public void createToken(User user, Map<String, Object> claims) {
-		//Dont do anything by default
+		// Dont do anything by default
 	}
+
 }

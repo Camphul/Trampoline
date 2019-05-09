@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * Proxy aspect for {@link PrePolicy}
+ * Proxy aspect for {@link PrePolicy}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
@@ -35,13 +35,12 @@ public class PolicyMethodSecurityAspect {
 
 	@Before("prePolicyDefinition()")
 	public void handlePrePolicy(JoinPoint joinPoint) {
-		policyMethodSecurityHandler.handlePrePolicy(joinPoint);
+		this.policyMethodSecurityHandler.handlePrePolicy(joinPoint);
 	}
 
 	@Around("postPolicyDefinition()")
 	public Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable {
-		return policyMethodSecurityHandler.handlePostPolicy(joinPoint);
+		return this.policyMethodSecurityHandler.handlePostPolicy(joinPoint);
 	}
-
 
 }

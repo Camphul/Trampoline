@@ -2,7 +2,6 @@ package com.lucadev.trampoline.assetstore.autoconfigure;
 
 import com.lucadev.trampoline.assetstore.AssetStore;
 import com.lucadev.trampoline.assetstore.AssetStoreFactory;
-import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStore;
 import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreFactory;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 /**
+ * Autoconfigure asset store implementation.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
@@ -23,34 +24,39 @@ public class AssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store.
-	 *
-	 * @param providerType          which provider instance to use.
+	 * @param factories available factories for an asset store.
+	 * @param providerType which provider instance to use.
 	 * @return a new {@link AssetStore}
+	 * @throws Exception when we cannot resolve an implementation.
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AssetStore.class)
-	public AssetStore assetStore(List<AssetStoreFactory> factories, @Value("${trampoline.assetstore.provider:local}")
-			String providerType) throws Exception {
-		if(factories.isEmpty()) {
-			throw new NullPointerException("Could not find matching factories for AssetStore");
+	public AssetStore assetStore(List<AssetStoreFactory> factories,
+			@Value("${trampoline.assetstore.provider:local}") String providerType)
+			throws Exception {
+		if (factories.isEmpty()) {
+			throw new NullPointerException(
+					"Could not find matching factories for AssetStore");
 		}
 
-		AssetStoreFactory factory = factories.stream().filter(factoryPredicate -> factoryPredicate
-				.supports(providerType)).findFirst().orElseThrow(() -> new NullPointerException("Could not find matching factory."));
-		//found factory
+		AssetStoreFactory factory = factories.stream()
+				.filter(factoryPredicate -> factoryPredicate.supports(providerType))
+				.findFirst().orElseThrow(() -> new NullPointerException(
+						"Could not find matching factory."));
+		// found factory
 		return factory.getObject();
 	}
 
 	/**
 	 * Configure default asset store.
-	 *
 	 * @param localStorageDirectory local fs directory to use to store data.
-	 * @param repository            the repo for asset metadata.
+	 * @param repository the repo for asset metadata.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean
-	public LocalAssetStoreFactory localAssetStoreFactory(@Value("${trampoline.assetstore.provider.local.directory:./local-asset-store/}")
-																 String localStorageDirectory, AssetMetaDataRepository repository) {
+	public LocalAssetStoreFactory localAssetStoreFactory(
+			@Value("${trampoline.assetstore.provider.local.directory:./local-asset-store/}") String localStorageDirectory,
+			AssetMetaDataRepository repository) {
 		return new LocalAssetStoreFactory(localStorageDirectory, repository);
 	}
 

@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autconfigure default adapter for jwt security if no beans are found.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
@@ -17,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(JwtConfigurationAdapter.class)
 public class JwtConfigurationAdapterAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JwtConfigurationAdapterAutoConfiguration.class);
-
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JwtConfigurationAdapterAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean

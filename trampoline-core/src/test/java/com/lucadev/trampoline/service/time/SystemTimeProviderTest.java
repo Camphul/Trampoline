@@ -39,7 +39,7 @@ public class SystemTimeProviderTest {
 	}
 
 	private void assertAcceptedRange(long expected, long result) {
-		//100ms difference accepted
+		// 100ms difference accepted
 		long ACCEPTED_DIFFERENCE = 100;
 		assertTrue("Measured result too low", result >= expected - ACCEPTED_DIFFERENCE);
 		assertTrue("Measured result too high", result <= expected + ACCEPTED_DIFFERENCE);

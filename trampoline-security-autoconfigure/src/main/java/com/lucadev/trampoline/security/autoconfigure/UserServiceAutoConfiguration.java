@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autoconfigure userservice.
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -21,8 +22,7 @@ public class UserServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public UserService userService(UserRepository repository, TimeProvider timeProvider,
-								   @Value("${trampoline.security.authentication.emailIdentification:false}")
-										   boolean emailIdentification) {
+			@Value("${trampoline.security.authentication.emailIdentification:false}") boolean emailIdentification) {
 		return new TrampolineUserService(repository, timeProvider, emailIdentification);
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Autoconfiguration which creates a bean for {@link TrampolinePersistenceConfiguration}
+ * Autoconfiguration which creates a bean for {@link TrampolinePersistenceConfiguration}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -18,7 +18,6 @@ public class TrampolineDataAutoConfiguration {
 
 	/**
 	 * Bean definition for persistence configuration.
-	 *
 	 * @return default persistence configuration.
 	 */
 	@Bean

@@ -21,33 +21,55 @@ import javax.annotation.PostConstruct;
 @ConfigurationProperties(prefix = "trampoline.security.jwt")
 public class JwtSecurityProperties {
 
-	public static final String DEFAULT_SECRET = "trampolineSecret";
+	/**
+	 * Default secret if none are defined.
+	 */
+	public static final String DEFAULT_SECRET = "trampolineSecret238746982643";
+
+	/**
+	 * Header containing our token.
+	 */
 	public static final String TOKEN_HEADER = "Authorization";
+
+	/**
+	 * Define scheme used in header.
+	 */
 	public static final String HEADER_PREFIX = "Bearer";
+
+	/**
+	 * Default timeout for jwt tokens(expiry).
+	 */
 	public static final long TOKEN_TIMEOUT = 3600L;
+
+	/**
+	 * Default web path to use for jwt auth.
+	 */
 	public static final String AUTH_PATH = "/auth";
+
 	/**
 	 * Errormessage that gets thrown when you try to modify this object through a setter method.
 	 */
 	private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 
-	//Signing secret
+	// Signing secret
 	private String secret;
-	//Timeout for token invalidation
+
+	// Timeout for token invalidation
 	private long tokenTimeout;
-	//Auth basepath
+
+	// Auth basepath
 	private String authPath;
 
 	/**
-	 * Handle default cases if a value has not been set yet
+	 * Handle default cases if a value has not been set yet.
 	 */
 	@PostConstruct
 	public void init() {
-		secret = handleDefault(secret, DEFAULT_SECRET);
-		if (tokenTimeout <= 0) {
-			tokenTimeout = 3600L;
+		this.secret = handleDefault(this.secret, DEFAULT_SECRET);
+		if (this.tokenTimeout <= 0) {
+			this.tokenTimeout = 3600L;
 		}
-		authPath = handleDefault(authPath, AUTH_PATH);
+		this.authPath = handleDefault(this.authPath, this.AUTH_PATH);
 	}
 
 	private String handleDefault(String prop, String defaultValue) {
@@ -77,4 +99,5 @@ public class JwtSecurityProperties {
 		}
 		this.authPath = authPath;
 	}
+
 }

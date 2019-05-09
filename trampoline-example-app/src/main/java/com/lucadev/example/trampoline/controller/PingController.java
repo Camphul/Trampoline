@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Ping model
+ * Ping controller.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
@@ -26,7 +26,7 @@ public class PingController {
 	 */
 	@GetMapping("/ping/unprotected")
 	public MessageResponse pingUnprotected() {
-		return new MessageResponse("Pong unprotected: " + timeProvider.unix());
+		return new MessageResponse("Pong unprotected: " + this.timeProvider.unix());
 	}
 
 	/**
@@ -37,7 +37,8 @@ public class PingController {
 	@GetMapping("/ping/protected")
 	@PrePolicy("PING_PROTECTED")
 	public MessageResponse pingProtected() {
-		return new MessageResponse("Pong protected: " + timeProvider.unix());
+		return new MessageResponse("Pong protected: " +
+				this.timeProvider.unix());
 	}
 
 }

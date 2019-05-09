@@ -21,46 +21,42 @@ public class BigDecimalValueDto {
 
 	/**
 	 * If the number is 0 or higher.
-	 *
 	 * @return larger or equal to 0
 	 */
 	public boolean isPositive() {
-		return BigDecimal.ZERO.compareTo(value) <= 0;
+		return BigDecimal.ZERO.compareTo(this.value) <= 0;
 	}
 
 	/**
 	 * If the number is 0 or lower.
-	 *
 	 * @return lower or equal to 0
 	 */
 	public boolean isNegative() {
-		return BigDecimal.ZERO.compareTo(value) >= 0;
+		return BigDecimal.ZERO.compareTo(this.value) >= 0;
 	}
 
 	/**
 	 * If the number is zero.
-	 *
 	 * @return is zero
 	 */
 	public boolean isZero() {
-		return BigDecimal.ZERO.equals(value);
+		return BigDecimal.ZERO.equals(this.value);
 	}
 
 	/**
-	 * If the number is above 0
-	 *
+	 * If the number is above 0.
 	 * @return larger than 0
 	 */
 	public boolean isNonZeroPositive() {
-		return BigDecimal.ZERO.compareTo(value) < 0;
+		return BigDecimal.ZERO.compareTo(this.value) < 0;
 	}
 
 	/**
-	 * Number is under 0
-	 *
+	 * Number is under 0.
 	 * @return lower than 0
 	 */
 	public boolean isNonZeroNegative() {
-		return BigDecimal.ZERO.compareTo(value) > 0;
+		return BigDecimal.ZERO.compareTo(this.value) > 0;
 	}
+
 }

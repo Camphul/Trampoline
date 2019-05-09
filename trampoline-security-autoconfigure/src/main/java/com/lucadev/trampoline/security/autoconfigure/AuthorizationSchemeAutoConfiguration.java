@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autoconfigure builder used to setup roles and privileges.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
@@ -17,7 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(AuthorizationSchemeConfiguration.class)
 public class AuthorizationSchemeAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationSchemeAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(AuthorizationSchemeAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean

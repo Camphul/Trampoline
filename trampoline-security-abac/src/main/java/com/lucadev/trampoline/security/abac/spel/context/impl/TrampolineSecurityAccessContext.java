@@ -8,7 +8,7 @@ import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.core.Authentication;
 
 /**
- * Handle method security methods
+ * Handle method security methods.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
@@ -16,18 +16,23 @@ import org.springframework.security.core.Authentication;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TrampolineSecurityAccessContext extends SecurityExpressionRoot implements SecurityAccessContext {
+public class TrampolineSecurityAccessContext extends SecurityExpressionRoot
+		implements SecurityAccessContext {
 
 	private Object subject;
+
 	private Object resource;
+
 	private Object action;
+
 	private Object environment;
 
 	protected TrampolineSecurityAccessContext(Authentication authentication) {
 		super(authentication);
 	}
 
-	public TrampolineSecurityAccessContext(Authentication authentication, Object subject, Object resource, Object action, Object environment) {
+	public TrampolineSecurityAccessContext(Authentication authentication, Object subject,
+			Object resource, Object action, Object environment) {
 		this(authentication);
 		this.subject = subject;
 		this.resource = resource;
@@ -36,8 +41,7 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot impl
 	}
 
 	/**
-	 * Check if actions match
-	 *
+	 * Check if actions match.
 	 * @param action the action to check
 	 * @return if the current action is equal.
 	 */
@@ -45,4 +49,5 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot impl
 	public boolean isAction(Object action) {
 		return this.action.equals(action);
 	}
+
 }

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
+ * Request to register a user.
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */

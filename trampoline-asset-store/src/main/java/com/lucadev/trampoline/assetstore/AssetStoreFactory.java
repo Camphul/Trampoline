@@ -16,4 +16,5 @@ public interface AssetStoreFactory extends FactoryBean<AssetStore> {
 	 * @return if we support the asset store.
 	 */
 	boolean supports(String identifier);
+
 }

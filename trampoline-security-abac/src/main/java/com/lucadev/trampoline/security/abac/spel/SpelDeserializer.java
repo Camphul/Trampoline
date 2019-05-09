@@ -13,7 +13,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import java.io.IOException;
 
 /**
- * Deserializes a String into a Spring expression object
+ * Deserializes a String into a Spring expression object.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
@@ -22,9 +22,10 @@ import java.io.IOException;
 public class SpelDeserializer extends StdDeserializer<Expression> {
 
 	/**
-	 * The compiler mode for SpeL
+	 * The compiler mode for SpeL.
 	 */
 	public static final SpelCompilerMode SPEL_COMPILER_MODE = SpelCompilerMode.MIXED;
+
 	private final ExpressionParser elParser;
 
 	public SpelDeserializer() {
@@ -33,11 +34,12 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
 
 	protected SpelDeserializer(Class<?> vc) {
 		super(vc);
-		elParser = createSpelParser();
+		this.elParser = createSpelParser();
 	}
 
 	private ExpressionParser createSpelParser() {
-		SpelParserConfiguration parserConfiguration = new SpelParserConfiguration(SPEL_COMPILER_MODE, null);
+		SpelParserConfiguration parserConfiguration = new SpelParserConfiguration(
+				SPEL_COMPILER_MODE, null);
 		return new SpelExpressionParser(parserConfiguration);
 	}
 
@@ -45,7 +47,7 @@ public class SpelDeserializer extends StdDeserializer<Expression> {
 	public Expression deserialize(JsonParser jp, DeserializationContext ctxt)
 			throws IOException {
 		String expresion = jp.getCodec().readValue(jp, String.class);
-		return elParser.parseExpression(expresion);
+		return this.elParser.parseExpression(expresion);
 	}
 
 }

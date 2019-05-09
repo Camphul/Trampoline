@@ -27,9 +27,11 @@ import java.util.List;
  */
 public class JsonFilePolicyContainer implements PolicyContainer {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonFilePolicyContainer.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JsonFilePolicyContainer.class);
 
 	private final String policyFilePath;
+
 	private List<PolicyRule> rules;
 
 	public JsonFilePolicyContainer(String jsonFilePath) throws IOException {
@@ -37,53 +39,52 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		loadPolicyRules();
 	}
 
-
 	private void loadPolicyRules() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		SimpleModule module = new SimpleModule();
 		module.addDeserializer(Expression.class, new SpelDeserializer());
 		mapper.registerModule(module);
-		File file = new ClassPathResource(policyFilePath).getFile();
+		File file = new ClassPathResource(this.policyFilePath).getFile();
 		if (!file.exists()) {
 			throw new FileNotFoundException("Cannot load non existent resource");
 		}
 
 		try {
-			LOGGER.debug("[loadPolicyRules] Checking policy file at: {}", policyFilePath);
-			rules = mapper.readValue(file,
-					JsonPolicyFileModel.class).getPolicies();
+			LOGGER.debug("[loadPolicyRules] Checking policy file at: {}", this.policyFilePath);
+			this.rules = mapper.readValue(file, JsonPolicyFileModel.class).getPolicies();
 			LOGGER.info("[loadPolicyRules] Policy loaded successfully.");
-		} catch (JsonMappingException e) {
+		}
+		catch (JsonMappingException e) {
 			LOGGER.error("An error occurred while parsing the policy file.", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			LOGGER.error("An error occurred while reading the policy file.", e);
 		}
 	}
 
 	@Override
 	public List<PolicyRule> findAllPolicyRules() {
-		return rules;
+		return this.rules;
 	}
 
 	@Override
 	public boolean hasPolicyRule(String name) {
-		return rules.stream().anyMatch(p -> p.getName().equals(name));
+		return this.rules.stream().anyMatch(p -> p.getName().equals(name));
 	}
 
 	/**
 	 * Adds an in-memory policy rule.
-	 *
 	 * @param policyRule the policy rule to add
 	 */
 	@Override
 	public PolicyRule addPolicyRule(PolicyRule policyRule) {
-		rules.add(policyRule);
+		this.rules.add(policyRule);
 		return policyRule;
 	}
 
 	@Override
 	public PolicyRule updatePolicyRule(PolicyRule policyRule) {
-		for (PolicyRule rule : rules) {
+		for (PolicyRule rule : this.rules) {
 			if (rule.getName().equals(policyRule.getName())) {
 				rule.setCondition(policyRule.getCondition());
 				rule.setTarget(policyRule.getTarget());
@@ -91,7 +92,7 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 				return rule;
 			}
 		}
-		//policy not found
+		// policy not found
 		return null;
 	}
 
@@ -102,6 +103,9 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	public static class JsonPolicyFileModel {
+
 		private List<PolicyRule> policies;
+
 	}
+
 }

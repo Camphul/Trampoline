@@ -15,4 +15,5 @@ import java.lang.annotation.*;
 @Documented
 @Import(TrampolineConfiguration.class)
 public @interface EnableTrampoline {
+
 }

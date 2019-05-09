@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import java.util.Collection;
 
 /**
- * Authentication token for JWT
+ * Authentication token for JWT.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 28-4-18
@@ -21,11 +21,11 @@ import java.util.Collection;
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	private final JwtPayload jwtPayload;
+
 	private final Object principal;
 
 	/**
 	 * Construct the token with raw jwt data. Not setting authenticated.
-	 *
 	 * @param jwtPayload the JWT representation.
 	 */
 	public JwtAuthenticationToken(JwtPayload jwtPayload) {
@@ -36,12 +36,12 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Construct an authenticated token.
-	 *
 	 * @param authorities the user authorities.
-	 * @param user        the actual user.
-	 * @param jwtPayload  the jwt linked to the user.
+	 * @param user the actual user.
+	 * @param jwtPayload the jwt linked to the user.
 	 */
-	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities, User user, JwtPayload jwtPayload) {
+	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities,
+			User user, JwtPayload jwtPayload) {
 		super(authorities);
 		this.jwtPayload = jwtPayload;
 		this.principal = user;
@@ -49,8 +49,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	/**
-	 * Never pass credentials in JWT
-	 *
+	 * Never pass credentials in JWT.
 	 * @return user credentials. NA in JWT.
 	 */
 	@Override
@@ -60,43 +59,41 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * {@inheritDoc}
-	 *
 	 * @return either username or {@link User} object when authenticated.
 	 */
 	@Override
 	public Object getPrincipal() {
-		return principal;
+		return this.principal;
 	}
 
 	/**
 	 * Username inside the jwt token.
-	 *
 	 * @return JWT username.
 	 */
 	@Override
 	public String getName() {
-		return jwtPayload.getUsername();
+		return this.jwtPayload.getUsername();
 	}
 
 	/**
-	 * Auth details, jwt token when authenticated. Else {@code super.getDetails();}
-	 *
+	 * Auth details, jwt token when authenticated.
+	 * Else {@code super.getDetails();}
 	 * @return user details.
 	 */
 	@Override
 	public Object getDetails() {
-		return isAuthenticated() ? jwtPayload.getRawToken() : super.getDetails();
+		return isAuthenticated() ? this.jwtPayload.getRawToken() : super.getDetails();
 	}
 
 	/**
 	 * Get the user.
-	 *
 	 * @return null if the principal is not a {@link User}
 	 */
 	public User getUser() {
-		if (!(principal instanceof User)) {
+		if (!(this.principal instanceof User)) {
 			return null;
 		}
-		return (User) principal;
+		return (User) this.principal;
 	}
+
 }

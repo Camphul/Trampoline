@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Representation of the data inside the JWT
+ * Representation of the data inside the JWT.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -17,35 +17,42 @@ import java.util.UUID;
 public class JwtPayload implements Serializable {
 
 	/**
-	 * Raw token data
+	 * Raw token data.
 	 */
 	private String rawToken;
+
 	/**
-	 * Subject ID(UUID)
+	 * Subject ID(UUID).
 	 */
 	private UUID subject;
+
 	/**
-	 * Subject username
+	 * Subject username.
 	 */
 	private String username;
+
 	/**
-	 * Subject email
+	 * Subject email.
 	 */
 	private String email;
+
 	/**
-	 * Subject roles
+	 * Subject roles.
 	 */
 	private List<String> roles;
+
 	/**
-	 * Token issue date
+	 * Token issue date.
 	 */
 	private Date issuedDate;
+
 	/**
-	 * Token expiry date
+	 * Token expiry date.
 	 */
 	private Date expirationDate;
+
 	/**
-	 * Can we ignore expirydate?
+	 * If we can ignore expiry date.
 	 */
 	private boolean ignorableExpiration;
 

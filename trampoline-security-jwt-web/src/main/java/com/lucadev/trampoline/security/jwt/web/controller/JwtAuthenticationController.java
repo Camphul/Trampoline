@@ -27,11 +27,11 @@ import javax.validation.Valid;
 public class JwtAuthenticationController {
 
 	private final AuthenticationManager authenticationManager;
+
 	private final TokenService tokenService;
 
 	/**
-	 * Login with username-password
-	 *
+	 * Login with username-password.
 	 * @param userAuthenticationRequest authorization request dto
 	 * @return response of the authorization
 	 */
@@ -39,37 +39,40 @@ public class JwtAuthenticationController {
 	public JwtAuthenticationResponse submitAuthenticationTokenRequest(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
 		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(userAuthenticationRequest.getIdentifier(),
+			Authentication authentication = this.authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(
+							userAuthenticationRequest.getIdentifier(),
 							userAuthenticationRequest.getPassword()));
 
 			if (authentication == null) {
 				throw new AccessDeniedException("Could not authorize user.");
 			}
-			return new JwtAuthenticationResponse(String.valueOf(authentication.getDetails()));
-		} catch (Exception ex) {
+			return new JwtAuthenticationResponse(
+					String.valueOf(authentication.getDetails()));
+		}
+		catch (Exception ex) {
 			throw new AccessDeniedException("Could not authorize: " + ex.getMessage());
 		}
 	}
 
 	/**
-	 * Refresh token from current logged in request
-	 *
-	 * @param request  http req
+	 * Refresh token from current logged in request.
+	 * @param request http req
 	 * @param response http resp
 	 * @return jwt auth response.
 	 */
 	@GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
-	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(HttpServletRequest request, HttpServletResponse response) {
+	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(
+			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String refreshedToken = tokenService.refreshTokenFromRequest(request);
+			String refreshedToken = this.tokenService.refreshTokenFromRequest(request);
 			return new JwtAuthenticationResponse(refreshedToken);
-		} catch (Exception e) {
-			//Catch model to always return correct format
+		}
+		catch (Exception e) {
+			// Catch model to always return correct format
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			throw new AccessDeniedException("Could not refresh token: " + e.getMessage());
 		}
 	}
-
 
 }

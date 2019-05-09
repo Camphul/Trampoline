@@ -20,15 +20,20 @@ import java.util.List;
 @AllArgsConstructor
 public class JpaPolicyContainer implements PolicyContainer {
 
+	/**
+	 * Name of the cache region used to store policies.
+	 */
 	public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
-	private static final Logger LOGGER = LoggerFactory.getLogger(JpaPolicyContainer.class);
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JpaPolicyContainer.class);
+
 	private final PolicyRuleRepository policyRuleRepository;
 
 	/**
 	 * Import parent policy rules into the JPA datasource.
-	 *
 	 * @param repository the repository to use.
-	 * @param parent     the parent policy definition, null is accepted.
+	 * @param parent the parent policy definition, null is accepted.
 	 */
 	public JpaPolicyContainer(PolicyRuleRepository repository, PolicyContainer parent) {
 		this(repository);
@@ -42,28 +47,27 @@ public class JpaPolicyContainer implements PolicyContainer {
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
 		parent.findAllPolicyRules().stream()
-				//Only add when none exist with the same name
-				.filter(r -> !hasPolicyRule(r.getName()))
-				.forEach(this::addPolicyRule);
+				// Only add when none exist with the same name
+				.filter(r -> !hasPolicyRule(r.getName())).forEach(this::addPolicyRule);
 	}
 
 	@Cacheable(POLICY_RULE_CACHE_REGION)
 	@Override
 	public List<PolicyRule> findAllPolicyRules() {
-		return policyRuleRepository.findAll();
+		return this.policyRuleRepository.findAll();
 	}
 
 	@Override
 	@Cacheable(POLICY_RULE_CACHE_REGION)
 	public boolean hasPolicyRule(String name) {
-		return policyRuleRepository.countByName(name) > 0;
+		return this.policyRuleRepository.countByName(name) > 0;
 	}
 
 	@Override
 	@CacheEvict(POLICY_RULE_CACHE_REGION)
 	public PolicyRule addPolicyRule(PolicyRule policyRule) {
 		LOGGER.debug("Saving policy rule {}", policyRule.getName());
-		return policyRuleRepository.save(policyRule);
+		return this.policyRuleRepository.save(policyRule);
 	}
 
 	@Override
@@ -71,4 +75,5 @@ public class JpaPolicyContainer implements PolicyContainer {
 	public PolicyRule updatePolicyRule(PolicyRule policyRule) {
 		return addPolicyRule(policyRule);
 	}
+
 }

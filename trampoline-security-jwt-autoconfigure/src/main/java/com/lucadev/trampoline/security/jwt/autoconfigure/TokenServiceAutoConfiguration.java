@@ -24,14 +24,18 @@ import org.springframework.context.annotation.Configuration;
 public class TokenServiceAutoConfiguration {
 
 	private final JwtConfigurationAdapter jwtConfiguration;
+
 	private final JwtSecurityProperties jwtSecurityProperties;
+
 	private final TimeProvider timeProvider;
+
 	private final UserService userService;
 
 	@Bean
 	@ConditionalOnMissingBean
 	public TokenService tokenService() {
-		return new JwtTokenService(jwtConfiguration, timeProvider, userService, jwtSecurityProperties);
+		return new JwtTokenService(this.jwtConfiguration, this.timeProvider, this.userService,
+				this.jwtSecurityProperties);
 	}
 
 }

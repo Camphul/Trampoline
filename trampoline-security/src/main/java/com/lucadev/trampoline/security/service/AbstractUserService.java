@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Abstract implementation of {@link UserService}
+ * Abstract implementation of {@link UserService}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -27,17 +27,19 @@ public abstract class AbstractUserService implements UserService {
 
 	@Getter(AccessLevel.PROTECTED)
 	private final UserRepository userRepository;
+
 	private IdentificationType identificationType = IdentificationType.USERNAME;
 
 	/**
 	 * Construct the abstract handler.
-	 *
 	 * @param userRepository the {@code Repository} used to persist {@link User} entities.
+	 * @param emailIdentification if we should use the email attribute for authorization.
 	 */
-	public AbstractUserService(UserRepository userRepository, boolean emailIdentification) {
+	public AbstractUserService(UserRepository userRepository,
+			boolean emailIdentification) {
 		this.userRepository = userRepository;
 		if (emailIdentification) {
-			identificationType = IdentificationType.EMAIL;
+			this.identificationType = IdentificationType.EMAIL;
 		}
 	}
 
@@ -46,17 +48,19 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String s) {
-		if (identificationType == IdentificationType.EMAIL) {
+		if (this.identificationType == IdentificationType.EMAIL) {
 			return loadUserByEmail(s);
 		}
-		Optional<User> user = userRepository.findOneByUsername(s);
-		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with username " + s));
+		Optional<User> user = this.userRepository.findOneByUsername(s);
+		return user.orElseThrow(() -> new UsernameNotFoundException(
+				"Could not find user with username " + s));
 	}
 
 	@Override
 	public UserDetails loadUserByEmail(String email) {
-		Optional<User> user = userRepository.findOneByEmail(email);
-		return user.orElseThrow(() -> new UsernameNotFoundException("Could not find user with email " + email));
+		Optional<User> user = this.userRepository.findOneByEmail(email);
+		return user.orElseThrow(() -> new UsernameNotFoundException(
+				"Could not find user with email " + email));
 	}
 
 	/**
@@ -84,13 +88,12 @@ public abstract class AbstractUserService implements UserService {
 		return currentUser().orElseThrow(CurrentUserNotFoundException::new);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public User findById(UUID subject) {
-		return userRepository.findById(subject).orElse(null);
+		return this.userRepository.findById(subject).orElse(null);
 	}
 
 	/**
@@ -98,7 +101,7 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public User save(User user) {
-		return userRepository.save(user);
+		return this.userRepository.save(user);
 	}
 
 	/**
@@ -106,7 +109,7 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public User update(User user) {
-		return userRepository.save(user);
+		return this.userRepository.save(user);
 	}
 
 	/**
@@ -114,7 +117,7 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public List<User> findAll() {
-		return userRepository.findAll();
+		return this.userRepository.findAll();
 	}
 
 	/**
@@ -122,7 +125,7 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public Page<User> findAll(Pageable pageable) {
-		return userRepository.findAll(pageable);
+		return this.userRepository.findAll(pageable);
 	}
 
 	/**
@@ -210,9 +213,9 @@ public abstract class AbstractUserService implements UserService {
 	}
 
 	/**
-	 * Get the current context's {@link Authentication}
-	 *
-	 * @return the current thread's {@link org.springframework.security.core.context.SecurityContext} authentication.
+	 * Get the current context's {@link Authentication}.
+	 * @return the current thread's
+	 * {@link org.springframework.security.core.context.SecurityContext} authentication.
 	 */
 	protected Authentication authenticationContext() {
 		return SecurityContextHolder.getContext().getAuthentication();
@@ -223,7 +226,7 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public IdentificationType getIdentificationType() {
-		return identificationType;
+		return this.identificationType;
 	}
 
 	/**

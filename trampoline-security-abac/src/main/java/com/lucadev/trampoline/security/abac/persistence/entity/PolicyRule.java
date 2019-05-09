@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 /**
+ * Entity containing an ABAC policy.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
@@ -45,25 +47,25 @@ public class PolicyRule extends TrampolineEntity {
 	@Column(name = "condition_expression", nullable = false)
 	private Expression condition;
 
-
 	/**
-	 * Create a policy
-	 *
-	 * @param name        the name of the policy
+	 * Create a policy.
+	 * @param name the name of the policy
 	 * @param description the description of what the policy does
-	 * @param target      the expression defining when to apply the condition(check if the action matches, etc..)
-	 * @param condition   the rule to apply(your logic goes here)
+	 * @param target the expression defining when to apply the condition(check if the
+	 * action matches, etc..)
+	 * @param condition the rule to apply(your logic goes here)
 	 */
-	public PolicyRule(String name, String description, Expression target, Expression condition) {
+	public PolicyRule(String name, String description, Expression target,
+			Expression condition) {
 		this(target, condition);
 		this.name = name;
 		this.description = description;
 	}
 
 	/**
-	 * Create a policy
-	 *
-	 * @param target    the expression defining when to apply the condition(check if the action matches, etc..)
+	 * Create a policy.
+	 * @param target the expression defining when to apply the condition(check if the
+	 * action matches, etc..)
 	 * @param condition the rule to apply(your logic goes here)
 	 */
 	protected PolicyRule(Expression target, Expression condition) {
@@ -71,6 +73,5 @@ public class PolicyRule extends TrampolineEntity {
 		this.target = target;
 		this.condition = condition;
 	}
-
 
 }

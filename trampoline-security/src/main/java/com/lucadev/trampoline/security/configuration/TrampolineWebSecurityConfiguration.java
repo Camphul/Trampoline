@@ -29,46 +29,49 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/**
-	 * The {@link Order} of this configuration, not 100 to allow default config
+	 * The {@link Order} of this configuration, not 100 to allow default config.
 	 */
 	public static final int TRAMPOLINE_SECURITY_CONFIGURATION_ORDER = 95;
+
 	private final boolean debug;
 
 	/**
-	 * Construct configuration
-	 *
+	 * Construct configuration.
 	 * @param debug if we should enable debug on websecurity
 	 */
-	public TrampolineWebSecurityConfiguration(@Value("${trampoline.debug.spring.security:false}") boolean debug) {
+	public TrampolineWebSecurityConfiguration(
+			@Value("${trampoline.debug.spring.security:false}") boolean debug) {
 		this.debug = debug;
 	}
 
 	@Override
 	public void init(WebSecurity web) throws Exception {
-		web.debug(debug);
+		web.debug(this.debug);
 		super.init(web);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Configure authentication manager.
+	 * @param auth builder for the manager.
+	 * @param userService user service.
+	 * @param passwordEncoder encoder for passwords.
+	 * @throws Exception when we couldn't build the auth manager.
 	 */
 	@Autowired
-	protected void initAuthenticationManager(AuthenticationManagerBuilder auth, UserService userService,
-											 PasswordEncoder passwordEncoder) throws Exception {
-		auth.userDetailsService(userService)
-				.passwordEncoder(passwordEncoder);
+	protected void initAuthenticationManager(AuthenticationManagerBuilder auth,
+			UserService userService, PasswordEncoder passwordEncoder) throws Exception {
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
 	}
 
 	/**
 	 * Bean for the global {@link AuthenticationManager}
-	 *
 	 * @param builder the auth builder.
 	 * @return auth manager.
 	 */
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) {
+	public AuthenticationManager authenticationManager(
+			AuthenticationManagerBuilder builder) {
 		return authentication -> builder.getOrBuild().authenticate(authentication);
 	}
-
 
 }

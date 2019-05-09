@@ -10,10 +10,13 @@ import java.util.UUID;
 /**
  * A {@link JpaRepository} specific to {@link TrampolineEntity} entities.
  *
+ * @param <T> an entity extending {@link TrampolineEntity}.
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Transactional
 @NoRepositoryBean
-public interface TrampolineRepository<T extends TrampolineEntity> extends JpaRepository<T, UUID> {
+public interface TrampolineRepository<T extends TrampolineEntity>
+		extends JpaRepository<T, UUID> {
+
 }

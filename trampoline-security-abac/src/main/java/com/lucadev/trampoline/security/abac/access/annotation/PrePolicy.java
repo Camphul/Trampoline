@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Similar to {@link org.springframework.security.access.prepost.PreAuthorize}
+ * Similar to {@link org.springframework.security.access.prepost.PreAuthorize}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/10/19
@@ -17,8 +17,8 @@ public @interface PrePolicy {
 
 	/**
 	 * The policy identifier which is used to ask permission.
-	 *
 	 * @return the policyrule
 	 */
 	String value();
+
 }

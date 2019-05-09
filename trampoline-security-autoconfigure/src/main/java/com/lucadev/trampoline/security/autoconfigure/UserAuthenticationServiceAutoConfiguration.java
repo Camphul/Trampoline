@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
+ * Authentication service autoconfig.
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -19,7 +20,8 @@ public class UserAuthenticationServiceAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserAuthenticationService userPasswordService(UserService userService, PasswordEncoder passwordEncoder) {
+	public UserAuthenticationService userPasswordService(UserService userService,
+			PasswordEncoder passwordEncoder) {
 		return new TrampolineUserAuthenticationService(userService, passwordEncoder);
 	}
 

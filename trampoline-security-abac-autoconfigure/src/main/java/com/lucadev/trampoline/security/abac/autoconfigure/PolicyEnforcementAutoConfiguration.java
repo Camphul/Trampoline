@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Autoconfigure policy enforcer.
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
@@ -21,15 +22,19 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class PolicyEnforcementAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PolicyEnforcementAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(PolicyEnforcementAutoConfiguration.class);
+
 	private final SecurityAccessContextFactory securityAccessContextFactory;
+
 	private final PolicyContainer policyContainer;
 
 	@Bean
 	@ConditionalOnMissingBean(PolicyEnforcement.class)
 	public PolicyEnforcement policyEnforcement() {
 		LOGGER.debug("Creating autoconfigured policy enforcement");
-		return new TrampolinePolicyEnforcement(securityAccessContextFactory, policyContainer);
+		return new TrampolinePolicyEnforcement(this.securityAccessContextFactory,
+				this.policyContainer);
 	}
 
 }

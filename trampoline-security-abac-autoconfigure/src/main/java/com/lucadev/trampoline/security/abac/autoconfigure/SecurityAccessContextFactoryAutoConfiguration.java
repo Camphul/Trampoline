@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Autoconfiguration for {@link SecurityAccessContextFactory}
+ * Autoconfiguration for {@link SecurityAccessContextFactory}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
@@ -19,7 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(SecurityAccessContextFactory.class)
 public class SecurityAccessContextFactoryAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SecurityAccessContextFactoryAutoConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(SecurityAccessContextFactoryAutoConfiguration.class);
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityAccessContextFactory.class)
@@ -27,6 +28,5 @@ public class SecurityAccessContextFactoryAutoConfiguration {
 		LOGGER.debug("Creating autoconfigured security access context factory");
 		return new TrampolineSecurityAccessContextFactory();
 	}
-
 
 }

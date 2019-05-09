@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class BooleanValueDto {
 
 	private boolean value;
+
 }

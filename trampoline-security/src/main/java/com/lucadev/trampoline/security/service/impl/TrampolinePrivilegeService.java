@@ -22,7 +22,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
 	@Override
 	public Privilege create(String privilege) {
 		Privilege p = new Privilege(privilege);
-		return privilegeRepository.save(p);
+		return this.privilegeRepository.save(p);
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
 	 */
 	@Override
 	public void remove(String privilege) {
-		privilegeRepository.deleteByName(privilege);
+		this.privilegeRepository.deleteByName(privilege);
 	}
 
 	/**
@@ -38,6 +38,7 @@ public class TrampolinePrivilegeService implements PrivilegeService {
 	 */
 	@Override
 	public Privilege find(String privilegeName) {
-		return privilegeRepository.findOneByName(privilegeName);
+		return this.privilegeRepository.findOneByName(privilegeName);
 	}
+
 }

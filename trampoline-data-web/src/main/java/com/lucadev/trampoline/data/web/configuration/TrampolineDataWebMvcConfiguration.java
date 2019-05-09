@@ -22,18 +22,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TrampolineDataWebMvcConfiguration.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(TrampolineDataWebMvcConfiguration.class);
+
 	private final EntityManager entityManager;
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(new FindByIdMethodArgumentResolver(entityManager));
+		resolvers.add(new FindByIdMethodArgumentResolver(this.entityManager));
 		LOGGER.debug("Added custom argument resolvers.");
 	}
-
 
 	@Override
 	public int getOrder() {
 		return 34;
 	}
+
 }

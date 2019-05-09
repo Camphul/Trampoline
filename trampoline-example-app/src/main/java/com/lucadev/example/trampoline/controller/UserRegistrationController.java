@@ -40,7 +40,7 @@ public class UserRegistrationController {
 		String username = signupRequest.getUsername();
 		String email = signupRequest.getEmail();
 		//Passwords must be hashed.
-		String hashedPassword = passwordEncoder.encode(signupRequest.getPassword());
+		String hashedPassword = this.passwordEncoder.encode(signupRequest.getPassword());
 
 		User user = new User();
 		user.setUsername(username);
@@ -53,13 +53,13 @@ public class UserRegistrationController {
 		user.setEmail(email);
 		user.setPassword(hashedPassword);
 
-		user = userService.save(user);
+		user = this.userService.save(user);
 
 		//Add default role to user
-		Role role = roleService.find("ROLE_USER");
+		Role role = this.roleService.find("ROLE_USER");
 		user.getRoles().add(role);
 
-		user = userService.update(user);
+		user = this.userService.update(user);
 
 		return new UUIDDto(user.getId());
 	}
