@@ -17,14 +17,14 @@ import java.util.UUID;
  */
 @Configuration
 @ConditionalOnClass(Converter.class)
-public class UuidConverterAutoConfiguration {
+public class UUIDConverterAutoConfiguration {
 
 	/**
 	 * Bean definition for our {@link UUID} converter. In this case our
 	 * {@link UUIDConverter}
 	 * @return a converter for converting a {@link String} into a {@link UUID}
 	 */
-	@Bean
+	@Bean(name = "uuidConverter")
 	@ConditionalOnMissingBean
 	public Converter<String, UUID> uuidConverter() {
 		return new UUIDConverter();

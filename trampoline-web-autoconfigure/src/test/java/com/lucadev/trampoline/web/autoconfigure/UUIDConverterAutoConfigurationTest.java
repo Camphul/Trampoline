@@ -38,7 +38,7 @@ public class UUIDConverterAutoConfigurationTest {
 
 	@Test
 	public void registersUuidConverterAutomatically() {
-		this.context.register(UuidConverterAutoConfiguration.class);
+		this.context.register(UUIDConverterAutoConfiguration.class);
 		this.context.refresh();
 
 		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter",
@@ -49,7 +49,7 @@ public class UUIDConverterAutoConfigurationTest {
 	@Test
 	public void customUuidConverterBean() {
 		this.context.register(CustomUuidConfiguration.class,
-				UuidConverterAutoConfiguration.class);
+				UUIDConverterAutoConfiguration.class);
 		this.context.refresh();
 
 		Converter<String, UUID> uuidConverter = this.context.getBean("uuidConverter",
