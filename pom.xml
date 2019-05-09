@@ -5,36 +5,7 @@
 
 	<groupId>com.lucadev.trampoline</groupId>
 	<artifactId>trampoline-parent</artifactId>
-	<version>20190507</version>
-	<modules>
-		<module>trampoline-core</module>
-		<module>trampoline-core-autoconfigure</module>
-		<module>trampoline-core-starter</module>
-		<module>trampoline-data</module>
-		<module>trampoline-data-autoconfigure</module>
-		<module>trampoline-data-starter</module>
-		<module>trampoline-data-web</module>
-		<module>trampoline-security</module>
-		<module>trampoline-security-autoconfigure</module>
-		<module>trampoline-security-starter</module>
-		<module>trampoline-security-jwt</module>
-		<module>trampoline-security-jwt-web</module>
-		<module>trampoline-security-jwt-autoconfigure</module>
-		<module>trampoline-security-jwt-starter</module>
-		<module>trampoline-starter</module>
-		<module>trampoline-security-abac</module>
-		<module>trampoline-security-abac-autoconfigure</module>
-		<module>trampoline-security-abac-starter</module>
-		<module>trampoline-asset-store</module>
-		<module>trampoline-asset-store-autoconfigure</module>
-		<module>trampoline-asset-store-starter</module>
-		<module>trampoline-security-logging</module>
-		<module>trampoline-security-logging-autoconfigure</module>
-		<module>trampoline-security-logging-starter</module>
-		<module>trampoline-web</module>
-		<module>trampoline-web-autoconfigure</module>
-		<module>trampoline-web-starter</module>
-	</modules>
+	<version>20190509</version>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
@@ -128,6 +99,37 @@
 			<url>https://lucadev.com/trampoline/docs/${project.version}</url>
 		</site>
 	</distributionManagement>
+
+	<modules>
+		<module>trampoline-core</module>
+		<module>trampoline-core-autoconfigure</module>
+		<module>trampoline-core-starter</module>
+		<module>trampoline-data</module>
+		<module>trampoline-data-autoconfigure</module>
+		<module>trampoline-data-starter</module>
+		<module>trampoline-data-web</module>
+		<module>trampoline-security</module>
+		<module>trampoline-security-autoconfigure</module>
+		<module>trampoline-security-starter</module>
+		<module>trampoline-security-jwt</module>
+		<module>trampoline-security-jwt-web</module>
+		<module>trampoline-security-jwt-autoconfigure</module>
+		<module>trampoline-security-jwt-starter</module>
+		<module>trampoline-starter</module>
+		<module>trampoline-security-abac</module>
+		<module>trampoline-security-abac-autoconfigure</module>
+		<module>trampoline-security-abac-starter</module>
+		<module>trampoline-asset-store</module>
+		<module>trampoline-asset-store-autoconfigure</module>
+		<module>trampoline-asset-store-starter</module>
+		<module>trampoline-security-logging</module>
+		<module>trampoline-security-logging-autoconfigure</module>
+		<module>trampoline-security-logging-starter</module>
+		<module>trampoline-web</module>
+		<module>trampoline-web-autoconfigure</module>
+		<module>trampoline-web-starter</module>
+	</modules>
+
 	<build>
 		<plugins>
 			<plugin>
