@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 public class ListResponseTest {
 
 	private List<String> expectedList;
+
 	private ListResponse listResponse;
 
 	@Before
@@ -63,4 +64,5 @@ public class ListResponseTest {
 	public void shouldSucceedIsEmpty_false() {
 		assertFalse("ListResponse#isEmpty should return false", listResponse.isEmpty());
 	}
+
 }

@@ -31,7 +31,8 @@ public class BigIntegerValueDtoTest {
 	public void shouldSucceedIsPositive_0() {
 		BigInteger value = new BigInteger("0");
 		BigIntegerValueDto dto = new BigIntegerValueDto(value);
-		assertTrue("Value should still be positive. See #isNonZeroPositive for > 0", dto.isPositive());
+		assertTrue("Value should still be positive. See #isNonZeroPositive for > 0",
+				dto.isPositive());
 	}
 
 	@Test
@@ -48,12 +49,12 @@ public class BigIntegerValueDtoTest {
 		assertFalse("Value should be negative.", dto.isPositive());
 	}
 
-
 	@Test
 	public void shouldSucceedIsNegative_0() {
 		BigInteger value = new BigInteger("0");
 		BigIntegerValueDto dto = new BigIntegerValueDto(value);
-		assertTrue("Value should still be negative. See #isNonZeroNegative for > 0", dto.isNegative());
+		assertTrue("Value should still be negative. See #isNonZeroNegative for > 0",
+				dto.isNegative());
 	}
 
 	@Test
@@ -125,5 +126,5 @@ public class BigIntegerValueDtoTest {
 		BigIntegerValueDto dto = new BigIntegerValueDto(value);
 		assertFalse("Value should be negative.", dto.isNonZeroNegative());
 	}
-	
+
 }

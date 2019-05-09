@@ -11,10 +11,12 @@ import static org.junit.Assert.*;
  * @since 5/9/19
  */
 public class DataResponseTest {
+
 	@Test
 	public void shouldSucceedGetData() {
 		String expected = "Trampoline testing string";
 		DataResponse dto = new DataResponse(expected);
 		assertEquals(expected, dto.getData());
 	}
+
 }

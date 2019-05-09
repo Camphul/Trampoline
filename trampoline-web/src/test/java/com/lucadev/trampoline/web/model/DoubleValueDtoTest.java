@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Model unit test.
- * 
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */
@@ -26,4 +26,5 @@ public class DoubleValueDtoTest {
 		dto.setValue(expected);
 		assertEquals(expected, dto.getValue(), 0);
 	}
+
 }

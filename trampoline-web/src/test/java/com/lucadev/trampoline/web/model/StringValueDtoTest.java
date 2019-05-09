@@ -26,4 +26,5 @@ public class StringValueDtoTest {
 		dto.setValue(expected);
 		assertEquals(expected, dto.getValue());
 	}
+
 }
