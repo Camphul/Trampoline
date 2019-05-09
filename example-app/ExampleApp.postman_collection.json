@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "f5c62c6b-a131-4c8e-add8-1872e02c95cd",
+		"name": "ExampleApp",
+		"description": "Collection to test the trampoline example application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/auth/authorize user@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"user\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"user@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email user@example.com"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/authorize joe@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"joe\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"joe@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email joe@example.com"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/authorize admin@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"admin\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"admin@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email admin@example.com"
+					},
+					"response": []
+				}
+			],
+			"description": "Authorization related requests",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99c0b85c-3c0c-4337-ae23-c684988b9a92",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "59bc6703-f7e7-40e4-91c7-f4302f42540c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"token value not null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).not.equal(null);",
+							"    ",
+							"    //Set auth_token to jwt",
+							"    pm.globals.set(\"auth_token\", jsonData.token);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/whoami",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f36ae2be-565d-4318-a309-89a45f5eaaf9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"username match auth_username\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.equal(pm.globals.get(\"auth_username\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/whoami",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"whoami"
+					]
+				},
+				"description": "Get /whoami"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d813a597-764d-45b6-b9f2-a5091f511960",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "df3f7b30-1658-407e-9f67-3fbb1876222e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e5d34c2e-89c4-4192-83a9-0040f3b97adb",
+			"key": "auth_password",
+			"value": "test",
+			"type": "string"
+		}
+	]
+}

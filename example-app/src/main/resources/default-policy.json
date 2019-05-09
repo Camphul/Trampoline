@@ -1,0 +1,16 @@
+{
+  "policies": [
+    {
+      "name": "User#WhoAmI",
+      "description": "Is the user allowed to access the GET /whoami endpoint?",
+      "target": "isAction('GET_WHO_AM_I')",
+      "condition": "hasAuthority('GET_WHO_AM_I')"
+    },
+    {
+      "name": "Web#Ping",
+      "description": "Is the user allowed to access the GET /ping endpoint?",
+      "target": "isAction('GET_PING_PROTECTED')",
+      "condition": "hasAuthority('GET_PING_PROTECTED')"
+    }
+  ]
+}
