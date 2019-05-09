@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Autoconfigure service for managing roles.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */

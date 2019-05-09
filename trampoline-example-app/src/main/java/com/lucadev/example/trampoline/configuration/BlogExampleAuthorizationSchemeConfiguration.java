@@ -3,6 +3,7 @@ package com.lucadev.example.trampoline.configuration;
 import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchemeBuilder;
 import com.lucadev.trampoline.security.configuration.AuthorizationSchemeConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * This is a Trampoline configuration implementation.
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
+@Profile("dev")
 @Configuration
 public class BlogExampleAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
 
@@ -21,11 +23,12 @@ public class BlogExampleAuthorizationSchemeConfiguration implements Authorizatio
 	 * Build the authorization scheme.
 	 *
 	 * @param builder please see {@link AuthorizationSchemeBuilder} for more information.
+	 * @return the builder.
 	 */
 	@Override
-	public void build(AuthorizationSchemeBuilder builder) {
+	public AuthorizationSchemeBuilder build(AuthorizationSchemeBuilder builder) {
 		//Wrap creation inside system authentication(you most likely wont need this for this purpose).
-		builder.wrapSystemAuthentication((wrappedBuilder) ->
+		return builder.wrapSystemAuthentication((wrappedBuilder) ->
 				//Create user role
 				wrappedBuilder.createRole("ROLE_USER").withPrivileges("GET_WHOAMI", "GET_PING_PROTECTED").buildAnd()
 						//Create admin role

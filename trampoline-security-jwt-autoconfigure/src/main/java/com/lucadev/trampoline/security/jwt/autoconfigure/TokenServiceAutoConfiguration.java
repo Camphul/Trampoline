@@ -34,8 +34,8 @@ public class TokenServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public TokenService tokenService() {
-		return new JwtTokenService(this.jwtConfiguration, this.timeProvider, this.userService,
-				this.jwtSecurityProperties);
+		return new JwtTokenService(this.jwtConfiguration, this.timeProvider,
+				this.userService, this.jwtSecurityProperties);
 	}
 
 }

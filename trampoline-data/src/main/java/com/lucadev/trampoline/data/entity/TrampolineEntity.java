@@ -85,10 +85,12 @@ public abstract class TrampolineEntity implements Serializable {
 		if (this.id != null ? !this.id.equals(that.id) : that.id != null) {
 			return false;
 		}
-		if (this.created != null ? !this.created.equals(that.created) : that.created != null) {
+		if (this.created != null ? !this.created.equals(that.created)
+				: that.created != null) {
 			return false;
 		}
-		return this.updated != null ? this.updated.equals(that.updated) : that.updated == null;
+		return this.updated != null ? this.updated.equals(that.updated)
+				: that.updated == null;
 
 	}
 

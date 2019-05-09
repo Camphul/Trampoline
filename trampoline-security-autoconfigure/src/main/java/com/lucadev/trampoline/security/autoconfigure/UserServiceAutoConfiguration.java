@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Autoconfigure userservice.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */

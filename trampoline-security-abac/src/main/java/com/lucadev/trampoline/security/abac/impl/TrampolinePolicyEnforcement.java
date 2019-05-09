@@ -52,8 +52,8 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 		// Get all policy rules
 		List<PolicyRule> allRules = this.policyContainer.findAllPolicyRules();
 		// Wrap the context
-		SecurityAccessContext cxt = this.securityAccessContextFactory.create(subject, resource,
-				action, environment);
+		SecurityAccessContext cxt = this.securityAccessContextFactory.create(subject,
+				resource, action, environment);
 		// Filter the rules according to context.
 		List<PolicyRule> matchedRules = filterRules(allRules, cxt);
 		// finally, check if any of the rules are satisfied, otherwise return false.
@@ -134,7 +134,8 @@ public class TrampolinePolicyEnforcement implements PolicyEnforcement {
 	}
 
 	/**
-	 * Evaluate a List of {@link PolicyRule} objects against the {@link SecurityAccessContext}.
+	 * Evaluate a List of {@link PolicyRule} objects against the
+	 * {@link SecurityAccessContext}.
 	 * @param matchedRules the rules to evaluate.
 	 * @param ctx the {@link SecurityAccessContext} to evaluate against
 	 * @return if the check passed.

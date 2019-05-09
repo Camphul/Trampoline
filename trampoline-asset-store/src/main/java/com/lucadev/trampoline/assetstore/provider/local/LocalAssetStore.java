@@ -84,8 +84,9 @@ public class LocalAssetStore extends AbstractAssetStore {
 	 */
 	@Override
 	public AssetMetaData getAssetMetaData(UUID id) {
-		return this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
-				"Could not find asset by specified id."));
+		return this.repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Could not find asset by specified id."));
 	}
 
 	/**

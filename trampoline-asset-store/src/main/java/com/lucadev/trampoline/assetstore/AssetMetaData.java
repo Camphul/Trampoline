@@ -48,7 +48,6 @@ public class AssetMetaData extends TrampolineEntity {
 
 	/**
 	 * Size of the binary file.
-	 *
 	 * @return {@link DataSize} as it's preferred in the newer Spring releases.
 	 */
 	public DataSize getDataSize() {
@@ -75,7 +74,8 @@ public class AssetMetaData extends TrampolineEntity {
 		if (this.name != null ? !this.name.equals(that.name) : that.name != null) {
 			return false;
 		}
-		if (this.originalFilename != null ? !this.originalFilename.equals(that.originalFilename)
+		if (this.originalFilename != null
+				? !this.originalFilename.equals(that.originalFilename)
 				: that.originalFilename != null) {
 			return false;
 		}
@@ -91,7 +91,8 @@ public class AssetMetaData extends TrampolineEntity {
 		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
 		result = 31 * result
 				+ (this.originalFilename != null ? this.originalFilename.hashCode() : 0);
-		result = 31 * result + (this.contentType != null ? this.contentType.hashCode() : 0);
+		result = 31 * result
+				+ (this.contentType != null ? this.contentType.hashCode() : 0);
 		result = 31 * result + (int) (this.fileSize ^ (this.fileSize >>> 32));
 		return result;
 	}

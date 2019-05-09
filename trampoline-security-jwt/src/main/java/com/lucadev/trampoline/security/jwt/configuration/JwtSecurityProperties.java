@@ -47,7 +47,8 @@ public class JwtSecurityProperties {
 	public static final String AUTH_PATH = "/auth";
 
 	/**
-	 * Errormessage that gets thrown when you try to modify this object through a setter method.
+	 * Errormessage that gets thrown when you try to modify this object through a setter
+	 * method.
 	 */
 	private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 

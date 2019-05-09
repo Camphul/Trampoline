@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Autoconfigure policy enforcer.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */

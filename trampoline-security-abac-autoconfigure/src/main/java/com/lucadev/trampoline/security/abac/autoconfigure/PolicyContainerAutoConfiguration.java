@@ -17,6 +17,7 @@ import java.io.IOException;
 
 /**
  * Autoconfigure container for policies.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */

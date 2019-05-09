@@ -37,8 +37,8 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 
 		environment.put("time", this.timeProvider.now());
 
-		boolean allowed = this.policyEnforcement.check(user, targetDomainObject, permission,
-				environment);
+		boolean allowed = this.policyEnforcement.check(user, targetDomainObject,
+				permission, environment);
 
 		if (!allowed) {
 			throw new AccessDeniedException("Principal is denied access to resource.");

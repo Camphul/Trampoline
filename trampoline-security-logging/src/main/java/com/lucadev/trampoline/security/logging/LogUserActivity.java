@@ -28,7 +28,8 @@ public @interface LogUserActivity {
 	boolean spel() default false;
 
 	/**
-	 * Should we still consider logging an activity when the method we log throws an exception.
+	 * Should we still consider logging an activity when the method we log throws an
+	 * exception.
 	 * @return true by default. To skip set to false.
 	 */
 	boolean logThrowables() default true;

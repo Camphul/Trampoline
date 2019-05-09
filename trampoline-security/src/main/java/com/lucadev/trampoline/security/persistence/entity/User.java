@@ -115,7 +115,8 @@ public class User extends TrampolineEntity implements UserDetails {
 
 		User user = (User) o;
 
-		return this.username != null ? this.username.equals(user.username) : user.username == null;
+		return this.username != null ? this.username.equals(user.username)
+				: user.username == null;
 
 	}
 

@@ -160,7 +160,8 @@ public final class AuthorizationSchemeBuilder {
 	 * @return the {@link Role} builder.
 	 */
 	public AuthorizationRoleBuilder createRole(String name) {
-		return new AuthorizationRoleBuilder(this, this.roleService, this.privilegeService, name);
+		return new AuthorizationRoleBuilder(this, this.roleService, this.privilegeService,
+				name);
 	}
 
 	/**
@@ -168,7 +169,8 @@ public final class AuthorizationSchemeBuilder {
 	 * @return the {@link Role} builder.
 	 */
 	public AuthorizationRoleBuilder createRole() {
-		return new AuthorizationRoleBuilder(this, this.roleService, this.privilegeService);
+		return new AuthorizationRoleBuilder(this, this.roleService,
+				this.privilegeService);
 	}
 
 }

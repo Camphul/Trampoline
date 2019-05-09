@@ -12,7 +12,6 @@ public abstract class AbstractAssetStore implements AssetStore {
 
 	/**
 	 * Remove an asset by the {@link AssetMetaData} id.
-	 *
 	 * @param id the {@link Asset} id
 	 * @see AssetStore#remove(UUID)
 	 */
@@ -23,7 +22,6 @@ public abstract class AbstractAssetStore implements AssetStore {
 
 	/**
 	 * Get an asset by the {@link AssetMetaData} id.
-	 *
 	 * @param id the meta data id of the asset
 	 * @return resolved {@link Asset} from {@link UUID}
 	 * @see AssetStore#getAsset(UUID)

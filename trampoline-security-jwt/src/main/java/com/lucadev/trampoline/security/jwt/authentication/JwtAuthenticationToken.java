@@ -76,8 +76,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	/**
-	 * Auth details, jwt token when authenticated.
-	 * Else {@code super.getDetails();}
+	 * Auth details, jwt token when authenticated. Else {@code super.getDetails();}
 	 * @return user details.
 	 */
 	@Override

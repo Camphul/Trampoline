@@ -7,6 +7,7 @@ package com.lucadev.trampoline.security.authentication;
  * @since 12-5-18
  */
 public enum IdentificationType {
+
 	/**
 	 * Identify/authorize using user username.
 	 */

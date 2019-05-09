@@ -28,8 +28,8 @@ public interface UserService extends UserDetailsService {
 	Optional<User> currentUser();
 
 	/**
-	 * Obtains the {@link User} from the current {@link Thread}.
-	 * Throws a {@link CurrentUserNotFoundException} when null.
+	 * Obtains the {@link User} from the current {@link Thread}. Throws a
+	 * {@link CurrentUserNotFoundException} when null.
 	 * @return currently active {@link User}
 	 */
 	User currentUserOrThrow();
