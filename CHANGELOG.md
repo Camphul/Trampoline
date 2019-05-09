@@ -17,6 +17,7 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - Added MapStruct library support
 - Added DataResponse to wrap response.
 - Added ListResponse to wrap list response.
+- Rewrite LogUserActivity and the mechanism behind it to make it easier to work with.
 
 ## 20190329
 
