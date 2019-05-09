@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Method parameter annotation to be used in controller methods. Maps a path variable to a
  * TrampolineEntity.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/7/19
  */
 @Target(ElementType.PARAMETER)

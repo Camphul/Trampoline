@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Wrapper for {@link List} to wrap data.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/7/19
  */
 @Getter

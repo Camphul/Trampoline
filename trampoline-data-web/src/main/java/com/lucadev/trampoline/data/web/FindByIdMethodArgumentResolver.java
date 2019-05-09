@@ -20,7 +20,7 @@ import java.util.UUID;
 /**
  * Resolves entity id to entity inside pathvariable.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/7/19
  */
 @RequiredArgsConstructor

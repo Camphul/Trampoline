@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * {@link AssetStoreFactory} implementation to provide {@link LocalAssetStore}.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/8/19
  */
 public class LocalAssetStoreFactory implements AssetStoreFactory {

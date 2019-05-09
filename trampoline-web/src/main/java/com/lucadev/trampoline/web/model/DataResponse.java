@@ -8,7 +8,7 @@ import lombok.ToString;
 /**
  * Response which wraps an object in a data field. Useful for returning lists and whatnot.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/7/19
  */
 @Getter

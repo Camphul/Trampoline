@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * Wrapper for handling method invocation for logging.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/8/19
  */
 @Data

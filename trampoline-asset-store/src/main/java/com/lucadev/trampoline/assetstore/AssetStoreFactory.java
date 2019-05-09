@@ -5,7 +5,7 @@ import org.springframework.beans.factory.FactoryBean;
 /**
  * Interface used to decide which {@link AssetStore} implementation to use.
  *
- * @author <a href="mailto:Luca.Camphuisen@hva.nl">Luca Camphuisen</a>
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/8/19
  */
 public interface AssetStoreFactory extends FactoryBean<AssetStore> {
