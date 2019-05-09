@@ -1,5 +1,3 @@
-# trampoline-core-autoconfigure
+# trampoline-asset-store-autoconfigure
 
-Autoconfigure trampoline-core if no custom configuration is presents.
-
-**WIP**
+Spring autoconfiguration for [trampoline-core](../trampoline-core)

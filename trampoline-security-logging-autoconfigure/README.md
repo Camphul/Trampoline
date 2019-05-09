@@ -1,3 +1,3 @@
-# trampoline-security-logging-autoconfig
+# trampoline-security-logging-autoconfigure
 
-Autconfigurations required for [trampoline-security-logging](../trampoline-security-logging)
+Autoconfiguration for [trampoline-security-logging](../trampoline-security-logging).

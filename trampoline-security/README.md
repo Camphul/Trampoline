@@ -27,7 +27,7 @@ It will probably cause conflicts if you try to add roles that already exist.
 
 ### Logging user activity
 
-Please make sure you have the `trampoline-security-logging-starter` if you wish to add `User` activity logging.
+Please make sure you have the [trampoline-security-logging-starter](../trampoline-security-logging-starter) if you wish to add `User` activity logging.
 To enable logging add the `@EnableUserActivityLogging` annotation.
 
 To log an activity add the `@LogUserActivity` above a method and specify the identifier, category and activity layer.

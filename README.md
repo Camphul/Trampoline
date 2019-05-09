@@ -1,7 +1,7 @@
 # Trampoline
 
 Trampoline is a collection of Spring Boot starters to develop Spring Boot REST API's even faster.
-This is achieved by providing even more opinionated services and standard implementations of Spring Boot starters(security, etc..).
+This is achieved by providing even more opinionated services and standard implementations of Spring framework modules(security, etc..).
 
 Trampoline still allows you to configure nearly everything by allowing you to override defaults(just like regular Spring Boot starts).
 The defaults are based off of my requirements(Camphul) and may not fit your needs.
@@ -11,12 +11,13 @@ The defaults are based off of my requirements(Camphul) and may not fit your need
 Please read the documentation for a full list of features. I'll try to summarize them here:
 
 - Prewritten POJO/DTOs
-- Databased backed spring security implementation
+- Database backed spring security implementation
 - Base entity with auditing and UUID id's
 - Attribute based access control using SPeL and custom authorize annotations such as `@PrePolicy`, `@PostPolicy` `@PolicyResource`
 - Map path variables directly to entities using `@FindById`
-- Easily setup roles
+- Easily setup roles and privileges
 - Implement JWT auth without any code
+- Log user activity using `@LogUserActivity`
 - Lots more to make everything easier
 
 ## Getting started

@@ -1,7 +1,3 @@
 # trampoline-data-web
 
-Add components to integrate trampoline-data easier with web services.
-
-## Automatic entity resolve
-
-Add `@FindById` to your requestmapping method to direct map a path variable to an entity.
+Extension module for [trampoline-data](../trampoline-data) which adds components for the web-layer.

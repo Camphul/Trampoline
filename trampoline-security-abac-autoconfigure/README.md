@@ -1,3 +1,3 @@
 # trampoline-security-abac-autoconfigure
 
-Autoconfigurations for trampoline-security-abac
+Autoconfiguration for [trampoline-security-abac](../trampoline-security-abac).

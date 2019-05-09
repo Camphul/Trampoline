@@ -60,4 +60,4 @@ We have implemented our own security annotations which are comparable to `PreAut
 These annotations use Spring AoP to check the permissions using the built in `PermissionEvaluator`.
 
 To set a resource for a policy please add the `@PolicyResource` annotation to a parameter.
-This works great with `@FindById` inside `trampoline-data-web`.
+This works great with `@FindById` inside [trampoline-data-web](../trampoline-data-web)

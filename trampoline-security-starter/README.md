@@ -1,3 +1,3 @@
 # trampoline-security-starter
 
-Combines the autoconfigurations for security with the unopinionated trampoline-security.
+Spring starter module for [trampoline-security](../trampoline-security)

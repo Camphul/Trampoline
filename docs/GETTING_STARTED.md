@@ -1,17 +1,17 @@
 # Getting Started
 
-Prequisites:
+Prerequisites:
 * Maven
 * Git 
 * Java 8
 
 ## Import into your project
 
-Please check the [example pom](../trampoline-example-app/pom.xml).
+Please check the [trampoline-example-app/pom.xml](../trampoline-example-app/pom.xml).
 
 As you can see you require the trampoline starter dependency. This dependency adds all of the trampoline starters.
 
-Trampoline is built upon `Spring Boot 2.1.3-RELEASE`
+Trampoline is built upon `Spring Boot 2.1.4-RELEASE`
 
 ```xml
 <dependency>
@@ -45,6 +45,8 @@ public class TrampolineApplication {
 
 }
 ```
+
+If you wish to use [trampoline-security-logging](../trampoline-security-logging) you must also add the `@EnableUserActivityLogging` annotation on your class.
 
 ## Configuration requirements
 
