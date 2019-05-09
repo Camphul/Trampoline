@@ -84,6 +84,11 @@ public class UserActivityLoggingAspect {
 		ActivityMethodInvocationResult result = runWrappedMethod(joinPoint);
 
 		String description = logUserActivity.value();
+		//Description was not filled in
+		if("".equals(description)) {
+			description = method.getDeclaringClass().getSimpleName() + "#" + method.getName();
+		}
+
 		if (logUserActivity.spel()) {
 			description = evaluateSpelDescription(description, argumentMap);
 		}

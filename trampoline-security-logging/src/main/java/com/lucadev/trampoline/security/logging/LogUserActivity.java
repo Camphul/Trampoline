@@ -19,7 +19,7 @@ public @interface LogUserActivity {
 	 * Activity description.
 	 * @return string representation of the activity that has executed.
 	 */
-	String value();
+	String value() default "";
 
 	/**
 	 * The {@link #value()} is a SPeL expression which needs to be evaluated.
