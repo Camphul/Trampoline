@@ -8,4 +8,4 @@ To enable this feature please add the `@EnableUserActivityLogging` annotation to
 
 trampoline-security-logging works based on the AoP principle(aspect oriented programming).
 
-blablalba
+Use `@LogUserActivity` and write readable descriptions in spel. The arguments are available as variables and more.

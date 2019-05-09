@@ -6,20 +6,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simple {@link UserActivityHandler} which logs info.
+ * Simple {@link UserActivityHandler} which logs activities.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
  */
 public class LogUserActivityHandler implements UserActivityHandler {
 
-	private static final Logger LOG = LoggerFactory.getLogger(LogUserActivityHandler.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(LogUserActivityHandler.class);
 
 	@Override
 	public void handleUserActivity(UserActivity userActivity) {
 		UserActivityInvocationDetails context = userActivity.getInvocationDetails();
-		LOG.debug("{}: {}#{} {}::{} {} {}ms", userActivity.getPrincipal().getId(), context.getClassName(),
-				context.getMethodName(), userActivity.getCategory(), userActivity.getIdentifier(),
-				userActivity.getDescription(), (context.getInvocationEnd()-context.getInvocationStart()));
+		String activityContextClass = userActivity.getActedUpon() != null
+				? userActivity.getActedUpon().getClass().getName()
+				: "No activity context";
+		LOG.debug("{}: {}#{} {} :: {} {}ms", userActivity.getPrincipal().getId(),
+				context.getClassName(), context.getMethodName(), activityContextClass,
+				userActivity.getDescription(),
+				(context.getInvocationEnd() - context.getInvocationStart()));
 	}
+
 }

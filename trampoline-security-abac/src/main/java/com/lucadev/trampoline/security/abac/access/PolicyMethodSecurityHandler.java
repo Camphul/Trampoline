@@ -13,16 +13,16 @@ public interface PolicyMethodSecurityHandler {
 
 	/**
 	 * Get triggered before method body executes.
-	 *
 	 * @param joinPoint before {@link JoinPoint}
 	 */
 	void handlePrePolicy(JoinPoint joinPoint);
 
 	/**
 	 * Gets triggered around the method body and acts accordingly.
-	 *
 	 * @param joinPoint between {@link ProceedingJoinPoint}
 	 * @return return value.
+	 * @throws Throwable when the invoked method throws an exception.
 	 */
 	Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable;
+
 }

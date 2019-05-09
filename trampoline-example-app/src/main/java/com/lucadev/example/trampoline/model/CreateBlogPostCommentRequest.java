@@ -21,7 +21,7 @@ public class CreateBlogPostCommentRequest {
 
 	@NotBlank
 	@NotNull
-	@Size(min=2, max=1024)
-    private String content;
+	@Size(min = 2, max = 1024)
+	private String content;
 
 }

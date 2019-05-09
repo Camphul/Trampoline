@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
 /**
- * Asset meta data
+ * Asset meta data entity which acts as a reference to the binary data.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
@@ -26,56 +26,75 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class AssetMetaData extends TrampolineEntity {
 
-    @Setter
+	@Setter
 	@NotBlank
 	@NotEmpty
-    @Column(name = "asset_name", nullable = false)
-    private String name;
+	@Column(name = "asset_name", nullable = false)
+	private String name;
 
-    @NotBlank
+	@NotBlank
 	@NotEmpty
-    @Column(name = "original_filename", nullable = false)
-    private String originalFilename;
+	@Column(name = "original_filename", nullable = false)
+	private String originalFilename;
 
-    @NotBlank
+	@NotBlank
 	@NotEmpty
-    @Column(name = "content_type")
-    private String contentType;
+	@Column(name = "content_type")
+	private String contentType;
 
-    @Positive
-    @Column(name = "file_size")
-    private long fileSize;
+	@Positive
+	@Column(name = "file_size")
+	private long fileSize;
 
-    /**
-     * @return {@link DataSize} as it's preferred in the newer Spring releases.
-     */
-    public DataSize getDataSize() {
-        return DataSize.ofBytes(getFileSize());
-    }
+	/**
+	 * Size of the binary file.
+	 * @return {@link DataSize} as it's preferred in the newer Spring releases.
+	 */
+	public DataSize getDataSize() {
+		return DataSize.ofBytes(getFileSize());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AssetMetaData)) return false;
-        if (!super.equals(o)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof AssetMetaData)) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
 
-        AssetMetaData that = (AssetMetaData) o;
+		AssetMetaData that = (AssetMetaData) o;
 
-        if (fileSize != that.fileSize) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (originalFilename != null ? !originalFilename.equals(that.originalFilename) : that.originalFilename != null)
-            return false;
-        return contentType != null ? contentType.equals(that.contentType) : that.contentType == null;
+		if (this.fileSize != that.fileSize) {
+			return false;
+		}
+		if (this.name != null ? !this.name.equals(that.name) : that.name != null) {
+			return false;
+		}
+		if (this.originalFilename != null
+				? !this.originalFilename.equals(that.originalFilename)
+				: that.originalFilename != null) {
+			return false;
+		}
 
-    }
+		return this.contentType != null ? this.contentType.equals(that.contentType)
+				: that.contentType == null;
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (originalFilename != null ? originalFilename.hashCode() : 0);
-        result = 31 * result + (contentType != null ? contentType.hashCode() : 0);
-        result = 31 * result + (int) (fileSize ^ (fileSize >>> 32));
-        return result;
-    }
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
+		result = 31 * result
+				+ (this.originalFilename != null ? this.originalFilename.hashCode() : 0);
+		result = 31 * result
+				+ (this.contentType != null ? this.contentType.hashCode() : 0);
+		result = 31 * result + (int) (this.fileSize ^ (this.fileSize >>> 32));
+		return result;
+	}
+
 }

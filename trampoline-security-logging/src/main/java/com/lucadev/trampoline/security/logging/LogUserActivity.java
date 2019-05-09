@@ -1,14 +1,12 @@
 package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.logging.resolver.DefaultUserActivityResolver;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation will trigger a {@link com.lucadev.trampoline.security.logging.handler.UserActivityHandler}
+ * This annotation will log activity to a handler.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3/9/19
@@ -18,27 +16,22 @@ import java.lang.annotation.Target;
 public @interface LogUserActivity {
 
 	/**
-	 * The identifier which discloses which type of activity it is.
-	 * @return activity identifier.
+	 * Activity description.
+	 * @return string representation of the activity that has executed.
 	 */
-	String value();
+	String value() default "";
 
 	/**
-	 * Category the log should be submitted to.
-	 * @return activity category.
+	 * The {@link #value()} is a SPeL expression which needs to be evaluated.
+	 * @return false by default. To use spel expressions set this to true.
 	 */
-	String category() default "logs";
+	boolean spel() default false;
 
 	/**
-	 * In which layer is this annotation place.
-	 * @return activity layer.
+	 * Should we still consider logging an activity when the method we log throws an
+	 * exception.
+	 * @return true by default. To skip set to false.
 	 */
-	ActivityLayer layer() default ActivityLayer.UNDEFINED;
-
-	/**
-	 * Resolver for user activity message.
-	 * @return resolver for the message.
-	 */
-	Class<? extends UserActivityResolver> resolver() default DefaultUserActivityResolver.class;
+	boolean logThrowables() default true;
 
 }

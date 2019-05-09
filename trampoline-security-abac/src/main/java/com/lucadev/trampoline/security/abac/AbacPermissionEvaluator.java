@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.abac;
 
-import com.lucadev.trampoline.security.abac.policy.PolicyEnforcement;
 import org.springframework.security.access.PermissionEvaluator;
 
 /**
@@ -13,8 +12,8 @@ public interface AbacPermissionEvaluator extends PermissionEvaluator {
 
 	/**
 	 * Get the policy enforcement being used by the evaluator.
-	 *
 	 * @return a {@link PolicyEnforcement}
 	 */
 	PolicyEnforcement getPolicyEnforcement();
+
 }

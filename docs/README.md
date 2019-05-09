@@ -7,7 +7,7 @@
 Please reference the following modules for documentation:
 
 - [trampoline-asset-store](../trampoline-asset-store)
-- [trampoline-common](../trampoline-common)
+- [trampoline-core](../trampoline-core)
 - [trampoline-data](../trampoline-data)
 - [trampoline-security](../trampoline-security)
 - [trampoline-security-abac](../trampoline-security-abac)
@@ -19,7 +19,7 @@ Please reference the following modules for documentation:
 ## Javadoc
 
 - [trampoline-asset-store](https://lucadev.com/trampoline/docs/trampoline-asset-store)
-- [trampoline-common](https://lucadev.com/trampoline/docs/trampoline-common)
+- [trampoline-core](https://lucadev.com/trampoline/docs/trampoline-core)
 - [trampoline-data](https://lucadev.com/trampoline/docs/trampoline-data)
 - [trampoline-security](https://lucadev.com/trampoline/docs/trampoline-security)
 - [trampoline-security-abac](https://lucadev.com/trampoline/docs/trampoline-security-abac)
@@ -42,11 +42,7 @@ Other properties being used are:
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
 - `trampoline.security.abac.policy.definition.json.filepath`: define which json file to load policy from for trampoline-security-abac
 - `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
-- `trampoline.security.authorization.schema.run.configuration`: should we run the `AuthorizationSchemaConfiguration`, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
-- `trampoline.security.jwt.signingAlgorithm`: algorithm used to sign, default is HS512
-- `trampoline.security.jwt.tokenHeader`: header containing token, default is Authorization
-- `trampoline.security.jwt.tokenHeaderPrefix`: Prefix before jwt, default is Bearer
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
 

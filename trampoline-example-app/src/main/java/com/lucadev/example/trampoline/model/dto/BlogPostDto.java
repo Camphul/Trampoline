@@ -18,21 +18,21 @@ import java.util.UUID;
 @ToString
 public class BlogPostDto {
 
-    private final UUID id;
-    private final String title;
-    private final String content;
-    private final Date created;
-    private final Date updated;
-    private final UserSummaryDto author;
-    private final Page<BlogPostCommentDto> comments;
+	private final UUID id;
+	private final String title;
+	private final String content;
+	private final Date created;
+	private final Date updated;
+	private final UserSummaryDto author;
+	private final Page<BlogPostCommentDto> comments;
 
-    public BlogPostDto(BlogPost blogPost, Page<BlogPostCommentDto> comments) {
-        this.id = blogPost.getId();
-        this.title = blogPost.getTitle();
-        this.content = blogPost.getContent();
-        this.author = new UserSummaryDto(blogPost.getAuthor());
-        this.created = blogPost.getCreated();
-        this.updated = blogPost.getUpdated();
-        this.comments = comments;
-    }
+	public BlogPostDto(BlogPost blogPost, Page<BlogPostCommentDto> comments) {
+		this.id = blogPost.getId();
+		this.title = blogPost.getTitle();
+		this.content = blogPost.getContent();
+		this.author = new UserSummaryDto(blogPost.getAuthor());
+		this.created = blogPost.getCreated();
+		this.updated = blogPost.getUpdated();
+		this.comments = comments;
+	}
 }

@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>trampoline-parent</artifactId>
-        <groupId>com.lucadev.trampoline</groupId>
-        <version>20190329</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>trampoline-parent</artifactId>
+		<groupId>com.lucadev.trampoline</groupId>
+		<version>20190507</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trampoline-security-jwt</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>A trampoline starter module</description>
-    <url>https://github.com/Camphul/Trampoline</url>
-    <properties>
-        <jjwt.version>0.9.0</jjwt.version>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.lucadev.trampoline</groupId>
-            <artifactId>trampoline-security</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
-        </dependency>
-    </dependencies>
+	<artifactId>trampoline-security-jwt</artifactId>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>A trampoline starter module</description>
+	<url>https://github.com/Camphul/Trampoline</url>
+	<properties>
+		<jjwt.version>0.10.5</jjwt.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
 
 </project>

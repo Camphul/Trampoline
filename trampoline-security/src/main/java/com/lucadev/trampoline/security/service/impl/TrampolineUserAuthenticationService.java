@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.service.impl;
 
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -18,47 +18,51 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class TrampolineUserAuthenticationService implements UserAuthenticationService {
 
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+	private final UserService userService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isPassword(User user, String password) {
-        return passwordEncoder.matches(password, user.getPassword());
-    }
+	private final PasswordEncoder passwordEncoder;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public User changePassword(User user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
-        return userService.update(user);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isPassword(User user, String password) {
+		return this.passwordEncoder.matches(password, user.getPassword());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void validateUserState(User user) {
-        if (!user.isEnabled()) {
-            throw new DisabledException("Could not authorize user because the account is disabled.");
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User changePassword(User user, String newPassword) {
+		user.setPassword(this.passwordEncoder.encode(newPassword));
+		return this.userService.update(user);
+	}
 
-        if (!user.isAccountNonExpired()) {
-            throw new AccountExpiredException("Could not authorize user because the account is expired.");
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void validateUserState(User user) {
+		if (!user.isEnabled()) {
+			throw new DisabledException(
+					"Could not authorize user because the account is disabled.");
+		}
 
-        if (!user.isCredentialsNonExpired()) {
-            throw new AccountExpiredException("Could not authorize user because the credentials are expired.");
-        }
+		if (!user.isAccountNonExpired()) {
+			throw new AccountExpiredException(
+					"Could not authorize user because the account is expired.");
+		}
 
-        if (!user.isAccountNonLocked()) {
-            throw new LockedException("Could not authorize user because the account is locked.");
-        }
-    }
+		if (!user.isCredentialsNonExpired()) {
+			throw new AccountExpiredException(
+					"Could not authorize user because the credentials are expired.");
+		}
 
+		if (!user.isAccountNonLocked()) {
+			throw new LockedException(
+					"Could not authorize user because the account is locked.");
+		}
+	}
 
 }

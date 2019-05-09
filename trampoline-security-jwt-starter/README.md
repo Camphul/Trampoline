@@ -1,3 +1,3 @@
 # trampoline-security-jwt-starter
 
-Enable JWT using trampoline-security
+Spring starter module for [trampoline-security-jwt](../trampoline-security-jwt)

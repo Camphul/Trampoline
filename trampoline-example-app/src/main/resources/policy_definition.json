@@ -34,7 +34,7 @@
       "name": "View blogpost",
       "description": "View GET /blogs/{id}",
       "target": "isAction('BLOGPOST_VIEW')",
-      "condition": "hasRole('ROLE_USER')"
+      "condition": "resource.author.id == subject.id"
     },
     {
       "name": "Delete blogpost",

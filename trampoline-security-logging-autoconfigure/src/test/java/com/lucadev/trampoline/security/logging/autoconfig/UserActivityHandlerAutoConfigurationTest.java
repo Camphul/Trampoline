@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
@@ -38,7 +38,8 @@ public class UserActivityHandlerAutoConfigurationTest {
 		this.context.register(UserActivityHandlerAutoConfiguration.class);
 		this.context.refresh();
 
-		UserActivityHandler userActivityHandler = context.getBean(UserActivityHandler.class);
+		UserActivityHandler userActivityHandler = context
+				.getBean(UserActivityHandler.class);
 
 		assertThat(userActivityHandler, instanceOf(LogUserActivityHandler.class));
 	}
@@ -49,17 +50,20 @@ public class UserActivityHandlerAutoConfigurationTest {
 		this.context.register(UserActivityHandlerAutoConfiguration.class);
 		this.context.refresh();
 
-		UserActivityHandler userActivityHandler = context.getBean(UserActivityHandler.class);
+		UserActivityHandler userActivityHandler = context
+				.getBean(UserActivityHandler.class);
 
 		assertThat(userActivityHandler, instanceOf(CustomUserActivityHandler.class));
 	}
 
 	@Configuration
 	protected static class CustomUserActivityHandlerConfig {
+
 		@Bean
 		public UserActivityHandler userActivityHandler() {
 			return new CustomUserActivityHandler();
 		}
+
 	}
 
 	protected static class CustomUserActivityHandler implements UserActivityHandler {
@@ -68,6 +72,7 @@ public class UserActivityHandlerAutoConfigurationTest {
 		public void handleUserActivity(UserActivity userActivity) {
 
 		}
+
 	}
 
 }

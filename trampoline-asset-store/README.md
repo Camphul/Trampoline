@@ -1,9 +1,6 @@
 # trampoline-asset-store
 
-Bridge to store assets(blobs, files, images, etc...). Goal is to easily switch between cloud providers(or local storage).
-
-Metadata on assets is stored through JPA(using trampoline-data)
-
+AssetStore provides a mechanism implement file uploads and binary files in RESTful API's.
 
 ## Architecture
 

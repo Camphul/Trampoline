@@ -10,7 +10,7 @@ ABAC allows you to easily implement row-level security. This is partly done usin
 This module expands on trampoline-security by adding the following core components:
 
 - `PolicyRule`: the rule which is applied against the `User`. `PolicyRule` is a `TrampolineEntity` but can also be stored in other formats if required.
-- `PolicyDefinition`: interface to manage `PolicyRule` objects
+- `PolicyContainer`: interface to manage `PolicyRule` objects
 - `PolicyEnforcement`: check methods to see if a `User` complies with a `PolicyRule`
 
 A `PolicyRule` consists of the following attributes:
@@ -49,7 +49,7 @@ We have the following objects/methods available inside SpEL expressions:
 - `subject`: the person who triggered the rule to fire
 - `resource`: the resource to check against(is the subject the owner of the resource?)
 - `action`: the action being taken place(DELETE_BLOG, VIEW_USER, etc.. All defined in the service or controller layer).
-- `environment`: probably not too important
+- `environment`: in the case of `@PrePolicy` or `@PostPolicy` it contains the method arguments in a map.
 - `isAction(action)`: equality method for the action object.
 
 The `hasAuthority` method is built into Spring and will check if a Privilege/Role from trampoline-security is present.
@@ -58,3 +58,6 @@ The `hasAuthority` method is built into Spring and will check if a Privilege/Rol
 
 We have implemented our own security annotations which are comparable to `PreAuthorize` and `PostAuthorize`.
 These annotations use Spring AoP to check the permissions using the built in `PermissionEvaluator`.
+
+To set a resource for a policy please add the `@PolicyResource` annotation to a parameter.
+This works great with `@FindById` inside [trampoline-data-web](../trampoline-data-web)

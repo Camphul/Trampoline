@@ -4,6 +4,7 @@ import com.lucadev.trampoline.assetstore.AbstractAssetStore;
 import com.lucadev.trampoline.assetstore.Asset;
 import com.lucadev.trampoline.assetstore.AssetMetaData;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
+import com.lucadev.trampoline.data.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 
@@ -15,84 +16,91 @@ import java.util.UUID;
 /**
  * An AssetStore implementation which operates on the local file system.
  *
- * @see com.lucadev.trampoline.assetstore.AssetStore
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
+ * @see com.lucadev.trampoline.assetstore.AssetStore
  * @since 9-6-18
  */
 @AllArgsConstructor
 public class LocalAssetStore extends AbstractAssetStore {
 
-    private final String storageDirectory;
-    private final AssetMetaDataRepository repository;
+	private final String storageDirectory;
 
-	/**
-	 * {@inheritDoc}
-	 */
-    @Override
-    public AssetMetaData put(byte[] data, AssetMetaData assetMetaData) {
-        assetMetaData = repository.save(assetMetaData);
-        FileSystemResource resource = getFileSystemResource(assetMetaData);
-        try {
-            resource.getOutputStream().write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return assetMetaData;
-    }
+	private final AssetMetaDataRepository repository;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-    public Asset getAsset(AssetMetaData assetMetaData) {
-        FileSystemResource resource = getFileSystemResource(assetMetaData);
-        try {
-            long size = assetMetaData.getFileSize();
-            byte[] assetData = new byte[(int) size];
-
-            InputStream is = resource.getInputStream();
-            DataInputStream dis = new DataInputStream(is);
-
-            dis.readFully(assetData);
-
-            return new Asset(assetData, assetMetaData);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not load asset", e);
-        }
-    }
+	public AssetMetaData put(byte[] data, AssetMetaData assetMetaData) {
+		assetMetaData = this.repository.save(assetMetaData);
+		FileSystemResource resource = getFileSystemResource(assetMetaData);
+		try {
+			resource.getOutputStream().write(data);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return assetMetaData;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-    public void remove(AssetMetaData assetMetaData) {
-        FileSystemResource resource = getFileSystemResource(assetMetaData);
-        if (resource.getFile().delete()) {
-            repository.delete(assetMetaData);
-        } else {
-            throw new RuntimeException("Could not delete asset(no permission to fs?)");
-        }
-    }
+	public Asset getAsset(AssetMetaData assetMetaData) {
+		FileSystemResource resource = getFileSystemResource(assetMetaData);
+		try {
+			long size = assetMetaData.getFileSize();
+			byte[] assetData = new byte[(int) size];
+
+			InputStream is = resource.getInputStream();
+			DataInputStream dis = new DataInputStream(is);
+
+			dis.readFully(assetData);
+
+			return new Asset(assetData, assetMetaData);
+		}
+		catch (IOException e) {
+			throw new RuntimeException("Could not load asset", e);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-    public AssetMetaData getAssetMetaData(UUID id) {
-        return repository.findById(id).orElse(null);
-    }
+	public void remove(AssetMetaData assetMetaData) {
+		FileSystemResource resource = getFileSystemResource(assetMetaData);
+		if (resource.getFile().delete()) {
+			this.repository.delete(assetMetaData);
+		}
+		else {
+			throw new RuntimeException("Could not delete asset(no permission to fs?)");
+		}
+	}
 
-    /**
-     * Get the actual asset file from metadata.
-     *
-     * @param assetMetaData the metadata to obtain file info for
-     * @return file resource resolved through the metadata.
-     */
-    private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
-        UUID id = assetMetaData.getId();
-        if (id == null) {
-            throw new IllegalArgumentException("Cannot find asset which has not been saved yet.");
-        }
-        return new FileSystemResource(storageDirectory + id.toString());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AssetMetaData getAssetMetaData(UUID id) {
+		return this.repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(
+						"Could not find asset by specified id."));
+	}
+
+	/**
+	 * Get the actual asset file from metadata.
+	 * @param assetMetaData the metadata to obtain file info for
+	 * @return file resource resolved through the metadata.
+	 */
+	private FileSystemResource getFileSystemResource(AssetMetaData assetMetaData) {
+		UUID id = assetMetaData.getId();
+		if (id == null) {
+			throw new IllegalArgumentException(
+					"Cannot find asset which has not been saved yet.");
+		}
+		return new FileSystemResource(this.storageDirectory + id.toString());
+	}
+
 }

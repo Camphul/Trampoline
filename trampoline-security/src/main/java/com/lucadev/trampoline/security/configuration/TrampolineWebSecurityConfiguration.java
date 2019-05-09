@@ -28,47 +28,50 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 @Order(TRAMPOLINE_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    /**
-     * The {@link Order} of this configuration, not 100 to allow default config
-     */
-    public static final int TRAMPOLINE_SECURITY_CONFIGURATION_ORDER = 95;
-    private final boolean debug;
+	/**
+	 * The {@link Order} of this configuration, not 100 to allow default config.
+	 */
+	public static final int TRAMPOLINE_SECURITY_CONFIGURATION_ORDER = 95;
 
-    /**
-     * Construct configuration
-     *
-     * @param debug if we should enable debug on websecurity
-     */
-    public TrampolineWebSecurityConfiguration(@Value("${trampoline.debug.spring.security:false}") boolean debug) {
-        this.debug = debug;
-    }
+	private final boolean debug;
 
-    @Override
-    public void init(WebSecurity web) throws Exception {
-        web.debug(debug);
-        super.init(web);
-    }
+	/**
+	 * Construct configuration.
+	 * @param debug if we should enable debug on websecurity
+	 */
+	public TrampolineWebSecurityConfiguration(
+			@Value("${trampoline.debug.spring.security:false}") boolean debug) {
+		this.debug = debug;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Autowired
-    protected void initAuthenticationManager(AuthenticationManagerBuilder auth, UserService userService,
-                                             PasswordEncoder passwordEncoder) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
-    }
+	@Override
+	public void init(WebSecurity web) throws Exception {
+		web.debug(this.debug);
+		super.init(web);
+	}
 
-    /**
-     * Bean for the global {@link AuthenticationManager}
-     *
-     * @param builder the auth builder.
-     * @return auth manager.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) {
-        return authentication -> builder.getOrBuild().authenticate(authentication);
-    }
+	/**
+	 * Configure authentication manager.
+	 * @param auth builder for the manager.
+	 * @param userService user service.
+	 * @param passwordEncoder encoder for passwords.
+	 * @throws Exception when we couldn't build the auth manager.
+	 */
+	@Autowired
+	protected void initAuthenticationManager(AuthenticationManagerBuilder auth,
+			UserService userService, PasswordEncoder passwordEncoder) throws Exception {
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+	}
 
+	/**
+	 * Bean for the global {@link AuthenticationManager}
+	 * @param builder the auth builder.
+	 * @return auth manager.
+	 */
+	@Bean
+	public AuthenticationManager authenticationManager(
+			AuthenticationManagerBuilder builder) {
+		return authentication -> builder.getOrBuild().authenticate(authentication);
+	}
 
 }

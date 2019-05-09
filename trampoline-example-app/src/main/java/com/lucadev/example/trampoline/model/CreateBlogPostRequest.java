@@ -21,11 +21,11 @@ public class CreateBlogPostRequest {
 
 	@NotBlank
 	@NotNull
-	@Size(min=2, max=32)
-    private String title;
+	@Size(min = 2, max = 32)
+	private String title;
 	@NotBlank
 	@NotNull
-	@Size(min=2, max=1024)
-    private String content;
+	@Size(min = 2, max = 1024)
+	private String content;
 
 }

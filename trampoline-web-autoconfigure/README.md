@@ -1,3 +1,3 @@
 # trampoline-web-autoconfigure
 
-Autoconfig for [trampoline-web](../trampoline-web)
+Autoconfiguration for [trampoline-web](../trampoline-web).

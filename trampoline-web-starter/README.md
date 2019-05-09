@@ -1,3 +1,3 @@
 # trampoline-web-starter
 
-Combines [trampoline-web](../trampoline-web) with [trampoline-web-autoconfigure](../trampoline-web-autoconfigure)
+Combines [trampoline-web](../trampoline-web-rest) with [trampoline-web-autoconfigure](../trampoline-web-autoconfigure)

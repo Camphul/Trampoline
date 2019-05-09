@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
- * Autoconfigure the auth entry point to our jwt one
+ * Autoconfigure the auth entry point to our jwt one.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
@@ -17,10 +17,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @ConditionalOnClass(AuthenticationEntryPoint.class)
 public class JwtAuthenticationEntryPointAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return new JwtAuthenticationEntryPoint();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return new JwtAuthenticationEntryPoint();
+	}
 
 }

@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
+ * Autconfigure password encoder to use bcrypt be default.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
@@ -15,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ConditionalOnClass(PasswordEncoder.class)
 public class PasswordEncoderAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }

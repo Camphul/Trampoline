@@ -20,40 +20,44 @@ import static org.junit.Assert.*;
  */
 public class AssetResponseHttpMessageConverterTest {
 
-    private AssetResponseHttpMessageConverter conv;
-    private Asset asset;
+	private AssetResponseHttpMessageConverter conv;
 
-    @Before
-    public void setUp() {
-        conv = new AssetResponseHttpMessageConverter();
-        byte[] content = "hello world".getBytes();
-        AssetMetaData assetMetaData = new AssetMetaData("hello.txt", "hello.txt", MediaType.TEXT_PLAIN_VALUE, content.length);
-        asset = new Asset(content, assetMetaData);
-    }
+	private Asset asset;
 
-    @After
-    public void tearDown() {
-        conv = null;
-        asset = null;
-    }
+	@Before
+	public void setUp() {
+		conv = new AssetResponseHttpMessageConverter();
+		byte[] content = "hello world".getBytes();
+		AssetMetaData assetMetaData = new AssetMetaData("hello.txt", "hello.txt",
+				MediaType.TEXT_PLAIN_VALUE, content.length);
+		asset = new Asset(content, assetMetaData);
+	}
 
-    @Test
-    public void shouldCanWriteTrue() {
-        assertTrue(conv.canWrite(AssetResponse.class, null));
-    }
+	@After
+	public void tearDown() {
+		conv = null;
+		asset = null;
+	}
 
-    @Test
-    public void shouldCanWriteFalse() {
-        assertFalse(conv.canWrite(AssetStore.class, null));
-    }
+	@Test
+	public void shouldCanWriteTrue() {
+		assertTrue(conv.canWrite(AssetResponse.class, null));
+	}
 
-    @Test
-    public void shouldSucceedWrite() throws IOException {
-        AssetResponse assetResponse = new AssetResponse(asset);
-        MockHttpOutputMessage outputMessage = new MockHttpOutputMessage();
-        conv.write(assetResponse, MediaType.TEXT_PLAIN, outputMessage);
-        assertEquals(asset.getMetaData().getContentType(), outputMessage.getHeaders().getContentType().toString());
-        assertTrue(outputMessage.getHeaders().getAccept().contains(MediaType.TEXT_PLAIN));
-        assertArrayEquals(asset.getData(), outputMessage.getBodyAsBytes());
-    }
+	@Test
+	public void shouldCanWriteFalse() {
+		assertFalse(conv.canWrite(AssetStore.class, null));
+	}
+
+	@Test
+	public void shouldSucceedWrite() throws IOException {
+		AssetResponse assetResponse = new AssetResponse(asset);
+		MockHttpOutputMessage outputMessage = new MockHttpOutputMessage();
+		conv.write(assetResponse, MediaType.TEXT_PLAIN, outputMessage);
+		assertEquals(asset.getMetaData().getContentType(),
+				outputMessage.getHeaders().getContentType().toString());
+		assertTrue(outputMessage.getHeaders().getAccept().contains(MediaType.TEXT_PLAIN));
+		assertArrayEquals(asset.getData(), outputMessage.getBodyAsBytes());
+	}
+
 }

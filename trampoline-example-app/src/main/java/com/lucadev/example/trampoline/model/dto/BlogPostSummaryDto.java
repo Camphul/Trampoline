@@ -17,16 +17,16 @@ import java.util.UUID;
 @ToString
 public class BlogPostSummaryDto {
 
-    private final UUID id;
-    private final UserSummaryDto author;
-    private final String title;
-    private final Date created;
+	private final UUID id;
+	private final UserSummaryDto author;
+	private final String title;
+	private final Date created;
 
-    public BlogPostSummaryDto(BlogPost blogPost) {
-        this.id = blogPost.getId();
-        this.author = new UserSummaryDto(blogPost.getAuthor());
-        this.title = blogPost.getTitle();
-        this.created = blogPost.getCreated();
-    }
+	public BlogPostSummaryDto(BlogPost blogPost) {
+		this.id = blogPost.getId();
+		this.author = new UserSummaryDto(blogPost.getAuthor());
+		this.title = blogPost.getTitle();
+		this.created = blogPost.getCreated();
+	}
 
 }

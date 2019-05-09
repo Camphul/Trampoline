@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 /**
+ * Configure abac security using this configuration.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
@@ -17,14 +19,16 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableCaching
-public class GlobalAbacMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+public class GlobalAbacMethodSecurityConfiguration
+		extends GlobalMethodSecurityConfiguration {
 
 	private final AbacPermissionEvaluator abacPermissionEvaluator;
 
 	@Override
 	protected MethodSecurityExpressionHandler createExpressionHandler() {
 		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-		expressionHandler.setPermissionEvaluator(abacPermissionEvaluator);
+		expressionHandler.setPermissionEvaluator(this.abacPermissionEvaluator);
 		return expressionHandler;
 	}
+
 }

@@ -1,3 +1,3 @@
 # trampoline-security-jwt-autoconfigure
 
-Autoconfigures configs/beans required for JWT to be implemented successfully(bean implementations, etc...)
+Autoconfiguration for [trampoline-security-jwt](../trampoline-security-jwt).

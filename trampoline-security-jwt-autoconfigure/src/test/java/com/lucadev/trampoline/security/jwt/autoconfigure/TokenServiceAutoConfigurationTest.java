@@ -3,9 +3,9 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfiguration;
+import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
-import com.lucadev.trampoline.security.model.User;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
@@ -17,113 +17,126 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 public class TokenServiceAutoConfigurationTest {
-    private AnnotationConfigApplicationContext context;
-    private JwtConfiguration jwtConfiguration;
-    private JwtSecurityProperties jwtSecurityProperties;
-    private TimeProvider timeProvider;
-    private UserService userService;
 
-    @Before
-    public void setUp() throws Exception {
-        jwtSecurityProperties = mock(JwtSecurityProperties.class);
-        timeProvider = mock(TimeProvider.class);
-        userService = mock(UserService.class);
-        jwtConfiguration = mock(JwtConfiguration.class);
-        context = new AnnotationConfigApplicationContext();
-    }
+	private AnnotationConfigApplicationContext context;
 
-    @After
-    public void tearDown() throws Exception {
-        if (this.context != null) {
-            this.context.close();
-        }
-        if (jwtSecurityProperties != null) {
-            jwtSecurityProperties = null;
-        }
-        if (timeProvider != null) {
-            timeProvider = null;
-        }
-        if (userService != null) {
-            userService = null;
-        }
-        if (jwtConfiguration != null) {
-            jwtConfiguration = null;
-        }
-    }
+	private JwtConfigurationAdapter jwtConfiguration;
 
-    @Test
-    public void registersJwtTokenServiceAutomatically() {
-        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
-                timeProvider, userService);
-        this.context.refresh();
-        TokenService tokenService = this.context.getBean(TokenService.class);
-        assertThat(tokenService, instanceOf(JwtTokenService.class));
-    }
+	private JwtSecurityProperties jwtSecurityProperties;
 
-    @Test
-    public void customTokenServiceBean() {
-        this.context.register(CustomTokenServiceConfig.class);
-        this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, jwtSecurityProperties,
-                timeProvider, userService);
-        this.context.refresh();
-        TokenService tokenService = this.context.getBean(TokenService.class);
-        assertThat(tokenService, instanceOf(TestTokenService.class));
-    }
+	private TimeProvider timeProvider;
 
-    @Configuration
-    protected static class CustomTokenServiceConfig {
+	private UserService userService;
 
-        @Bean
-        public TokenService tokenService() {
-            return new TestTokenService();
-        }
-    }
+	@Before
+	public void setUp() throws Exception {
+		jwtSecurityProperties = mock(JwtSecurityProperties.class);
+		when(jwtSecurityProperties.getSecret())
+				.thenReturn("averylongstringasjwtsecurity");
+		timeProvider = mock(TimeProvider.class);
+		userService = mock(UserService.class);
+		jwtConfiguration = mock(JwtConfigurationAdapter.class);
+		context = new AnnotationConfigApplicationContext();
+	}
 
-    protected static class TestTokenService implements TokenService {
+	@After
+	public void tearDown() throws Exception {
+		if (this.context != null) {
+			this.context.close();
+		}
+		if (jwtSecurityProperties != null) {
+			jwtSecurityProperties = null;
+		}
+		if (timeProvider != null) {
+			timeProvider = null;
+		}
+		if (userService != null) {
+			userService = null;
+		}
+		if (jwtConfiguration != null) {
+			jwtConfiguration = null;
+		}
+	}
 
-        @Override
-        public String createToken(User user) {
-            return null;
-        }
+	@Test
+	public void registersJwtTokenServiceAutomatically() {
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
+				jwtSecurityProperties, timeProvider, userService);
+		this.context.refresh();
+		TokenService tokenService = this.context.getBean(TokenService.class);
+		assertThat(tokenService, instanceOf(JwtTokenService.class));
+	}
 
-        @Override
-        public String refreshToken(String token) {
-            return null;
-        }
+	@Test
+	public void customTokenServiceBean() {
+		this.context.register(CustomTokenServiceConfig.class);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
+				jwtSecurityProperties, timeProvider, userService);
+		this.context.refresh();
+		TokenService tokenService = this.context.getBean(TokenService.class);
+		assertThat(tokenService, instanceOf(TestTokenService.class));
+	}
 
-        @Override
-        public JwtPayload getTokenData(String token) {
-            return null;
-        }
+	@Configuration
+	protected static class CustomTokenServiceConfig {
 
-        @Override
-        public JwtPayload getTokenDataFromRequest(HttpServletRequest request) {
-            return null;
-        }
+		@Bean
+		public TokenService tokenService() {
+			return new TestTokenService();
+		}
 
-        @Override
-        public boolean isValidToken(JwtPayload jwtPayload, User user) {
-            return false;
-        }
+	}
 
-        @Override
-        public String processTokenRefreshRequest(HttpServletRequest request) {
-            return null;
-        }
+	protected static class TestTokenService implements TokenService {
 
-        @Override
-        public Authentication getAuthenticationToken(HttpServletRequest request) {
-            return null;
-        }
-    }
+		@Override
+		public String createToken(User user) {
+			return null;
+		}
+
+		@Override
+		public String refreshToken(String token) {
+			return null;
+		}
+
+		@Override
+		public JwtPayload getTokenData(String token) {
+			return null;
+		}
+
+		@Override
+		public JwtPayload getTokenData(HttpServletRequest request) {
+			return null;
+		}
+
+		@Override
+		public boolean isValidToken(JwtPayload jwtPayload, User user) {
+			return false;
+		}
+
+		@Override
+		public String refreshTokenFromRequest(HttpServletRequest request) {
+			return null;
+		}
+
+		@Override
+		public Optional<Authentication> getAuthenticationToken(
+				HttpServletRequest request) {
+			return null;
+		}
+
+	}
+
 }

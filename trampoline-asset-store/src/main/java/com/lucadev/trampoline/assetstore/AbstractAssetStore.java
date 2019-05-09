@@ -10,22 +10,25 @@ import java.util.UUID;
  */
 public abstract class AbstractAssetStore implements AssetStore {
 
-    /**
-     * @param id the {@link Asset} id
-     * @see AssetStore#remove(UUID)
-     */
-    @Override
-    public void remove(UUID id) {
-        remove(getAssetMetaData(id));
-    }
+	/**
+	 * Remove an asset by the {@link AssetMetaData} id.
+	 * @param id the {@link Asset} id
+	 * @see AssetStore#remove(UUID)
+	 */
+	@Override
+	public void remove(UUID id) {
+		remove(getAssetMetaData(id));
+	}
 
-    /**
-     * @param id the meta data id of the asset
-     * @return resolved {@link Asset} from {@link UUID}
-     * @see AssetStore#getAsset(UUID)
-     */
-    @Override
-    public Asset getAsset(UUID id) {
-        return getAsset(getAssetMetaData(id));
-    }
+	/**
+	 * Get an asset by the {@link AssetMetaData} id.
+	 * @param id the meta data id of the asset
+	 * @return resolved {@link Asset} from {@link UUID}
+	 * @see AssetStore#getAsset(UUID)
+	 */
+	@Override
+	public Asset getAsset(UUID id) {
+		return getAsset(getAssetMetaData(id));
+	}
+
 }
