@@ -2,6 +2,7 @@ package com.lucadev.trampoline.web.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ListResponse {
 	 * Construct list response.
 	 * @param list list to wrap.
 	 */
-	public ListResponse(List list) {
+	public ListResponse(@NonNull List list) {
 		this.content = list;
 		this.size = list.size();
 		this.empty = list.isEmpty();
