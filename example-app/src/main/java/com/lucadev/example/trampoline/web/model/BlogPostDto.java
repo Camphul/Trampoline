@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.domain.Page;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,6 +22,6 @@ public class BlogPostDto {
 	private Date created;
 	private Date updated;
 	private UserSummaryDto author;
-	private Page<BlogPostCommentDto> comments;
+	private List<BlogPostCommentDto> comments;
 
 }

@@ -120,10 +120,10 @@ public class BlogPostService {
 	/**
 	 * Delete comment
 	 *
-	 * @param commentId comment id to delete.
+	 * @param comment comment to delete.
 	 */
-	public void deleteCommentById(UUID commentId) {
-		commentRepository.deleteById(commentId);
+	public void deleteComment(BlogPostComment comment) {
+		commentRepository.delete(comment);
 	}
 
 	/**

@@ -8,6 +8,10 @@ import com.lucadev.example.trampoline.web.model.CreateBlogPostRequest;
 import com.lucadev.example.trampoline.web.model.mapper.BlogPostMapper;
 import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
+import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
+import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
+import com.lucadev.trampoline.security.logging.ActingUpon;
+import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.web.model.SuccessResponse;
@@ -45,7 +49,9 @@ public class BlogPostController {
 	}
 
 	@PostMapping
-	public UUIDDto submit(CreateBlogPostRequest request) {
+	@LogUserActivity
+	@PrePolicy("BLOGPOST_SUBMIT")
+	public UUIDDto submit(@RequestBody CreateBlogPostRequest request) {
 		BlogPost blogPost = blogPostMapper.fromRequest(request);
 		User author = userService.currentUserOrThrow();
 		blogPost = blogPostService.createBlogPost(author, blogPost);
@@ -57,8 +63,10 @@ public class BlogPostController {
 		return blogPostMapper.toDto(blogPost);
 	}
 
+	@LogUserActivity
 	@DeleteMapping("/{blogPost}")
-	public SuccessResponse deleteById(@FindById BlogPost blogPost) {
+	@PrePolicy("BLOGPOST_DELETE")
+	public SuccessResponse deleteById(@ActingUpon @PolicyResource @FindById BlogPost blogPost) {
 		blogPostService.delete(blogPost);
 		return new SuccessResponse();
 	}

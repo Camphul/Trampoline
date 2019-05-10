@@ -25,19 +25,15 @@ To make a route publicly accessible ignore it using the WebSecurity configuratio
 | Route                             | Method        | Description                           |
 |-----------------------------------|:-------------:|--------------------------------------:|
 | /whoami                           | GET           | Summary of the authenticated user     |
-| /ping/unprotected                 | GET           | Unprotected ping returning a pong     |
-| /ping/protected                   | GET           | Protected ping returning a pong       |
-| /signup                           | POST          | Register new user                     |
+| /ping                             | GET           | Protected ping returning a pong       |
 | /auth/authorize                   | POST          | Authorize and obtain JWT token        |
 | /blogs                            | GET           | Return all blogs                      |
 | /blogs                            | POST          | Submit a new blogpost                 |
 | /blogs/{id}                       | GET           | View blogpost                         |
 | /blogs/{id}                       | DELETE        | Delete blogpost                       |
-| /blogs/{id}                       | PATCH         | Edit blogpost                         |
 | /blogs/{id}/comments              | GET           | View blogpost comments only           |
 | /blogs/{id}/comments              | POST          | Add comments to blog post              |
 | /blogs/{id}/comments/{id}         | DELETE        | Delete blogpost comments               |
-| /blogs/{id}/comments/{id}         | PATCH         | Edit blogpost comments                 |
 
 ## PostMan Collection
 

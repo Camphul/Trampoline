@@ -23,9 +23,7 @@ import java.util.Date;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */
-@Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix="spring.jpa.hibernate", name="ddl-auto", havingValue = "create")//Only run when db scheme is dropped at start
 public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);

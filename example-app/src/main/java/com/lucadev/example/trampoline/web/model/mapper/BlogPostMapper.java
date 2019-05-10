@@ -7,6 +7,8 @@ import com.lucadev.example.trampoline.web.model.CreateBlogPostRequest;
 import org.mapstruct.Mapper;
 
 /**
+ * MapStruct mapper for blogposts.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */
