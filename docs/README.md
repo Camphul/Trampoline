@@ -53,4 +53,4 @@ We also provide two example properties files:
 
 ## Examples
 
-An example project is available at [trampoline-example-app](../trampoline-example-app)
+An example project is available at [example-app](../example-app)

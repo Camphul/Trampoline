@@ -20,7 +20,7 @@ Read the [docs](/docs/README.md) for more information.
 
 ## Example Project
 
-[trampoline-example-app](trampoline-example-app) is a REST api to maintain blogs and comments on blogs.
+[example-app](example-app) is a REST api to maintain blogs and comments on blogs.
 
 The readme provides a bunch of information regarding the endpoints, dummy users. I also added a PostMan collection so you can easily test the api through postman.
 

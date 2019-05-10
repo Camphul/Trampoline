@@ -7,7 +7,7 @@ Prerequisites:
 
 ## Import into your project
 
-Please check the [trampoline-example-app/pom.xml](../trampoline-example-app/pom.xml).
+Please check the [example-app/pom.xml](../example-app/pom.xml).
 
 As you can see you require the trampoline starter dependency. This dependency adds all of the trampoline starters.
 
@@ -57,4 +57,4 @@ spring.main.allow-bean-definition-overriding=true
 
 ## Write your app with the help of Trampoline
 
-For an example on how to use Trampoline in your application please check the [trampoline-example-app](../trampoline-example-app) and read the other docs.
+For an example on how to use Trampoline in your application please check the [example-app](../example-app) and read the other docs.
