@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class JwtAuthenticationController {
 	 * @param userAuthenticationRequest authorization request dto
 	 * @return response of the authorization
 	 */
+	@PermitAll
 	@PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
 	public JwtAuthenticationResponse submitAuthenticationTokenRequest(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
@@ -61,6 +63,7 @@ public class JwtAuthenticationController {
 	 * @param response http resp
 	 * @return jwt auth response.
 	 */
+	@PermitAll
 	@GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
 	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(
 			HttpServletRequest request, HttpServletResponse response) {

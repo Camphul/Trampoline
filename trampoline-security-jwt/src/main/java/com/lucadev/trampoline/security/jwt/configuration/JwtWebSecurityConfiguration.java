@@ -61,17 +61,6 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private final AuthenticationManager authenticationManager;
 
 	/**
-	 * Websecurity to allow auth route.
-	 * @param web web security.
-	 * @throws Exception when we fail to configure.
-	 */
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.POST,
-				this.jwtSecurityProperties.getAuthPath() + "/**");
-	}
-
-	/**
 	 * Autowires the {@link AuthenticationManager} builder. Used to build the global
 	 * {@link AuthenticationManager}
 	 * @param builder the builder for the global {@link AuthenticationManager}
@@ -104,8 +93,6 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// Handle unauthorized/auth exceptions
 				.exceptionHandling().authenticationEntryPoint(this.entryPoint).and()
 				.authorizeRequests()
-				// Permit auth requests
-				.antMatchers(this.jwtSecurityProperties.getAuthPath()).permitAll()
 				// All other requests should be authenticated
 				.anyRequest().authenticated().and()
 				// Apply our JWT filter.

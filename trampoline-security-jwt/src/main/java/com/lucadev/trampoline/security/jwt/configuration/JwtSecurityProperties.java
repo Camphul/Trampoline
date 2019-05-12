@@ -42,11 +42,6 @@ public class JwtSecurityProperties {
 	public static final long TOKEN_TIMEOUT = 3600L;
 
 	/**
-	 * Default web path to use for jwt auth.
-	 */
-	public static final String AUTH_PATH = "/auth";
-
-	/**
 	 * Errormessage that gets thrown when you try to modify this object through a setter
 	 * method.
 	 */
@@ -58,9 +53,6 @@ public class JwtSecurityProperties {
 	// Timeout for token invalidation
 	private long tokenTimeout;
 
-	// Auth basepath
-	private String authPath;
-
 	/**
 	 * Handle default cases if a value has not been set yet.
 	 */
@@ -70,7 +62,6 @@ public class JwtSecurityProperties {
 		if (this.tokenTimeout <= 0) {
 			this.tokenTimeout = 3600L;
 		}
-		this.authPath = handleDefault(this.authPath, this.AUTH_PATH);
 	}
 
 	private String handleDefault(String prop, String defaultValue) {
@@ -93,12 +84,4 @@ public class JwtSecurityProperties {
 		}
 		this.tokenTimeout = tokenTimeout;
 	}
-
-	public void setAuthPath(String authPath) {
-		if (this.authPath != null) {
-			throw new IllegalStateException(IMMUTABILITY_ERROR_MESSAGE);
-		}
-		this.authPath = authPath;
-	}
-
 }
