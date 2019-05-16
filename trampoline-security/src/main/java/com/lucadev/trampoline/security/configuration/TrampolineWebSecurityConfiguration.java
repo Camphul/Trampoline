@@ -24,7 +24,8 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true,
+		jsr250Enabled = true)
 @Order(TRAMPOLINE_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
