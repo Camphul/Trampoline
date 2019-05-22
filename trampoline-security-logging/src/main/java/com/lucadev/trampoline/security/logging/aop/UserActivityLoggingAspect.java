@@ -13,6 +13,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.Order;
 import org.springframework.expression.EvaluationException;
@@ -38,6 +40,8 @@ import java.util.Map;
 @Aspect
 @Order(20)
 public class UserActivityLoggingAspect {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserActivityLoggingAspect.class);
 
 	private final UserActivityHandler userActivityHandler;
 
@@ -77,6 +81,9 @@ public class UserActivityLoggingAspect {
 			Parameter param = method.getParameters()[i];
 			if (param.isAnnotationPresent(ActingUpon.class)) {
 				actedUpon = joinPoint.getArgs()[i];
+			}
+			if(param.getName().startsWith("arg")) {
+				LOGGER.warn("Parameter name starts with \"arg\" prefix. Please make sure you compiled with the '-parameters' options.");
 			}
 			argumentMap.put(param.getName(), joinPoint.getArgs()[i]);
 		}
