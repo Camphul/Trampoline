@@ -63,4 +63,5 @@ public class BigDecimalValueDto {
 	public String toString() {
 		return String.valueOf(value);
 	}
+
 }
