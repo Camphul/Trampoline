@@ -59,4 +59,8 @@ public class BigDecimalValueDto {
 		return BigDecimal.ZERO.compareTo(this.value) > 0;
 	}
 
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
 }

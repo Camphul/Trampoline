@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.assetstore;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -9,6 +10,20 @@ import java.util.UUID;
  * @since 9-6-18
  */
 public interface AssetStore {
+
+	/**
+	 * Find all meta datas by filename.
+	 * @param name the file name.
+	 * @return a list of files found.
+	 */
+	List<AssetMetaData> findAllByName(String name);
+
+	/**
+	 * Find all meta datas by original filename.
+	 * @param name the file name.
+	 * @return a list of files found.
+	 */
+	List<AssetMetaData> findAllByOriginalName(String name);
 
 	/**
 	 * Store the data.

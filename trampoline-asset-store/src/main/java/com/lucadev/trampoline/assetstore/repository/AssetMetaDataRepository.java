@@ -4,6 +4,8 @@ import com.lucadev.trampoline.assetstore.AssetMetaData;
 import com.lucadev.trampoline.data.repository.TrampolineRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * {@link TrampolineRepository} for {@link AssetMetaData}.
  *
@@ -12,5 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AssetMetaDataRepository extends TrampolineRepository<AssetMetaData> {
+
+	List<AssetMetaData> findByName(String name);
+
+	List<AssetMetaData> findByOrOriginalFilename(String originalFilename);
 
 }

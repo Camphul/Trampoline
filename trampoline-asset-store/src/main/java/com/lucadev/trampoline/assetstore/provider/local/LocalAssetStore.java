@@ -11,6 +11,7 @@ import org.springframework.core.io.FileSystemResource;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -26,6 +27,16 @@ public class LocalAssetStore extends AbstractAssetStore {
 	private final String storageDirectory;
 
 	private final AssetMetaDataRepository repository;
+
+	@Override
+	public List<AssetMetaData> findAllByName(String name) {
+		return repository.findByName(name);
+	}
+
+	@Override
+	public List<AssetMetaData> findAllByOriginalName(String name) {
+		return repository.findByOrOriginalFilename(name);
+	}
 
 	/**
 	 * {@inheritDoc}

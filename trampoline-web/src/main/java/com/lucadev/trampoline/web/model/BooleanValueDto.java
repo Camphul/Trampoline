@@ -17,4 +17,8 @@ public class BooleanValueDto {
 
 	private boolean value;
 
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
 }

@@ -20,4 +20,9 @@ public class UUIDDto {
 
 	private UUID id;
 
+	@Override
+	public String toString() {
+		return id == null ? "" : id.toString();
+	}
+
 }

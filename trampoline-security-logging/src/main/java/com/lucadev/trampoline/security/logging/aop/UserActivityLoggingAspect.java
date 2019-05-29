@@ -41,7 +41,8 @@ import java.util.Map;
 @Order(20)
 public class UserActivityLoggingAspect {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserActivityLoggingAspect.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UserActivityLoggingAspect.class);
 
 	private final UserActivityHandler userActivityHandler;
 
@@ -82,8 +83,9 @@ public class UserActivityLoggingAspect {
 			if (param.isAnnotationPresent(ActingUpon.class)) {
 				actedUpon = joinPoint.getArgs()[i];
 			}
-			if(param.getName().startsWith("arg")) {
-				LOGGER.warn("Parameter name starts with \"arg\" prefix. Please make sure you compiled with the '-parameters' options.");
+			if (param.getName().startsWith("arg")) {
+				LOGGER.warn(
+						"Parameter name starts with \"arg\" prefix. Please make sure you compiled with the '-parameters' options.");
 			}
 			argumentMap.put(param.getName(), joinPoint.getArgs()[i]);
 		}
