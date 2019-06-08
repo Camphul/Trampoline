@@ -123,6 +123,9 @@
 		<module>trampoline-web-autoconfigure</module>
 		<module>trampoline-web-starter</module>
 		<module>trampoline-security-web</module>
+		<module>trampoline-notify</module>
+		<module>trampoline-notify-autoconfigure</module>
+		<module>trampoline-notify-starter</module>
 	</modules>
 
 	<build>

@@ -8,6 +8,7 @@ import com.lucadev.example.trampoline.web.model.CreateBlogPostCommentRequest;
 import com.lucadev.example.trampoline.web.model.mapper.BlogPostCommentMapper;
 import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
+import com.lucadev.trampoline.notify.email.EmailService;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.ActingUpon;
@@ -20,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 
 /**
  * Controller containing endpoints to handle comments on a blogpost.
@@ -37,6 +40,8 @@ public class BlogPostCommentController {
 	private final BlogPostService blogPostService;
 
 	private final UserService userService;
+
+	private final EmailService emailService;
 
 	/**
 	 * Find all comments for a given blogposts in pageable form.
@@ -65,6 +70,16 @@ public class BlogPostCommentController {
 		User author = userService.currentUserOrThrow();
 		BlogPostComment comment = mapper.fromRequest(request);
 		comment = blogPostService.addComment(author, blogPost, comment);
+		try {
+			//Example of how you could send an awesome email notification!
+			emailService.send(builder -> builder.to(blogPost.getAuthor().getEmail())
+					.withSubject("New comment made on your blogpost.")
+					.withAttribute("username", blogPost.getAuthor().getUsername())
+					.withAttribute("poster", author.getUsername())
+					.withTemplate("add_comment"));
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		return new UUIDDto(comment.getId());
 	}
 

@@ -3,6 +3,7 @@ experimental-*
 public.key
 private.key
 site
+example-app/src/main/resources/application-secrets.properties
 
 # Maven wrapper
 .mvn/timing.properties
