@@ -1,11 +1,11 @@
 package com.lucadev.example.trampoline.web.controller;
 
-import com.lucadev.example.trampoline.web.model.UserSummaryDto;
-import com.lucadev.example.trampoline.web.model.mapper.UserMapper;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
+import com.lucadev.trampoline.security.web.model.UserSummaryDto;
+import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +31,7 @@ public class WhoAmIController {
 	public UserSummaryDto whoAmI() {
 		// Get current user or throw an exception(since we cant recover from null)
 		User currentUser = userService.currentUserOrThrow();
-		return userMapper.toSummaryDto(currentUser);
+		return userMapper.toSummary(currentUser);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.lucadev.example.trampoline.web.model;
 
+import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import lombok.Data;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ public class BlogPostDto {
 
 	private Date updated;
 
-	private UserSummaryDto author;
+	private EmbeddedUser author;
 
 	private List<BlogPostCommentDto> comments;
 

@@ -54,19 +54,19 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot
 
 	@Override
 	public boolean isSubject(Object user) {
-		if(getSubject() == null || user == null) {
+		if (getSubject() == null || user == null) {
 			return false;
 		}
 
-		if(!(user instanceof User)) {
+		if (!(user instanceof User)) {
 			return false;
 		}
 
-		if(!(getSubject() instanceof User)) {
+		if (!(getSubject() instanceof User)) {
 			return false;
 		}
 
-		return ((User)user).getId().equals(((User)getSubject()).getId());
+		return ((User) user).getId().equals(((User) getSubject()).getId());
 	}
 
 }

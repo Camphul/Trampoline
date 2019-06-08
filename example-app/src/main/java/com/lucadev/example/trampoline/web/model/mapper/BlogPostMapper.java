@@ -4,6 +4,7 @@ import com.lucadev.example.trampoline.persistence.entity.BlogPost;
 import com.lucadev.example.trampoline.web.model.BlogPostDto;
 import com.lucadev.example.trampoline.web.model.BlogPostSummaryDto;
 import com.lucadev.example.trampoline.web.model.CreateBlogPostRequest;
+import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import org.mapstruct.Mapper;
 
 /**
@@ -12,8 +13,7 @@ import org.mapstruct.Mapper;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */
-@Mapper(componentModel = "spring",
-		uses = { BlogPostCommentMapper.class, UserMapper.class })
+@Mapper(uses = { BlogPostCommentMapper.class, UserMapper.class })
 public interface BlogPostMapper {
 
 	BlogPostDto toDto(BlogPost blogPost);

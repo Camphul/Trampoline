@@ -1,4 +1,4 @@
-package com.lucadev.example.trampoline.web.model;
+package com.lucadev.trampoline.security.web.model;
 
 import lombok.Data;
 
@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Model used for the WhoAmIController
+ * Model for {@link com.lucadev.trampoline.security.persistence.entity.User}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
- * @since 5/9/19
+ * @since 6/8/19
  */
 @Data
 public class UserSummaryDto {

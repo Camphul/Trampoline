@@ -1,5 +1,6 @@
 package com.lucadev.example.trampoline.web.model;
 
+import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class BlogPostSummaryDto {
 
 	private UUID id;
 
-	private UserSummaryDto author;
+	private EmbeddedUser author;
 
 	private String title;
 
