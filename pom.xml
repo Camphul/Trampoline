@@ -21,6 +21,7 @@
 	</parent>
 
 	<properties>
+		<trampoline.spring.version>2.1.4.RELEASE</trampoline.spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -183,6 +184,11 @@
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
 						</path>
+						<annotationProcessorPath>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+							<version>${trampoline.spring.version}</version>
+						</annotationProcessorPath>
 					</annotationProcessorPaths>
 					<compilerArgs>
 						<arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>

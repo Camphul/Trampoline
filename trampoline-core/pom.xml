@@ -12,4 +12,12 @@
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<artifactId>trampoline-core</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 </project>
