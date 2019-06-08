@@ -3,10 +3,10 @@ experimental-*
 public.key
 private.key
 site
-example-app/src/main/resources/application-secrets.properties
+example-app/src/main/resources/application-secrets.configurationProperties
 
 # Maven wrapper
-.mvn/timing.properties
+.mvn/timing.configurationProperties
 .mvn/wrapper/maven-wrapper.jar
 
 # Created by https://www.gitignore.io/api/eclipse,netbeans,intellij+all,visualstudiocode
@@ -20,7 +20,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
-local.properties
+local.configurationProperties
 .settings/
 .loadpath
 .recommenders
@@ -123,9 +123,9 @@ atlassian-ide-plugin.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
+crashlytics.configurationProperties
+crashlytics-build.configurationProperties
+fabric.configurationProperties
 
 ### Intellij+all Patch ###
 # Ignores the whole .idea folder and all .iml files

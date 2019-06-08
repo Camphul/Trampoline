@@ -38,7 +38,7 @@ Please make sure you have the following property:
 spring.main.allow-bean-definition-overriding=true
 ```
 
-Other properties being used are:
+Other configurationProperties being used are:
 
 - `trampoline.assetstore.provider`: which AssetStore to use, defaults to local
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
@@ -48,10 +48,10 @@ Other properties being used are:
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
 
-We also provide two example properties files:
+We also provide two example configurationProperties files:
 
-- [application-dev-example.properties](application-dev-example.properties)
-- [application-prod-example.properties](application-prod-example.properties)
+- [application-dev-example.configurationProperties](application-dev-example.configurationProperties)
+- [application-prod-example.configurationProperties](application-prod-example.configurationProperties)
 
 ## Examples
 

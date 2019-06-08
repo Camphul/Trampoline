@@ -24,7 +24,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class LocalAssetStore extends AbstractAssetStore {
 
-	private final String storageDirectory;
+	private final LocalAssetStoreConfigurationProperties properties;
 
 	private final AssetMetaDataRepository repository;
 
@@ -111,7 +111,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 			throw new IllegalArgumentException(
 					"Cannot find asset which has not been saved yet.");
 		}
-		return new FileSystemResource(this.storageDirectory + id.toString());
+		return new FileSystemResource(this.properties.getDirectory() + id.toString());
 	}
 
 }

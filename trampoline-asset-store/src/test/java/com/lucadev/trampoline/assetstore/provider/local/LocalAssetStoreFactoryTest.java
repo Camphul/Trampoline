@@ -19,6 +19,8 @@ public class LocalAssetStoreFactoryTest {
 
 	private LocalAssetStoreFactory assetStoreFactory;
 
+	private LocalAssetStoreConfigurationProperties configurationProperties;
+
 	private AssetMetaDataRepository mockedRepository;
 
 	private String storeDir = "_junit_test";
@@ -26,7 +28,9 @@ public class LocalAssetStoreFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		mockedRepository = mock(AssetMetaDataRepository.class);
-		assetStoreFactory = new LocalAssetStoreFactory(storeDir, mockedRepository);
+		configurationProperties = new LocalAssetStoreConfigurationProperties();
+		assetStoreFactory = new LocalAssetStoreFactory(configurationProperties,
+				mockedRepository);
 	}
 
 	@After

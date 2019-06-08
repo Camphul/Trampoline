@@ -7,11 +7,11 @@ The emails are templated using thymeleaf(you can easily implement your own templ
 
 ## How to use trampoline-notify email
 
-First you should configure the mail settings with traditional spring properties.
-These can be found [here](../docs/application-prod-example.properties).
+First you should configure the mail settings with traditional spring configurationProperties.
+These can be found [here](../docs/application-prod-example.configurationProperties).
 
 Then you may want to configure some defaults such as the sender address(noreply@example.com for example).
-We have the following properties:
+We have the following configurationProperties:
 
 - `trampoline.notify.email.`: required to be `true` to even make use of this service.
 - `trampoline.notify.email.defaults.from`: address from which the emails are sent.
