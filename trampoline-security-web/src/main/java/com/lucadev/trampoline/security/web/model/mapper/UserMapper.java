@@ -22,7 +22,14 @@ public interface UserMapper {
 	 * @param user user to map.
 	 * @return embeddable model.
 	 */
-	EmbeddedUser toEmbedded(User user);
+	EmbeddedUser toEmbeddedDto(User user);
+
+	/**
+	 * To basic embeddable user.
+	 * @param user user to map.
+	 * @return embeddable model.
+	 */
+	List<EmbeddedUser> toEmbeddedDtos(List<User> user);
 
 	/**
 	 * Map to summary.

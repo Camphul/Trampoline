@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.persistence.entity.Privilege;
 import com.lucadev.trampoline.security.web.model.PrivilegeDto;
 import org.mapstruct.Mapper;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public interface PrivilegeMapper {
 	 * @param privileges the privileges to map.
 	 * @return names of the privileges.
 	 */
-	default List<String> toNames(List<Privilege> privileges) {
+	default List<String> toNames(Collection<Privilege> privileges) {
 		return privileges.stream().map(this::toName).collect(Collectors.toList());
 	}
 
@@ -46,6 +47,6 @@ public interface PrivilegeMapper {
 	 * @param privileges privileges to map.
 	 * @return dto's.
 	 */
-	List<PrivilegeDto> toDtos(List<Privilege> privileges);
+	List<PrivilegeDto> toDtos(Collection<Privilege> privileges);
 
 }
