@@ -4,7 +4,6 @@ import com.lucadev.example.trampoline.web.model.UserSummaryDto;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.mapstruct.Mapper;
 
-
 /**
  * MapStruct mapper for User objects.
  *

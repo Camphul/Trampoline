@@ -19,6 +19,7 @@ public class CreateBlogPostRequest {
 	@NotNull
 	@Size(min = 2, max = 32)
 	private String title;
+
 	@NotBlank
 	@NotNull
 	@Size(min = 2, max = 1024)

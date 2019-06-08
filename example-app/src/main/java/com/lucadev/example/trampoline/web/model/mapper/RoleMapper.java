@@ -18,7 +18,6 @@ public interface RoleMapper {
 
 	/**
 	 * Convert role to name string.
-	 *
 	 * @param role role to map.
 	 * @return role name.
 	 */
@@ -31,7 +30,6 @@ public interface RoleMapper {
 
 	/**
 	 * Map list of roles.
-	 *
 	 * @param roles list of roles.
 	 * @return mapped list.
 	 */
@@ -41,4 +39,5 @@ public interface RoleMapper {
 		}
 		return roles.stream().map(Role::getName).collect(Collectors.toList());
 	}
+
 }

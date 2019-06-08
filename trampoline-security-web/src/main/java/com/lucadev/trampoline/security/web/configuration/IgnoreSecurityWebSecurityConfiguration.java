@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
+ * Configuration which ignores security chain based on IgnoreSecurity annotation.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */
@@ -21,7 +23,10 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
-public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigurerAdapter implements Ordered {
+public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigurerAdapter
+		implements Ordered {
+
+	public static final int IGNORE_SECURITY_CONFIGURATION_ORDER = 80;
 
 	private final RequestMappingHandlerMapping handlerMapping;
 
@@ -58,8 +63,10 @@ public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigure
 			}
 		});
 	}
+
 	@Override
 	public int getOrder() {
-		return 23;
+		return IGNORE_SECURITY_CONFIGURATION_ORDER;
 	}
+
 }

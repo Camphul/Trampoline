@@ -15,4 +15,5 @@ public interface BlogPostCommentMapper {
 	BlogPostCommentDto toDto(BlogPostComment comment);
 
 	BlogPostComment fromRequest(CreateBlogPostCommentRequest request);
+
 }

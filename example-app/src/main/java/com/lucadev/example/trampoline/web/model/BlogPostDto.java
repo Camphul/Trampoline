@@ -1,7 +1,6 @@
 package com.lucadev.example.trampoline.web.model;
 
 import lombok.Data;
-import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -17,11 +16,17 @@ import java.util.UUID;
 public class BlogPostDto {
 
 	private UUID id;
+
 	private String title;
+
 	private String content;
+
 	private Date created;
+
 	private Date updated;
+
 	private UserSummaryDto author;
+
 	private List<BlogPostCommentDto> comments;
 
 }

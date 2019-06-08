@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurityConfiguration.TRAMPOLINE_SECURITY_CONFIGURATION_ORDER;
 
 /**
  * Spring {@link WebSecurityConfigurerAdapter} to configure our own services/routes.
@@ -27,13 +26,13 @@ import static com.lucadev.trampoline.security.configuration.TrampolineWebSecurit
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Order(TRAMPOLINE_SECURITY_CONFIGURATION_ORDER)
-public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter
+		implements Ordered {
 
 	/**
 	 * The {@link Order} of this configuration, not 100 to allow default config.
 	 */
-	public static final int TRAMPOLINE_SECURITY_CONFIGURATION_ORDER = 95;
+	public static final int SECURITY_CONFIGURATION_ORDER = 60;
 
 	private final boolean debug;
 
@@ -50,7 +49,6 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
 	public void init(WebSecurity web) throws Exception {
 		web.debug(this.debug);
 	}
-
 
 	/**
 	 * Configure authentication manager.
@@ -74,6 +72,11 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
 	public AuthenticationManager authenticationManager(
 			AuthenticationManagerBuilder builder) {
 		return authentication -> builder.getOrBuild().authenticate(authentication);
+	}
+
+	@Override
+	public int getOrder() {
+		return SECURITY_CONFIGURATION_ORDER;
 	}
 
 }

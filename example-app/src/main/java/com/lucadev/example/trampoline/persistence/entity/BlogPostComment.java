@@ -2,7 +2,9 @@ package com.lucadev.example.trampoline.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.security.persistence.entity.User;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -18,7 +20,7 @@ import javax.persistence.*;
 @Table(name = "BLOGPOST_COMMENT")
 public class BlogPostComment extends TrampolineEntity {
 
-	@ToString.Exclude//Exclude since we dont want infinite loops.
+	@ToString.Exclude // Exclude since we dont want infinite loops.
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "blogpost_id")
 	private BlogPost blogPost;
@@ -39,4 +41,5 @@ public class BlogPostComment extends TrampolineEntity {
 		this.author = author;
 		this.content = content;
 	}
+
 }

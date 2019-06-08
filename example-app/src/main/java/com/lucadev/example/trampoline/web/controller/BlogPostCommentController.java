@@ -33,7 +33,9 @@ import org.springframework.web.bind.annotation.*;
 public class BlogPostCommentController {
 
 	private final BlogPostCommentMapper mapper;
+
 	private final BlogPostService blogPostService;
+
 	private final UserService userService;
 
 	/**
@@ -43,8 +45,10 @@ public class BlogPostCommentController {
 	 * @return a page containing the comments.
 	 */
 	@GetMapping
-	public Page<BlogPostCommentDto> findAllByBlogPost(@FindById BlogPost blogPost, Pageable pageable) {
-		return MappedPage.of(blogPostService.findAllComments(blogPost, pageable), mapper::toDto);
+	public Page<BlogPostCommentDto> findAllByBlogPost(@FindById BlogPost blogPost,
+			Pageable pageable) {
+		return MappedPage.of(blogPostService.findAllComments(blogPost, pageable),
+				mapper::toDto);
 	}
 
 	/**
@@ -56,7 +60,8 @@ public class BlogPostCommentController {
 	@PostMapping
 	@LogUserActivity
 	@PrePolicy("BLOGPOST_COMMENT_SUBMIT")
-	public UUIDDto submit(@ActingUpon @FindById BlogPost blogPost, @RequestBody CreateBlogPostCommentRequest request) {
+	public UUIDDto submit(@ActingUpon @FindById BlogPost blogPost,
+			@RequestBody CreateBlogPostCommentRequest request) {
 		User author = userService.currentUserOrThrow();
 		BlogPostComment comment = mapper.fromRequest(request);
 		comment = blogPostService.addComment(author, blogPost, comment);
@@ -70,7 +75,8 @@ public class BlogPostCommentController {
 	 * @return the comment.
 	 */
 	@GetMapping("/{comment}")
-	public BlogPostCommentDto findById(@FindById BlogPost blogPost, @FindById BlogPostComment comment) {
+	public BlogPostCommentDto findById(@FindById BlogPost blogPost,
+			@FindById BlogPostComment comment) {
 		return mapper.toDto(comment);
 	}
 
@@ -83,7 +89,8 @@ public class BlogPostCommentController {
 	@DeleteMapping("/{comment}")
 	@PrePolicy("BLOGPOST_COMMENT_DELETE")
 	@LogUserActivity(value = "'Deleting comment ' + comment.id", spel = true)
-	public SuccessResponse removeById(@ActingUpon @FindById BlogPost blogPost, @PolicyResource @FindById BlogPostComment comment) {
+	public SuccessResponse removeById(@ActingUpon @FindById BlogPost blogPost,
+			@PolicyResource @FindById BlogPostComment comment) {
 		blogPostService.deleteComment(comment);
 		return new SuccessResponse();
 	}

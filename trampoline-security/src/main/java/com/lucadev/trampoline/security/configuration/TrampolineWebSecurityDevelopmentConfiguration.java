@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -18,14 +19,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @Configuration
 @Profile(TrampolineWebSecurityDevelopmentConfiguration.DEV_SECURITY_CONFIGURATION_PROFILE)
-@Order(TrampolineWebSecurityDevelopmentConfiguration.DEV_SECURITY_CONFIGURATION_ORDER)
 public class TrampolineWebSecurityDevelopmentConfiguration
-		extends WebSecurityConfigurerAdapter {
+		extends WebSecurityConfigurerAdapter implements Ordered {
 
 	/**
 	 * The {@link Order} of this configuration.
 	 */
-	public static final int DEV_SECURITY_CONFIGURATION_ORDER = 90;
+	public static final int DEV_SECURITY_CONFIGURATION_ORDER = 70;
 
 	/**
 	 * The profile which activates this configuration.
@@ -63,6 +63,11 @@ public class TrampolineWebSecurityDevelopmentConfiguration
 				new WebServlet());
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
+	}
+
+	@Override
+	public int getOrder() {
+		return DEV_SECURITY_CONFIGURATION_ORDER;
 	}
 
 }

@@ -21,16 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class WhoAmIController {
 
 	private final UserService userService;
+
 	private final UserMapper userMapper;
 
 	@GetMapping("/whoami")
-	@LogUserActivity("GET_WHO_AM_I")//Log action as GET_WHO_AM_I
-	@PrePolicy("GET_WHO_AM_I")//Check if we are allowed to access this endpoint before invocation
+	@LogUserActivity("GET_WHO_AM_I") // Log action as GET_WHO_AM_I
+	@PrePolicy("GET_WHO_AM_I") // Check if we are allowed to access this endpoint before
+								// invocation
 	public UserSummaryDto whoAmI() {
-		//Get current user or throw an exception(since we cant recover from null)
+		// Get current user or throw an exception(since we cant recover from null)
 		User currentUser = userService.currentUserOrThrow();
 		return userMapper.toSummaryDto(currentUser);
 	}
-
 
 }

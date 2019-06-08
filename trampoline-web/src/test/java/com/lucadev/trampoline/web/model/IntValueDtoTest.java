@@ -2,7 +2,7 @@ package com.lucadev.trampoline.web.model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Model unit test.

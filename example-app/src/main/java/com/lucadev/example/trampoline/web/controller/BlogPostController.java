@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
 /**
  * Blogpost controller.
  *
@@ -36,9 +35,10 @@ import javax.validation.Valid;
 public class BlogPostController {
 
 	private final BlogPostService blogPostService;
-	private final BlogPostMapper blogPostMapper;
-	private final UserService userService;
 
+	private final BlogPostMapper blogPostMapper;
+
+	private final UserService userService;
 
 	/**
 	 * Get all blogposts.
@@ -47,7 +47,8 @@ public class BlogPostController {
 	 */
 	@GetMapping
 	public Page<BlogPostSummaryDto> findAll(Pageable pageable) {
-		return MappedPage.of(blogPostService.findAll(pageable), blogPostMapper::toSummaryDto);
+		return MappedPage.of(blogPostService.findAll(pageable),
+				blogPostMapper::toSummaryDto);
 	}
 
 	@PostMapping
@@ -68,7 +69,8 @@ public class BlogPostController {
 	@LogUserActivity
 	@DeleteMapping("/{blogPost}")
 	@PrePolicy("BLOGPOST_DELETE")
-	public SuccessResponse deleteById(@ActingUpon @PolicyResource @FindById BlogPost blogPost) {
+	public SuccessResponse deleteById(
+			@ActingUpon @PolicyResource @FindById BlogPost blogPost) {
 		blogPostService.delete(blogPost);
 		return new SuccessResponse();
 	}

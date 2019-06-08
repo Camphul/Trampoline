@@ -25,11 +25,11 @@ import java.util.UUID;
 public class BlogPostService {
 
 	private final BlogPostRepository repository;
+
 	private final BlogPostCommentRepository commentRepository;
 
 	/**
 	 * Pageable find all.
-	 *
 	 * @param pageable pagination.
 	 * @return page of blogs.
 	 */
@@ -39,8 +39,7 @@ public class BlogPostService {
 
 	/**
 	 * Create a new blog post.
-	 *
-	 * @param author    author of the blogpost
+	 * @param author author of the blogpost
 	 * @param blogPost the mapped blogpost.
 	 * @return the persisted {@link BlogPost}
 	 */
@@ -51,8 +50,8 @@ public class BlogPostService {
 
 	/**
 	 * Find {@link BlogPost} by id.
-	 *
-	 * @param id the {@link UUID} of the {@link BlogPost} since we use {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
+	 * @param id the {@link UUID} of the {@link BlogPost} since we use
+	 * {@link com.lucadev.trampoline.data.entity.TrampolineEntity} as base entity.
 	 * @return resolved blogpost.
 	 */
 	public Optional<BlogPost> findById(UUID id) {
@@ -61,7 +60,6 @@ public class BlogPostService {
 
 	/**
 	 * Delete {@link BlogPost}
-	 *
 	 * @param blogPost blogpost to delete.
 	 */
 	public void delete(BlogPost blogPost) {
@@ -70,7 +68,6 @@ public class BlogPostService {
 
 	/**
 	 * Update {@link BlogPost}.
-	 *
 	 * @param blogPost the blogpost to update.
 	 * @return updated blogpost.
 	 */
@@ -80,14 +77,14 @@ public class BlogPostService {
 
 	/**
 	 * Add a comment
-	 *
-	 * @param author   the author of the comment.
+	 * @param author the author of the comment.
 	 * @param blogPost the blogpost to put it on.
 	 * @param comment the blogpost comment to add.
 	 * @return the created comment.
 	 */
 	@Transactional
-	public BlogPostComment addComment(User author, BlogPost blogPost, BlogPostComment comment) {
+	public BlogPostComment addComment(User author, BlogPost blogPost,
+			BlogPostComment comment) {
 		comment.setAuthor(author);
 		comment = commentRepository.save(comment);
 		comment.setBlogPost(blogPost);
@@ -98,7 +95,6 @@ public class BlogPostService {
 
 	/**
 	 * Find pageable comments
-	 *
 	 * @param blogPost blogpost to find comments on.
 	 * @param pageable pagination.
 	 * @return page of blog comments.
@@ -109,7 +105,6 @@ public class BlogPostService {
 
 	/**
 	 * Find comment by id
-	 *
 	 * @param commentId comment id.
 	 * @return resolved comment.
 	 */
@@ -119,7 +114,6 @@ public class BlogPostService {
 
 	/**
 	 * Delete comment
-	 *
 	 * @param comment comment to delete.
 	 */
 	public void deleteComment(BlogPostComment comment) {
@@ -128,7 +122,6 @@ public class BlogPostService {
 
 	/**
 	 * Update comment
-	 *
 	 * @param comment comment to update.
 	 */
 	public void updateComment(BlogPostComment comment) {
@@ -137,18 +130,17 @@ public class BlogPostService {
 
 	/**
 	 * Removes a comment
-	 *
 	 * @param blogPost blogpost
-	 * @param comment  comment to remove from blogpost.
+	 * @param comment comment to remove from blogpost.
 	 */
 	@Transactional
 	public void removeComment(BlogPost blogPost, BlogPostComment comment) {
-		//Unlink relations
+		// Unlink relations
 		comment.setBlogPost(null);
 		blogPost.getComments().remove(comment);
-		//Save blogpost
+		// Save blogpost
 		update(blogPost);
-		//Now it's save to delete
+		// Now it's save to delete
 		commentRepository.delete(comment);
 	}
 

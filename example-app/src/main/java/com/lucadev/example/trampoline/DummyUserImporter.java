@@ -3,19 +3,14 @@ package com.lucadev.example.trampoline;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.RoleService;
-import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * Component used to import dummy users to test around with.
@@ -27,18 +22,23 @@ import java.util.Date;
 public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);
+
 	/**
 	 * Dummy user's email domain
 	 */
 	private static final String USER_EMAIL_DOMAIN = "example.com";
+
 	/**
 	 * Dummy user password
 	 */
 	private static final String USER_PASSWORD = "test";
 
 	private final TimeProvider timeProvider;
+
 	private final UserService userService;
+
 	private final RoleService roleService;
+
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
@@ -63,16 +63,18 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 		user.setLocked(false);
 		user.setEmail(name + "@" + USER_EMAIL_DOMAIN);
 		user.setPassword(passwordEncoder.encode(USER_PASSWORD));
-		//user = userService.save(user);
+		// user = userService.save(user);
 		for (Role role : roles) {
 			user.getRoles().add(role);
 		}
 		user = userService.save(user);
 		if (user == null) {
 			LOGGER.error("Could not persist user!");
-		} else {
+		}
+		else {
 			LOGGER.info("Created new user with id {}", user.getId());
 		}
 		return user;
 	}
+
 }

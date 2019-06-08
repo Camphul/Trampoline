@@ -13,10 +13,15 @@ import java.util.UUID;
  */
 @Data
 public class BlogPostCommentDto {
+
 	private UUID id;
+
 	private UserSummaryDto author;
+
 	private String content;
+
 	private Date created;
+
 	private Date updated;
 
 }

@@ -22,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
 
+	public static final int DATA_WEB_CONFIGURATION_ORDER = 30;
+
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TrampolineDataWebMvcConfiguration.class);
 
@@ -35,7 +37,7 @@ public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Orde
 
 	@Override
 	public int getOrder() {
-		return 34;
+		return DATA_WEB_CONFIGURATION_ORDER;
 	}
 
 }

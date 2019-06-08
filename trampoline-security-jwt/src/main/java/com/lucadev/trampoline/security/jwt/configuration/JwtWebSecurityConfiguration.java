@@ -9,21 +9,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.Filter;
-
-import static com.lucadev.trampoline.security.jwt.configuration.JwtWebSecurityConfiguration.JWT_SECURITY_CONFIGURATION_ORDER;
 
 /**
  * Have 2 configurations, in this one we configure the coupled parts such as auth path.
@@ -34,8 +31,8 @@ import static com.lucadev.trampoline.security.jwt.configuration.JwtWebSecurityCo
 @Configuration
 @EnableConfigurationProperties(JwtSecurityProperties.class)
 @AllArgsConstructor
-@Order(JWT_SECURITY_CONFIGURATION_ORDER)
-public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
+		implements Ordered {
 
 	/**
 	 * The {@link Order} of this configuration.
@@ -46,8 +43,6 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * The filter class which our custom JWT filter will sit infront of.
 	 */
 	public static final Class<? extends Filter> JWT_FILTER_BEFORE = UsernamePasswordAuthenticationFilter.class;
-
-	private final JwtSecurityProperties jwtSecurityProperties;
 
 	// Request filter for auth
 	private final AuthenticationEntryPoint entryPoint;
@@ -108,6 +103,11 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 */
 	protected Filter filter() {
 		return new JwtAuthorizationFilter(this.authenticationManager, this.tokenService);
+	}
+
+	@Override
+	public int getOrder() {
+		return JWT_SECURITY_CONFIGURATION_ORDER;
 	}
 
 }

@@ -15,8 +15,11 @@ import java.util.UUID;
 public class BlogPostSummaryDto {
 
 	private UUID id;
+
 	private UserSummaryDto author;
+
 	private String title;
+
 	private Date created;
 
 }

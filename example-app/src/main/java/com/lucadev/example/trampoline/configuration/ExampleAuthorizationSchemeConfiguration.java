@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Configuration;
  * @since 5/9/19
  */
 @Configuration
-@ConditionalOnProperty(prefix="spring.jpa.hibernate", name="ddl-auto", havingValue = "create")//Only run when db scheme is dropped at start
-public class ExampleAuthorizationSchemeConfiguration implements AuthorizationSchemeConfiguration {
+@ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto",
+		havingValue = "create") // Only run when db scheme is dropped at start
+public class ExampleAuthorizationSchemeConfiguration
+		implements AuthorizationSchemeConfiguration {
 
 	/**
 	 * Configure auth scheme
@@ -22,8 +24,10 @@ public class ExampleAuthorizationSchemeConfiguration implements AuthorizationSch
 	 */
 	@Override
 	public AuthorizationSchemeBuilder build(AuthorizationSchemeBuilder builder) {
-		return builder.createRole("ROLE_USER").withPrivileges("GET_WHO_AM_I", "GET_PING_PROTECTED").buildAnd()
-				.createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER").withPrivilege("MANAGE_USERS")
-				.buildAnd();
+		return builder.createRole("ROLE_USER")
+				.withPrivileges("GET_WHO_AM_I", "GET_PING_PROTECTED").buildAnd()
+				.createRole("ROLE_ADMIN").withExistingRolePrivileges("ROLE_USER")
+				.withPrivilege("MANAGE_USERS").buildAnd();
 	}
+
 }

@@ -23,7 +23,7 @@ import java.util.Collection;
 @Table(name = "BLOGPOST")
 public class BlogPost extends TrampolineEntity {
 
-	//The user who persisted this blogpost.
+	// The user who persisted this blogpost.
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "blogpost_author")
 	private User author;
@@ -35,11 +35,10 @@ public class BlogPost extends TrampolineEntity {
 	private String content;
 
 	/*
-	 * A blogpost may have 0 or more comments.
-	 * We use two way relationships so we can make comments pageable.
+	 * A blogpost may have 0 or more comments. We use two way relationships so we can make
+	 * comments pageable.
 	 */
-	@OneToMany(
-			orphanRemoval = true
-	)
+	@OneToMany(orphanRemoval = true)
 	private Collection<BlogPostComment> comments = new ArrayList<>();
+
 }
