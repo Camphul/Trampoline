@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service.impl;
 
+import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import com.lucadev.trampoline.security.service.AbstractUserService;
@@ -20,11 +21,11 @@ public class TrampolineUserService extends AbstractUserService {
 	 * Construct the handler.
 	 * @param userRepository the repository to persist {@link User} entities.
 	 * @param timeProvider {@link TimeProvider} instance.
-	 * @param emailIdentification if we should use email as authorization identifier.
+	 * @param securityConfigurationProperties properties which define how the user service behaves.
 	 */
 	public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider,
-			boolean emailIdentification) {
-		super(userRepository, emailIdentification);
+								 SecurityConfigurationProperties securityConfigurationProperties) {
+		super(userRepository, securityConfigurationProperties);
 		this.timeProvider = timeProvider;
 	}
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.lucadev.trampoline.security.abac.PolicyContainer;
+import com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import com.lucadev.trampoline.security.abac.spel.SpelDeserializer;
 import lombok.AllArgsConstructor;
@@ -27,12 +28,12 @@ import java.util.List;
 @Slf4j
 public class JsonFilePolicyContainer implements PolicyContainer {
 
-	private final String policyFilePath;
+	private final AbacSecurityConfigurationProperties abacSecurityConfigurationProperties;
 
 	private List<PolicyRule> rules;
 
-	public JsonFilePolicyContainer(String jsonFilePath) throws IOException {
-		this.policyFilePath = jsonFilePath;
+	public JsonFilePolicyContainer(AbacSecurityConfigurationProperties abacSecurityConfigurationProperties) throws IOException {
+		this.abacSecurityConfigurationProperties = abacSecurityConfigurationProperties;
 		loadPolicyRules();
 	}
 
@@ -41,13 +42,15 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		SimpleModule module = new SimpleModule();
 		module.addDeserializer(Expression.class, new SpelDeserializer());
 		mapper.registerModule(module);
-		File file = new ClassPathResource(this.policyFilePath).getFile();
+		String jsonFilePath = this.abacSecurityConfigurationProperties.getJson().getFilePath();
+
+		File file = new ClassPathResource(jsonFilePath).getFile();
 		if (!file.exists()) {
 			throw new FileNotFoundException("Cannot load non existent resource");
 		}
 
 		try {
-			log.debug("Checking policy file at: {}", this.policyFilePath);
+			log.debug("Checking policy file at: {}", jsonFilePath);
 			this.rules = mapper.readValue(file, JsonPolicyFileModel.class).getPolicies();
 			log.info("Policies loaded successfully.");
 		}

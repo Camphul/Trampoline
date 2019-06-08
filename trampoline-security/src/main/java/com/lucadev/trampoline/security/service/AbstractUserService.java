@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.service;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationType;
+import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import lombok.AccessLevel;
@@ -33,12 +34,12 @@ public abstract class AbstractUserService implements UserService {
 	/**
 	 * Construct the abstract handler.
 	 * @param userRepository the {@code Repository} used to persist {@link User} entities.
-	 * @param emailIdentification if we should use the email attribute for authorization.
+	 * @param securityConfigurationProperties authentication properties.
 	 */
 	public AbstractUserService(UserRepository userRepository,
-			boolean emailIdentification) {
+							   SecurityConfigurationProperties securityConfigurationProperties) {
 		this.userRepository = userRepository;
-		if (emailIdentification) {
+		if (securityConfigurationProperties.isEmailIdentification()) {
 			this.identificationType = IdentificationType.EMAIL;
 		}
 	}

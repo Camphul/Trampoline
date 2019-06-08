@@ -1,10 +1,10 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
+import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.security.service.impl.TrampolineUserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +22,8 @@ public class UserServiceAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserService userService(UserRepository repository, TimeProvider timeProvider,
-			@Value("${trampoline.security.authentication.emailIdentification:false}") boolean emailIdentification) {
-		return new TrampolineUserService(repository, timeProvider, emailIdentification);
+	public UserService userService(UserRepository repository, TimeProvider timeProvider, SecurityConfigurationProperties configurationProperties) {
+		return new TrampolineUserService(repository, timeProvider, configurationProperties);
 	}
 
 }
