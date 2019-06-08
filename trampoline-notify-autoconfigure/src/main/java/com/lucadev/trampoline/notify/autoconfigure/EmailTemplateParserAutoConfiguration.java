@@ -34,4 +34,5 @@ public class EmailTemplateParserAutoConfiguration {
 		log.debug("Using default (thymeleaf) email template parser.");
 		return new ThymeleafEmailTemplateParser(templateEngine);
 	}
+
 }

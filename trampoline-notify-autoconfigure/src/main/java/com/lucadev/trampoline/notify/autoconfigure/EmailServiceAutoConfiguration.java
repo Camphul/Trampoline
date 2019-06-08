@@ -19,17 +19,22 @@ import org.springframework.mail.javamail.JavaMailSender;
  */
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnClass({EmailService.class, EmailConfiguration.class})
-@ConditionalOnProperty(prefix = "trampoline.notify.email", name = "enabled", havingValue = "true")
+@ConditionalOnClass({ EmailService.class, EmailConfiguration.class })
+@ConditionalOnProperty(prefix = "trampoline.notify.email", name = "enabled",
+		havingValue = "true")
 public class EmailServiceAutoConfiguration {
 
 	private final EmailConfigurationProperties emailConfigurationProperties;
+
 	private final EmailTemplateParser emailTemplateParser;
+
 	private final JavaMailSender mailSender;
 
 	@Bean
 	@ConditionalOnMissingBean(EmailService.class)
 	public EmailService emailService() {
-		return new TrampolineEmailService(emailConfigurationProperties, emailTemplateParser, mailSender);
+		return new TrampolineEmailService(emailConfigurationProperties,
+				emailTemplateParser, mailSender);
 	}
+
 }

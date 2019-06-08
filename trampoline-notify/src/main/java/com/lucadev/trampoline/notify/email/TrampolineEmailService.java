@@ -23,7 +23,9 @@ import java.util.function.Function;
 public class TrampolineEmailService implements EmailService {
 
 	private final EmailConfigurationProperties configurationProperties;
+
 	private final EmailTemplateParser templateParser;
+
 	private final JavaMailSender mailSender;
 
 	/**
@@ -38,7 +40,8 @@ public class TrampolineEmailService implements EmailService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void send(Function<EmailBuilder, EmailBuilder> builder) throws MessagingException {
+	public void send(Function<EmailBuilder, EmailBuilder> builder)
+			throws MessagingException {
 		send(builder.apply(builder()));
 	}
 
@@ -60,10 +63,15 @@ public class TrampolineEmailService implements EmailService {
 	 * @param model and getting data from this model.
 	 * @throws MessagingException when we somehow could not send the email.
 	 */
-	@Async/* Only this method has to be async annotated since the other methods delegate to this.*/
+	@Async /*
+			 * Only this method has to be async annotated since the other methods delegate
+			 * to this.
+			 */
 	@Override
-	public void send(String from, String to, String subject, String template, Map<String, Object> model) throws MessagingException {
-		log.debug("Sending email from {} to {} with subject {} using template {}", from, to, subject, template);
+	public void send(String from, String to, String subject, String template,
+			Map<String, Object> model) throws MessagingException {
+		log.debug("Sending email from {} to {} with subject {} using template {}", from,
+				to, subject, template);
 		MimeMessage message = mailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -72,7 +80,7 @@ public class TrampolineEmailService implements EmailService {
 		helper.setSubject(subject);
 		helper.setFrom(from);
 		message.setContent(content, "text/html; charset=utf-8");
-		//send mesage
+		// send mesage
 		mailSender.send(message);
 		log.debug("Sent email..");
 	}
@@ -84,7 +92,8 @@ public class TrampolineEmailService implements EmailService {
 	 */
 	@Async
 	@Override
-	public void sendAsync(Function<EmailBuilder, EmailBuilder> builder) throws MessagingException {
+	public void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
+			throws MessagingException {
 		send(builder);
 	}
 
@@ -100,7 +109,8 @@ public class TrampolineEmailService implements EmailService {
 	}
 
 	/**
-	 * Async version of {@link TrampolineEmailService#send(String, String, String, String, Map)}.
+	 * Async version of
+	 * {@link TrampolineEmailService#send(String, String, String, String, Map)}.
 	 * @param from coming from this address.
 	 * @param to destined for this address.
 	 * @param subject with subject.
@@ -110,7 +120,9 @@ public class TrampolineEmailService implements EmailService {
 	 */
 	@Async
 	@Override
-	public void sendAsync(String from, String to, String subject, String template, Map<String, Object> model) throws MessagingException {
+	public void sendAsync(String from, String to, String subject, String template,
+			Map<String, Object> model) throws MessagingException {
 		send(from, to, subject, template, model);
 	}
+
 }

@@ -32,4 +32,5 @@ public class ThymeleafEmailTemplateParser implements EmailTemplateParser {
 		context.setVariables(model);
 		return templateEngine.process(template, context);
 	}
+
 }

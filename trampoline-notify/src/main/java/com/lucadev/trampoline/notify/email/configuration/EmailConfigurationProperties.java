@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "trampoline.notify.email")
 public class EmailConfigurationProperties {
 
-	//If we should even load email.
+	// If we should even load email.
 	private boolean enabled = false;
 
 	@NestedConfigurationProperty
@@ -25,13 +25,13 @@ public class EmailConfigurationProperties {
 	@Data
 	public static class Defaults {
 
-		//Default sender address.
+		// Default sender address.
 		private String from = "noreply@localhost";
 
-		//Default template to use.
+		// Default template to use.
 		private String template = "email";
 
-		//Default subject
+		// Default subject
 		private String subject = "Email notification";
 
 	}

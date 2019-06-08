@@ -40,14 +40,16 @@ public interface EmailService {
 	 * @param model and getting data from this model.
 	 * @throws MessagingException when we could not send the email.
 	 */
-	void send(String from, String to, String subject, String template, Map<String,Object> model) throws MessagingException;
+	void send(String from, String to, String subject, String template,
+			Map<String, Object> model) throws MessagingException;
 
 	/**
 	 * Send a message built using a {@link EmailBuilder} asynchronously.
 	 * @param builder function which expects a builder to be returned.
 	 * @throws MessagingException when for some reason we could not send the email.
 	 */
-	void sendAsync(Function<EmailBuilder, EmailBuilder> builder) throws MessagingException;
+	void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
+			throws MessagingException;
 
 	/**
 	 * Send email made using the builder asynchronously.
@@ -64,6 +66,7 @@ public interface EmailService {
 	 * @param model and getting data from this model.
 	 * @throws MessagingException when we could not send the email.
 	 */
-	void sendAsync(String from, String to, String subject, String template, Map<String,Object> model) throws MessagingException;
+	void sendAsync(String from, String to, String subject, String template,
+			Map<String, Object> model) throws MessagingException;
 
 }

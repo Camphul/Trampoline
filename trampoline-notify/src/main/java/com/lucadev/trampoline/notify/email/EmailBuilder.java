@@ -18,10 +18,14 @@ import java.util.Map;
 public final class EmailBuilder {
 
 	private String from;
+
 	private String to;
+
 	private String subject;
+
 	private String template;
-	private Map<String,Object> model;
+
+	private Map<String, Object> model;
 
 	/**
 	 * Constructs the builder using configured defaults.
@@ -39,7 +43,8 @@ public final class EmailBuilder {
 	 * @param configurationProperties configuration for defaults and such.
 	 * @return new email builder.
 	 */
-	public static EmailBuilder create(EmailConfigurationProperties configurationProperties) {
+	public static EmailBuilder create(
+			EmailConfigurationProperties configurationProperties) {
 		return new EmailBuilder(configurationProperties);
 	}
 
@@ -88,7 +93,7 @@ public final class EmailBuilder {
 	 * @param model model data.
 	 * @return the builder.
 	 */
-	public EmailBuilder withModel(Map<String,Object> model) {
+	public EmailBuilder withModel(Map<String, Object> model) {
 		this.model = model;
 		return this;
 	}
@@ -98,7 +103,7 @@ public final class EmailBuilder {
 	 * @param model the model to get all attributes from.
 	 * @return the builder.
 	 */
-	public EmailBuilder withAllAttributes(Map<String,Object> model) {
+	public EmailBuilder withAllAttributes(Map<String, Object> model) {
 		this.model.putAll(model);
 		return this;
 	}

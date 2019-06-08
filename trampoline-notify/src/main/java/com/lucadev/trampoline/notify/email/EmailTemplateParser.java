@@ -16,7 +16,6 @@ public interface EmailTemplateParser {
 	 * @param model model containing our data.
 	 * @return parsed html template.
 	 */
-	String process(String template, Map<String,Object> model);
-
+	String process(String template, Map<String, Object> model);
 
 }
