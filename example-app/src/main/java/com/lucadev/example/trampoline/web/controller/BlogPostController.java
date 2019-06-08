@@ -10,6 +10,7 @@ import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
+import com.lucadev.trampoline.security.annotation.IgnoreSecurity;
 import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
