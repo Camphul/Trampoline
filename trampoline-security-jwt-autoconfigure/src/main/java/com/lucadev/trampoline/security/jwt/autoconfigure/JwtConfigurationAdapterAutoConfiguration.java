@@ -1,9 +1,8 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.NopJwtConfigurationAdapter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -15,18 +14,16 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
+@Slf4j
 @Configuration
 @ConditionalOnClass(JwtConfigurationAdapter.class)
 public class JwtConfigurationAdapterAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JwtConfigurationAdapterAutoConfiguration.class);
-
 	@Bean
 	@ConditionalOnMissingBean
 	public JwtConfigurationAdapter jwtConfiguration() {
-		LOGGER.debug("Using default jwt configuration");
-		return new DefaultJwtConfigurationAdapter();
+		log.debug("Using default jwt configuration");
+		return new NopJwtConfigurationAdapter();
 	}
 
 }

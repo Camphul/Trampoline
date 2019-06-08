@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.configuration.DefaultJwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.NopJwtConfigurationAdapter;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 		this.context.refresh();
 		JwtConfigurationAdapter jwtConfiguration = this.context
 				.getBean(JwtConfigurationAdapter.class);
-		assertThat(jwtConfiguration, instanceOf(DefaultJwtConfigurationAdapter.class));
+		assertThat(jwtConfiguration, instanceOf(NopJwtConfigurationAdapter.class));
 	}
 
 	@Test

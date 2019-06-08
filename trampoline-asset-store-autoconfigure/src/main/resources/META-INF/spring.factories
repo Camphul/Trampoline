@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.lucadev.trampoline.assetstore.autoconfigure.AssetStoreAutoConfiguration,\
-com.lucadev.trampoline.assetstore.autoconfigure.LocalAssetStoreFactoryAutoConfiguration
+com.lucadev.trampoline.assetstore.autoconfigure.AssetStoreAutoConfiguration

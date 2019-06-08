@@ -2,8 +2,8 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
+import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
@@ -19,13 +19,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(TokenService.class)
-@EnableConfigurationProperties(JwtSecurityProperties.class)
+@EnableConfigurationProperties(JwtSecurityConfigurationProperties.class)
 @AllArgsConstructor
 public class TokenServiceAutoConfiguration {
 
 	private final JwtConfigurationAdapter jwtConfiguration;
 
-	private final JwtSecurityProperties jwtSecurityProperties;
+	private final JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 
 	private final TimeProvider timeProvider;
 
@@ -35,7 +35,7 @@ public class TokenServiceAutoConfiguration {
 	@ConditionalOnMissingBean
 	public TokenService tokenService() {
 		return new JwtTokenService(this.jwtConfiguration, this.timeProvider,
-				this.userService, this.jwtSecurityProperties);
+				this.userService, this.jwtSecurityConfigurationProperties);
 	}
 
 }

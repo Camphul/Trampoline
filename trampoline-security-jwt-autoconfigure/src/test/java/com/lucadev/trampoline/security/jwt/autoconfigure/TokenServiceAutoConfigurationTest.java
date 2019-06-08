@@ -3,8 +3,8 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
+import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
@@ -34,7 +34,7 @@ public class TokenServiceAutoConfigurationTest {
 
 	private JwtConfigurationAdapter jwtConfiguration;
 
-	private JwtSecurityProperties jwtSecurityProperties;
+	private JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 
 	private TimeProvider timeProvider;
 
@@ -42,8 +42,8 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		jwtSecurityProperties = mock(JwtSecurityProperties.class);
-		when(jwtSecurityProperties.getSecret())
+		jwtSecurityConfigurationProperties = mock(JwtSecurityConfigurationProperties.class);
+		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
 		userService = mock(UserService.class);
@@ -56,8 +56,8 @@ public class TokenServiceAutoConfigurationTest {
 		if (this.context != null) {
 			this.context.close();
 		}
-		if (jwtSecurityProperties != null) {
-			jwtSecurityProperties = null;
+		if (jwtSecurityConfigurationProperties != null) {
+			jwtSecurityConfigurationProperties = null;
 		}
 		if (timeProvider != null) {
 			timeProvider = null;
@@ -73,7 +73,7 @@ public class TokenServiceAutoConfigurationTest {
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityProperties, timeProvider, userService);
+				jwtSecurityConfigurationProperties, timeProvider, userService);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(JwtTokenService.class));
@@ -83,7 +83,7 @@ public class TokenServiceAutoConfigurationTest {
 	public void customTokenServiceBean() {
 		this.context.register(CustomTokenServiceConfig.class);
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityProperties, timeProvider, userService);
+				jwtSecurityConfigurationProperties, timeProvider, userService);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(TestTokenService.class));

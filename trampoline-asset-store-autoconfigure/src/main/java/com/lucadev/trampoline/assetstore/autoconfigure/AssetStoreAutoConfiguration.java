@@ -3,6 +3,9 @@ package com.lucadev.trampoline.assetstore.autoconfigure;
 import com.lucadev.trampoline.assetstore.AssetStore;
 import com.lucadev.trampoline.assetstore.AssetStoreFactory;
 import com.lucadev.trampoline.assetstore.configuration.AssetStoreConfigurationProperties;
+import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreConfigurationProperties;
+import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreFactory;
+import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -24,10 +27,6 @@ import java.util.List;
 @ConditionalOnClass(AssetStore.class)
 public class AssetStoreAutoConfiguration {
 
-	private final AssetStoreConfigurationProperties configurationProperties;
-
-	private final List<AssetStoreFactory> factories;
-
 	/**
 	 * Configure default asset store.
 	 * @return a new {@link AssetStore}
@@ -35,7 +34,7 @@ public class AssetStoreAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AssetStore.class)
-	public AssetStore assetStore() throws Exception {
+	public AssetStore assetStore(List<AssetStoreFactory> factories, AssetStoreConfigurationProperties configurationProperties) throws Exception {
 		if (factories.isEmpty()) {
 			throw new NullPointerException(
 					"Could not find matching factories for AssetStore");
@@ -48,6 +47,17 @@ public class AssetStoreAutoConfiguration {
 						"Could not find matching factory."));
 		// found factory
 		return factory.getObject();
+	}
+
+	/**
+	 * Configure default asset store factory.
+	 * @return a new {@link AssetStore}
+	 */
+	@Bean
+	public LocalAssetStoreFactory localAssetStoreFactory(LocalAssetStoreConfigurationProperties localAssetStoreConfigurationProperties,
+														 AssetMetaDataRepository metaDataRepository) {
+		log.debug("Creating local asset store factory bean.");
+		return new LocalAssetStoreFactory(localAssetStoreConfigurationProperties, metaDataRepository);
 	}
 
 }

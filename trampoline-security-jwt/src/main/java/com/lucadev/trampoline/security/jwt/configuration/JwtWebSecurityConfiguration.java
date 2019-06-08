@@ -5,9 +5,9 @@ import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvi
 import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
 import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -28,9 +28,9 @@ import javax.servlet.Filter;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
+@Slf4j
 @Configuration
-@EnableConfigurationProperties(JwtSecurityProperties.class)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
 
@@ -81,6 +81,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		log.debug("Configuring jwt websecurity");
 		http
 				// Sessionless
 				.sessionManagement()

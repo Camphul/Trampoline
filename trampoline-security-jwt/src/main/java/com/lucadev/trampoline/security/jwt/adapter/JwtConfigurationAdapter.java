@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.configuration;
+package com.lucadev.trampoline.security.jwt.adapter;
 
 import com.lucadev.trampoline.security.persistence.entity.User;
 

@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.jwt;
 
+import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
-import com.lucadev.trampoline.security.jwt.configuration.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityProperties;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
@@ -51,7 +51,7 @@ public class JwtTokenService implements TokenService {
 
 	private final UserService userService;
 
-	private final JwtSecurityProperties properties;
+	private final JwtSecurityConfigurationProperties properties;
 
 	@Getter(AccessLevel.PRIVATE)
 	private Key signKey;
@@ -137,12 +137,12 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public JwtPayload getTokenData(HttpServletRequest request) {
 		final String requestHeader = request
-				.getHeader(JwtSecurityProperties.TOKEN_HEADER);
+				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
 		if (requestHeader == null || requestHeader.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
 					"Could not find token header.");
 		}
-		if (requestHeader.startsWith(JwtSecurityProperties.HEADER_PREFIX)) {
+		if (requestHeader.startsWith(JwtSecurityConfigurationProperties.HEADER_PREFIX)) {
 			String authToken = getTokenFromHeader(requestHeader);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException(
@@ -187,7 +187,7 @@ public class JwtTokenService implements TokenService {
 	 */
 	@Override
 	public String refreshTokenFromRequest(HttpServletRequest request) {
-		String authHeader = request.getHeader(JwtSecurityProperties.TOKEN_HEADER);
+		String authHeader = request.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
 		final String token = getTokenFromHeader(authHeader);
 		JwtPayload jwtPayload = getTokenData(token);
 		String username = jwtPayload.getUsername();
@@ -265,7 +265,7 @@ public class JwtTokenService implements TokenService {
 	 */
 	private String getTokenFromHeader(String headerValue) {
 		String authToken = headerValue
-				.substring(JwtSecurityProperties.HEADER_PREFIX.length());
+				.substring(JwtSecurityConfigurationProperties.HEADER_PREFIX.length());
 		// Remove first whitespace
 		while (authToken.startsWith(" ")) {
 			authToken = authToken.substring(1);
