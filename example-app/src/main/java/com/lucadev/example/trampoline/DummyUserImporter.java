@@ -6,8 +6,7 @@ import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */
+@Slf4j
 @RequiredArgsConstructor
 public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DummyUserImporter.class);
 
 	/**
 	 * Dummy user's email domain
@@ -43,13 +42,13 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-		LOGGER.info("Running dummy user imports..");
+		log.info("Running dummy user imports..");
 		Role userRole = roleService.find("ROLE_USER");
 		Role adminRole = roleService.find("ROLE_ADMIN");
 		User user = createUser("user", userRole);
 		User joe = createUser("joe", userRole);
 		User admin = createUser("admin", userRole, adminRole);
-		LOGGER.info("Completed dummy user imports");
+		log.info("Completed dummy user imports");
 	}
 
 	private User createUser(String name, Role... roles) {
@@ -69,10 +68,10 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 		}
 		user = userService.save(user);
 		if (user == null) {
-			LOGGER.error("Could not persist user!");
+			log.error("Could not persist user!");
 		}
 		else {
-			LOGGER.info("Created new user with id {}", user.getId());
+			log.info("Created new user with id {}", user.getId());
 		}
 		return user;
 	}

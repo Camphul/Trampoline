@@ -7,9 +7,8 @@ import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,11 +26,9 @@ import java.util.Collection;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 28-4-18
  */
-@AllArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JwtAuthenticationProvider.class);
 
 	private final TokenService tokenService;
 
@@ -47,7 +44,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) {
-		LOGGER.debug("Checking authentication for JwtAuthenticationToken");
+		log.debug("Checking authentication for JwtAuthenticationToken");
 		// If there's already a JwtAuthenticationToken present
 		if (authentication instanceof JwtAuthenticationToken) {
 			JwtPayload payload = ((JwtAuthenticationToken) authentication)

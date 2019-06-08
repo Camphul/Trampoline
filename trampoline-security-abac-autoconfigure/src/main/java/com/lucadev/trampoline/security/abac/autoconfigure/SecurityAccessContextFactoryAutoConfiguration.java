@@ -2,8 +2,7 @@ package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContextFactory;
 import com.lucadev.trampoline.security.abac.spel.context.impl.TrampolineSecurityAccessContextFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -15,17 +14,15 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
+@Slf4j
 @Configuration
 @ConditionalOnClass(SecurityAccessContextFactory.class)
 public class SecurityAccessContextFactoryAutoConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(SecurityAccessContextFactoryAutoConfiguration.class);
-
 	@Bean
 	@ConditionalOnMissingBean(SecurityAccessContextFactory.class)
 	public SecurityAccessContextFactory securityAccessContextFactory() {
-		LOGGER.debug("Creating autoconfigured security access context factory");
+		log.debug("Creating autoconfigured security access context factory");
 		return new TrampolineSecurityAccessContextFactory();
 	}
 

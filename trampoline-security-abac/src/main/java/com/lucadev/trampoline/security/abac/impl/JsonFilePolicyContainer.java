@@ -9,8 +9,7 @@ import com.lucadev.trampoline.security.abac.spel.SpelDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.expression.Expression;
 
@@ -25,10 +24,8 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
+@Slf4j
 public class JsonFilePolicyContainer implements PolicyContainer {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JsonFilePolicyContainer.class);
 
 	private final String policyFilePath;
 
@@ -50,16 +47,16 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		}
 
 		try {
-			LOGGER.debug("[loadPolicyRules] Checking policy file at: {}",
+			log.debug("Checking policy file at: {}",
 					this.policyFilePath);
 			this.rules = mapper.readValue(file, JsonPolicyFileModel.class).getPolicies();
-			LOGGER.info("[loadPolicyRules] Policy loaded successfully.");
+			log.info("Policies loaded successfully.");
 		}
 		catch (JsonMappingException e) {
-			LOGGER.error("An error occurred while parsing the policy file.", e);
+			log.error("An error occurred while parsing the policy file.", e);
 		}
 		catch (IOException e) {
-			LOGGER.error("An error occurred while reading the policy file.", e);
+			log.error("An error occurred while reading the policy file.", e);
 		}
 	}
 

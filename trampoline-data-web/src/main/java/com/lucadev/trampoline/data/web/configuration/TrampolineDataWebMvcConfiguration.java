@@ -2,8 +2,7 @@ package com.lucadev.trampoline.data.web.configuration;
 
 import com.lucadev.trampoline.data.web.FindByIdMethodArgumentResolver;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,21 +17,19 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/7/19
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
 
 	public static final int DATA_WEB_CONFIGURATION_ORDER = 30;
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TrampolineDataWebMvcConfiguration.class);
-
 	private final EntityManager entityManager;
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new FindByIdMethodArgumentResolver(this.entityManager));
-		LOGGER.debug("Added custom argument resolvers.");
+		log.debug("Added custom argument resolvers.");
 	}
 
 	@Override

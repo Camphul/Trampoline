@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.authorization;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +22,10 @@ import java.util.Optional;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 11-5-18
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-	private static final Logger JWT_LOGGER = LoggerFactory
+	private static final Logger log = LoggerFactory
 			.getLogger(JwtAuthorizationFilter.class);
 
 	private final AuthenticationManager authenticationManager;
@@ -41,7 +41,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 					.getAuthenticationToken(httpServletRequest);
 
 			if (!token.isPresent()) {
-				JWT_LOGGER.debug("Could not authenticate null JWT token.");
+				log.debug("Could not authenticate null JWT token.");
 				filterChain.doFilter(httpServletRequest, httpServletResponse);
 				return;
 			}
@@ -49,12 +49,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			Authentication authentication = this.authenticationManager
 					.authenticate(token.get());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			JWT_LOGGER.debug("Set the authentication object.");
+			log.debug("Set the authentication object.");
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception ex) {
 			SecurityContextHolder.clearContext();
-			JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(),
+			log.info("Failed JWT filter: {}: {}", ex.getClass().getName(),
 					ex.getMessage());
 			throw ex;
 		}

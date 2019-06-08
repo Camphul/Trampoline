@@ -4,8 +4,7 @@ import com.lucadev.trampoline.security.abac.PolicyContainer;
 import com.lucadev.trampoline.security.abac.impl.JpaPolicyContainer;
 import com.lucadev.trampoline.security.abac.impl.JsonFilePolicyContainer;
 import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -21,12 +20,10 @@ import java.io.IOException;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
+@Slf4j
 @Configuration
 @ConditionalOnClass(PolicyContainer.class)
 public class PolicyContainerAutoConfiguration {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PolicyContainerAutoConfiguration.class);
 
 	private final String jsonFilePath;
 
@@ -42,7 +39,7 @@ public class PolicyContainerAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(PolicyContainer.class)
 	public PolicyContainer policyDefinition() {
-		LOGGER.debug("Creating autoconfigured policy definition");
+		log.debug("Creating autoconfigured policy definition");
 		JsonFilePolicyContainer parent = null;
 		try {
 			parent = new JsonFilePolicyContainer(this.jsonFilePath);

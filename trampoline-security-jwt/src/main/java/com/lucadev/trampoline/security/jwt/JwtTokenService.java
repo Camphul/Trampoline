@@ -14,8 +14,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -32,10 +31,9 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
+@Slf4j
 @RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenService.class);
 
 	private static final String CLAIM_USERNAME = "t_username";
 
@@ -220,7 +218,7 @@ public class JwtTokenService implements TokenService {
 			return Optional.of(new JwtAuthenticationToken(jwtPayload));
 		}
 		catch (Exception ex) {
-			LOGGER.error("Failed to obtain JWT authentication object.", ex);
+			log.error("Failed to obtain JWT authentication object.", ex);
 			return Optional.empty();
 		}
 	}

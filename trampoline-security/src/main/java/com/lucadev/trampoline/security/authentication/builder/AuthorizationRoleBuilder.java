@@ -4,8 +4,7 @@ import com.lucadev.trampoline.security.persistence.entity.Privilege;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,8 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
+@Slf4j
 public class AuthorizationRoleBuilder {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AuthorizationRoleBuilder.class);
 
 	private final AuthorizationSchemeBuilder authorizationSchemeBuilder;
 
@@ -45,7 +42,7 @@ public class AuthorizationRoleBuilder {
 
 		// Initialize empty privilege list
 		this.privileges = new ArrayList<>();
-		LOGGER.debug("Constructed AuthorizationRoleBuilder");
+		log.debug("Constructed AuthorizationRoleBuilder");
 	}
 
 	/**
@@ -77,7 +74,7 @@ public class AuthorizationRoleBuilder {
 	 * @return the role builder.
 	 */
 	public AuthorizationRoleBuilder withPrivilege(String privilege) {
-		LOGGER.debug("Adding privilege: {}", privilege);
+		log.debug("Adding privilege: {}", privilege);
 		this.privileges.add(privilege);
 		return this;
 	}
@@ -108,7 +105,7 @@ public class AuthorizationRoleBuilder {
 					"Could not add roles from existing role. The role name specified was not found.");
 		}
 
-		LOGGER.debug("Adding privileges from existing role with name: {}", roleName);
+		log.debug("Adding privileges from existing role with name: {}", roleName);
 		AuthorizationRoleBuilder roleBuilder = this;
 
 		for (Privilege privilege : role.getPrivileges()) {
@@ -131,7 +128,7 @@ public class AuthorizationRoleBuilder {
 			return this;
 		}
 
-		LOGGER.debug("Building Role from builder.");
+		log.debug("Building Role from builder.");
 		Role role = this.roleService.create(this.roleName);
 
 		// Add roles
@@ -139,15 +136,15 @@ public class AuthorizationRoleBuilder {
 			Privilege privilege = this.privilegeService.find(privilegeStr);
 
 			if (privilege == null) {
-				LOGGER.debug("Creating non-existent privilege: {}", privilegeStr);
+				log.debug("Creating non-existent privilege: {}", privilegeStr);
 				privilege = this.privilegeService.create(privilegeStr);
 			}
 
-			LOGGER.debug("Adding privilege {} to role {}", privilegeStr, this.roleName);
+			log.debug("Adding privilege {} to role {}", privilegeStr, this.roleName);
 			role.getPrivileges().add(privilege);
 		}
 
-		LOGGER.debug("Persisting updated role");
+		log.debug("Persisting updated role");
 		this.roleService.update(role);
 		return this;
 	}
