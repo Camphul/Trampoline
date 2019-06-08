@@ -23,7 +23,7 @@ import javax.validation.Valid;
  * @since 21-4-18
  */
 @RestController
-@RequestMapping("${trampoline.security.jwt.authPath:/auth}")
+@RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController {
 
@@ -37,7 +37,7 @@ public class JwtAuthenticationController {
 	 * @return response of the authorization
 	 */
 	@IgnoreSecurity
-	@PostMapping("${trampoline.security.jwt.authPath.authorize:/authorize}")
+	@PostMapping("${trampoline.security.jwt.web.authorizeMapping:/authorize}")
 	public JwtAuthenticationResponse submitAuthenticationTokenRequest(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
 		try {
@@ -63,7 +63,7 @@ public class JwtAuthenticationController {
 	 * @param response http resp
 	 * @return jwt auth response.
 	 */
-	@GetMapping("${trampoline.security.jwt.authPath.refresh:/refresh}")
+	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
 	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(
 			HttpServletRequest request, HttpServletResponse response) {
 		try {

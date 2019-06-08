@@ -42,7 +42,8 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		jwtSecurityConfigurationProperties = mock(JwtSecurityConfigurationProperties.class);
+		jwtSecurityConfigurationProperties = mock(
+				JwtSecurityConfigurationProperties.class);
 		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);

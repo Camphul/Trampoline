@@ -24,6 +24,7 @@ public class NopEmailService implements EmailService {
 	public EmailBuilder builder() {
 		return EmailBuilder.create(configurationProperties);
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,9 +54,10 @@ public class NopEmailService implements EmailService {
 	 */
 	@Override
 	public void send(String from, String to, String subject, String template,
-					 Map<String, Object> model) throws MessagingException {
-		log.debug("NOP EmailService sending email from {} to {} with subject {} using template {}", from,
-				to, subject, template);
+			Map<String, Object> model) throws MessagingException {
+		log.debug(
+				"NOP EmailService sending email from {} to {} with subject {} using template {}",
+				from, to, subject, template);
 	}
 
 	/**
@@ -80,7 +82,8 @@ public class NopEmailService implements EmailService {
 	}
 
 	/**
-	 * Async version of {@link TrampolineEmailService#send(String, String, String, String, Map)}.
+	 * Async version of
+	 * {@link TrampolineEmailService#send(String, String, String, String, Map)}.
 	 * @param from coming from this address.
 	 * @param to destined for this address.
 	 * @param subject with subject.
@@ -90,7 +93,7 @@ public class NopEmailService implements EmailService {
 	 */
 	@Override
 	public void sendAsync(String from, String to, String subject, String template,
-						  Map<String, Object> model) throws MessagingException {
+			Map<String, Object> model) throws MessagingException {
 		send(from, to, subject, template, model);
 	}
 

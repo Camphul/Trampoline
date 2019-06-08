@@ -34,7 +34,8 @@ public class AssetStoreAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AssetStore.class)
-	public AssetStore assetStore(List<AssetStoreFactory> factories, AssetStoreConfigurationProperties configurationProperties) throws Exception {
+	public AssetStore assetStore(List<AssetStoreFactory> factories,
+			AssetStoreConfigurationProperties configurationProperties) throws Exception {
 		if (factories.isEmpty()) {
 			log.warn("No AssetStore factories discovered.");
 			throw new NullPointerException(
@@ -47,7 +48,7 @@ public class AssetStoreAutoConfiguration {
 				.findFirst().orElseThrow(() -> new NullPointerException(
 						"Could not find matching factory."));
 
-		log.info("Using factory {}", factory,getClass().getName());
+		log.info("Using factory {}", factory, getClass().getName());
 		// found factory
 		return factory.getObject();
 	}
@@ -57,10 +58,12 @@ public class AssetStoreAutoConfiguration {
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean
-	public LocalAssetStoreFactory localAssetStoreFactory(LocalAssetStoreConfigurationProperties localAssetStoreConfigurationProperties,
-														 AssetMetaDataRepository metaDataRepository) {
- 		log.debug("Creating local asset store factory bean.");
-		return new LocalAssetStoreFactory(localAssetStoreConfigurationProperties, metaDataRepository);
+	public LocalAssetStoreFactory localAssetStoreFactory(
+			LocalAssetStoreConfigurationProperties localAssetStoreConfigurationProperties,
+			AssetMetaDataRepository metaDataRepository) {
+		log.debug("Creating local asset store factory bean.");
+		return new LocalAssetStoreFactory(localAssetStoreConfigurationProperties,
+				metaDataRepository);
 	}
 
 }

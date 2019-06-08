@@ -6,4 +6,4 @@ REST API endpoints for [trampoline-security-jwt](../trampoline-security-jwt)
 
 Adds a simple controller ontop of trampoline-security-jwt.
 
-The basepath for the controll endpoints are configured by the `trampoline.security.jwt.authPath` property which defaults to `/auth`
+The basepath for the controll endpoints are configured by the `trampoline.security.jwt.web.baseMapping` property which defaults to `/auth`

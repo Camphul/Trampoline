@@ -27,17 +27,20 @@ import org.springframework.mail.javamail.JavaMailSender;
 public class EmailServiceAutoConfiguration {
 
 	private final JavaMailSender javaMailSender;
+
 	private final EmailConfigurationProperties emailConfigurationProperties;
+
 	private final EmailTemplateParser emailTemplateParser;
 
 	@Bean
 	@ConditionalOnMissingBean(EmailService.class)
 	public EmailService emailService() {
-		if(emailConfigurationProperties.isEnabled() && javaMailSender != null) {
+		if (emailConfigurationProperties.isEnabled() && javaMailSender != null) {
 			return new TrampolineEmailService(emailConfigurationProperties,
 					emailTemplateParser, javaMailSender);
 		}
 
 		return new NopEmailService(emailConfigurationProperties);
 	}
+
 }

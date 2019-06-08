@@ -185,7 +185,8 @@ public class JwtTokenService implements TokenService {
 	 */
 	@Override
 	public String refreshTokenFromRequest(HttpServletRequest request) {
-		String authHeader = request.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
+		String authHeader = request
+				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
 		final String token = getTokenFromHeader(authHeader);
 		JwtPayload jwtPayload = getTokenData(token);
 		String username = jwtPayload.getUsername();

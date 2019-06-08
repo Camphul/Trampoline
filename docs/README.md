@@ -46,7 +46,7 @@ Other properties being used are:
 - `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
-- `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
+- `trampoline.security.jwt.web.baseMapping`: auth basepath for authorizing and refreshing tokens, default is /auth
 
 We also provide two example properties files:
 
