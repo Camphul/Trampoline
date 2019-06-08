@@ -30,8 +30,8 @@ public @interface LogUserActivity {
 	/**
 	 * Should we still consider logging an activity when the method we log throws an
 	 * exception.
-	 * @return true by default. To skip set to false.
+	 * @return false by default. To skip set to true.
 	 */
-	boolean logThrowables() default true;
+	boolean logThrowables() default false;
 
 }
