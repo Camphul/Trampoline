@@ -1,9 +1,9 @@
 package com.lucadev.trampoline.security.jwt.web.controller;
 
-import com.lucadev.trampoline.security.annotation.IgnoreSecurity;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
+import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

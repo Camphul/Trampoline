@@ -10,7 +10,6 @@ import com.lucadev.trampoline.data.MappedPage;
 import com.lucadev.trampoline.data.web.annotation.FindById;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
-import com.lucadev.trampoline.security.annotation.IgnoreSecurity;
 import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
@@ -21,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /**
@@ -52,7 +53,7 @@ public class BlogPostController {
 	@PostMapping
 	@LogUserActivity
 	@PrePolicy("BLOGPOST_SUBMIT")
-	public UUIDDto submit(@RequestBody CreateBlogPostRequest request) {
+	public UUIDDto submit(@Valid @RequestBody CreateBlogPostRequest request) {
 		BlogPost blogPost = blogPostMapper.fromRequest(request);
 		User author = userService.currentUserOrThrow();
 		blogPost = blogPostService.createBlogPost(author, blogPost);

@@ -22,6 +22,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-security-web</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-security-autoconfigure</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>

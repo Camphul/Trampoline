@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.annotation;
+package com.lucadev.trampoline.security.web.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
