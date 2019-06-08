@@ -20,6 +20,13 @@
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- MapStruct is used to easily convert JPA entities to DTO's which are sent back to the client. -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-jdk8</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+		<!-- Web starter required -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

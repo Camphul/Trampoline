@@ -55,12 +55,6 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<!-- MapStruct is used to easily convert JPA entities to DTO's which are sent back to the client. -->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId>
-			<version>${mapstruct.version}</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

@@ -39,7 +39,7 @@ public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigure
 	 * Configures routes annotated with IgnoreSecurity.
 	 * @param web the web security.
 	 */
-	private void configureIgnoredRoutes(WebSecurity web) {
+	public void configureIgnoredRoutes(WebSecurity web) {
 		// Get all mappings.
 		handlerMapping.getHandlerMethods().forEach((info, method) -> {
 			// If @IgnoreSecurity is present on the method.
