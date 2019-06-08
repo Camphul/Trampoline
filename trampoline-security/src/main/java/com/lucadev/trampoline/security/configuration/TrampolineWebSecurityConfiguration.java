@@ -41,6 +41,7 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
 	public static final int TRAMPOLINE_SECURITY_CONFIGURATION_ORDER = 95;
 
 	private final boolean debug;
+
 	private final RequestMappingHandlerMapping handlerMapping;
 
 	/**
@@ -65,20 +66,24 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
 	 * @param web the web security.
 	 */
 	private void configureIgnoredRoutes(WebSecurity web) {
-		//Get all mappings.
-		handlerMapping.getHandlerMethods().forEach((info,method) -> {
-			//If @IgnoreSecurity is present on the method.
-			if(method.hasMethodAnnotation(IgnoreSecurity.class)) {
-				//Loop through
+		// Get all mappings.
+		handlerMapping.getHandlerMethods().forEach((info, method) -> {
+			// If @IgnoreSecurity is present on the method.
+			if (method.hasMethodAnnotation(IgnoreSecurity.class)) {
+				// Loop through
 				info.getPatternsCondition().getPatterns().forEach(pattern -> {
-					//For each request method accepted
+					// For each request method accepted
 					info.getMethodsCondition().getMethods().forEach(requestMethod -> {
-						//Ignore the security chain for the mapping.
-						web.ignoring().antMatchers(HttpMethod.valueOf(requestMethod.name()), pattern);
+						// Ignore the security chain for the mapping.
+						web.ignoring().antMatchers(
+								HttpMethod.valueOf(requestMethod.name()), pattern);
 
-						//Do some logging
-						log.info("Ignoring security chain on method {}#{} with mapping {} {}", method.getMethod().getDeclaringClass().getName(),
-								method.getMethod().getName(), requestMethod.name(), pattern);
+						// Do some logging
+						log.info(
+								"Ignoring security chain on method {}#{} with mapping {} {}",
+								method.getMethod().getDeclaringClass().getName(),
+								method.getMethod().getName(), requestMethod.name(),
+								pattern);
 					});
 				});
 			}

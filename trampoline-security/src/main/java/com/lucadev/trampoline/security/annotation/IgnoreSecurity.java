@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom annotation to mark a requestmapping as unsecured.
- * This annotation causes the trampoline web config to disable the security chain for the method it was applied on.
+ * Custom annotation to mark a requestmapping as unsecured. This annotation causes the
+ * trampoline web config to disable the security chain for the method it was applied on.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
@@ -15,4 +15,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IgnoreSecurity {
+
 }
