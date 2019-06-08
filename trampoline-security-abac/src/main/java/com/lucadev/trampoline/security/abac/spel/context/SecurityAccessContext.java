@@ -42,4 +42,11 @@ public interface SecurityAccessContext extends SecurityExpressionOperations {
 	 */
 	boolean isAction(Object action);
 
+	/**
+	 * If the given argument is the current subject.
+	 * @param user the user object to test.
+	 * @return if the subject is the given user.
+	 */
+	boolean isSubject(Object user);
+
 }

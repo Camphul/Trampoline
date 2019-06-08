@@ -56,7 +56,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			SecurityContextHolder.clearContext();
 			JWT_LOGGER.info("Failed JWT filter: {}: {}", ex.getClass().getName(),
 					ex.getMessage());
-			filterChain.doFilter(httpServletRequest, httpServletResponse);
 			throw ex;
 		}
 	}

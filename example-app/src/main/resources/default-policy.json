@@ -22,7 +22,7 @@
       "name": "BlogPost#delete",
       "description": "Is the user allowed to access the DELETE /blogs/{id} endpoint?",
       "target": "isAction('BLOGPOST_DELETE')",
-      "condition": "hasRole('ROLE_ADMIN') or resource.author.id == subject.id"
+      "condition": "hasRole('ROLE_ADMIN') or isSubject(resource.author)"
     },
     {
       "name": "BlogPostComment#submit",
@@ -34,7 +34,7 @@
       "name": "BlogPostComment#delete",
       "description": "Is the user allowed to access the DELETE /blogs/{id}/comments endpoint?",
       "target": "isAction('BLOGPOST_COMMENT_DELETE')",
-      "condition": "hasRole('ROLE_ADMIN') or resource.author == subject"
+      "condition": "hasRole('ROLE_ADMIN') or isSubject(resource.author)"
     }
   ]
 }
