@@ -6,6 +6,7 @@ import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreFactory;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
+@AutoConfigureBefore(AssetStoreAutoConfiguration.class)
 @ConditionalOnClass(AssetStore.class)
 public class LocalAssetStoreFactoryAutoConfiguration {
 
@@ -27,7 +29,7 @@ public class LocalAssetStoreFactoryAutoConfiguration {
 	private final AssetMetaDataRepository metaDataRepository;
 
 	/**
-	 * Configure default asset store.
+	 * Configure default asset store factory.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean

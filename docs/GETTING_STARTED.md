@@ -50,7 +50,7 @@ If you wish to use [trampoline-security-logging](../trampoline-security-logging)
 
 ## Configuration requirements
 
-As of spring boot 2.1.0-RELEASE bean overriding is disabled by default. Trampoline depends on this feature so please configure the following in your application configurationProperties:
+As of spring boot 2.1.0-RELEASE bean overriding is disabled by default. Trampoline depends on this feature so please configure the following in your application properties:
 ```
 spring.main.allow-bean-definition-overriding=true
 ```

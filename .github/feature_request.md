@@ -12,7 +12,7 @@ A clear and concise description of what you want to happen.
 A clear and concise description of any alternative solutions or features you've considered.
 
 **Describe to configurations for the feature**
-A clear description of the possible configuration configurationProperties and/or autoconfig beans.
+A clear description of the possible configuration properties and/or autoconfig beans.
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
