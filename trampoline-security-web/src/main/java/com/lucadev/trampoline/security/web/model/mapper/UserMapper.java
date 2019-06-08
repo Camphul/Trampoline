@@ -2,8 +2,11 @@ package com.lucadev.trampoline.security.web.model.mapper;
 
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.web.model.EmbeddedUser;
+import com.lucadev.trampoline.security.web.model.UserDto;
 import com.lucadev.trampoline.security.web.model.UserSummaryDto;
 import org.mapstruct.Mapper;
+
+import java.util.List;
 
 /**
  * MapStruct mapper for {@link User}
@@ -24,8 +27,29 @@ public interface UserMapper {
 	/**
 	 * Map to summary.
 	 * @param user user to map.
-	 * @return user summary.
+	 * @return a {@link UserSummaryDto}.
 	 */
 	UserSummaryDto toSummary(User user);
+
+	/**
+	 * Map users to summary dto's.
+	 * @param users users to map.
+	 * @return summary dto's.
+	 */
+	List<UserSummaryDto> toSummaries(List<User> users);
+
+	/**
+	 * Map user to dto.
+	 * @param user user to map.
+	 * @return dto.
+	 */
+	UserDto toDto(User user);
+
+	/**
+	 * Map users to dto's.
+	 * @param users users to map.
+	 * @return dto's.
+	 */
+	List<UserDto> toDtos(List<User> users);
 
 }
