@@ -91,7 +91,7 @@ public class BlogPostCommentController {
 	@LogUserActivity(value = "'Deleting comment ' + comment.id", spel = true)
 	public SuccessResponse removeById(@ActingUpon @FindById BlogPost blogPost,
 			@PolicyResource @FindById BlogPostComment comment) {
-		blogPostService.deleteComment(comment);
+		blogPostService.deleteComment(blogPost, comment);
 		return new SuccessResponse();
 	}
 

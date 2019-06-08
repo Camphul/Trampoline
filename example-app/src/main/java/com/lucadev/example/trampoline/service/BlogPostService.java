@@ -113,14 +113,6 @@ public class BlogPostService {
 	}
 
 	/**
-	 * Delete comment
-	 * @param comment comment to delete.
-	 */
-	public void deleteComment(BlogPostComment comment) {
-		commentRepository.delete(comment);
-	}
-
-	/**
 	 * Update comment
 	 * @param comment comment to update.
 	 */
@@ -129,19 +121,17 @@ public class BlogPostService {
 	}
 
 	/**
-	 * Removes a comment
+	 * Deletes a comment
 	 * @param blogPost blogpost
 	 * @param comment comment to remove from blogpost.
 	 */
 	@Transactional
-	public void removeComment(BlogPost blogPost, BlogPostComment comment) {
+	public void deleteComment(BlogPost blogPost, BlogPostComment comment) {
 		// Unlink relations
-		comment.setBlogPost(null);
+		commentRepository.delete(comment);
 		blogPost.getComments().remove(comment);
 		// Save blogpost
 		update(blogPost);
-		// Now it's save to delete
-		commentRepository.delete(comment);
 	}
 
 }
