@@ -28,6 +28,14 @@ The readme provides a bunch of information regarding the endpoints, dummy users.
 
 A changelog can be found under [CHANGELOG.md](CHANGELOG.md).
 
+## Why Trampoline?
+
+Some of you may ask why I wrote trampoline.
+
+I have developed trampoline as a way to easily create monolith REST API's(you really do not require microservices for most projects).
+Trampoline has given me the ability to focus more on the actual projects I am hired for.
+I can just implement security with a couple of lines and easily add more functionality.
+
 ## Versioning
 
 We use the date that development of a new Trampoline version began as a version in the YYYYMMDD format.
