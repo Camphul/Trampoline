@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8-12-18
+ * @param <R> Type of object contained in the page.
  */
 public class MappedPage<R> extends PageImpl<R> {
 

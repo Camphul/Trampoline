@@ -26,6 +26,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
 
+	/**
+	 * Load order for configuration.
+	 */
 	public static final int IGNORE_SECURITY_CONFIGURATION_ORDER = 80;
 
 	private final RequestMappingHandlerMapping handlerMapping;
@@ -41,7 +44,7 @@ public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigure
 	 */
 	public void configureIgnoredRoutes(WebSecurity web) {
 		// Get all mappings.
-		handlerMapping.getHandlerMethods().forEach((info, method) -> {
+		this.handlerMapping.getHandlerMethods().forEach((info, method) -> {
 			// If @IgnoreSecurity is present on the method.
 			if (method.hasMethodAnnotation(IgnoreSecurity.class)) {
 				// Loop through

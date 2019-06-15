@@ -36,7 +36,7 @@ public class ListResponse {
 
 	@Override
 	public String toString() {
-		return content.toString();
+		return this.content.toString();
 	}
 
 }

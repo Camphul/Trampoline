@@ -28,6 +28,7 @@ public interface EmailService {
 	/**
 	 * Send email made using the builder.
 	 * @param emailBuilder the email builder.
+	 * @throws MessagingException when for some reason we could not send the email.
 	 */
 	void send(EmailBuilder emailBuilder) throws MessagingException;
 
@@ -54,6 +55,7 @@ public interface EmailService {
 	/**
 	 * Send email made using the builder asynchronously.
 	 * @param emailBuilder the email builder.
+	 * @throws MessagingException when for some reason we could not send the email.
 	 */
 	void sendAsync(EmailBuilder emailBuilder) throws MessagingException;
 

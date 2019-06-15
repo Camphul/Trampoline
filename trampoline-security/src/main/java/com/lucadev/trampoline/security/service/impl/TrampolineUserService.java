@@ -21,10 +21,11 @@ public class TrampolineUserService extends AbstractUserService {
 	 * Construct the handler.
 	 * @param userRepository the repository to persist {@link User} entities.
 	 * @param timeProvider {@link TimeProvider} instance.
-	 * @param securityConfigurationProperties properties which define how the user service behaves.
+	 * @param securityConfigurationProperties properties which define how the user service
+	 * behaves.
 	 */
 	public TrampolineUserService(UserRepository userRepository, TimeProvider timeProvider,
-								 SecurityConfigurationProperties securityConfigurationProperties) {
+			SecurityConfigurationProperties securityConfigurationProperties) {
 		super(userRepository, securityConfigurationProperties);
 		this.timeProvider = timeProvider;
 	}

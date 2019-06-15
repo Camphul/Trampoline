@@ -21,7 +21,7 @@ public class DataResponse {
 
 	@Override
 	public String toString() {
-		return data == null ? "" : data.toString();
+		return this.data == null ? "" : this.data.toString();
 	}
 
 }

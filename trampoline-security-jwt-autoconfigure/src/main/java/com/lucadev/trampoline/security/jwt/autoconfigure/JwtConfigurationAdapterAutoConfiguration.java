@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class JwtConfigurationAdapterAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(JwtConfigurationAdapter.class)
 	public JwtConfigurationAdapter jwtConfiguration() {
 		log.debug("Using default jwt configuration");
 		return new NopJwtConfigurationAdapter();

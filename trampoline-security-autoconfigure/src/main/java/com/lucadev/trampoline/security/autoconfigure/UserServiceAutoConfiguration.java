@@ -22,8 +22,10 @@ public class UserServiceAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserService userService(UserRepository repository, TimeProvider timeProvider, SecurityConfigurationProperties configurationProperties) {
-		return new TrampolineUserService(repository, timeProvider, configurationProperties);
+	public UserService userService(UserRepository repository, TimeProvider timeProvider,
+			SecurityConfigurationProperties configurationProperties) {
+		return new TrampolineUserService(repository, timeProvider,
+				configurationProperties);
 	}
 
 }

@@ -19,7 +19,7 @@ public class DoubleValueDto {
 
 	@Override
 	public String toString() {
-		return String.valueOf(value);
+		return String.valueOf(this.value);
 	}
 
 }

@@ -33,7 +33,7 @@ public class TrampolineEmailService implements EmailService {
 	 */
 	@Override
 	public EmailBuilder builder() {
-		return EmailBuilder.create(configurationProperties);
+		return EmailBuilder.create(this.configurationProperties);
 	}
 
 	/**
@@ -72,23 +72,23 @@ public class TrampolineEmailService implements EmailService {
 			Map<String, Object> model) throws MessagingException {
 		log.debug("Sending email from {} to {} with subject {} using template {}", from,
 				to, subject, template);
-		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessage message = this.mailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		String content = templateParser.process(template, model);
+		String content = this.templateParser.process(template, model);
 		helper.setTo(to);
 		helper.setSubject(subject);
 		helper.setFrom(from);
 		message.setContent(content, "text/html; charset=utf-8");
 		// send mesage
-		mailSender.send(message);
+		this.mailSender.send(message);
 		log.debug("Sent email..");
 	}
 
 	/**
 	 * Async version of {@link TrampolineEmailService#send(Function)}.
 	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException
+	 * @throws MessagingException when for some reason we could not send the message.
 	 */
 	@Async
 	@Override
@@ -100,7 +100,7 @@ public class TrampolineEmailService implements EmailService {
 	/**
 	 * Async version of {@link TrampolineEmailService#send(EmailBuilder)}.
 	 * @param emailBuilder the email builder.
-	 * @throws MessagingException
+	 * @throws MessagingException when for some reason we could not send the message.
 	 */
 	@Async
 	@Override
@@ -116,7 +116,7 @@ public class TrampolineEmailService implements EmailService {
 	 * @param subject with subject.
 	 * @param template using email template.
 	 * @param model and getting data from this model.
-	 * @throws MessagingException
+	 * @throws MessagingException when for some reason we could not send the message.
 	 */
 	@Async
 	@Override

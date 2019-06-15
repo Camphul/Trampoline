@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * NOP implementation of {@link EmailService}
+ * NOP implementation of {@link EmailService}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
@@ -22,7 +22,7 @@ public class NopEmailService implements EmailService {
 
 	@Override
 	public EmailBuilder builder() {
-		return EmailBuilder.create(configurationProperties);
+		return EmailBuilder.create(this.configurationProperties);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class NopEmailService implements EmailService {
 	/**
 	 * Async version of {@link TrampolineEmailService#send(Function)}.
 	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException
+	 * @throws MessagingException not thrown in this implementation.
 	 */
 	@Override
 	public void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
@@ -74,7 +74,7 @@ public class NopEmailService implements EmailService {
 	/**
 	 * Async version of {@link TrampolineEmailService#send(EmailBuilder)}.
 	 * @param emailBuilder the email builder.
-	 * @throws MessagingException
+	 * @throws MessagingException not thrown in this implementation.
 	 */
 	@Override
 	public void sendAsync(EmailBuilder emailBuilder) throws MessagingException {
@@ -89,7 +89,7 @@ public class NopEmailService implements EmailService {
 	 * @param subject with subject.
 	 * @param template using email template.
 	 * @param model and getting data from this model.
-	 * @throws MessagingException
+	 * @throws MessagingException not thrown in this implementation.
 	 */
 	@Override
 	public void sendAsync(String from, String to, String subject, String template,

@@ -37,7 +37,7 @@ public abstract class AbstractUserService implements UserService {
 	 * @param securityConfigurationProperties authentication properties.
 	 */
 	public AbstractUserService(UserRepository userRepository,
-							   SecurityConfigurationProperties securityConfigurationProperties) {
+			SecurityConfigurationProperties securityConfigurationProperties) {
 		this.userRepository = userRepository;
 		if (securityConfigurationProperties.isEmailIdentification()) {
 			this.identificationType = IdentificationType.EMAIL;

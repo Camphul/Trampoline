@@ -30,12 +30,12 @@ public class LocalAssetStore extends AbstractAssetStore {
 
 	@Override
 	public List<AssetMetaData> findAllByName(String name) {
-		return repository.findByName(name);
+		return this.repository.findByName(name);
 	}
 
 	@Override
 	public List<AssetMetaData> findAllByOriginalName(String name) {
-		return repository.findByOrOriginalFilename(name);
+		return this.repository.findByOrOriginalFilename(name);
 	}
 
 	/**

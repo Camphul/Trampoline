@@ -22,7 +22,7 @@ public class UUIDDto {
 
 	@Override
 	public String toString() {
-		return id == null ? "" : id.toString();
+		return this.id == null ? "" : this.id.toString();
 	}
 
 }

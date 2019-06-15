@@ -187,7 +187,7 @@ public class UserActivityLoggingAspect {
 	}
 
 	/**
-	 * Get user who invoked the activity
+	 * Get user who invoked the activity.
 	 * @return current authorized user from {@link SecurityContext}
 	 */
 	private User getCurrentUser() {

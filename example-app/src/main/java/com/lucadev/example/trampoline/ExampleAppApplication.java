@@ -11,6 +11,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Main class for example application.
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
+ */
 @SpringBootApplication
 @EnableTrampoline
 @EnableUserActivityLogging

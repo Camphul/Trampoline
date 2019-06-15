@@ -21,14 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class DummyUserImporter implements ApplicationListener<ContextRefreshedEvent> {
 
-
 	/**
-	 * Dummy user's email domain
+	 * Dummy user's email domain.
 	 */
 	private static final String USER_EMAIL_DOMAIN = "example.com";
 
 	/**
-	 * Dummy user password
+	 * Dummy user password.
 	 */
 	private static final String USER_PASSWORD = "test";
 
@@ -43,8 +42,8 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 		log.info("Running dummy user imports..");
-		Role userRole = roleService.find("ROLE_USER");
-		Role adminRole = roleService.find("ROLE_ADMIN");
+		Role userRole = this.roleService.find("ROLE_USER");
+		Role adminRole = this.roleService.find("ROLE_ADMIN");
 		User user = createUser("user", userRole);
 		User joe = createUser("joe", userRole);
 		User admin = createUser("admin", userRole, adminRole);
@@ -57,16 +56,16 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 		user.setCredentialsExpired(false);
 		user.setEnabled(true);
 		user.setExpired(false);
-		user.setLastSeen(timeProvider.now());
-		user.setLastPasswordReset(timeProvider.now());
+		user.setLastSeen(this.timeProvider.now());
+		user.setLastPasswordReset(this.timeProvider.now());
 		user.setLocked(false);
 		user.setEmail(name + "@" + USER_EMAIL_DOMAIN);
-		user.setPassword(passwordEncoder.encode(USER_PASSWORD));
+		user.setPassword(this.passwordEncoder.encode(USER_PASSWORD));
 		// user = userService.save(user);
 		for (Role role : roles) {
 			user.getRoles().add(role);
 		}
-		user = userService.save(user);
+		user = this.userService.save(user);
 		if (user == null) {
 			log.error("Could not persist user!");
 		}

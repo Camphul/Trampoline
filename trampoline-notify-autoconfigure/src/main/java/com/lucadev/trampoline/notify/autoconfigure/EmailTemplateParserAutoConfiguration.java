@@ -32,7 +32,7 @@ public class EmailTemplateParserAutoConfiguration {
 	@ConditionalOnMissingBean(EmailTemplateParser.class)
 	public EmailTemplateParser templateParser() {
 		log.debug("Using default (thymeleaf) email template parser.");
-		return new ThymeleafEmailTemplateParser(templateEngine);
+		return new ThymeleafEmailTemplateParser(this.templateEngine);
 	}
 
 }

@@ -23,6 +23,7 @@ public class AbacSecurityConfiguration {
 
 	@PostConstruct
 	public void postConstruct() {
-		log.debug("Configured ABAC: {}", abacSecurityConfigurationProperties);
+		log.debug("Configured ABAC: {}", this.abacSecurityConfigurationProperties);
 	}
+
 }

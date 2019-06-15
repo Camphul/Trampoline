@@ -29,6 +29,8 @@ public class AssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store.
+	 * @param factories factories which provide different asset store implementations.
+	 * @param configurationProperties spring configuration properties.
 	 * @return a new {@link AssetStore}
 	 * @throws Exception when we cannot resolve an implementation.
 	 */
@@ -55,6 +57,8 @@ public class AssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store factory.
+	 * @param localAssetStoreConfigurationProperties spring cofiguration properties for this factory.
+	 * @param metaDataRepository jpa repository for {@link com.lucadev.trampoline.assetstore.AssetMetaData}.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean

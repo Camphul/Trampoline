@@ -22,6 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
 
+	/**
+	 * Configuration load order.
+	 */
 	public static final int DATA_WEB_CONFIGURATION_ORDER = 30;
 
 	private final EntityManager entityManager;

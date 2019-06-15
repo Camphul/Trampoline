@@ -23,6 +23,7 @@ public class SecurityConfiguration {
 
 	@PostConstruct
 	public void postConstruct() {
-		log.debug("Configured security: {}", securityConfigurationProperties);
+		log.debug("Configured security: {}", this.securityConfigurationProperties);
 	}
+
 }

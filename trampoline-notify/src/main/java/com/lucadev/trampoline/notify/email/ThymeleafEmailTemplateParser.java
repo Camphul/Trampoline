@@ -30,7 +30,7 @@ public class ThymeleafEmailTemplateParser implements EmailTemplateParser {
 		log.debug("Parsing thymeleaf template {}", template);
 		Context context = new Context();
 		context.setVariables(model);
-		return templateEngine.process(template, context);
+		return this.templateEngine.process(template, context);
 	}
 
 }

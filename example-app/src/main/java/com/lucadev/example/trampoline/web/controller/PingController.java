@@ -26,7 +26,7 @@ public class PingController {
 	@LogUserActivity // Will log a PingController#pong action for the current user.
 	@PrePolicy("GET_PING_PROTECTED")
 	public MessageResponse pong() {
-		return new MessageResponse("Pong at: " + timeProvider.unix());
+		return new MessageResponse("Pong at: " + this.timeProvider.unix());
 	}
 
 }

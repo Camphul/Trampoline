@@ -34,7 +34,7 @@ public class BlogPostService {
 	 * @return page of blogs.
 	 */
 	public Page<BlogPost> findAll(Pageable pageable) {
-		return repository.findAll(pageable);
+		return this.repository.findAll(pageable);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class BlogPostService {
 	 */
 	public BlogPost createBlogPost(User author, BlogPost blogPost) {
 		blogPost.setAuthor(author);
-		return repository.save(blogPost);
+		return this.repository.save(blogPost);
 	}
 
 	/**
@@ -55,15 +55,15 @@ public class BlogPostService {
 	 * @return resolved blogpost.
 	 */
 	public Optional<BlogPost> findById(UUID id) {
-		return repository.findById(id);
+		return this.repository.findById(id);
 	}
 
 	/**
-	 * Delete {@link BlogPost}
+	 * Delete {@link BlogPost}.
 	 * @param blogPost blogpost to delete.
 	 */
 	public void delete(BlogPost blogPost) {
-		repository.delete(blogPost);
+		this.repository.delete(blogPost);
 	}
 
 	/**
@@ -72,11 +72,11 @@ public class BlogPostService {
 	 * @return updated blogpost.
 	 */
 	public BlogPost update(BlogPost blogPost) {
-		return repository.save(blogPost);
+		return this.repository.save(blogPost);
 	}
 
 	/**
-	 * Add a comment
+	 * Add a comment.
 	 * @param author the author of the comment.
 	 * @param blogPost the blogpost to put it on.
 	 * @param comment the blogpost comment to add.
@@ -86,49 +86,49 @@ public class BlogPostService {
 	public BlogPostComment addComment(User author, BlogPost blogPost,
 			BlogPostComment comment) {
 		comment.setAuthor(author);
-		comment = commentRepository.save(comment);
+		comment = this.commentRepository.save(comment);
 		comment.setBlogPost(blogPost);
 		blogPost.getComments().add(comment);
-		repository.save(blogPost);
+		this.repository.save(blogPost);
 		return comment;
 	}
 
 	/**
-	 * Find pageable comments
+	 * Find pageable comments.
 	 * @param blogPost blogpost to find comments on.
 	 * @param pageable pagination.
 	 * @return page of blog comments.
 	 */
 	public Page<BlogPostComment> findAllComments(BlogPost blogPost, Pageable pageable) {
-		return commentRepository.findAllByBlogPost(blogPost, pageable);
+		return this.commentRepository.findAllByBlogPost(blogPost, pageable);
 	}
 
 	/**
-	 * Find comment by id
+	 * Find comment by id.
 	 * @param commentId comment id.
 	 * @return resolved comment.
 	 */
 	public Optional<BlogPostComment> findCommentById(UUID commentId) {
-		return commentRepository.findById(commentId);
+		return this.commentRepository.findById(commentId);
 	}
 
 	/**
-	 * Update comment
+	 * Update comment.
 	 * @param comment comment to update.
 	 */
 	public void updateComment(BlogPostComment comment) {
-		commentRepository.save(comment);
+		this.commentRepository.save(comment);
 	}
 
 	/**
-	 * Deletes a comment
+	 * Deletes a comment.
 	 * @param blogPost blogpost
 	 * @param comment comment to remove from blogpost.
 	 */
 	@Transactional
 	public void deleteComment(BlogPost blogPost, BlogPostComment comment) {
 		// Unlink relations
-		commentRepository.delete(comment);
+		this.commentRepository.delete(comment);
 		blogPost.getComments().remove(comment);
 		// Save blogpost
 		update(blogPost);

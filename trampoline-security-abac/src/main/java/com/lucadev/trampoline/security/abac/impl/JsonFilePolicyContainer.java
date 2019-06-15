@@ -32,7 +32,9 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 
 	private List<PolicyRule> rules;
 
-	public JsonFilePolicyContainer(AbacSecurityConfigurationProperties abacSecurityConfigurationProperties) throws IOException {
+	public JsonFilePolicyContainer(
+			AbacSecurityConfigurationProperties abacSecurityConfigurationProperties)
+			throws IOException {
 		this.abacSecurityConfigurationProperties = abacSecurityConfigurationProperties;
 		loadPolicyRules();
 	}
@@ -42,7 +44,8 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		SimpleModule module = new SimpleModule();
 		module.addDeserializer(Expression.class, new SpelDeserializer());
 		mapper.registerModule(module);
-		String jsonFilePath = this.abacSecurityConfigurationProperties.getJson().getFilePath();
+		String jsonFilePath = this.abacSecurityConfigurationProperties.getJson()
+				.getFilePath();
 
 		File file = new ClassPathResource(jsonFilePath).getFile();
 		if (!file.exists()) {

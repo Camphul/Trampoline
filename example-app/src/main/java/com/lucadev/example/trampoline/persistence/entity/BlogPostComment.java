@@ -9,7 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 /**
- * Blogpost comment entity
+ * Blogpost comment entity.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19

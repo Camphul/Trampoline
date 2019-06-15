@@ -34,16 +34,18 @@ public class PolicyContainerAutoConfiguration {
 	@ConditionalOnMissingBean(PolicyContainer.class)
 	public PolicyContainer policyDefinition() {
 		log.debug("Creating autoconfigured policy definition");
-		if(abacSecurityConfigurationProperties.isImportJson()) {
+		if (this.abacSecurityConfigurationProperties.isImportJson()) {
 			log.debug("Importing policies from specified json file.");
 			JsonFilePolicyContainer parent = null;
 			try {
-				parent = new JsonFilePolicyContainer(abacSecurityConfigurationProperties);
-			} catch (IOException e) {
+				parent = new JsonFilePolicyContainer(this.abacSecurityConfigurationProperties);
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return new JpaPolicyContainer(this.policyRuleRepository, parent);
-		} else {
+		}
+		else {
 			log.debug("Creating JPA policy container without imports.");
 			return new JpaPolicyContainer(this.policyRuleRepository);
 		}

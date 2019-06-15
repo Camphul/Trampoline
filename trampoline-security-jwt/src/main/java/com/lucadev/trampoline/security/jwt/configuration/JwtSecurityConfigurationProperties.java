@@ -1,8 +1,12 @@
 package com.lucadev.trampoline.security.jwt.configuration;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.Positive;
 
 /**
  * Config values for JWT. Has immutable setters
@@ -11,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 21-4-18
  */
 @Data
+@Validated
 @Configuration
 @ConfigurationProperties(prefix = "trampoline.security.jwt")
 public class JwtSecurityConfigurationProperties {
@@ -42,9 +47,11 @@ public class JwtSecurityConfigurationProperties {
 	private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 
 	// Signing secret
+	@Length(min = 15)
 	private String secret = DEFAULT_SECRET;
 
 	// Timeout for token invalidation
+	@Positive
 	private long tokenTimeout = DEFAULT_TOKEN_TIMEOUT;
 
 }

@@ -47,23 +47,23 @@ public class BlogPostController {
 	 */
 	@GetMapping
 	public Page<BlogPostSummaryDto> findAll(Pageable pageable) {
-		return MappedPage.of(blogPostService.findAll(pageable),
-				blogPostMapper::toSummaryDto);
+		return MappedPage.of(this.blogPostService.findAll(pageable),
+				this.blogPostMapper::toSummaryDto);
 	}
 
 	@PostMapping
 	@LogUserActivity
 	@PrePolicy("BLOGPOST_SUBMIT")
 	public UUIDDto submit(@Valid @RequestBody CreateBlogPostRequest request) {
-		BlogPost blogPost = blogPostMapper.fromRequest(request);
-		User author = userService.currentUserOrThrow();
-		blogPost = blogPostService.createBlogPost(author, blogPost);
+		BlogPost blogPost = this.blogPostMapper.fromRequest(request);
+		User author = this.userService.currentUserOrThrow();
+		blogPost = this.blogPostService.createBlogPost(author, blogPost);
 		return new UUIDDto(blogPost.getId());
 	}
 
 	@GetMapping("/{blogPost}")
 	public BlogPostDto findById(@FindById BlogPost blogPost) {
-		return blogPostMapper.toDto(blogPost);
+		return this.blogPostMapper.toDto(blogPost);
 	}
 
 	@LogUserActivity
@@ -71,7 +71,7 @@ public class BlogPostController {
 	@PrePolicy("BLOGPOST_DELETE")
 	public SuccessResponse deleteById(
 			@ActingUpon @PolicyResource @FindById BlogPost blogPost) {
-		blogPostService.delete(blogPost);
+		this.blogPostService.delete(blogPost);
 		return new SuccessResponse();
 	}
 

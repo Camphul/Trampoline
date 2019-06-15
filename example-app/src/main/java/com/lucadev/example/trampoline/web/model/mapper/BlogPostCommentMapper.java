@@ -7,6 +7,8 @@ import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import org.mapstruct.Mapper;
 
 /**
+ * MapStruct mapper for comments.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 5/9/19
  */

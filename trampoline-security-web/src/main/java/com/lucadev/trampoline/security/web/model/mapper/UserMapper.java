@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 /**
- * MapStruct mapper for {@link User}
+ * MapStruct mapper for {@link User}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19

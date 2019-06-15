@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * MapStruct mapper for {@link Role}.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */

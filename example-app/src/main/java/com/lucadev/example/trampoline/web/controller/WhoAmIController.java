@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 
-
 /**
  * WhoAmI controller to get the current user details.
  *
@@ -30,16 +29,16 @@ public class WhoAmIController {
 
 	private final EmailService emailService;
 
-
 	@GetMapping("/whoami")
 	@LogUserActivity("GET_WHO_AM_I") // Log action as GET_WHO_AM_I
 	@PrePolicy("GET_WHO_AM_I") // Check if we are allowed to access this endpoint before
 								// invocation
 	public UserSummaryDto whoAmI() throws MessagingException {
-		emailService.sendAsync(builder -> builder.to("user@example.com").withSubject("WhoAmI Accessed"));
+		this.emailService.sendAsync(
+				builder -> builder.to("user@example.com").withSubject("WhoAmI Accessed"));
 		// Get current user or throw an exception(since we cant recover from null)
-		User currentUser = userService.currentUserOrThrow();
-		return userMapper.toSummary(currentUser);
+		User currentUser = this.userService.currentUserOrThrow();
+		return this.userMapper.toSummary(currentUser);
 	}
 
 }

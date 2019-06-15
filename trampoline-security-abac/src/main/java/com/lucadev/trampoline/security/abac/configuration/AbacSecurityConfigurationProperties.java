@@ -1,8 +1,13 @@
 package com.lucadev.trampoline.security.abac.configuration;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * Configuration properties for setting up ABAC.
@@ -11,19 +16,29 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  * @since 6/8/19
  */
 @Data
+@Validated
 @ConfigurationProperties("trampoline.security.abac")
 public class AbacSecurityConfigurationProperties {
 
-	//Configures the json file which contains policies.
+	// Configures the json file which contains policies.
+	@Valid
 	@NestedConfigurationProperty
 	private JsonPolicyContainerProperties json = new JsonPolicyContainerProperties();
 
-	//If we should have the json policy definition as parent and import all to JPA.
+	// If we should have the json policy definition as parent and import all to JPA.
 	private boolean importJson = true;
 
+	/**
+	 * Inner class for more properties regarding the Json policy container.
+	 */
 	@Data
 	public static class JsonPolicyContainerProperties {
-		//File containing the policies.
+
+		@NotNull
+		@Length(min = 1, max = 128)
+		// File containing the policies.
 		private String filePath = "default-policy.json";
+
 	}
+
 }

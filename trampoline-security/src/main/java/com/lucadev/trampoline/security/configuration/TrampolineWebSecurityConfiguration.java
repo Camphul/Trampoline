@@ -56,7 +56,7 @@ public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAda
 	}
 
 	/**
-	 * Bean for the global {@link AuthenticationManager}
+	 * Bean for the global {@link AuthenticationManager}.
 	 * @param builder the auth builder.
 	 * @return auth manager.
 	 */

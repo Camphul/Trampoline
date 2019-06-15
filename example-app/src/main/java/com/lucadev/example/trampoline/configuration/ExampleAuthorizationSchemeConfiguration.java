@@ -18,9 +18,9 @@ public class ExampleAuthorizationSchemeConfiguration
 		implements AuthorizationSchemeConfiguration {
 
 	/**
-	 * Configure auth scheme
-	 * @param builder
-	 * @return
+	 * Configure auth scheme.
+	 * @param builder the auth scheme builder.
+	 * @return the auth scheme builder.
 	 */
 	@Override
 	public AuthorizationSchemeBuilder build(AuthorizationSchemeBuilder builder) {

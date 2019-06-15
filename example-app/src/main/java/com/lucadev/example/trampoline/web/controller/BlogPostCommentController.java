@@ -52,8 +52,8 @@ public class BlogPostCommentController {
 	@GetMapping
 	public Page<BlogPostCommentDto> findAllByBlogPost(@FindById BlogPost blogPost,
 			Pageable pageable) {
-		return MappedPage.of(blogPostService.findAllComments(blogPost, pageable),
-				mapper::toDto);
+		return MappedPage.of(this.blogPostService.findAllComments(blogPost, pageable),
+				this.mapper::toDto);
 	}
 
 	/**
@@ -67,17 +67,18 @@ public class BlogPostCommentController {
 	@PrePolicy("BLOGPOST_COMMENT_SUBMIT")
 	public UUIDDto submit(@ActingUpon @FindById BlogPost blogPost,
 			@RequestBody CreateBlogPostCommentRequest request) {
-		User author = userService.currentUserOrThrow();
-		BlogPostComment comment = mapper.fromRequest(request);
-		comment = blogPostService.addComment(author, blogPost, comment);
+		User author = this.userService.currentUserOrThrow();
+		BlogPostComment comment = this.mapper.fromRequest(request);
+		comment = this.blogPostService.addComment(author, blogPost, comment);
 		try {
-			//Example of how you could send an awesome email notification!
-			emailService.send(builder -> builder.to(blogPost.getAuthor().getEmail())
+			// Example of how you could send an awesome email notification!
+			this.emailService.send(builder -> builder.to(blogPost.getAuthor().getEmail())
 					.withSubject("New comment made on your blogpost.")
 					.withAttribute("username", blogPost.getAuthor().getUsername())
 					.withAttribute("poster", author.getUsername())
 					.withTemplate("add_comment"));
-		} catch (MessagingException e) {
+		}
+		catch (MessagingException e) {
 			e.printStackTrace();
 		}
 		return new UUIDDto(comment.getId());
@@ -92,7 +93,7 @@ public class BlogPostCommentController {
 	@GetMapping("/{comment}")
 	public BlogPostCommentDto findById(@FindById BlogPost blogPost,
 			@FindById BlogPostComment comment) {
-		return mapper.toDto(comment);
+		return this.mapper.toDto(comment);
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class BlogPostCommentController {
 	@LogUserActivity(value = "'Deleting comment ' + comment.id", spel = true)
 	public SuccessResponse removeById(@ActingUpon @FindById BlogPost blogPost,
 			@PolicyResource @FindById BlogPostComment comment) {
-		blogPostService.deleteComment(blogPost, comment);
+		this.blogPostService.deleteComment(blogPost, comment);
 		return new SuccessResponse();
 	}
 

@@ -61,7 +61,7 @@ public class BigDecimalValueDto {
 
 	@Override
 	public String toString() {
-		return String.valueOf(value);
+		return String.valueOf(this.value);
 	}
 
 }
