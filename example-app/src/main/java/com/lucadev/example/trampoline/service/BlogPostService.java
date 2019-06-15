@@ -113,14 +113,6 @@ public class BlogPostService {
 	}
 
 	/**
-	 * Update comment.
-	 * @param comment comment to update.
-	 */
-	public void updateComment(BlogPostComment comment) {
-		this.commentRepository.save(comment);
-	}
-
-	/**
 	 * Deletes a comment.
 	 * @param blogPost blogpost
 	 * @param comment comment to remove from blogpost.

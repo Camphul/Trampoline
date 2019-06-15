@@ -46,7 +46,21 @@ public class TrampolineApplication {
 }
 ```
 
-If you wish to use [trampoline-security-logging](../trampoline-security-logging) you must also add the `@EnableUserActivityLogging` annotation on your class.
+If you wish to use [trampoline-security-logging](../trampoline-security-logging) you must also add the `@EnableUserActivityLogging` annotation on your class like:
+
+```java
+@EnableTrampoline
+@EnableUserActivityLogging
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
+```
+
 
 ## Configuration requirements
 
