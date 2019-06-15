@@ -35,7 +35,8 @@ public class EmailServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(EmailService.class)
 	public EmailService emailService() {
-		if (this.emailConfigurationProperties.isEnabled() && this.javaMailSender != null) {
+		if (this.emailConfigurationProperties.isEnabled()
+				&& this.javaMailSender != null) {
 			return new TrampolineEmailService(this.emailConfigurationProperties,
 					this.emailTemplateParser, this.javaMailSender);
 		}

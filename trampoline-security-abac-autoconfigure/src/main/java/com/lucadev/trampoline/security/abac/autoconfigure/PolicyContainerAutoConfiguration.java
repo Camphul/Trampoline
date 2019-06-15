@@ -38,7 +38,8 @@ public class PolicyContainerAutoConfiguration {
 			log.debug("Importing policies from specified json file.");
 			JsonFilePolicyContainer parent = null;
 			try {
-				parent = new JsonFilePolicyContainer(this.abacSecurityConfigurationProperties);
+				parent = new JsonFilePolicyContainer(
+						this.abacSecurityConfigurationProperties);
 			}
 			catch (IOException e) {
 				e.printStackTrace();
