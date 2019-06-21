@@ -42,7 +42,9 @@ Other properties being used are:
 
 - `trampoline.assetstore.provider`: which AssetStore to use, defaults to local
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
-- `trampoline.security.abac.policy.definition.json.filepath`: define which json file to load policy from for trampoline-security-abac
+- `trampoline.security.abac.container.json.file-path`: define which json file to load policy from for trampoline-security-abac
+- `trampoline.security.abac.container.jpa.import-from-json`: import rules from json container on startup
+- `trampoline.security.abac.container.provider`: define which PolicyContainer to use. Choose between `json`, `jpa`, `acl`.
 - `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600

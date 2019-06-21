@@ -12,6 +12,9 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - Added @IgnoreSecurity to disable security chain on annotated handler(WebSecurity#ignoring() through RequestMappingHandlerMapping).
 - Better code quality.
 - Added more unit tests.
+- abac configuration property key refactors
+- abac json default file is now permissions.json
+- option to specify which policycontainer to use
 
 ## 20190507
 

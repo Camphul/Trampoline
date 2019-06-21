@@ -44,7 +44,7 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		SimpleModule module = new SimpleModule();
 		module.addDeserializer(Expression.class, new SpelDeserializer());
 		mapper.registerModule(module);
-		String jsonFilePath = this.abacSecurityConfigurationProperties.getJson()
+		String jsonFilePath = this.abacSecurityConfigurationProperties.getContainer().getJson()
 				.getFilePath();
 
 		File file = new ClassPathResource(jsonFilePath).getFile();

@@ -20,13 +20,31 @@ import javax.validation.constraints.NotNull;
 @ConfigurationProperties("trampoline.security.abac")
 public class AbacSecurityConfigurationProperties {
 
-	// Configures the json file which contains policies.
 	@Valid
 	@NestedConfigurationProperty
-	private JsonPolicyContainerProperties json = new JsonPolicyContainerProperties();
+	private PolicyContainerProperties container = new PolicyContainerProperties();
 
-	// If we should have the json policy definition as parent and import all to JPA.
-	private boolean importJson = true;
+	/**
+	 * Configuration used to configure the policy container.
+	 */
+	@Data
+	public static class PolicyContainerProperties {
+
+		//Define which container to use.
+		@NotNull
+		private String provider = "json";
+
+		// Configures the json file which contains policies.
+		@Valid
+		@NestedConfigurationProperty
+		private JsonPolicyContainerProperties json = new JsonPolicyContainerProperties();
+
+		@Valid
+		@NestedConfigurationProperty
+		private JpaPolicyContainerProperties jpa = new JpaPolicyContainerProperties();
+
+	}
+
 
 	/**
 	 * Inner class for more properties regarding the Json policy container.
@@ -37,7 +55,19 @@ public class AbacSecurityConfigurationProperties {
 		@NotNull
 		@Length(min = 1, max = 128)
 		// File containing the policies.
-		private String filePath = "default-policy.json";
+		private String filePath = "permissions.json";
+
+	}
+
+	/**
+	 * Inner class for more properties regarding the Json policy container.
+	 */
+	@Data
+	public static class JpaPolicyContainerProperties {
+
+		// If we should have the json policy definition as parent and import all to JPA.
+		private boolean importFromJson = true;
+
 
 	}
 

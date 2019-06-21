@@ -34,7 +34,34 @@ public class PolicyContainerAutoConfiguration {
 	@ConditionalOnMissingBean(PolicyContainer.class)
 	public PolicyContainer policyDefinition() {
 		log.debug("Creating autoconfigured policy definition");
-		if (this.abacSecurityConfigurationProperties.isImportJson()) {
+		String provider = this.abacSecurityConfigurationProperties.getContainer().getProvider();
+		switch(provider.toLowerCase()) {
+			case "jpa":
+				return configureJpaPolicyContainer();
+			case "json":
+				return configureJsonPolicyContainer();
+			default:
+				throw new IllegalStateException("No policy container found for provider " + provider);
+		}
+	}
+
+	private PolicyContainer configureJsonPolicyContainer() {
+		log.debug("Configuring json policy container.");
+		JsonFilePolicyContainer policyContainer = null;
+		try {
+			policyContainer = new JsonFilePolicyContainer(
+					this.abacSecurityConfigurationProperties);
+		}
+		catch (IOException e) {
+			log.error("Failed to create json policy container.", e);
+			e.printStackTrace();
+		}
+		return policyContainer;
+	}
+
+	private PolicyContainer configureJpaPolicyContainer() {
+		log.debug("Configuring jpa policy container.");
+		if (this.abacSecurityConfigurationProperties.getContainer().getJpa().isImportFromJson()) {
 			log.debug("Importing policies from specified json file.");
 			JsonFilePolicyContainer parent = null;
 			try {
@@ -42,6 +69,7 @@ public class PolicyContainerAutoConfiguration {
 						this.abacSecurityConfigurationProperties);
 			}
 			catch (IOException e) {
+				log.error("Failed to import json policy rules.");
 				e.printStackTrace();
 			}
 			return new JpaPolicyContainer(this.policyRuleRepository, parent);
@@ -50,7 +78,6 @@ public class PolicyContainerAutoConfiguration {
 			log.debug("Creating JPA policy container without imports.");
 			return new JpaPolicyContainer(this.policyRuleRepository);
 		}
-
 	}
 
 }

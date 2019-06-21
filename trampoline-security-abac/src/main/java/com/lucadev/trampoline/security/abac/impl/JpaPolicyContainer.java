@@ -43,7 +43,7 @@ public class JpaPolicyContainer implements PolicyContainer {
 		log.info("Importing policy rules...");
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
-		parent.findAllPolicyRules().stream()
+		policyRules.stream()
 				// Only add when none exist with the same name
 				.filter(r -> !hasPolicyRule(r.getName())).forEach(this::addPolicyRule);
 	}
