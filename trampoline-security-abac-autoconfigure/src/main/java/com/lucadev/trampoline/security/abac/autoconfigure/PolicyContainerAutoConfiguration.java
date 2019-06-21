@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.PolicyContainer;
 import com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.abac.impl.AclPolicyContainer;
 import com.lucadev.trampoline.security.abac.impl.JpaPolicyContainer;
 import com.lucadev.trampoline.security.abac.impl.JsonFilePolicyContainer;
 import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
@@ -40,9 +41,24 @@ public class PolicyContainerAutoConfiguration {
 				return configureJpaPolicyContainer();
 			case "json":
 				return configureJsonPolicyContainer();
+			case "acl":
+				return configureAclPolicyContainer();
 			default:
 				throw new IllegalStateException("No policy container found for provider " + provider);
 		}
+	}
+
+	private PolicyContainer configureAclPolicyContainer() {
+		log.debug("Configuring ACL policy container.");
+		AclPolicyContainer policyContainer =  null;
+		try {
+			policyContainer = new AclPolicyContainer(abacSecurityConfigurationProperties);
+		} catch (IOException e) {
+			log.error("Failed to load ACL", e);
+			e.printStackTrace();
+		}
+
+		return policyContainer;
 	}
 
 	private PolicyContainer configureJsonPolicyContainer() {

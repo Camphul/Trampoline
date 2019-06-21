@@ -39,6 +39,11 @@ public class AbacSecurityConfigurationProperties {
 		@NestedConfigurationProperty
 		private JsonPolicyContainerProperties json = new JsonPolicyContainerProperties();
 
+		// Configures the acl file which contains policies.
+		@Valid
+		@NestedConfigurationProperty
+		private JsonPolicyContainerProperties acl = new JsonPolicyContainerProperties();
+
 		@Valid
 		@NestedConfigurationProperty
 		private JpaPolicyContainerProperties jpa = new JpaPolicyContainerProperties();
@@ -56,6 +61,19 @@ public class AbacSecurityConfigurationProperties {
 		@Length(min = 1, max = 128)
 		// File containing the policies.
 		private String filePath = "permissions.json";
+
+	}
+
+	/**
+	 * Inner class for more properties regarding the Acl policy container.
+	 */
+	@Data
+	public static class AclPolicyContainerProperties {
+
+		@NotNull
+		@Length(min = 1, max = 128)
+		// File containing the policies.
+		private String filePath = "permissions.acl";
 
 	}
 
