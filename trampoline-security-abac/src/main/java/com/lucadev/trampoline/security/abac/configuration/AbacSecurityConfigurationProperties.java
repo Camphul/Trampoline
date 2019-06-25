@@ -30,7 +30,7 @@ public class AbacSecurityConfigurationProperties {
 	@Data
 	public static class PolicyContainerProperties {
 
-		//Define which container to use.
+		// Define which container to use.
 		@NotNull
 		private String provider = "json";
 
@@ -44,7 +44,6 @@ public class AbacSecurityConfigurationProperties {
 		private JpaPolicyContainerProperties jpa = new JpaPolicyContainerProperties();
 
 	}
-
 
 	/**
 	 * Inner class for more properties regarding the Json policy container.
@@ -67,7 +66,6 @@ public class AbacSecurityConfigurationProperties {
 
 		// If we should have the json policy definition as parent and import all to JPA.
 		private boolean importFromJson = true;
-
 
 	}
 

@@ -34,14 +34,16 @@ public class PolicyContainerAutoConfiguration {
 	@ConditionalOnMissingBean(PolicyContainer.class)
 	public PolicyContainer policyDefinition() {
 		log.debug("Creating autoconfigured policy definition");
-		String provider = this.abacSecurityConfigurationProperties.getContainer().getProvider();
-		switch(provider.toLowerCase()) {
-			case "jpa":
-				return configureJpaPolicyContainer();
-			case "json":
-				return configureJsonPolicyContainer();
-			default:
-				throw new IllegalStateException("No policy container found for provider " + provider);
+		String provider = this.abacSecurityConfigurationProperties.getContainer()
+				.getProvider();
+		switch (provider.toLowerCase()) {
+		case "jpa":
+			return configureJpaPolicyContainer();
+		case "json":
+			return configureJsonPolicyContainer();
+		default:
+			throw new IllegalStateException(
+					"No policy container found for provider " + provider);
 		}
 	}
 
@@ -61,7 +63,8 @@ public class PolicyContainerAutoConfiguration {
 
 	private PolicyContainer configureJpaPolicyContainer() {
 		log.debug("Configuring jpa policy container.");
-		if (this.abacSecurityConfigurationProperties.getContainer().getJpa().isImportFromJson()) {
+		if (this.abacSecurityConfigurationProperties.getContainer().getJpa()
+				.isImportFromJson()) {
 			log.debug("Importing policies from specified json file.");
 			JsonFilePolicyContainer parent = null;
 			try {
