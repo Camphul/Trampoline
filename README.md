@@ -6,7 +6,7 @@ Collection of reusable Spring Boot starter modules providing multiple new featur
 
 Please make sure you have git, maven and Java (min. version 8) installed.
 
-Trampoline is deployed on maven and is built upon `Spring Boot 2.1.4-RELEASE`
+Trampoline is deployed on maven and is built upon `Spring Boot 2.1.6-RELEASE`
 
 Please use the following dependency to use all functionality Trampoline offers:
 ```xml
