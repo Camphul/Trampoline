@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'next-release', name: 'BRANCH', type: 'PT_BRANCH'
+    }
+    stages {
+        stage('SCM Checkout') {
+            git branch: "${params.BRANCH}", url: 'https://github.com/Camphul/Trampoline.git'
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './.jenkins/deliver.sh'
+            }
+        }
+    }
+}
