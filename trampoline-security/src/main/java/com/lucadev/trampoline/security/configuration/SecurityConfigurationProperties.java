@@ -19,7 +19,7 @@ public class SecurityConfigurationProperties {
 
 	// True when you want to sign in using email instead of password
 	@NotNull
-	private boolean emailIdentification = false;
+	private boolean allowEmailIdentification = false;
 
 	// Set debug for spring security and trampoline-security
 	@NotNull

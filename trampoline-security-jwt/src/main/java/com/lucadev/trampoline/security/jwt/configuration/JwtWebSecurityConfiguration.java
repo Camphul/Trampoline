@@ -3,8 +3,6 @@ package com.lucadev.trampoline.security.jwt.configuration;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
-import com.lucadev.trampoline.security.service.UserAuthenticationService;
-import com.lucadev.trampoline.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -47,13 +47,13 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 	// Request filter for auth
 	private final AuthenticationEntryPoint entryPoint;
 
-	private final UserAuthenticationService userAuthenticationService;
-
-	private final UserService userService;
+	private final UserDetailsService userService;
 
 	private final TokenService tokenService;
 
 	private final AuthenticationManager authenticationManager;
+
+	private final PasswordEncoder passwordEncoder;
 
 	/**
 	 * Autowires the {@link AuthenticationManager} builder. Used to build the global
@@ -71,7 +71,7 @@ public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 	 */
 	protected AuthenticationProvider authenticationProvider() {
 		return new JwtAuthenticationProvider(this.tokenService, this.userService,
-				this.userAuthenticationService);
+				this.passwordEncoder);
 	}
 
 	/**

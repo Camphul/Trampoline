@@ -2,12 +2,12 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.adapter.NopJwtConfigurationAdapter;
-import com.lucadev.trampoline.security.persistence.entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;
 
@@ -57,12 +57,12 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 	protected static class SomeRandomJwtConfiguration implements JwtConfigurationAdapter {
 
 		@Override
-		public boolean shouldIgnoreExpiration(User user) {
+		public boolean shouldIgnoreExpiration(UserDetails user) {
 			return false;
 		}
 
 		@Override
-		public void createToken(User user, Map<String, Object> claims) {
+		public void createToken(UserDetails user, Map<String, Object> claims) {
 
 		}
 

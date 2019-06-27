@@ -1,22 +1,16 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.data.ResourceNotFoundException;
-import com.lucadev.trampoline.security.authentication.IdentificationType;
 import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.persistence.entity.User;
-import com.lucadev.trampoline.security.service.UserAuthenticationService;
-import com.lucadev.trampoline.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 
@@ -32,9 +26,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 	private final TokenService tokenService;
 
-	private final UserService userService;
+	private final UserDetailsService userService;
 
-	private final UserAuthenticationService userAuthenticationService;
+	private final PasswordEncoder passwordEncoder;
 
 	/**
 	 * Perform authentication.
@@ -57,45 +51,42 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	/**
-	 * Obtains either the username of email based upon the {@link IdentificationType}.
-	 * @param payload the {@link JwtPayload}
-	 * @param identificationType if we use the username or password.
-	 * @return the username or password.
-	 */
-	private String getUserIdentifier(JwtPayload payload,
-			IdentificationType identificationType) {
-		return identificationType == IdentificationType.USERNAME ? payload.getUsername()
-				: payload.getEmail();
-	}
-
-	/**
-	 * Loads {@link UserDetails} from the {@link JwtPayload}.
-	 * @param jwtPayload the authorization token.
-	 * @return the {@link UserDetails} obtained from the {@link JwtPayload}
-	 */
-	private User loadUserFromJwt(JwtPayload jwtPayload) {
-		UserDetails userDetails = this.userService.loadUserByUsername(
-				getUserIdentifier(jwtPayload, this.userService.getIdentificationType()));
-
-		if (!(userDetails instanceof User)) {
-			throw new ResourceNotFoundException(
-					"Could not find a User. Received the wrong type.");
-		}
-		return (User) userDetails;
-	}
-
-	/**
 	 * Authorize when already owner of a JWT token.
 	 * @param jwtPayload the JWT data.
 	 * @return the new {@link Authentication} object
 	 */
 	private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
-		User user = loadUserFromJwt(jwtPayload);
-		this.userAuthenticationService.validateUserState(user);
+		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
+		checkAllowance(user);
 		validateToken(user, jwtPayload);
 		// Updates user's last seen.
-		this.userService.updateLastSeen(user);
 		return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
+	}
+
+	/**
+	 * Check if the user is allowed to authorize.
+	 * @param user user to check.
+	 */
+	private void checkAllowance(UserDetails user) {
+		if (!user.isAccountNonLocked()) {
+			throw new LockedException(
+					"Could not authorize user because the account is locked.");
+		}
+
+		if (!user.isEnabled()) {
+			throw new DisabledException(
+					"Could not authorize user because the account is disabled.");
+		}
+
+		if (!user.isCredentialsNonExpired()) {
+			throw new AccountExpiredException(
+					"Could not authorize user because the credentials are expired.");
+		}
+
+		if (!user.isAccountNonExpired()) {
+			throw new AccountExpiredException(
+					"Could not authorize user because the account is expired.");
+		}
 	}
 
 	/**
@@ -104,10 +95,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 * @return a jwt auth object.
 	 */
 	private Authentication createNewJwtAuthentication(Authentication authentication) {
-		User user = getUser(authentication);
-		this.userAuthenticationService.validateUserState(user);
-		String token = this.tokenService.createToken(user);
-		JwtPayload payload = this.tokenService.getTokenData(token);
+		UserDetails user = getUserDetails(authentication);
+		String token = this.tokenService.issueToken(user);
+		JwtPayload payload = this.tokenService.parseToken(token);
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 		return new JwtAuthenticationToken(authorities, user, payload);
 	}
@@ -118,13 +108,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 * @param jwtPayload token to validate against user.
 	 */
 	private void validateToken(UserDetails userDetails, JwtPayload jwtPayload) {
-		if (!(userDetails instanceof User)) {
-			throw new BadCredentialsException(
-					"Failed authentication: unsupported UserDetails type. Must be of type User");
-		}
-
-		User user = (User) userDetails;
-		if (!this.tokenService.isValidToken(jwtPayload, user)) {
+		if (!this.tokenService.isValidToken(jwtPayload, userDetails)) {
 			throw new BadCredentialsException(
 					"Token did not validate against user with success.");
 		}
@@ -135,21 +119,15 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 * @param authentication find user from auth object.
 	 * @return the resolved user.
 	 */
-	private User getUser(Authentication authentication) {
+	private UserDetails getUserDetails(Authentication authentication) {
 		String name = authentication.getName();
 		String credentials = String.valueOf(authentication.getCredentials());
 		UserDetails userDetails = this.userService.loadUserByUsername(name);
-		if (!(userDetails instanceof User)) {
-			throw new AuthenticationServiceException(
-					"Unsupported or null UserDetails Type");
-		}
 
-		User user = (User) userDetails;
-
-		boolean correctCredentials = this.userAuthenticationService.isPassword(user,
-				credentials);
+		boolean correctCredentials = this.passwordEncoder.matches(credentials,
+				userDetails.getPassword());
 		if (correctCredentials) {
-			return user;
+			return userDetails;
 		}
 		throw new BadCredentialsException("Invalid credentials?");
 

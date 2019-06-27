@@ -1,11 +1,10 @@
 package com.lucadev.trampoline.security.service;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
-import com.lucadev.trampoline.security.authentication.IdentificationType;
+import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -150,22 +149,15 @@ public interface UserService extends UserDetailsService {
 	User setCredentialsExpired(User user, boolean expired);
 
 	/**
-	 * Similar to {@link UserDetailsService#loadUserByUsername(String)}.
-	 * @param email user email.
-	 * @return resolved user.
-	 */
-	UserDetails loadUserByEmail(String email);
-
-	/**
-	 * Current {@link IdentificationType} being used.
+	 * Current {@link IdentificationField} being used.
 	 * @return method of identification(username/email)
 	 */
-	IdentificationType getIdentificationType();
+	IdentificationField getIdentificationField();
 
 	/**
-	 * Set a new {@link IdentificationType}.
-	 * @param identificationType if we use username or email for authorization.
+	 * Set a new {@link IdentificationField}.
+	 * @param identificationField if we use username or email for authorization.
 	 */
-	void setIdentificationType(IdentificationType identificationType);
+	void setIdentificationField(IdentificationField identificationField);
 
 }

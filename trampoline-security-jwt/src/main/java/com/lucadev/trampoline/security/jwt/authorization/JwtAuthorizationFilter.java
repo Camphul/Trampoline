@@ -2,8 +2,7 @@ package com.lucadev.trampoline.security.jwt.authorization;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +21,9 @@ import java.util.Optional;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 11-5-18
  */
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-
-	private static final Logger log = LoggerFactory
-			.getLogger(JwtAuthorizationFilter.class);
 
 	private final AuthenticationManager authenticationManager;
 

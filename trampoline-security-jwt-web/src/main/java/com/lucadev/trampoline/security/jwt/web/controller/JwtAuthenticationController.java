@@ -67,7 +67,7 @@ public class JwtAuthenticationController {
 	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String refreshedToken = this.tokenService.refreshTokenFromRequest(request);
+			String refreshedToken = this.tokenService.issueTokenRefresh(request);
 			return new JwtAuthenticationResponse(refreshedToken);
 		}
 		catch (Exception e) {

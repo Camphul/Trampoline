@@ -43,7 +43,7 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validateUserState(User user) {
+	public void isAllowed(User user) {
 		if (!user.isEnabled()) {
 			throw new DisabledException(
 					"Could not authorize user because the account is disabled.");

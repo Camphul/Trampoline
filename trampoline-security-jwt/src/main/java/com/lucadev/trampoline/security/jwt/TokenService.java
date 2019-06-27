@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt;
 
-import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -19,29 +19,29 @@ public interface TokenService {
 	 * @param user user to create token for.
 	 * @return jwt token.
 	 */
-	String createToken(User user);
+	String issueToken(UserDetails user);
 
 	/**
 	 * Refresh an existing token without any checks.
 	 * @param token jwt
 	 * @return refreshed jwt
 	 */
-	String refreshToken(String token);
+	String issueTokenRefresh(String token);
 
 	/**
 	 * Get all token information.
 	 * @param token jwt string
 	 * @return jwt DTO representation.
 	 */
-	JwtPayload getTokenData(String token);
+	JwtPayload parseToken(String token);
 
 	/**
-	 * Similar to {@link #getTokenData(String)} but this reads the request header instead.
+	 * Similar to {@link #parseToken(String)} but this reads the request header instead.
 	 * of passing the raw token
 	 * @param request http req
 	 * @return jwt dto.
 	 */
-	JwtPayload getTokenData(HttpServletRequest request);
+	JwtPayload parseToken(HttpServletRequest request);
 
 	/**
 	 * Validate a token.
@@ -49,14 +49,14 @@ public interface TokenService {
 	 * @param user the user to validate the data on
 	 * @return if the token is valid with the given user
 	 */
-	boolean isValidToken(JwtPayload jwtPayload, User user);
+	boolean isValidToken(JwtPayload jwtPayload, UserDetails user);
 
 	/**
 	 * Handle a request to refresh a token.
 	 * @param request http req
 	 * @return jwt token string.
 	 */
-	String refreshTokenFromRequest(HttpServletRequest request);
+	String issueTokenRefresh(HttpServletRequest request);
 
 	/**
 	 * Read the token and create an {@link Authentication} object from it.

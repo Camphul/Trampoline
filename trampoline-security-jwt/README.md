@@ -1,6 +1,8 @@
 # trampoline-security-jwt
 
-Basic setup for enabling JWT authentication/authorization ontop of [trampoline-security](../trampoline-security)
+Basic setup for enabling JWT authentication/authorization.
+ 
+This module is completely decoupled from [trampoline-security](../trampoline-security) and can be used on existing spring security implementations.
 
 ## Architecture
 

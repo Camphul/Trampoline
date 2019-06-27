@@ -1,12 +1,12 @@
 package com.lucadev.trampoline.security.authentication;
 
 /**
- * Which identification type is used to authenticate and authorize users.
+ * Which identification field is used to authenticate and authorize users.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 12-5-18
  */
-public enum IdentificationType {
+public enum IdentificationField {
 
 	/**
 	 * Identify/authorize using user username.
@@ -14,8 +14,8 @@ public enum IdentificationType {
 	USERNAME,
 
 	/**
-	 * Identify/authorize using user email.
+	 * Identify/authorize using username or email.
 	 */
-	EMAIL
+	USERNAME_OR_EMAIL
 
 }

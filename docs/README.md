@@ -49,6 +49,7 @@ Other properties being used are:
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.web.baseMapping`: auth basepath for authorizing and refreshing tokens, default is /auth
+- `trampoline.security.allow-email-identification`: allow clients to either authenticate with their username or with their email(only used in trampoline-security)
 - `trampoline.notify.email.enabled`: required to be `true` to even make use of this service.
 - `trampoline.notify.email.defaults.from`: address from which the emails are sent.
 - `trampoline.notify.email.defaults.template`: default (fallback) template to render.

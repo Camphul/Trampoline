@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.adapter;
 
-import com.lucadev.trampoline.security.persistence.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;
 
@@ -13,12 +13,12 @@ import java.util.Map;
 public class NopJwtConfigurationAdapter implements JwtConfigurationAdapter {
 
 	@Override
-	public boolean shouldIgnoreExpiration(User user) {
+	public boolean shouldIgnoreExpiration(UserDetails user) {
 		return false;
 	}
 
 	@Override
-	public void createToken(User user, Map<String, Object> claims) {
+	public void createToken(UserDetails user, Map<String, Object> claims) {
 		// Dont do anything by default
 	}
 

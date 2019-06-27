@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.service;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
-import com.lucadev.trampoline.security.authentication.IdentificationType;
+import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
@@ -29,7 +29,7 @@ public abstract class AbstractUserService implements UserService {
 	@Getter(AccessLevel.PROTECTED)
 	private final UserRepository userRepository;
 
-	private IdentificationType identificationType = IdentificationType.USERNAME;
+	private IdentificationField identificationField = IdentificationField.USERNAME;
 
 	/**
 	 * Construct the abstract handler.
@@ -39,8 +39,8 @@ public abstract class AbstractUserService implements UserService {
 	public AbstractUserService(UserRepository userRepository,
 			SecurityConfigurationProperties securityConfigurationProperties) {
 		this.userRepository = userRepository;
-		if (securityConfigurationProperties.isEmailIdentification()) {
-			this.identificationType = IdentificationType.EMAIL;
+		if (securityConfigurationProperties.isAllowEmailIdentification()) {
+			this.identificationField = IdentificationField.USERNAME_OR_EMAIL;
 		}
 	}
 
@@ -49,19 +49,15 @@ public abstract class AbstractUserService implements UserService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String s) {
-		if (this.identificationType == IdentificationType.EMAIL) {
-			return loadUserByEmail(s);
+		Optional<User> user = Optional.empty();
+		if (this.identificationField == IdentificationField.USERNAME) {
+			user = this.userRepository.findOneByUsername(s);
 		}
-		Optional<User> user = this.userRepository.findOneByUsername(s);
+		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
+			user = this.userRepository.findOneByUsernameOrEmail(s);
+		}
 		return user.orElseThrow(() -> new UsernameNotFoundException(
 				"Could not find user with username " + s));
-	}
-
-	@Override
-	public UserDetails loadUserByEmail(String email) {
-		Optional<User> user = this.userRepository.findOneByEmail(email);
-		return user.orElseThrow(() -> new UsernameNotFoundException(
-				"Could not find user with email " + email));
 	}
 
 	/**
@@ -226,16 +222,16 @@ public abstract class AbstractUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IdentificationType getIdentificationType() {
-		return this.identificationType;
+	public IdentificationField getIdentificationField() {
+		return this.identificationField;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setIdentificationType(IdentificationType identificationType) {
-		this.identificationType = identificationType;
+	public void setIdentificationField(IdentificationField identificationField) {
+		this.identificationField = identificationField;
 	}
 
 }

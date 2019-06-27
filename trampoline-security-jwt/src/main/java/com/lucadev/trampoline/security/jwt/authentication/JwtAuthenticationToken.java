@@ -1,12 +1,12 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
 import com.lucadev.trampoline.security.jwt.JwtPayload;
-import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -41,7 +41,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 * @param jwtPayload the jwt linked to the user.
 	 */
 	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities,
-			User user, JwtPayload jwtPayload) {
+			UserDetails user, JwtPayload jwtPayload) {
 		super(authorities);
 		this.jwtPayload = jwtPayload;
 		this.principal = user;
@@ -59,7 +59,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * {@inheritDoc}
-	 * @return either username or {@link User} object when authenticated.
+	 * @return either username or {@link UserDetails} object when authenticated.
 	 */
 	@Override
 	public Object getPrincipal() {
@@ -86,13 +86,13 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	/**
 	 * Get the user.
-	 * @return null if the principal is not a {@link User}
+	 * @return null if the principal is not a {@link UserDetails}
 	 */
-	public User getUser() {
-		if (!(this.principal instanceof User)) {
+	public UserDetails getUserDetails() {
+		if (!(this.principal instanceof UserDetails)) {
 			return null;
 		}
-		return (User) this.principal;
+		return (UserDetails) this.principal;
 	}
 
 }

@@ -3,9 +3,6 @@ package com.lucadev.trampoline.security.jwt;
 import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
-import com.lucadev.trampoline.security.persistence.entity.Role;
-import com.lucadev.trampoline.security.persistence.entity.User;
-import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -18,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +37,6 @@ public class JwtTokenService implements TokenService {
 
 	private static final String CLAIM_USERNAME = "t_username";
 
-	private static final String CLAIM_EMAIL = "t_mail";
-
 	private static final String CLAIM_ROLES = "t_roles";
 
 	private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "t_ignore_timout";
@@ -47,7 +45,7 @@ public class JwtTokenService implements TokenService {
 
 	private final TimeProvider timeProvider;
 
-	private final UserService userService;
+	private final UserDetailsService userService;
 
 	private final JwtSecurityConfigurationProperties properties;
 
@@ -67,16 +65,15 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt token.
 	 */
 	@Override
-	public String createToken(User user) {
+	public String issueToken(UserDetails user) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(CLAIM_USERNAME, user.getUsername());
-		claims.put(CLAIM_EMAIL, user.getEmail());
-		claims.put(CLAIM_ROLES,
-				user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+		claims.put(CLAIM_ROLES, user.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT,
 				this.jwtConfiguration.shouldIgnoreExpiration(user));
 		this.jwtConfiguration.createToken(user, claims);
-		return generateToken(claims, user.getId().toString());
+		return generateToken(claims, user.getUsername());
 	}
 
 	/**
@@ -85,30 +82,28 @@ public class JwtTokenService implements TokenService {
 	 * @return refreshed jwt
 	 */
 	@Override
-	public String refreshToken(String token) {
+	public String issueTokenRefresh(String token) {
 		final Date createdDate = this.timeProvider.now();
 		// copy over old claims
 		final Claims claims = getAllTokenClaims(token);
 
 		return Jwts.builder().setClaims(claims).setIssuedAt(createdDate)
-				.setExpiration(calculateExpirationDate(createdDate))
+				.setExpiration(getExpiryDate(createdDate))
 				.signWith(getSignKey()).compact();
 	}
 
 	private String generateToken(Map<String, Object> claims, String subject) {
 		final Date createdDate = this.timeProvider.now();
-		final Date expirationDate = calculateExpirationDate(createdDate);
+		final Date expirationDate = getExpiryDate(createdDate);
 
 		return Jwts.builder().setClaims(claims).setSubject(subject)
 				.setIssuedAt(createdDate).setExpiration(expirationDate)
 				.signWith(getSignKey()).compact();
 	}
 
-	private boolean isTokenRefreshable(JwtPayload token, Date lastPasswordReset) {
-		return !isCreatedDateTimeBeforeLastPasswordResetDateTime(token.getIssuedDate(),
-				lastPasswordReset)
-				&& (!isDateExpired(token.getExpirationDate())
-						|| token.isIgnorableExpiration());
+	private boolean isTokenRefreshable(JwtPayload token) {
+		return (!isPastExpiryDate(token.getExpirationDate())
+				|| token.isIgnorableExpiration());
 	}
 
 	/**
@@ -117,13 +112,11 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt DTO representation.
 	 */
 	@Override
-	public JwtPayload getTokenData(String token) {
+	public JwtPayload parseToken(String token) {
 		final Claims claims = getAllTokenClaims(token);
 		JwtPayload jwtPayload = new JwtPayload();
 		jwtPayload.setRawToken(token);
-		jwtPayload.setSubject(UUID.fromString(claims.getSubject()));
 		jwtPayload.setUsername(claims.get(CLAIM_USERNAME, String.class));
-		jwtPayload.setEmail(claims.get(CLAIM_EMAIL, String.class));
 		jwtPayload.setIssuedDate(claims.getIssuedAt());
 		jwtPayload.setExpirationDate(claims.getExpiration());
 		jwtPayload.setIgnorableExpiration(
@@ -133,7 +126,7 @@ public class JwtTokenService implements TokenService {
 	}
 
 	@Override
-	public JwtPayload getTokenData(HttpServletRequest request) {
+	public JwtPayload parseToken(HttpServletRequest request) {
 		final String requestHeader = request
 				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
 		if (requestHeader == null || requestHeader.isEmpty()) {
@@ -141,13 +134,13 @@ public class JwtTokenService implements TokenService {
 					"Could not find token header.");
 		}
 		if (requestHeader.startsWith(JwtSecurityConfigurationProperties.HEADER_PREFIX)) {
-			String authToken = getTokenFromHeader(requestHeader);
+			String authToken = parseTokenHeader(requestHeader);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException(
 						"Auth token is null.");
 			}
 			try {
-				return getTokenData(authToken);
+				return parseToken(authToken);
 			}
 			catch (IllegalArgumentException e) {
 				throw new BadCredentialsException("Could not parse token");
@@ -169,13 +162,10 @@ public class JwtTokenService implements TokenService {
 	 * @return if the token is valid.
 	 */
 	@Override
-	public boolean isValidToken(JwtPayload jwtPayload, User user) {
-		return (user.getId().equals(jwtPayload.getSubject())
-				&& user.getUsername().equals(jwtPayload.getUsername())
-				&& (!isDateExpired(jwtPayload.getExpirationDate())
-						|| jwtPayload.isIgnorableExpiration())
-				&& !isCreatedDateTimeBeforeLastPasswordResetDateTime(
-						jwtPayload.getIssuedDate(), user.getLastPasswordReset()));
+	public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
+		return (user.getUsername().equals(jwtPayload.getUsername())
+				&& (!isPastExpiryDate(jwtPayload.getExpirationDate())
+						|| jwtPayload.isIgnorableExpiration()));
 	}
 
 	/**
@@ -184,19 +174,19 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt token string.
 	 */
 	@Override
-	public String refreshTokenFromRequest(HttpServletRequest request) {
+	public String issueTokenRefresh(HttpServletRequest request) {
 		String authHeader = request
 				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
-		final String token = getTokenFromHeader(authHeader);
-		JwtPayload jwtPayload = getTokenData(token);
+		final String token = parseTokenHeader(authHeader);
+		JwtPayload jwtPayload = parseToken(token);
 		String username = jwtPayload.getUsername();
-		User user = this.userService.findById(jwtPayload.getSubject());
+		UserDetails user = userService.loadUserByUsername(username);
 		if (!user.getUsername().equals(username)) {
 			throw new BadCredentialsException("Token subject does not match user");
 		}
 
-		if (isTokenRefreshable(jwtPayload, user.getLastPasswordReset())) {
-			return refreshToken(token);
+		if (isTokenRefreshable(jwtPayload)) {
+			return issueTokenRefresh(token);
 		}
 		else {
 			throw new BadCredentialsException("Auth token can not be refreshed");
@@ -212,7 +202,7 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
 		try {
-			JwtPayload jwtPayload = getTokenData(request);
+			JwtPayload jwtPayload = parseToken(request);
 			if (jwtPayload == null) {
 				return Optional.empty();
 			}
@@ -224,19 +214,14 @@ public class JwtTokenService implements TokenService {
 		}
 	}
 
+	/**
+	 * Parse JWT and obtain all claims.
+	 * @param token jwt string.
+	 * @return all token claims.
+	 * @see Claims
+	 */
 	private Claims getAllTokenClaims(String token) {
 		return Jwts.parser().setSigningKey(getSignKey()).parseClaimsJws(token).getBody();
-	}
-
-	/**
-	 * Is created date before the given lastPasswordReset date.
-	 * @param created date created
-	 * @param lastPasswordReset last password reset date
-	 * @return if the token dates are valid.
-	 */
-	private boolean isCreatedDateTimeBeforeLastPasswordResetDateTime(Date created,
-			Date lastPasswordReset) {
-		return (lastPasswordReset != null && created.before(lastPasswordReset));
 	}
 
 	/**
@@ -244,7 +229,7 @@ public class JwtTokenService implements TokenService {
 	 * @param expiration expiration date.
 	 * @return if current datetime is before expiration.
 	 */
-	private boolean isDateExpired(Date expiration) {
+	private boolean isPastExpiryDate(Date expiration) {
 		return expiration.before(this.timeProvider.now());
 	}
 
@@ -253,7 +238,7 @@ public class JwtTokenService implements TokenService {
 	 * @param createdDate jwt creation date.
 	 * @return expiration date.
 	 */
-	private Date calculateExpirationDate(Date createdDate) {
+	private Date getExpiryDate(Date createdDate) {
 		return new Date(createdDate.getTime() + this.properties.getTokenTimeout() * 1000);
 	}
 
@@ -262,7 +247,7 @@ public class JwtTokenService implements TokenService {
 	 * @param headerValue the raw header value
 	 * @return the un-prefixed, ready to parse jwt token
 	 */
-	private String getTokenFromHeader(String headerValue) {
+	private String parseTokenHeader(String headerValue) {
 		String authToken = headerValue
 				.substring(JwtSecurityConfigurationProperties.HEADER_PREFIX.length());
 		// Remove first whitespace

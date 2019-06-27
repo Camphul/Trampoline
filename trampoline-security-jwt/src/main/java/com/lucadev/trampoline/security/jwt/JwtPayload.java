@@ -5,7 +5,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Representation of the data inside the JWT.
@@ -22,19 +21,9 @@ public class JwtPayload implements Serializable {
 	private String rawToken;
 
 	/**
-	 * Subject ID(UUID).
-	 */
-	private UUID subject;
-
-	/**
 	 * Subject username.
 	 */
 	private String username;
-
-	/**
-	 * Subject email.
-	 */
-	private String email;
 
 	/**
 	 * Subject roles.

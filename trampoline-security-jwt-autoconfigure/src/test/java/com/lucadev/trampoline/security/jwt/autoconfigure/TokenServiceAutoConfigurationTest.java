@@ -5,8 +5,6 @@ import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
-import com.lucadev.trampoline.security.persistence.entity.User;
-import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -15,6 +13,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class TokenServiceAutoConfigurationTest {
 
 	private TimeProvider timeProvider;
 
-	private UserService userService;
+	private UserDetailsService userService;
 
 	@Before
 	public void setUp() throws Exception {
@@ -47,7 +47,7 @@ public class TokenServiceAutoConfigurationTest {
 		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
-		userService = mock(UserService.class);
+		userService = mock(UserDetailsService.class);
 		jwtConfiguration = mock(JwtConfigurationAdapter.class);
 		context = new AnnotationConfigApplicationContext();
 	}
@@ -103,32 +103,32 @@ public class TokenServiceAutoConfigurationTest {
 	protected static class TestTokenService implements TokenService {
 
 		@Override
-		public String createToken(User user) {
+		public String issueToken(UserDetails user) {
 			return null;
 		}
 
 		@Override
-		public String refreshToken(String token) {
+		public String issueTokenRefresh(String token) {
 			return null;
 		}
 
 		@Override
-		public JwtPayload getTokenData(String token) {
+		public JwtPayload parseToken(String token) {
 			return null;
 		}
 
 		@Override
-		public JwtPayload getTokenData(HttpServletRequest request) {
+		public JwtPayload parseToken(HttpServletRequest request) {
 			return null;
 		}
 
 		@Override
-		public boolean isValidToken(JwtPayload jwtPayload, User user) {
+		public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
 			return false;
 		}
 
 		@Override
-		public String refreshTokenFromRequest(HttpServletRequest request) {
+		public String issueTokenRefresh(HttpServletRequest request) {
 			return null;
 		}
 
