@@ -5,7 +5,9 @@ pipeline {
     }
     stages {
         stage('SCM Checkout') {
-            git branch: "${params.BRANCH}", url: 'https://github.com/Camphul/Trampoline.git'
+            steps {
+                git branch: "${params.BRANCH}", url: 'https://github.com/Camphul/Trampoline.git'
+            }
         }
         stage('Build') {
             steps {
