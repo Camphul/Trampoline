@@ -88,8 +88,8 @@ public class JwtTokenService implements TokenService {
 		final Claims claims = getAllTokenClaims(token);
 
 		return Jwts.builder().setClaims(claims).setIssuedAt(createdDate)
-				.setExpiration(getExpiryDate(createdDate))
-				.signWith(getSignKey()).compact();
+				.setExpiration(getExpiryDate(createdDate)).signWith(getSignKey())
+				.compact();
 	}
 
 	private String generateToken(Map<String, Object> claims, String subject) {

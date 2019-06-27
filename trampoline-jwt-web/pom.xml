@@ -9,43 +9,27 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>trampoline-security-jwt-starter</artifactId>
-	<packaging>jar</packaging>
+	<artifactId>trampoline-jwt-web</artifactId>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<dependencies>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-jwt</artifactId>
+			<artifactId>trampoline-jwt</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-jwt-web</artifactId>
+			<artifactId>trampoline-security-web</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-jwt-autoconfigure</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>

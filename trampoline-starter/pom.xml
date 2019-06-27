@@ -28,6 +28,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-jwt-starter</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-notify-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
@@ -35,12 +41,6 @@
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-security-starter</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-jwt-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>

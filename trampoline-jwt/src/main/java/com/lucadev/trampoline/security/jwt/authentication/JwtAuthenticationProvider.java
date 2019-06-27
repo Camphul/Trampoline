@@ -57,9 +57,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 */
 	private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
 		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
-		checkAllowance(user);
 		validateToken(user, jwtPayload);
-		// Updates user's last seen.
+		checkAllowance(user);
 		return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
 	}
 

@@ -1,10 +1,10 @@
-# trampoline-security-jwt-web
+# trampoline-jwt-web
 
-REST API endpoints for [trampoline-security-jwt](../trampoline-security-jwt)
+REST API endpoints for [trampoline-jwt](../trampoline-jwt)
 
 ## Architecture
 
-Adds a simple controller on top of trampoline-security-jwt.
+Adds a simple controller on top of trampoline-jwt.
 
 The base path for the control endpoints are configured by the `trampoline.security.jwt.web.base-mapping` property which defaults to `/auth`.
 

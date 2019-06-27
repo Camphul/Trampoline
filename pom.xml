@@ -106,10 +106,10 @@
 		<module>trampoline-security</module>
 		<module>trampoline-security-autoconfigure</module>
 		<module>trampoline-security-starter</module>
-		<module>trampoline-security-jwt</module>
-		<module>trampoline-security-jwt-web</module>
-		<module>trampoline-security-jwt-autoconfigure</module>
-		<module>trampoline-security-jwt-starter</module>
+		<module>trampoline-jwt</module>
+		<module>trampoline-jwt-web</module>
+		<module>trampoline-jwt-autoconfigure</module>
+		<module>trampoline-jwt-starter</module>
 		<module>trampoline-starter</module>
 		<module>trampoline-security-abac</module>
 		<module>trampoline-security-abac-autoconfigure</module>
