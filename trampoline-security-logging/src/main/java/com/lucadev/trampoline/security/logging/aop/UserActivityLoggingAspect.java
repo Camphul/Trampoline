@@ -1,12 +1,10 @@
 package com.lucadev.trampoline.security.logging.aop;
 
-import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.logging.UserActivity;
 import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
-import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -24,6 +22,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -74,7 +73,7 @@ public class UserActivityLoggingAspect {
 		Method method = methodSignature.getMethod();
 		LogUserActivity logUserActivity = method
 				.getDeclaredAnnotation(LogUserActivity.class);
-		User principal = getCurrentUser();
+		UserDetails principal = getCurrentUser();
 		Object actedUpon = null;
 		Map<String, Object> argumentMap = new HashMap<>();
 
@@ -190,20 +189,20 @@ public class UserActivityLoggingAspect {
 	 * Get user who invoked the activity.
 	 * @return current authorized user from {@link SecurityContext}
 	 */
-	private User getCurrentUser() {
+	private UserDetails getCurrentUser() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		if (securityContext == null) {
-			throw new CurrentUserNotFoundException();
+			throw new NullPointerException("Could not get current principal because SecurityContext is null.");
 		}
 		Authentication auth = securityContext.getAuthentication();
 		if (auth == null) {
-			throw new CurrentUserNotFoundException();
+			throw new NullPointerException("Could not get current principal because Authentication is null.");
 		}
 		Object principal = auth.getPrincipal();
-		if (!(principal instanceof User)) {
-			throw new CurrentUserNotFoundException("Principal not of supported type.");
+		if (!(principal instanceof UserDetails)) {
+			throw new NullPointerException("Could not get current principal because it is not of type UserDetails");
 		}
-		return (User) principal;
+		return (UserDetails) principal;
 	}
 
 }

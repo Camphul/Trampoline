@@ -1,9 +1,9 @@
 package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * User activity that took place.
@@ -21,7 +21,7 @@ public class UserActivity {
 	/**
 	 * User who caused the activity.
 	 */
-	private final User principal;
+	private final UserDetails principal;
 
 	/**
 	 * Description of the activity.

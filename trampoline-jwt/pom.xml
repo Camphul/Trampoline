@@ -17,11 +17,6 @@
 		<jjwt.version>0.10.5</jjwt.version>
 	</properties>
 	<dependencies>
-		<!--<dependency>-->
-		<!--<groupId>com.lucadev.trampoline</groupId>-->
-		<!--<artifactId>trampoline-security</artifactId>-->
-		<!--<version>${project.version}</version>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-core</artifactId>

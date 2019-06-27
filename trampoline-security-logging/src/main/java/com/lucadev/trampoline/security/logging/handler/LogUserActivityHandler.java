@@ -22,7 +22,7 @@ public class LogUserActivityHandler implements UserActivityHandler {
 		String activityContextClass = userActivity.getActedUpon() != null
 				? userActivity.getActedUpon().getClass().getName()
 				: "No activity context";
-		LOG.debug("{}: {}#{} {} :: {} {}ms", userActivity.getPrincipal().getId(),
+		LOG.debug("{}: {}#{} {} :: {} {}ms", userActivity.getPrincipal().getUsername(),
 				context.getClassName(), context.getMethodName(), activityContextClass,
 				userActivity.getDescription(),
 				(context.getInvocationEnd() - context.getInvocationStart()));
