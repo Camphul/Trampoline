@@ -30,13 +30,4 @@ public class TrampolineUserService extends AbstractUserService {
 		this.timeProvider = timeProvider;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User updateLastSeen(User user) {
-		user.setLastSeen(this.timeProvider.now());
-		return update(user);
-	}
-
 }

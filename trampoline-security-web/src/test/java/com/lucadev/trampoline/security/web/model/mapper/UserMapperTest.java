@@ -64,7 +64,6 @@ public class UserMapperTest {
 		assertEquals(input.isExpired(), result.isExpired());
 		assertEquals(input.isCredentialsExpired(), result.isCredentialsExpired());
 		assertEquals(input.getCreated(), result.getCreated());
-		assertEquals(input.getLastSeen(), result.getLastSeen());
 		assertEquals(roleMapper.toDtos(input.getRoles()), result.getRoles());
 	}
 

@@ -59,7 +59,6 @@ public class MapperHelper {
 
 	public static User createUser(String name) {
 		User user = new User();
-		user.setLastSeen(TEST_DATE);
 		user.setLastPasswordReset(TEST_DATE);
 		user.setLocked(false);
 		user.setEmail(name + "@example.com");

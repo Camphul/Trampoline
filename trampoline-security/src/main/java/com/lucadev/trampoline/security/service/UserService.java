@@ -55,13 +55,6 @@ public interface UserService extends UserDetailsService {
 	User update(User user);
 
 	/**
-	 * Update {@link User#getUpdated()} value.
-	 * @param user the {@link User} to update.
-	 * @return the updated {@link User}
-	 */
-	User updateLastSeen(User user);
-
-	/**
 	 * Get a {@link List} of all users.
 	 * @return a {@link List} of all {@link User} entities.
 	 */
