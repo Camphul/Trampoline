@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Compile-package') {
             steps {
-                sh 'mvn clean package -DskipTests -Pjenkins-pipeline'
+                sh 'mvn clean package -Pjenkins-pipeline'
             }
         }
         stage('Deploy-repository') {
@@ -27,8 +27,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'echo running deploy'
-                //sh 'mvn deploy -Pjenkins-pipeline'
+                sh 'mvn deploy -Pjenkins-pipeline'
             }
         }
     }
