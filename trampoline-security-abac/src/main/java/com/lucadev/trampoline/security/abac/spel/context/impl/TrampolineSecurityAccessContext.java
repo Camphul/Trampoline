@@ -1,12 +1,12 @@
 package com.lucadev.trampoline.security.abac.spel.context.impl;
 
 import com.lucadev.trampoline.security.abac.spel.context.SecurityAccessContext;
-import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Handle method security methods.
@@ -58,15 +58,15 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot
 			return false;
 		}
 
-		if (!(user instanceof User)) {
+		if (!(user instanceof UserDetails)) {
 			return false;
 		}
 
-		if (!(getSubject() instanceof User)) {
+		if (!(getSubject() instanceof UserDetails)) {
 			return false;
 		}
 
-		return ((User) user).getId().equals(((User) getSubject()).getId());
+		return ((UserDetails) user).getUsername().equals(((UserDetails) getSubject()).getUsername());
 	}
 
 }
