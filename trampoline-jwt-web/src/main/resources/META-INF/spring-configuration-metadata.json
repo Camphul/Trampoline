@@ -1,0 +1,22 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.security.jwt.web.base-mapping",
+      "type": "java.lang.String",
+      "description": "Base mapping for jwt routes.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.web.configuration.JwtWebConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.web.authorize-mapping",
+      "type": "java.lang.String",
+      "description": "Authorize endpoint which will be appended to the base mapping.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.web.configuration.JwtWebConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.web.refresh-mapping",
+      "type": "java.lang.String",
+      "description": "Refresh endpoint which will be appended to the base mapping.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.web.configuration.JwtWebConfigurationProperties"
+    }
+  ]
+}
