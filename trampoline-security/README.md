@@ -37,7 +37,7 @@ Use the `@ConditionalOn*` and `@Profile` annotations to disable or enable scheme
 
 ### Logging user activity
 
-Please make sure you have the [trampoline-security-logging-starter](../trampoline-security-logging-starter) if you wish to add `User` activity logging.
+Please make sure you have the [trampoline-user-logging-starter](../trampoline-user-logging-starter) if you wish to add `User` activity logging.
 To enable logging add the `@EnableUserActivityLogging` annotation.
 
 To log an activity add the `@LogUserActivity` above a method and specify the identifier, category and activity layer.

@@ -14,7 +14,7 @@ Please reference the following modules for documentation:
 - [trampoline-security-abac](../trampoline-security-abac)
 - [trampoline-jwt](../trampoline-jwt)
 - [trampoline-jwt-web](../trampoline-jwt-web)
-- [trampoline-security-logging](../trampoline-security-logging)
+- [trampoline-user-logging](../trampoline-user-logging)
 - [trampoline-web](../trampoline-web)
 
 ## Javadoc
@@ -27,7 +27,7 @@ Please reference the following modules for documentation:
 - [trampoline-notify](https://lucadev.com/trampoline/docs/trampoline-notify)
 - [trampoline-security](https://lucadev.com/trampoline/docs/trampoline-security)
 - [trampoline-security-abac](https://lucadev.com/trampoline/docs/trampoline-security-abac)
-- [trampoline-security-logging](https://lucadev.com/trampoline/docs/trampoline-security-logging)
+- [trampoline-user-logging](https://lucadev.com/trampoline/docs/trampoline-user-logging)
 - [trampoline-web](https://lucadev.com/trampoline/docs/trampoline-web)
 
 ## Configuration Values

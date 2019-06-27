@@ -15,13 +15,17 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - abac configuration property key refactors
 - abac json default file is now permissions.json
 - option to specify which policycontainer to use
+- refactor trampoline-security-jwt to trampoline-jwt
+- remove dependency on trampoline-security for trampoline-jwt
+- remove depency on trampoline-security for trampoline-user-logging
+- refactor trampoline-security-logging to trampoline-user-logging
 
 ## 20190507
 
 - Major refactoring of modules.
 - trampoline-common -> trampoline-core.
 - added trampoline-data-web.
-- Modified mechanism for trampoline-security-logging to use SPeL instead of resolvers.
+- Modified mechanism for trampoline-user-logging to use SPeL instead of resolvers.
 - Updated JWT library.
 - Removed useless config properties for jwt.
 - Refactored SuccessResponse: use exceptions instead with corresponding statuses.

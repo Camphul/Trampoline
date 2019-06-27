@@ -46,7 +46,7 @@ public class TrampolineApplication {
 }
 ```
 
-If you wish to use [trampoline-security-logging](../trampoline-security-logging) you must also add the `@EnableUserActivityLogging` annotation on your class like:
+If you wish to use [trampoline-user-logging](../trampoline-user-logging) you must also add the `@EnableUserActivityLogging` annotation on your class like:
 
 ```java
 @EnableTrampoline

@@ -58,7 +58,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-logging-starter</artifactId>
+			<artifactId>trampoline-user-logging-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>

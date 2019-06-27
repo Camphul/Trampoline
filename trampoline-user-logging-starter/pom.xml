@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>trampoline-security-logging-starter</artifactId>
+	<artifactId>trampoline-user-logging-starter</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A trampoline starter module</description>
@@ -17,13 +17,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-logging</artifactId>
+			<artifactId>trampoline-user-logging</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-logging-autoconfigure</artifactId>
+			<artifactId>trampoline-user-logging-autoconfigure</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>

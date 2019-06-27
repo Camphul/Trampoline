@@ -122,9 +122,9 @@
 		<module>trampoline-asset-store</module>
 		<module>trampoline-asset-store-autoconfigure</module>
 		<module>trampoline-asset-store-starter</module>
-		<module>trampoline-security-logging</module>
-		<module>trampoline-security-logging-autoconfigure</module>
-		<module>trampoline-security-logging-starter</module>
+		<module>trampoline-user-logging</module>
+		<module>trampoline-user-logging-autoconfigure</module>
+		<module>trampoline-user-logging-starter</module>
 		<module>trampoline-web</module>
 		<module>trampoline-web-autoconfigure</module>
 		<module>trampoline-web-starter</module>

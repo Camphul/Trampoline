@@ -9,5 +9,5 @@ Selection of starters that are ready-to-use:
 - [trampoline-security-starter](../trampoline-security-starter)
 - [trampoline-security-abac-starter](../trampoline-security-abac-starter)
 - [trampoline-jwt-starter](../trampoline-jwt-starter)
-- [trampoline-security-logging-starter](../trampoline-security-logging-starter)
+- [trampoline-user-logging-starter](../trampoline-user-logging-starter)
 - [trampoline-web-starter](../trampoline-web-starter)
