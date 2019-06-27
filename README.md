@@ -42,6 +42,8 @@ We use the date that development of a new Trampoline version began as a version 
 
 Version `20190507` would have started development on the 7th of may 2019.
 
+In-development versions are versioned the same but with the `-SNAPSHOT` suffix.
+
 ## Contributing
 
 If you wish to contribute please read the guidelines as described in [CONTRIBUTING.md](/CONTRIBUTING.md)
