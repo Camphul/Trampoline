@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.assetstore.provider",
+      "type": "java.lang.String",
+      "description": "Define which asset store implementation to use.",
+      "sourceType": "com.lucadev.trampoline.assetstore.configuration.AssetStoreConfigurationProperties"
+    },
+    {
+      "name": "trampoline.assetstore.provider.local.directory",
+      "type": "java.lang.String",
+      "description": "Define which directory to store files in.",
+      "sourceType": "com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreConfigurationProperties"
+    }
+  ]
+}

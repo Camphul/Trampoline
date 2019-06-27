@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Minimum length 16 string used to sign jwt.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.token-timeout",
+      "type": "java.lang.Long",
+      "description": "Seconds before a jwt is considered expired.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
+    }
+  ]
+}
