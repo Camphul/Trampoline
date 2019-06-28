@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.configuration;
+package com.lucadev.trampoline.security.autoconfigure;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -18,8 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @since 21-4-18
  */
 @Configuration
-@Profile(TrampolineWebSecurityDevelopmentConfiguration.DEV_SECURITY_CONFIGURATION_PROFILE)
-public class TrampolineWebSecurityDevelopmentConfiguration
+@Profile(TrampolineWebSecurityDevelopmentAutoConfiguration.DEV_SECURITY_CONFIGURATION_PROFILE)
+public class TrampolineWebSecurityDevelopmentAutoConfiguration
 		extends WebSecurityConfigurerAdapter implements Ordered {
 
 	/**

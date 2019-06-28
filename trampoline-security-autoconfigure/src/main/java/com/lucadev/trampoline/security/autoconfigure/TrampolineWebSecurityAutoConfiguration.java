@@ -1,5 +1,6 @@
-package com.lucadev.trampoline.security.configuration;
+package com.lucadev.trampoline.security.autoconfigure;
 
+import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class TrampolineWebSecurityConfiguration extends WebSecurityConfigurerAdapter
+public class TrampolineWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
 
 	/**

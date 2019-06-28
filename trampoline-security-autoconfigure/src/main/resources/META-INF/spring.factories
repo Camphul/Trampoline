@@ -1,4 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lucadev.trampoline.security.autoconfigure.TrampolineSecurityAutoConfiguration,\
+com.lucadev.trampoline.security.autoconfigure.TrampolineWebSecurityAutoConfiguration,\
+com.lucadev.trampoline.security.autoconfigure.TrampolineWebSecurityDevelopmentAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.PasswordEncoderAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.PrivilegeServiceAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.RoleServiceAutoConfiguration,\
