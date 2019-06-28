@@ -1,6 +1,7 @@
-package com.lucadev.trampoline.assetstore.configuration;
+package com.lucadev.trampoline.assetstore.autoconfigure;
 
 import com.lucadev.trampoline.assetstore.web.converter.AssetResponseHttpMessageConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -16,8 +17,9 @@ import java.util.List;
  * @see HttpMessageConverter
  * @since 9-6-18
  */
+@Slf4j
 @Configuration
-public class AssetStoreWebConfiguration implements WebMvcConfigurer, Ordered {
+public class AssetStoreWebAutoConfiguration implements WebMvcConfigurer, Ordered {
 
 	/**
 	 * Order of the configuration to load.
@@ -31,6 +33,7 @@ public class AssetStoreWebConfiguration implements WebMvcConfigurer, Ordered {
 	 */
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		log.debug("Adding AssetResponse message converter.");
 		converters.add(new AssetResponseHttpMessageConverter());
 	}
 
