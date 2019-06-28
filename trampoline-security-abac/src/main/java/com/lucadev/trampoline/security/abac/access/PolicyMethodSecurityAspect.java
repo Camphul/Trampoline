@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  * Proxy aspect for {@link PrePolicy}.
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
  * @since 3/10/19
  */
 @Aspect
-@Component
 @Order(1)
 @AllArgsConstructor
 public class PolicyMethodSecurityAspect {

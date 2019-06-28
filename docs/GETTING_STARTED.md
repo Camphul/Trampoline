@@ -46,6 +46,8 @@ public class TrampolineApplication {
 }
 ```
 
+## Enable user logging
+
 If you wish to use [trampoline-user-logging](../trampoline-user-logging) you must also add the `@EnableUserActivityLogging` annotation on your class like:
 
 ```java
@@ -61,6 +63,8 @@ public class TrampolineApplication {
 }
 ```
 
+## Enable security chain ignore annotation
+
 If you wish to use `@IgnoreSecurity` from [trampoline-security-web](../trampoline-security-web) to disable security on a mapping add the `@EnableIgnoreSecurity` annotation.
 
 ```java
@@ -75,6 +79,27 @@ public class TrampolineApplication {
 
 }
 ```
+
+When `@IgnoreSecurity` is added on a request mapping it will disable the entire security chain for that route.
+
+## Enable abac annotations
+
+If you wish to use `@PrePolicy` or `@PostPolicy` from [trampoline-security-abac](../trampoline-security-abac) to secure methods using abac please use the `@EnablePrePostPolicy` annotation.
+
+```java
+@EnableTrampoline
+@EnablePrePostPolicy
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
+```
+
+You can then apply abac policies on methods using `@PrePolicy` or `@PostPolicy`.
 
 ## Write your app with the help of Trampoline
 
