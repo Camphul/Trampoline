@@ -61,6 +61,21 @@ public class TrampolineApplication {
 }
 ```
 
+If you wish to use `@IgnoreSecurity` from [trampoline-security-web](../trampoline-security-web) to disable security on a mapping add the `@EnableIgnoreSecurity` annotation.
+
+```java
+@EnableTrampoline
+@EnableIgnoreSecurity
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
+```
+
 ## Write your app with the help of Trampoline
 
 For an example on how to use Trampoline in your application please check the [example-app](../example-app) and read the other docs.

@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 /**
  * Configuration properties for setting up ABAC.
@@ -31,7 +30,6 @@ public class AbacSecurityConfigurationProperties {
 	public static class PolicyContainerProperties {
 
 		// Define which container to use.
-		@NotNull
 		private String provider = "json";
 
 		// Configures the json file which contains policies.
@@ -51,7 +49,6 @@ public class AbacSecurityConfigurationProperties {
 	@Data
 	public static class JsonPolicyContainerProperties {
 
-		@NotNull
 		@Length(min = 1, max = 128)
 		// File containing the policies.
 		private String filePath = "permissions.json";

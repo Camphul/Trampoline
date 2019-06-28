@@ -13,4 +13,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(SecurityConfigurationProperties.class)
 public class TrampolineSecurityAutoConfiguration {
+
 }

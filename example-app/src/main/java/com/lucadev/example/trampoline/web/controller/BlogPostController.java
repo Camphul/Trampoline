@@ -14,6 +14,7 @@ import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
+import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import com.lucadev.trampoline.web.model.SuccessResponse;
 import com.lucadev.trampoline.web.model.UUIDDto;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,7 @@ public class BlogPostController {
 	 * @return page with blog summaries.
 	 */
 	@GetMapping
+	@IgnoreSecurity
 	public Page<BlogPostSummaryDto> findAll(Pageable pageable) {
 		return MappedPage.of(this.blogPostService.findAll(pageable),
 				this.blogPostMapper::toSummaryDto);

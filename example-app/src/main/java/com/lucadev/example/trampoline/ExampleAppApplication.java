@@ -4,6 +4,7 @@ import com.lucadev.trampoline.EnableTrampoline;
 import com.lucadev.trampoline.security.logging.EnableUserActivityLogging;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
+import com.lucadev.trampoline.security.web.annotation.EnableIgnoreSecurity;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 @EnableTrampoline
 @EnableUserActivityLogging
+@EnableIgnoreSecurity
 public class ExampleAppApplication {
 
 	public static void main(String[] args) {

@@ -12,13 +12,15 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - Added @IgnoreSecurity to disable security chain on annotated handler(WebSecurity#ignoring() through RequestMappingHandlerMapping).
 - Better code quality.
 - Added more unit tests.
-- abac configuration property key refactors
-- abac json default file is now permissions.json
-- option to specify which policycontainer to use
-- refactor trampoline-security-jwt to trampoline-jwt
-- remove dependency on trampoline-security for trampoline-jwt
-- remove depency on trampoline-security for trampoline-user-logging
-- refactor trampoline-security-logging to trampoline-user-logging
+- abac configuration property key refactors.
+- abac json default file is now permissions.json.
+- option to specify which policycontainer to use.
+- refactor trampoline-security-jwt to trampoline-jwt.
+- remove dependency on trampoline-security for trampoline-jwt.
+- remove depency on trampoline-security for trampoline-user-logging.
+- refactor trampoline-security-logging to trampoline-user-logging.
+- migrate most configurations to autoconfig modules.
+- you now require `@EnableIgnoreSecurity` to use the `@IgnoreSecurity` annotation.
 
 ## 20190507
 

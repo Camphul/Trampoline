@@ -3,12 +3,9 @@ package com.lucadev.trampoline.security.web.configuration;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -19,9 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @since 6/8/19
  */
 @Slf4j
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+// @Configuration
 @RequiredArgsConstructor
 public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
