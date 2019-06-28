@@ -192,15 +192,18 @@ public class UserActivityLoggingAspect {
 	private UserDetails getCurrentUser() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		if (securityContext == null) {
-			throw new NullPointerException("Could not get current principal because SecurityContext is null.");
+			throw new NullPointerException(
+					"Could not get current principal because SecurityContext is null.");
 		}
 		Authentication auth = securityContext.getAuthentication();
 		if (auth == null) {
-			throw new NullPointerException("Could not get current principal because Authentication is null.");
+			throw new NullPointerException(
+					"Could not get current principal because Authentication is null.");
 		}
 		Object principal = auth.getPrincipal();
 		if (!(principal instanceof UserDetails)) {
-			throw new NullPointerException("Could not get current principal because it is not of type UserDetails");
+			throw new NullPointerException(
+					"Could not get current principal because it is not of type UserDetails");
 		}
 		return (UserDetails) principal;
 	}

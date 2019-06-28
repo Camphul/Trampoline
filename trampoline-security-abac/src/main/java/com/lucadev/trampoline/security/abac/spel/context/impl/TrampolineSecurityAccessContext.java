@@ -66,7 +66,8 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot
 			return false;
 		}
 
-		return ((UserDetails) user).getUsername().equals(((UserDetails) getSubject()).getUsername());
+		return ((UserDetails) user).getUsername()
+				.equals(((UserDetails) getSubject()).getUsername());
 	}
 
 }

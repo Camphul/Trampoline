@@ -127,13 +127,15 @@ public class User extends TrampolineEntity implements UserDetails {
 	/**
 	 * Cast UserDetails to User.
 	 * @param userDetails the UserDetails to cast.
-	 * @return optional with the user. Empty optional if the userDetails is not an instance of User.
+	 * @return optional with the user. Empty optional if the userDetails is not an
+	 * instance of User.
 	 * @see UserDetails
 	 */
 	public static Optional<User> from(UserDetails userDetails) {
-		if(userDetails instanceof User) {
-			return Optional.of((User)userDetails);
+		if (userDetails instanceof User) {
+			return Optional.of((User) userDetails);
 		}
 		return Optional.empty();
 	}
+
 }

@@ -35,7 +35,7 @@ public class TrampolineUserService implements UserService {
 	 * @param securityConfigurationProperties authentication properties.
 	 */
 	public TrampolineUserService(UserRepository userRepository,
-							   SecurityConfigurationProperties securityConfigurationProperties) {
+			SecurityConfigurationProperties securityConfigurationProperties) {
 		this.userRepository = userRepository;
 		if (securityConfigurationProperties.isAllowEmailIdentification()) {
 			this.identificationField = IdentificationField.USERNAME_OR_EMAIL;
@@ -72,7 +72,7 @@ public class TrampolineUserService implements UserService {
 			return Optional.empty();
 		}
 
-		return User.from((UserDetails)principal);
+		return User.from((UserDetails) principal);
 	}
 
 	/**
