@@ -26,9 +26,9 @@ public class JwtPayload implements Serializable {
 	private String username;
 
 	/**
-	 * Subject roles.
+	 * Subject authorities.
 	 */
-	private List<String> roles;
+	private List<String> authorities;
 
 	/**
 	 * Token issue date.

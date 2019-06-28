@@ -37,7 +37,7 @@ public class JwtTokenService implements TokenService {
 
 	private static final String CLAIM_USERNAME = "t_username";
 
-	private static final String CLAIM_ROLES = "t_roles";
+	private static final String CLAIM_AUTHORITIES = "t_authorities";
 
 	private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "t_ignore_timout";
 
@@ -68,7 +68,7 @@ public class JwtTokenService implements TokenService {
 	public String issueToken(UserDetails user) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(CLAIM_USERNAME, user.getUsername());
-		claims.put(CLAIM_ROLES, user.getAuthorities().stream()
+		claims.put(CLAIM_AUTHORITIES, user.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT,
 				this.jwtConfiguration.shouldIgnoreExpiration(user));
@@ -121,7 +121,7 @@ public class JwtTokenService implements TokenService {
 		jwtPayload.setExpirationDate(claims.getExpiration());
 		jwtPayload.setIgnorableExpiration(
 				claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
-		jwtPayload.setRoles(claims.get(CLAIM_ROLES, ArrayList.class));
+		jwtPayload.setAuthorities(claims.get(CLAIM_AUTHORITIES, ArrayList.class));
 		return jwtPayload;
 	}
 
