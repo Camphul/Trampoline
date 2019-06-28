@@ -1,5 +1,6 @@
-package com.lucadev.trampoline.security.abac.configuration;
+package com.lucadev.trampoline.security.abac.autoconfigure;
 
+import com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,7 +18,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(AbacSecurityConfigurationProperties.class)
-public class AbacSecurityConfiguration {
+public class AbacSecurityAutoConfiguration {
 
 	private final AbacSecurityConfigurationProperties abacSecurityConfigurationProperties;
 

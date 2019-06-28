@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.abac.configuration;
+package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.AbacPermissionEvaluator;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableCaching
-public class GlobalAbacMethodSecurityConfiguration
+public class GlobalAbacMethodSecurityAutoConfiguration
 		extends GlobalMethodSecurityConfiguration {
 
 	private final AbacPermissionEvaluator abacPermissionEvaluator;
