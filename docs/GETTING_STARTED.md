@@ -101,6 +101,9 @@ public class TrampolineApplication {
 
 You can then apply abac policies on methods using `@PrePolicy` or `@PostPolicy`.
 
+You can always use Spring's `@PreAuthorize` and `@PostAuthorize` with a call to `hasPermission`.
+Using `@EnablePrePostPolicy` simply provides a shortcut which requires less code.
+
 ## Write your app with the help of Trampoline
 
 For an example on how to use Trampoline in your application please check the [example-app](../example-app) and read the other docs.

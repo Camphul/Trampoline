@@ -21,6 +21,7 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - refactor trampoline-security-logging to trampoline-user-logging.
 - migrate most configurations to autoconfig modules.
 - you now require `@EnableIgnoreSecurity` to use the `@IgnoreSecurity` annotation.
+- add `@EnablePrePostPolicy` annotation to use abac method security.
 
 ## 20190507
 
