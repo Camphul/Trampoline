@@ -28,6 +28,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-data-web-starter</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-jwt-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>

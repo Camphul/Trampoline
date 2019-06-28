@@ -1,8 +1,12 @@
-package com.lucadev.trampoline.data.web.configuration;
+package com.lucadev.trampoline.data.web.autoconfig;
 
 import com.lucadev.trampoline.data.web.FindByIdMethodArgumentResolver;
+import com.lucadev.trampoline.data.web.PrimaryKeyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -19,8 +23,11 @@ import java.util.List;
  */
 @Slf4j
 @Configuration
+@AutoConfigureAfter(TrampolineDataWebAutoConfiguration.class)
+@ConditionalOnClass(FindByIdMethodArgumentResolver.class)
+@ConditionalOnBean(PrimaryKeyMapper.class)
 @RequiredArgsConstructor
-public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Ordered {
+public class TrampolineDataWebMvcAutoConfiguration implements WebMvcConfigurer, Ordered {
 
 	/**
 	 * Configuration load order.
@@ -29,9 +36,12 @@ public class TrampolineDataWebMvcConfiguration implements WebMvcConfigurer, Orde
 
 	private final EntityManager entityManager;
 
+	private final PrimaryKeyMapper primaryKeyMapper;
+
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(new FindByIdMethodArgumentResolver(this.entityManager));
+		resolvers.add(new FindByIdMethodArgumentResolver(this.entityManager,
+				this.primaryKeyMapper));
 		log.debug("Added custom argument resolvers.");
 	}
 

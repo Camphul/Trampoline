@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>trampoline-parent</artifactId>
@@ -9,20 +9,20 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
-	<artifactId>trampoline-data-starter</artifactId>
+	<artifactId>trampoline-data-web-starter</artifactId>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<dependencies>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-data</artifactId>
+			<artifactId>trampoline-data-web</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-data-autoconfigure</artifactId>
+			<artifactId>trampoline-data-web-autoconfigure</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
@@ -40,5 +40,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>

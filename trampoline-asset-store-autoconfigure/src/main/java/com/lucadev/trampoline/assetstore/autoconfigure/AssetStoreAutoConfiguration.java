@@ -26,7 +26,8 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 @ConditionalOnClass(AssetStore.class)
-@EnableConfigurationProperties({AssetStoreConfigurationProperties.class, LocalAssetStoreConfigurationProperties.class})
+@EnableConfigurationProperties({ AssetStoreConfigurationProperties.class,
+		LocalAssetStoreConfigurationProperties.class })
 public class AssetStoreAutoConfiguration {
 
 	/**

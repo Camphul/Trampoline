@@ -4,11 +4,12 @@
 
 ## Modules
 
-Please reference the following modules for documentation:
+Please reference the following starter modules for documentation:
 
 - [trampoline-asset-store](../trampoline-asset-store)
 - [trampoline-core](../trampoline-core)
 - [trampoline-data](../trampoline-data)
+- [trampoline-data-web](../trampoline-data-web)
 - [trampoline-notify](../trampoline-notify)
 - [trampoline-security](../trampoline-security)
 - [trampoline-security-abac](../trampoline-security-abac)
@@ -22,6 +23,7 @@ Please reference the following modules for documentation:
 - [trampoline-asset-store](https://lucadev.com/trampoline/docs/trampoline-asset-store)
 - [trampoline-core](https://lucadev.com/trampoline/docs/trampoline-core)
 - [trampoline-data](https://lucadev.com/trampoline/docs/trampoline-data)
+- [trampoline-data-web](https://lucadev.com/trampoline/docs/trampoline-data-web)
 - [trampoline-jwt](https://lucadev.com/trampoline/docs/trampoline-jwt)
 - [trampoline-jwt-web](https://lucadev.com/trampoline/docs/trampoline-jwt-web)
 - [trampoline-notify](https://lucadev.com/trampoline/docs/trampoline-notify)

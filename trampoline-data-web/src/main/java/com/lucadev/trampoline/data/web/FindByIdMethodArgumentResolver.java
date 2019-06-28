@@ -1,7 +1,6 @@
 package com.lucadev.trampoline.data.web;
 
 import com.lucadev.trampoline.data.ResourceNotFoundException;
-import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.data.web.annotation.FindById;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.HandlerMapping;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Resolves entity id to entity inside pathvariable.
@@ -27,6 +25,8 @@ import java.util.UUID;
 public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
 	private final EntityManager entityManager;
+
+	private final PrimaryKeyMapper primaryKeyMapper;
 
 	/**
 	 * Check if parameter is valid.
@@ -45,11 +45,6 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 		Class paramType = parameter.getParameterType();
 		// Require @Entity annotation
 		if (!paramType.isAnnotationPresent(Entity.class)) {
-			return false;
-		}
-
-		// Require superclass to be TrampolineEntity due to UUID id.
-		if (!TrampolineEntity.class.isAssignableFrom(paramType)) {
 			return false;
 		}
 
@@ -77,7 +72,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 						RequestAttributes.SCOPE_REQUEST);
 
 		String idString = templateVariables.get(name);
-		UUID id = UUID.fromString(idString);
+		Object id = this.primaryKeyMapper.getPrimaryKey(idString);
 		Object entity = this.entityManager.find(paramType, id);
 
 		if (entity == null && findAnnotation.required()) {

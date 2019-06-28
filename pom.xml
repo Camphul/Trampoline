@@ -132,6 +132,8 @@
 		<module>trampoline-notify</module>
 		<module>trampoline-notify-autoconfigure</module>
 		<module>trampoline-notify-starter</module>
+		<module>trampoline-data-web-autoconfigure</module>
+		<module>trampoline-data-web-starter</module>
 	</modules>
 
 	<profiles>
