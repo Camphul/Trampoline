@@ -4,20 +4,19 @@ import com.lucadev.trampoline.security.authentication.builder.AuthorizationSchem
 import com.lucadev.trampoline.security.service.AuthorizationSchemeService;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 
 /**
+ * Default {@link AuthorizationSchemeService} which does a NOP operation.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 27-4-18
  */
-@AllArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class TrampolineAuthorizationSchemeService implements AuthorizationSchemeService {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TrampolineAuthorizationSchemeService.class);
 
 	private final Environment environment;
 
@@ -27,7 +26,7 @@ public class TrampolineAuthorizationSchemeService implements AuthorizationScheme
 
 	@Override
 	public AuthorizationSchemeBuilder builder() {
-		LOGGER.debug("Creating builder...");
+		log.debug("Creating builder...");
 		return AuthorizationSchemeBuilder.create(this.roleService, this.privilegeService,
 				this.environment);
 	}

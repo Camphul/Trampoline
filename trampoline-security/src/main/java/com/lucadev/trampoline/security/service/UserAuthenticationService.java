@@ -31,6 +31,6 @@ public interface UserAuthenticationService {
 	 * Will throw runtime exceptions if disabled, expired, cred expired, locked.
 	 * @param user the {@link User} to check against.
 	 */
-	void validateUserState(User user);
+	void isAllowed(User user);
 
 }

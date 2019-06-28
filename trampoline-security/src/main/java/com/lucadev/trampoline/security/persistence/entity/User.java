@@ -12,10 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * A {@link TrampolineEntity} and {@link UserDetails} to easily manage users.
@@ -125,6 +122,20 @@ public class User extends TrampolineEntity implements UserDetails {
 		int result = super.hashCode();
 		result = 31 * result + (this.username != null ? this.username.hashCode() : 0);
 		return result;
+	}
+
+	/**
+	 * Cast UserDetails to User.
+	 * @param userDetails the UserDetails to cast.
+	 * @return optional with the user. Empty optional if the userDetails is not an
+	 * instance of User.
+	 * @see UserDetails
+	 */
+	public static Optional<User> from(UserDetails userDetails) {
+		if (userDetails instanceof User) {
+			return Optional.of((User) userDetails);
+		}
+		return Optional.empty();
 	}
 
 }

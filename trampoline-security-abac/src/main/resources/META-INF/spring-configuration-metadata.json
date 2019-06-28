@@ -1,0 +1,22 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.security.abac.container.provider",
+      "type": "java.lang.String",
+      "description": "Define provider for ABAC policy rules.",
+      "sourceType": "com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties$PolicyContainerProperties"
+    },
+    {
+      "name": "trampoline.security.abac.container.json.file-path",
+      "type": "java.lang.String",
+      "description": "File containing policy rules relative to classpath.",
+      "sourceType": "com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties$JsonPolicyContainerProperties"
+    },
+    {
+      "name": "trampoline.security.abac.container.jpa.import-from-json",
+      "type": "java.lang.String",
+      "description": "If we should import rules from the json provider into the jpa provider.",
+      "sourceType": "com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties$JpaPolicyContainerProperties"
+    }
+  ]
+}

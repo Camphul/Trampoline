@@ -17,4 +17,9 @@ public class DoubleValueDto {
 
 	private double value;
 
+	@Override
+	public String toString() {
+		return String.valueOf(this.value);
+	}
+
 }

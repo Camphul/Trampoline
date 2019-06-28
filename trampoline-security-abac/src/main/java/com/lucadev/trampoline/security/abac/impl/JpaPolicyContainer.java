@@ -3,9 +3,8 @@ package com.lucadev.trampoline.security.abac.impl;
 import com.lucadev.trampoline.security.abac.PolicyContainer;
 import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import com.lucadev.trampoline.security.abac.persistence.repository.PolicyRuleRepository;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -17,16 +16,14 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-@AllArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class JpaPolicyContainer implements PolicyContainer {
 
 	/**
 	 * Name of the cache region used to store policies.
 	 */
 	public static final String POLICY_RULE_CACHE_REGION = "trampoline_policy_rule_cache";
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JpaPolicyContainer.class);
 
 	private final PolicyRuleRepository policyRuleRepository;
 
@@ -43,10 +40,10 @@ public class JpaPolicyContainer implements PolicyContainer {
 	}
 
 	private void importPolicyRules(PolicyContainer parent) {
-		LOGGER.info("Importing policy rules...");
+		log.info("Importing policy rules...");
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
-		parent.findAllPolicyRules().stream()
+		policyRules.stream()
 				// Only add when none exist with the same name
 				.filter(r -> !hasPolicyRule(r.getName())).forEach(this::addPolicyRule);
 	}
@@ -66,7 +63,7 @@ public class JpaPolicyContainer implements PolicyContainer {
 	@Override
 	@CacheEvict(POLICY_RULE_CACHE_REGION)
 	public PolicyRule addPolicyRule(PolicyRule policyRule) {
-		LOGGER.debug("Saving policy rule {}", policyRule.getName());
+		log.debug("Saving policy rule {}", policyRule.getName());
 		return this.policyRuleRepository.save(policyRule);
 	}
 

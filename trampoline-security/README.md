@@ -16,6 +16,19 @@ There's service's for each component:
 - `PrivilegeService`: manages privileges
 - `UserAuthenticationService`: separate service dedicated to manage user's passwords(through the use of Spring's `PasswordEncoder`) and validate the state of the `User`. Check if it's still enabled, etc..
 
+## Authentication mechanism
+
+trampoline-security's implementation of `UserDetailsService` allows you to configure two ways of loading users.
+You may load users by `username` only or load them by `username` or `email`. This can be configured with the following property:
+
+```properties
+trampoline.security.allow-email-identification=true
+``` 
+
+The default value for this property is `false`.
+
+
+
 ### Configuring authorization scheme
 
 Roles and privileges can be configured in Java by implementing the `AuthorizationSchemeConfiguration`.
@@ -24,7 +37,7 @@ Use the `@ConditionalOn*` and `@Profile` annotations to disable or enable scheme
 
 ### Logging user activity
 
-Please make sure you have the [trampoline-security-logging-starter](../trampoline-security-logging-starter) if you wish to add `User` activity logging.
+Please make sure you have the [trampoline-user-logging-starter](../trampoline-user-logging-starter) if you wish to add `User` activity logging.
 To enable logging add the `@EnableUserActivityLogging` annotation.
 
 To log an activity add the `@LogUserActivity` above a method and specify the identifier, category and activity layer.

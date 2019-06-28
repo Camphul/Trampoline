@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.security.allow-email-identification",
+      "type": "java.lang.Boolean",
+      "description": "Allow clients to authenticate with username or email.",
+      "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.debug",
+      "type": "java.lang.Boolean",
+      "description": "Configure debug output for security.",
+      "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties"
+    }
+  ]
+}

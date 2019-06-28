@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Handle method security methods.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
+ * @see SecurityAccessContext
  */
 @Getter
 @Setter
@@ -48,6 +50,24 @@ public class TrampolineSecurityAccessContext extends SecurityExpressionRoot
 	@Override
 	public boolean isAction(Object action) {
 		return this.action.equals(action);
+	}
+
+	@Override
+	public boolean isSubject(Object user) {
+		if (getSubject() == null || user == null) {
+			return false;
+		}
+
+		if (!(user instanceof UserDetails)) {
+			return false;
+		}
+
+		if (!(getSubject() instanceof UserDetails)) {
+			return false;
+		}
+
+		return ((UserDetails) user).getUsername()
+				.equals(((UserDetails) getSubject()).getUsername());
 	}
 
 }

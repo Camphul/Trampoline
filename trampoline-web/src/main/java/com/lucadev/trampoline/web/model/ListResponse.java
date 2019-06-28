@@ -34,4 +34,9 @@ public class ListResponse {
 		this.empty = list.isEmpty();
 	}
 
+	@Override
+	public String toString() {
+		return this.content.toString();
+	}
+
 }

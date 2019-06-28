@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "f5c62c6b-a131-4c8e-add8-1872e02c95cd",
+		"name": "ExampleApp",
+		"description": "Collection to test the trampoline example application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/auth/authorize user@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"user\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"user@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email user@example.com"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/authorize joe@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"joe\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"joe@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email joe@example.com"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/authorize admin@example.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5895f444-7491-4df6-b7b2-0c6ebe225dc4",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"auth_username\", \"admin\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"admin@example.com\",\n\t\"password\": \"{{auth_password}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/authorize",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"authorize"
+							]
+						},
+						"description": "Authorize user with email admin@example.com"
+					},
+					"response": []
+				}
+			],
+			"description": "Authorization related requests",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99c0b85c-3c0c-4337-ae23-c684988b9a92",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "59bc6703-f7e7-40e4-91c7-f4302f42540c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"token value not null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).not.equal(null);",
+							"    ",
+							"    //Set auth_token to jwt",
+							"    pm.globals.set(\"auth_token\", jsonData.token);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/whoami",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f36ae2be-565d-4318-a309-89a45f5eaaf9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"username match auth_username\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.equal(pm.globals.get(\"auth_username\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/whoami",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"whoami"
+					]
+				},
+				"description": "Get /whoami"
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs"
+					]
+				},
+				"description": "Find all blogs"
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs entry 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be0ef33b-eb5d-480b-a5e7-2f69c136b502",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"pm.globals.set(\"blog_id\", jsonData.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"My blog post entry\",\n\t \"content\": \"these are the contents of my blog post!\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs"
+					]
+				},
+				"description": "Find all blogs"
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}"
+					]
+				},
+				"description": "Find specific blog."
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}/comments add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be0ef33b-eb5d-480b-a5e7-2f69c136b502",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"pm.globals.set(\"blog_comment_id\", jsonData.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"content\": \"This is a blogpost comment!\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}",
+						"comments"
+					]
+				},
+				"description": "Submit comment to blog."
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}/coments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc82868e-62fd-4169-be3e-c8b8574c653a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}",
+						"comments"
+					]
+				},
+				"description": "Find blog comments."
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}/coments/{commentId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc82868e-62fd-4169-be3e-c8b8574c653a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}/comments/{{blog_comment_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}",
+						"comments",
+						"{{blog_comment_id}}"
+					]
+				},
+				"description": "Find specific blog comment."
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}/coments/{commentId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc82868e-62fd-4169-be3e-c8b8574c653a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}/comments/{{blog_comment_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}",
+						"comments",
+						"{{blog_comment_id}}"
+					]
+				},
+				"description": "Delete specific comment."
+			},
+			"response": []
+		},
+		{
+			"name": "/blogs/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/blogs/{{blog_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"blogs",
+						"{{blog_id}}"
+					]
+				},
+				"description": "Delete specific blog."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d813a597-764d-45b6-b9f2-a5091f511960",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "df3f7b30-1658-407e-9f67-3fbb1876222e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "9638912f-3f14-49d3-99b1-9821efb26e25",
+			"key": "auth_password",
+			"value": "test",
+			"type": "string"
+		}
+	]
+}

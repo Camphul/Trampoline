@@ -1,0 +1,40 @@
+{
+  "policies": [
+    {
+      "name": "User#WhoAmI",
+      "description": "Is the user allowed to access the GET /whoami endpoint?",
+      "target": "isAction('GET_WHO_AM_I')",
+      "condition": "hasAuthority('GET_WHO_AM_I')"
+    },
+    {
+      "name": "Web#Ping",
+      "description": "Is the user allowed to access the GET /ping endpoint?",
+      "target": "isAction('GET_PING_PROTECTED')",
+      "condition": "hasAuthority('GET_PING_PROTECTED')"
+    },
+    {
+      "name": "BlogPost#submit",
+      "description": "Is the user allowed to access the POST /blogs endpoint?",
+      "target": "isAction('BLOGPOST_SUBMIT')",
+      "condition": "hasRole('ROLE_USER')"
+    },
+    {
+      "name": "BlogPost#delete",
+      "description": "Is the user allowed to access the DELETE /blogs/{id} endpoint?",
+      "target": "isAction('BLOGPOST_DELETE')",
+      "condition": "hasRole('ROLE_ADMIN') or isSubject(resource.author)"
+    },
+    {
+      "name": "BlogPostComment#submit",
+      "description": "Is the user allowed to access the POST /blogs/{id}/comments endpoint?",
+      "target": "isAction('BLOGPOST_COMMENT_SUBMIT')",
+      "condition": "hasRole('ROLE_USER')"
+    },
+    {
+      "name": "BlogPostComment#delete",
+      "description": "Is the user allowed to access the DELETE /blogs/{id}/comments endpoint?",
+      "target": "isAction('BLOGPOST_COMMENT_DELETE')",
+      "condition": "hasRole('ROLE_ADMIN') or isSubject(resource.author)"
+    }
+  ]
+}

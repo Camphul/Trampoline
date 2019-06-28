@@ -75,8 +75,8 @@ public class Role extends TrampolineEntity {
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (privileges != null ? privileges.hashCode() : 0);
+		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
+		result = 31 * result + (this.privileges != null ? this.privileges.hashCode() : 0);
 		return result;
 	}
 

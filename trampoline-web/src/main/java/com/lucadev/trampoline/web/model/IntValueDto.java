@@ -17,4 +17,9 @@ public class IntValueDto {
 
 	private int value;
 
+	@Override
+	public String toString() {
+		return String.valueOf(this.value);
+	}
+
 }

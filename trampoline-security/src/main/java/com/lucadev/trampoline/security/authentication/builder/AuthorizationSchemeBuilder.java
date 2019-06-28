@@ -5,8 +5,7 @@ import com.lucadev.trampoline.security.persistence.entity.Privilege;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.service.PrivilegeService;
 import com.lucadev.trampoline.security.service.RoleService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -20,10 +19,8 @@ import java.util.function.Function;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 7-12-18
  */
+@Slf4j
 public final class AuthorizationSchemeBuilder {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AuthorizationSchemeBuilder.class);
 
 	private final RoleService roleService;
 
@@ -52,7 +49,7 @@ public final class AuthorizationSchemeBuilder {
 		this.roleService = roleService;
 		this.privilegeService = privilegeService;
 		this.environment = environment;
-		LOGGER.debug("Constructed AuthorizationSchemeBuilder");
+		log.debug("Constructed AuthorizationSchemeBuilder");
 	}
 
 	/**
@@ -81,14 +78,14 @@ public final class AuthorizationSchemeBuilder {
 
 		AuthorizationSchemeBuilder resultBuilder = this;
 		try {
-			LOGGER.debug("Wrapping inside authentication");
+			log.debug("Wrapping inside authentication");
 			SecurityContext ctx = SecurityContextHolder.createEmptyContext();
 			SecurityContextHolder.setContext(ctx);
 			ctx.setAuthentication(authentication);
 			resultBuilder = wrapped.apply(this);
 		}
 		finally {
-			LOGGER.debug("Clearing security context");
+			log.debug("Clearing security context");
 			SecurityContextHolder.clearContext();
 		}
 		return resultBuilder;
@@ -138,7 +135,7 @@ public final class AuthorizationSchemeBuilder {
 			}
 			// If not, it wont pass
 			if (!passes) {
-				LOGGER.debug(
+				log.debug(
 						"Profile check for auth scheme builder did not pass profile: {}",
 						profile);
 				hasProfiles = false;
@@ -148,7 +145,7 @@ public final class AuthorizationSchemeBuilder {
 		AuthorizationSchemeBuilder resultBuilder = this;
 
 		if (hasProfiles) {
-			LOGGER.debug("All profiles requested pass. Applying builder function.");
+			log.debug("All profiles requested pass. Applying builder function.");
 			resultBuilder = wrapped.apply(this);
 		}
 		return resultBuilder;

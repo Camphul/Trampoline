@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>trampoline-parent</artifactId>
 		<groupId>com.lucadev.trampoline</groupId>
-		<version>20190507</version>
+		<version>20190509</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
@@ -28,13 +28,25 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-starter</artifactId>
+			<artifactId>trampoline-data-web-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-jwt-starter</artifactId>
+			<artifactId>trampoline-jwt-starter</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-notify-starter</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.lucadev.trampoline</groupId>
+			<artifactId>trampoline-security-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
@@ -52,7 +64,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-security-logging-starter</artifactId>
+			<artifactId>trampoline-user-logging-starter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>

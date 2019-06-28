@@ -6,11 +6,13 @@ import com.lucadev.trampoline.assetstore.AssetMetaData;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,24 +22,37 @@ import java.util.UUID;
  * @see com.lucadev.trampoline.assetstore.AssetStore
  * @since 9-6-18
  */
+@Slf4j
 @AllArgsConstructor
 public class LocalAssetStore extends AbstractAssetStore {
 
-	private final String storageDirectory;
+	private final LocalAssetStoreConfigurationProperties properties;
 
 	private final AssetMetaDataRepository repository;
+
+	@Override
+	public List<AssetMetaData> findAllByName(String name) {
+		return this.repository.findByName(name);
+	}
+
+	@Override
+	public List<AssetMetaData> findAllByOriginalName(String name) {
+		return this.repository.findByOrOriginalFilename(name);
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public AssetMetaData put(byte[] data, AssetMetaData assetMetaData) {
+		log.debug("Putting asset data with size of {}", data.length);
 		assetMetaData = this.repository.save(assetMetaData);
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		try {
 			resource.getOutputStream().write(data);
 		}
 		catch (IOException e) {
+			log.error("Failed to put asset data.", e);
 			e.printStackTrace();
 		}
 		return assetMetaData;
@@ -73,8 +88,10 @@ public class LocalAssetStore extends AbstractAssetStore {
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		if (resource.getFile().delete()) {
 			this.repository.delete(assetMetaData);
+			log.debug("Removed asset.");
 		}
 		else {
+			log.error("Failed to delete asset.");
 			throw new RuntimeException("Could not delete asset(no permission to fs?)");
 		}
 	}
@@ -100,7 +117,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 			throw new IllegalArgumentException(
 					"Cannot find asset which has not been saved yet.");
 		}
-		return new FileSystemResource(this.storageDirectory + id.toString());
+		return new FileSystemResource(this.properties.getDirectory() + id.toString());
 	}
 
 }

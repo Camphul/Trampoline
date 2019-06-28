@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.lucadev.trampoline.security.abac.PolicyContainer;
+import com.lucadev.trampoline.security.abac.configuration.AbacSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.abac.persistence.entity.PolicyRule;
 import com.lucadev.trampoline.security.abac.spel.SpelDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.expression.Expression;
 
@@ -25,17 +25,17 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 20-5-18
  */
+@Slf4j
 public class JsonFilePolicyContainer implements PolicyContainer {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(JsonFilePolicyContainer.class);
-
-	private final String policyFilePath;
+	private final AbacSecurityConfigurationProperties abacSecurityConfigurationProperties;
 
 	private List<PolicyRule> rules;
 
-	public JsonFilePolicyContainer(String jsonFilePath) throws IOException {
-		this.policyFilePath = jsonFilePath;
+	public JsonFilePolicyContainer(
+			AbacSecurityConfigurationProperties abacSecurityConfigurationProperties)
+			throws IOException {
+		this.abacSecurityConfigurationProperties = abacSecurityConfigurationProperties;
 		loadPolicyRules();
 	}
 
@@ -44,22 +44,24 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		SimpleModule module = new SimpleModule();
 		module.addDeserializer(Expression.class, new SpelDeserializer());
 		mapper.registerModule(module);
-		File file = new ClassPathResource(this.policyFilePath).getFile();
+		String jsonFilePath = this.abacSecurityConfigurationProperties.getContainer()
+				.getJson().getFilePath();
+
+		File file = new ClassPathResource(jsonFilePath).getFile();
 		if (!file.exists()) {
 			throw new FileNotFoundException("Cannot load non existent resource");
 		}
 
 		try {
-			LOGGER.debug("[loadPolicyRules] Checking policy file at: {}",
-					this.policyFilePath);
+			log.debug("Checking policy file at: {}", jsonFilePath);
 			this.rules = mapper.readValue(file, JsonPolicyFileModel.class).getPolicies();
-			LOGGER.info("[loadPolicyRules] Policy loaded successfully.");
+			log.info("Policies loaded successfully.");
 		}
 		catch (JsonMappingException e) {
-			LOGGER.error("An error occurred while parsing the policy file.", e);
+			log.error("An error occurred while parsing the policy file.", e);
 		}
 		catch (IOException e) {
-			LOGGER.error("An error occurred while reading the policy file.", e);
+			log.error("An error occurred while reading the policy file.", e);
 		}
 	}
 

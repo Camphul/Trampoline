@@ -5,36 +5,7 @@
 
 	<groupId>com.lucadev.trampoline</groupId>
 	<artifactId>trampoline-parent</artifactId>
-	<version>20190507</version>
-	<modules>
-		<module>trampoline-core</module>
-		<module>trampoline-core-autoconfigure</module>
-		<module>trampoline-core-starter</module>
-		<module>trampoline-data</module>
-		<module>trampoline-data-autoconfigure</module>
-		<module>trampoline-data-starter</module>
-		<module>trampoline-data-web</module>
-		<module>trampoline-security</module>
-		<module>trampoline-security-autoconfigure</module>
-		<module>trampoline-security-starter</module>
-		<module>trampoline-security-jwt</module>
-		<module>trampoline-security-jwt-web</module>
-		<module>trampoline-security-jwt-autoconfigure</module>
-		<module>trampoline-security-jwt-starter</module>
-		<module>trampoline-starter</module>
-		<module>trampoline-security-abac</module>
-		<module>trampoline-security-abac-autoconfigure</module>
-		<module>trampoline-security-abac-starter</module>
-		<module>trampoline-asset-store</module>
-		<module>trampoline-asset-store-autoconfigure</module>
-		<module>trampoline-asset-store-starter</module>
-		<module>trampoline-security-logging</module>
-		<module>trampoline-security-logging-autoconfigure</module>
-		<module>trampoline-security-logging-starter</module>
-		<module>trampoline-web</module>
-		<module>trampoline-web-autoconfigure</module>
-		<module>trampoline-web-starter</module>
-	</modules>
+	<version>20190509</version>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
@@ -42,30 +13,36 @@
 	</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${trampoline.spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<properties>
+		<trampoline.spring.version>2.1.6.RELEASE</trampoline.spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
 		<javax.servlet.version>3.0.1</javax.servlet.version>
-		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
-		<maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
-		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
+		<maven.source.plugin.version>3.1.0</maven.source.plugin.version>
+		<maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
+		<maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
 		<nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
-		<lombok.plugin.version>1.18.0.0</lombok.plugin.version>
+		<lombok.plugin.version>1.18.6.0</lombok.plugin.version>
 		<delombok.output>${project.build.directory}/delombok</delombok.output>
 		<javadoc.source.version>8</javadoc.source.version>
 		<nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
 		<mapstruct.version>1.3.0.Final</mapstruct.version>
 		<spring.javaformat.plugin.version>0.0.9</spring.javaformat.plugin.version>
+		<lombok.version>1.18.8</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -83,12 +60,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<!-- MapStruct is used to easily convert JPA entities to DTO's which are sent back to the client. -->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId>
-			<version>${mapstruct.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
 		<dependency>
@@ -128,6 +99,83 @@
 			<url>https://lucadev.com/trampoline/docs/${project.version}</url>
 		</site>
 	</distributionManagement>
+
+	<modules>
+		<module>trampoline-core</module>
+		<module>trampoline-core-autoconfigure</module>
+		<module>trampoline-core-starter</module>
+		<module>trampoline-data</module>
+		<module>trampoline-data-autoconfigure</module>
+		<module>trampoline-data-starter</module>
+		<module>trampoline-data-web</module>
+		<module>trampoline-security</module>
+		<module>trampoline-security-autoconfigure</module>
+		<module>trampoline-security-starter</module>
+		<module>trampoline-jwt</module>
+		<module>trampoline-jwt-web</module>
+		<module>trampoline-jwt-autoconfigure</module>
+		<module>trampoline-jwt-starter</module>
+		<module>trampoline-starter</module>
+		<module>trampoline-security-abac</module>
+		<module>trampoline-security-abac-autoconfigure</module>
+		<module>trampoline-security-abac-starter</module>
+		<module>trampoline-asset-store</module>
+		<module>trampoline-asset-store-autoconfigure</module>
+		<module>trampoline-asset-store-starter</module>
+		<module>trampoline-user-logging</module>
+		<module>trampoline-user-logging-autoconfigure</module>
+		<module>trampoline-user-logging-starter</module>
+		<module>trampoline-web</module>
+		<module>trampoline-web-autoconfigure</module>
+		<module>trampoline-web-starter</module>
+		<module>trampoline-security-web</module>
+		<module>trampoline-notify</module>
+		<module>trampoline-notify-autoconfigure</module>
+		<module>trampoline-notify-starter</module>
+		<module>trampoline-data-web-autoconfigure</module>
+		<module>trampoline-data-web-starter</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>jenkins-pipeline</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${nexus.staging.plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven.gpg.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -149,6 +197,13 @@
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>
 				<version>${lombok.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>${lombok.version}</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
 					<outputDirectory>${delombok.output}</outputDirectory>
@@ -183,10 +238,16 @@
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
 						</path>
+						<annotationProcessorPath>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+							<version>${trampoline.spring.version}</version>
+						</annotationProcessorPath>
 					</annotationProcessorPaths>
 					<compilerArgs>
 						<arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
 						<arg>-Amapstruct.defaultComponentModel=spring</arg>
+						<arg>-parameters</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
@@ -226,37 +287,6 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>${nexus.staging.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>${maven.gpg.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-						<configuration>
-							<gpgArguments>
-								<arg>--pinentry-mode</arg>
-								<arg>loopback</arg>
-							</gpgArguments>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

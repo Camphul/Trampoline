@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>trampoline-parent</artifactId>
 		<groupId>com.lucadev.trampoline</groupId>
-		<version>20190507</version>
+		<version>20190509</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -18,6 +18,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 

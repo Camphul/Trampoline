@@ -15,6 +15,8 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 /**
+ * Tests functionality of sending a binary file back to the client.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 3-11-18
  */

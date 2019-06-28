@@ -19,4 +19,9 @@ public class DataResponse {
 
 	private final Object data;
 
+	@Override
+	public String toString() {
+		return this.data == null ? "" : this.data.toString();
+	}
+
 }

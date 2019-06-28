@@ -7,17 +7,17 @@ Prerequisites:
 
 ## Import into your project
 
-Please check the [trampoline-example-app/pom.xml](../trampoline-example-app/pom.xml).
+Please check the [example-app/pom.xml](../example-app/pom.xml).
 
 As you can see you require the trampoline starter dependency. This dependency adds all of the trampoline starters.
 
-Trampoline is built upon `Spring Boot 2.1.4-RELEASE`
+Trampoline is built upon `Spring Boot 2.1.6-RELEASE`
 
 ```xml
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190507</version>
+       <version>20190509</version>
 </dependency>
 ```
 
@@ -46,15 +46,64 @@ public class TrampolineApplication {
 }
 ```
 
-If you wish to use [trampoline-security-logging](../trampoline-security-logging) you must also add the `@EnableUserActivityLogging` annotation on your class.
+## Enable user logging
 
-## Configuration requirements
+If you wish to use [trampoline-user-logging](../trampoline-user-logging) you must also add the `@EnableUserActivityLogging` annotation on your class like:
 
-As of spring boot 2.1.0-RELEASE bean overriding is disabled by default. Trampoline depends on this feature so please configure the following in your application properties:
+```java
+@EnableTrampoline
+@EnableUserActivityLogging
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
 ```
-spring.main.allow-bean-definition-overriding=true
+
+## Enable security chain ignore annotation
+
+If you wish to use `@IgnoreSecurity` from [trampoline-security-web](../trampoline-security-web) to disable security on a mapping add the `@EnableIgnoreSecurity` annotation.
+
+```java
+@EnableTrampoline
+@EnableIgnoreSecurity
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
 ```
+
+When `@IgnoreSecurity` is added on a request mapping it will disable the entire security chain for that route.
+
+## Enable abac annotations
+
+If you wish to use `@PrePolicy` or `@PostPolicy` from [trampoline-security-abac](../trampoline-security-abac) to secure methods using abac please use the `@EnablePrePostPolicy` annotation.
+
+```java
+@EnableTrampoline
+@EnablePrePostPolicy
+@SpringBootApplication
+public class TrampolineApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrampolineApplication.class, args);
+    }
+
+}
+```
+
+You can then apply abac policies on methods using `@PrePolicy` or `@PostPolicy`.
+
+You can always use Spring's `@PreAuthorize` and `@PostAuthorize` with a call to `hasPermission`.
+Using `@EnablePrePostPolicy` simply provides a shortcut which requires less code.
 
 ## Write your app with the help of Trampoline
 
-For an example on how to use Trampoline in your application please check the [trampoline-example-app](../trampoline-example-app) and read the other docs.
+For an example on how to use Trampoline in your application please check the [example-app](../example-app) and read the other docs.

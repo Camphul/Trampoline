@@ -4,16 +4,18 @@
 
 ## Modules
 
-Please reference the following modules for documentation:
+Please reference the following starter modules for documentation:
 
 - [trampoline-asset-store](../trampoline-asset-store)
 - [trampoline-core](../trampoline-core)
 - [trampoline-data](../trampoline-data)
+- [trampoline-data-web](../trampoline-data-web)
+- [trampoline-notify](../trampoline-notify)
 - [trampoline-security](../trampoline-security)
 - [trampoline-security-abac](../trampoline-security-abac)
-- [trampoline-security-jwt](../trampoline-security-jwt)
-- [trampoline-security-jwt-web](../trampoline-security-jwt-web)
-- [trampoline-security-logging](../trampoline-security-logging)
+- [trampoline-jwt](../trampoline-jwt)
+- [trampoline-jwt-web](../trampoline-jwt-web)
+- [trampoline-user-logging](../trampoline-user-logging)
 - [trampoline-web](../trampoline-web)
 
 ## Javadoc
@@ -21,36 +23,42 @@ Please reference the following modules for documentation:
 - [trampoline-asset-store](https://lucadev.com/trampoline/docs/trampoline-asset-store)
 - [trampoline-core](https://lucadev.com/trampoline/docs/trampoline-core)
 - [trampoline-data](https://lucadev.com/trampoline/docs/trampoline-data)
+- [trampoline-data-web](https://lucadev.com/trampoline/docs/trampoline-data-web)
+- [trampoline-jwt](https://lucadev.com/trampoline/docs/trampoline-jwt)
+- [trampoline-jwt-web](https://lucadev.com/trampoline/docs/trampoline-jwt-web)
+- [trampoline-notify](https://lucadev.com/trampoline/docs/trampoline-notify)
 - [trampoline-security](https://lucadev.com/trampoline/docs/trampoline-security)
 - [trampoline-security-abac](https://lucadev.com/trampoline/docs/trampoline-security-abac)
-- [trampoline-security-jwt](https://lucadev.com/trampoline/docs/trampoline-security-jwt)
-- [trampoline-security-jwt-web](https://lucadev.com/trampoline/docs/trampoline-security-jwt-web)
-- [trampoline-security-logging](https://lucadev.com/trampoline/docs/trampoline-security-logging)
+- [trampoline-user-logging](https://lucadev.com/trampoline/docs/trampoline-user-logging)
 - [trampoline-web](https://lucadev.com/trampoline/docs/trampoline-web)
 
-## Configuration Values
+## Configuration Properties
 
-Please make sure you have the following property:
-
-```
-spring.main.allow-bean-definition-overriding=true
-```
-
-Other properties being used are:
+Properties being used are:
 
 - `trampoline.assetstore.provider`: which AssetStore to use, defaults to local
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
-- `trampoline.security.abac.policy.definition.json.filepath`: define which json file to load policy from for trampoline-security-abac
+- `trampoline.security.abac.container.json.file-path`: define which json file to load policy from for trampoline-security-abac
+- `trampoline.security.abac.container.jpa.import-from-json`: import rules from json container on startup
+- `trampoline.security.abac.container.provider`: define which PolicyContainer to use. Choose between `json`, `jpa`.
 - `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
-- `trampoline.security.jwt.authPath`: auth basepath for authorizing and refreshing tokens, default is /auth
+- `trampoline.security.jwt.web.baseMapping`: auth basepath for authorizing and refreshing tokens, default is /auth
+- `trampoline.security.allow-email-identification`: allow clients to either authenticate with their username or with their email(only used in trampoline-security)
+- `trampoline.notify.email.enabled`: required to be `true` to even make use of this service.
+- `trampoline.notify.email.defaults.from`: address from which the emails are sent.
+- `trampoline.notify.email.defaults.template`: default (fallback) template to render.
+- `trampoline.notify.email.defaults.subject`: default (fallback) subject for emails. 
 
 We also provide two example properties files:
 
 - [application-dev-example.properties](application-dev-example.properties)
 - [application-prod-example.properties](application-prod-example.properties)
 
+All properties have [metadata files](https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html) such that you can autocomplete them in your IDE.
+
+
 ## Examples
 
-An example project is available at [trampoline-example-app](../trampoline-example-app)
+An example project is available at [example-app](../example-app)
