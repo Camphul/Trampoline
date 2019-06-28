@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @since 6/8/19
  */
 @Slf4j
-// @Configuration
 @RequiredArgsConstructor
 public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
