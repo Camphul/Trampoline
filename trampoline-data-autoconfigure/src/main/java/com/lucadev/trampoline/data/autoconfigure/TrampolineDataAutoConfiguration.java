@@ -1,29 +1,21 @@
 package com.lucadev.trampoline.data.autoconfigure;
 
-import com.lucadev.trampoline.data.configuration.TrampolinePersistenceConfiguration;
+import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * Autoconfiguration which creates a bean for {@link TrampolinePersistenceConfiguration}.
+ * Autoconfiguration for trampoline-data.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
 @Configuration
-@ConditionalOnClass(TrampolinePersistenceConfiguration.class)
+@EnableJpaAuditing
+@EnableCaching
+@ConditionalOnClass(TrampolineEntity.class)
 public class TrampolineDataAutoConfiguration {
-
-	/**
-	 * Bean definition for persistence configuration.
-	 * @return default persistence configuration.
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	public TrampolinePersistenceConfiguration trampolineDataConfiguration() {
-		return new TrampolinePersistenceConfiguration();
-	}
 
 }
