@@ -4,15 +4,16 @@ import com.lucadev.trampoline.notify.email.EmailService;
 import com.lucadev.trampoline.notify.email.EmailTemplateParser;
 import com.lucadev.trampoline.notify.email.NopEmailService;
 import com.lucadev.trampoline.notify.email.TrampolineEmailService;
-import com.lucadev.trampoline.notify.email.configuration.EmailConfiguration;
 import com.lucadev.trampoline.notify.email.configuration.EmailConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * Autoconfigure email service.
@@ -23,7 +24,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnClass({ EmailService.class, EmailConfiguration.class })
+@EnableAsync
+@EnableConfigurationProperties({EnableConfigurationProperties.class})
+@ConditionalOnClass(EmailService.class)
 public class EmailServiceAutoConfiguration {
 
 	private final JavaMailSender javaMailSender;
