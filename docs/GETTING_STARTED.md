@@ -61,14 +61,6 @@ public class TrampolineApplication {
 }
 ```
 
-
-## Configuration requirements
-
-As of spring boot 2.1.0-RELEASE bean overriding is disabled by default. Trampoline depends on this feature so please configure the following in your application properties:
-```
-spring.main.allow-bean-definition-overriding=true
-```
-
 ## Write your app with the help of Trampoline
 
 For an example on how to use Trampoline in your application please check the [example-app](../example-app) and read the other docs.

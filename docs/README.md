@@ -30,15 +30,9 @@ Please reference the following modules for documentation:
 - [trampoline-user-logging](https://lucadev.com/trampoline/docs/trampoline-user-logging)
 - [trampoline-web](https://lucadev.com/trampoline/docs/trampoline-web)
 
-## Configuration Values
+## Configuration Properties
 
-Please make sure you have the following property:
-
-```
-spring.main.allow-bean-definition-overriding=true
-```
-
-Other properties being used are:
+Properties being used are:
 
 - `trampoline.assetstore.provider`: which AssetStore to use, defaults to local
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
@@ -59,6 +53,9 @@ We also provide two example properties files:
 
 - [application-dev-example.properties](application-dev-example.properties)
 - [application-prod-example.properties](application-prod-example.properties)
+
+All properties have [metadata files](https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html) such that you can autocomplete them in your IDE.
+
 
 ## Examples
 
