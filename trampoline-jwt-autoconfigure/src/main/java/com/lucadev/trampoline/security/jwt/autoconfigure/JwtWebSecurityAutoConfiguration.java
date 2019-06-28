@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.configuration;
+package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
@@ -6,6 +6,7 @@ import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -30,8 +31,9 @@ import javax.servlet.Filter;
  */
 @Slf4j
 @Configuration
+@AutoConfigureAfter(TokenServiceAutoConfiguration.class)
 @RequiredArgsConstructor
-public class JwtWebSecurityConfiguration extends WebSecurityConfigurerAdapter
+public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
 
 	/**
