@@ -1,5 +1,8 @@
 # Trampoline
 
+[![master](http://lucadev.com/service/jenkins/buildStatus/icon?job=trampoline&build=10)](http://lucadev.com/service/jenkins/job/trampoline/10/)
+[![next-release](http://lucadev.com/service/jenkins/buildStatus/icon?job=trampoline)](http://lucadev.com/service/jenkins/job/trampoline/)
+
 Collection of reusable Spring Boot starter modules providing multiple new features/and or implementations(Spring Security, etc..).
 
 ## Getting Started
