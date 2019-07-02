@@ -4,11 +4,14 @@ import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -29,6 +32,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	private final UserDetailsService userService;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final UserDetailsChecker userDetailsChecker;
 
 	/**
 	 * Perform authentication.
@@ -58,34 +63,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
 		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
 		validateToken(user, jwtPayload);
-		checkAllowance(user);
+		userDetailsChecker.check(user);
 		return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
-	}
-
-	/**
-	 * Check if the user is allowed to authorize.
-	 * @param user user to check.
-	 */
-	private void checkAllowance(UserDetails user) {
-		if (!user.isAccountNonLocked()) {
-			throw new LockedException(
-					"Could not authorize user because the account is locked.");
-		}
-
-		if (!user.isEnabled()) {
-			throw new DisabledException(
-					"Could not authorize user because the account is disabled.");
-		}
-
-		if (!user.isCredentialsNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the credentials are expired.");
-		}
-
-		if (!user.isAccountNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the account is expired.");
-		}
 	}
 
 	/**
@@ -95,6 +74,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 */
 	private Authentication createNewJwtAuthentication(Authentication authentication) {
 		UserDetails user = getUserDetails(authentication);
+		userDetailsChecker.check(user);
 		String token = this.tokenService.issueToken(user);
 		JwtPayload payload = this.tokenService.parseToken(token);
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();

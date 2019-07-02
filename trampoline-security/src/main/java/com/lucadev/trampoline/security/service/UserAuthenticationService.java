@@ -26,11 +26,4 @@ public interface UserAuthenticationService {
 	 */
 	User changePassword(User user, String newPassword);
 
-	/**
-	 * Required checks to see if the user is not disable, locked, etc...<br>
-	 * Will throw runtime exceptions if disabled, expired, cred expired, locked.
-	 * @param user the {@link User} to check against.
-	 */
-	void isAllowed(User user);
-
 }

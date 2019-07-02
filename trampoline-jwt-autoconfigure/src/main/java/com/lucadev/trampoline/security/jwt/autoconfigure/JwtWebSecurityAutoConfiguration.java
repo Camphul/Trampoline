@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -31,7 +32,7 @@ import javax.servlet.Filter;
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter(TokenServiceAutoConfiguration.class)
+@AutoConfigureAfter({TokenServiceAutoConfiguration.class, JwtAutoConfiguration.class})
 @RequiredArgsConstructor
 public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
@@ -57,6 +58,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 
 	private final PasswordEncoder passwordEncoder;
 
+	private final UserDetailsChecker userDetailsChecker;
+
 	/**
 	 * Autowires the {@link AuthenticationManager} builder. Used to build the global
 	 * {@link AuthenticationManager}
@@ -73,7 +76,7 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	 */
 	protected AuthenticationProvider authenticationProvider() {
 		return new JwtAuthenticationProvider(this.tokenService, this.userService,
-				this.passwordEncoder);
+				this.passwordEncoder, this.userDetailsChecker);
 	}
 
 	/**
