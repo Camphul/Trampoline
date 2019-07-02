@@ -15,21 +15,21 @@ import org.springframework.security.core.Authentication;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class LastSeenUpdateListener implements AuthenticationSuccessListener {
+public class LastSeenUpdateHandler implements AuthenticationSuccessListener {
 
 	private final UserService userService;
 
 	private final TimeProvider timeProvider;
 
 	/**
-	 * Updates list seen data.
+	 * Triggered when authenticated so we obtain the user here and update the last seen.
 	 * @param authentication the authentication object.
 	 */
 	@Override
 	public void onAuthenticationSuccess(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
 		if (!(principal instanceof User)) {
-			log.debug("Skipping lastSeen listener because principal is not a user.");
+			log.debug("Skipping update because principal is not a user.");
 			return;
 		}
 
