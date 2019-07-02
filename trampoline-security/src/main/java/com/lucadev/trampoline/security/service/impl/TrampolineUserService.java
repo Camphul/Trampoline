@@ -63,12 +63,12 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public Optional<User> currentUser() {
-		Authentication auth = authenticationContext();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null) {
 			return Optional.empty();
 		}
-		Object principal = auth.getPrincipal();
-		if (!(principal instanceof UserDetails)) {
+		UserDetails principal = loadUserDetails(auth);
+		if(principal == null) {
 			return Optional.empty();
 		}
 
@@ -87,8 +87,16 @@ public class TrampolineUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User findById(UUID subject) {
-		return this.userRepository.findById(subject).orElse(null);
+	public Optional<User> findById(UUID subject) {
+		return this.userRepository.findById(subject);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return this.userRepository.findOneByEmail(email);
 	}
 
 	/**
@@ -224,12 +232,15 @@ public class TrampolineUserService implements UserService {
 	}
 
 	/**
-	 * Get the current context's {@link Authentication}.
-	 * @return the current thread's
-	 * {@link org.springframework.security.core.context.SecurityContext} authentication.
+	 * {@inheritDoc}
 	 */
-	private Authentication authenticationContext() {
-		return SecurityContextHolder.getContext().getAuthentication();
-	}
+	@Override
+	public UserDetails loadUserDetails(Authentication token) throws UsernameNotFoundException {
+		Object principal = token.getPrincipal();
+		if(token instanceof User) {
+			return (UserDetails)principal;
+		}
 
+		return loadUserByUsername(token.getName());
+	}
 }

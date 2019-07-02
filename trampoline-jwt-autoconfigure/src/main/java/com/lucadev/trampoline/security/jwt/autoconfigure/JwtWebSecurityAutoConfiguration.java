@@ -32,7 +32,7 @@ import javax.servlet.Filter;
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter({TokenServiceAutoConfiguration.class, JwtAutoConfiguration.class})
+@AutoConfigureAfter({ TokenServiceAutoConfiguration.class, JwtAutoConfiguration.class })
 @RequiredArgsConstructor
 public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {

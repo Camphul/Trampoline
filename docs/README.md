@@ -41,7 +41,6 @@ Properties being used are:
 - `trampoline.security.abac.container.json.file-path`: define which json file to load policy from for trampoline-security-abac
 - `trampoline.security.abac.container.jpa.import-from-json`: import rules from json container on startup
 - `trampoline.security.abac.container.provider`: define which PolicyContainer to use. Choose between `json`, `jpa`.
-- `trampoline.security.authentication.emailIdentification`: use email instead of username for authorization, defaults to `false`
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.web.baseMapping`: auth basepath for authorizing and refreshing tokens, default is /auth

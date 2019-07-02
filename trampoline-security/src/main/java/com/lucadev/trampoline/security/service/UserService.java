@@ -5,6 +5,8 @@ import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public interface UserService extends UserDetailsService {
+public interface UserService extends UserDetailsService, AuthenticationUserDetailsService<Authentication> {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}.
@@ -38,7 +40,14 @@ public interface UserService extends UserDetailsService {
 	 * @param subject the {@link UUID} to find.
 	 * @return null or the found {@link User}
 	 */
-	User findById(UUID subject);
+	Optional<User> findById(UUID subject);
+
+	/**
+	 * Find a {@link User} by it's email.
+	 * @param email the user email.
+	 * @return the found user.
+	 */
+	Optional<User> findByEmail(String email);
 
 	/**
 	 * Persist new {@link User}.
