@@ -5,6 +5,7 @@ import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,9 +24,10 @@ import javax.validation.Valid;
  * @since 21-4-18
  */
 @RestController
+@ConditionalOnMissingBean(value = AuthenticationController.class, ignored = JwtAuthenticationController.class)
 @RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
-public class JwtAuthenticationController {
+public class JwtAuthenticationController implements AuthenticationController<JwtAuthenticationResponse, UserAuthenticationRequest> {
 
 	private final AuthenticationManager authenticationManager;
 
@@ -38,7 +40,8 @@ public class JwtAuthenticationController {
 	 */
 	@IgnoreSecurity
 	@PostMapping("${trampoline.security.jwt.web.authorizeMapping:/authorize}")
-	public JwtAuthenticationResponse submitAuthenticationTokenRequest(
+	@Override
+	public JwtAuthenticationResponse authenticate(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
 		try {
 			Authentication authentication = this.authenticationManager
@@ -59,12 +62,13 @@ public class JwtAuthenticationController {
 
 	/**
 	 * Refresh token from current logged in request.
-	 * @param request http req
-	 * @param response http resp
+	 * @param request http request.
+	 * @param response http response.
 	 * @return jwt auth response.
 	 */
+	@Override
 	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
-	public JwtAuthenticationResponse submitAuthenticationTokenRefreshRequest(
+	public JwtAuthenticationResponse refresh(
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String refreshedToken = this.tokenService.issueTokenRefresh(request);
