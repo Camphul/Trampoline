@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,10 +31,8 @@ public abstract class TrampolineEntity implements Serializable {
 	 * Primary key is a {@link UUID}.
 	 */
 	@Id
-	@GeneratedValue(generator = "UUID")
-	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-	@Column(name = "id", columnDefinition = "BINARY(16)", updatable = false,
-			nullable = false)
+	@GeneratedValue
+	@Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
 	@Setter(AccessLevel.PROTECTED)
 	private UUID id;
 
@@ -57,14 +54,6 @@ public abstract class TrampolineEntity implements Serializable {
 	@PastOrPresent
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
-
-	/**
-	 * Check if the entity has not been persisted yet.
-	 * @return true if the id is null(which means it has not been persisted yet)
-	 */
-	public boolean isNewTrampolineEntity() {
-		return this.id == null;
-	}
 
 	/**
 	 * Equals implementation which only checks the id, created date and modified date.
