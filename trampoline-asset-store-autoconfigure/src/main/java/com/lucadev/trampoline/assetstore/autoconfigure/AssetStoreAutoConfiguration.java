@@ -3,6 +3,7 @@ package com.lucadev.trampoline.assetstore.autoconfigure;
 import com.lucadev.trampoline.assetstore.AssetStore;
 import com.lucadev.trampoline.assetstore.AssetStoreFactory;
 import com.lucadev.trampoline.assetstore.configuration.AssetStoreConfigurationProperties;
+import com.lucadev.trampoline.assetstore.event.AssetEventPublisher;
 import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreConfigurationProperties;
 import com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreFactory;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
@@ -62,17 +63,19 @@ public class AssetStoreAutoConfiguration {
 	 * Configure default asset store factory.
 	 * @param localAssetStoreConfigurationProperties spring cofiguration properties for
 	 * this factory.
-	 * @param metaDataRepository jpa repository for
+	 * @param metaDataRepository jpa repository for.
+	 * @param eventPublisher event publisher.
 	 * {@link com.lucadev.trampoline.assetstore.AssetMetaData}.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean
 	public LocalAssetStoreFactory localAssetStoreFactory(
 			LocalAssetStoreConfigurationProperties localAssetStoreConfigurationProperties,
-			AssetMetaDataRepository metaDataRepository) {
+			AssetMetaDataRepository metaDataRepository,
+			AssetEventPublisher eventPublisher) {
 		log.debug("Creating local asset store factory bean.");
 		return new LocalAssetStoreFactory(localAssetStoreConfigurationProperties,
-				metaDataRepository);
+				metaDataRepository, eventPublisher);
 	}
 
 }
