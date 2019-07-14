@@ -15,7 +15,7 @@ import org.springframework.context.ApplicationEventPublisher;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class UserActivityPublisher implements UserActivityHandler {
+public class UserActivityEventPublisher implements UserActivityHandler {
 
 	private final ApplicationEventPublisher applicationEventPublisher;
 
