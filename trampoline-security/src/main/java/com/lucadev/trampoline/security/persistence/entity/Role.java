@@ -35,7 +35,7 @@ public class Role extends TrampolineEntity {
 	/**
 	 * {@code Collection} of {@link Privilege} that this group contains.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "TRAMPOLINE_ROLE_PRIVILEGE",
 			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "privilege_id",
