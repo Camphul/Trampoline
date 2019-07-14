@@ -4,6 +4,13 @@ This document contains the broad changes to versions deployed to maven central.
 
 We use the following versioning scheme `YEARMMDD` so version `20190308` would have began development on 8 march 2019.
 
+## 20190628
+
+- Make JWT claim keys configurable.
+- Make JWT more configurable overall.
+- Use Spring application events for default user-logging handler.
+- Add events to asset-store.
+
 ## 20190509
 
 - Ready to use DTO's for trampoline-security.
