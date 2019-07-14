@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.logging.autoconfig;
 
 import com.lucadev.trampoline.security.logging.UserActivity;
-import com.lucadev.trampoline.security.logging.handler.LogUserActivityHandler;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
+import com.lucadev.trampoline.security.logging.handler.event.UserActivityPublisher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class UserActivityHandlerAutoConfigurationTest {
 		UserActivityHandler userActivityHandler = context
 				.getBean(UserActivityHandler.class);
 
-		assertThat(userActivityHandler, instanceOf(LogUserActivityHandler.class));
+		assertThat(userActivityHandler, instanceOf(UserActivityPublisher.class));
 	}
 
 	@Test
