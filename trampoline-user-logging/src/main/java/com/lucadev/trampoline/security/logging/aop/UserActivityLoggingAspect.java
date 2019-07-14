@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.logging.aop;
 import com.lucadev.trampoline.security.logging.ActingUpon;
 import com.lucadev.trampoline.security.logging.LogUserActivity;
 import com.lucadev.trampoline.security.logging.UserActivity;
-import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
+import com.lucadev.trampoline.security.logging.UserActivityInvocationContext;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -178,7 +178,7 @@ public class UserActivityLoggingAspect {
 			invocationEnd = this.timeProvider.unix();
 		}
 		boolean exceptionThrown = throwable != null;
-		UserActivityInvocationDetails invocationDetails = new UserActivityInvocationDetails(
+		UserActivityInvocationContext invocationDetails = new UserActivityInvocationContext(
 				clazz.getName(), method.getName(), exceptionThrown, invocationStart,
 				invocationEnd);
 		return new ActivityMethodInvocationResult(invocationDetails, returnValue,

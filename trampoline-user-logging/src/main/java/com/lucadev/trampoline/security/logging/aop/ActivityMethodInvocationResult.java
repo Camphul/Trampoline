@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.logging.aop;
 
-import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
+import com.lucadev.trampoline.security.logging.UserActivityInvocationContext;
 import lombok.Data;
 
 /**
@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class ActivityMethodInvocationResult {
 
-	private final UserActivityInvocationDetails invocationDetails;
+	private final UserActivityInvocationContext invocationDetails;
 
 	private final Object result;
 

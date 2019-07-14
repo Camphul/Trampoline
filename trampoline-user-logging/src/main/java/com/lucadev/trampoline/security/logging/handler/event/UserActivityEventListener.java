@@ -9,11 +9,12 @@ import org.springframework.context.ApplicationListener;
  * @since 7/14/19
  * @see UserActivityEvent
  */
-public interface UserActivityEventListener extends ApplicationListener<UserActivityEvent> {
+public interface UserActivityEventListener
+		extends ApplicationListener<UserActivityEvent> {
 
 	@Override
 	default void onApplicationEvent(UserActivityEvent userActivityEvent) {
-		if(filter(userActivityEvent)) {
+		if (filter(userActivityEvent)) {
 			handle(userActivityEvent);
 		}
 	}
@@ -33,4 +34,5 @@ public interface UserActivityEventListener extends ApplicationListener<UserActiv
 	 * @see UserActivityEvent
 	 */
 	void handle(UserActivityEvent event);
+
 }

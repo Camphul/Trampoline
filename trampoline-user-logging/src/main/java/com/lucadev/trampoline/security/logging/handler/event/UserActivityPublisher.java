@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.logging.handler.event;
 
 import com.lucadev.trampoline.security.logging.UserActivity;
-import com.lucadev.trampoline.security.logging.UserActivityInvocationDetails;
+import com.lucadev.trampoline.security.logging.UserActivityInvocationContext;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,16 +27,18 @@ public class UserActivityPublisher implements UserActivityHandler {
 	 */
 	@Override
 	public void handleUserActivity(UserActivity userActivity) {
-		UserActivityInvocationDetails context = userActivity.getInvocationDetails();
+		UserActivityInvocationContext context = userActivity.getInvocationContext();
 		String activityContextClass = userActivity.getActedUpon() != null
 				? userActivity.getActedUpon().getClass().getName()
 				: "No activity context";
-		log.debug("Publishing user actvity event {}: {}#{} {} :: {} {}ms", userActivity.getPrincipal().getUsername(),
-				context.getClassName(), context.getMethodName(), activityContextClass,
+		log.debug("Publishing user actvity event {}: {}#{} {} :: {} {}ms",
+				userActivity.getPrincipal().getUsername(), context.getClassName(),
+				context.getMethodName(), activityContextClass,
 				userActivity.getDescription(),
 				(context.getInvocationEnd() - context.getInvocationStart()));
 
 		UserActivityEvent event = new UserActivityEvent(context, userActivity);
 		this.applicationEventPublisher.publishEvent(event);
 	}
+
 }
