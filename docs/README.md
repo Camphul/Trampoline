@@ -42,8 +42,13 @@ Properties being used are:
 - `trampoline.security.abac.container.jpa.import-from-json`: import rules from json container on startup
 - `trampoline.security.abac.container.provider`: define which PolicyContainer to use. Choose between `json`, `jpa`.
 - `trampoline.security.jwt.secret`: jwt signing secret, default is trampolineSecret
+- `trampoline.security.jwt.header`: Header key containing our auth token.
+- `trampoline.security.jwt.header-schema`: Schema prefix inside the header value(Bearer)
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
-- `trampoline.security.jwt.web.baseMapping`: auth basepath for authorizing and refreshing tokens, default is /auth
+- `trampoline.security.jwt.claims.username`: claim key for username
+- `trampoline.security.jwt.claims.authorities`: claim key for authorities
+- `trampoline.security.jwt.claims.ignore-expiration`: claim key for ignoring expiration
+- `trampoline.security.jwt.web.base-mapping`: auth basepath for authorizing and refreshing tokens, default is /auth
 - `trampoline.security.allow-email-identification`: allow clients to either authenticate with their username or with their email(only used in trampoline-security)
 - `trampoline.notify.email.enabled`: required to be `true` to even make use of this service.
 - `trampoline.notify.email.defaults.from`: address from which the emails are sent.

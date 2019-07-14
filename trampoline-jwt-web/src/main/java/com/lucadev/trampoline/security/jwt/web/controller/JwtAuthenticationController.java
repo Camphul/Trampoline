@@ -11,7 +11,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,10 +28,12 @@ import javax.validation.Valid;
  * @since 21-4-18
  */
 @RestController
-@ConditionalOnMissingBean(value = AuthenticationController.class, ignored = JwtAuthenticationController.class)
+@ConditionalOnMissingBean(value = AuthenticationController.class,
+		ignored = JwtAuthenticationController.class)
 @RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
-public class JwtAuthenticationController implements AuthenticationController<JwtAuthenticationResponse, UserAuthenticationRequest> {
+public class JwtAuthenticationController implements
+		AuthenticationController<JwtAuthenticationResponse, UserAuthenticationRequest> {
 
 	private final AuthenticationManager authenticationManager;
 
@@ -68,8 +74,8 @@ public class JwtAuthenticationController implements AuthenticationController<Jwt
 	 */
 	@Override
 	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
-	public JwtAuthenticationResponse refresh(
-			HttpServletRequest request, HttpServletResponse response) {
+	public JwtAuthenticationResponse refresh(HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			String refreshedToken = this.tokenService.issueTokenRefresh(request);
 			return new JwtAuthenticationResponse(refreshedToken);

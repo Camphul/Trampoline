@@ -18,14 +18,14 @@ public interface AssetEventListener extends ApplicationListener<AssetEvent> {
 	@Override
 	default void onApplicationEvent(AssetEvent event) {
 		switch (event.getAction()) {
-			case PUT:
-				handlePut(event);
-				break;
-			case REMOVE:
-				handleRemove(event);
-				break;
-			default:
-				handleOther(event);
+		case PUT:
+			handlePut(event);
+			break;
+		case REMOVE:
+			handleRemove(event);
+			break;
+		default:
+			handleOther(event);
 		}
 	}
 
@@ -46,4 +46,5 @@ public interface AssetEventListener extends ApplicationListener<AssetEvent> {
 	 * @param event the asset event.
 	 */
 	void handleOther(AssetEvent event);
+
 }

@@ -8,7 +8,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +38,8 @@ public abstract class TrampolineEntity implements Serializable {
 	 */
 	@Id
 	@GeneratedValue
-	@Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
+	@Column(name = "id", updatable = false, nullable = false,
+			columnDefinition = "BINARY(16)")
 	@Setter(AccessLevel.PROTECTED)
 	private UUID id;
 

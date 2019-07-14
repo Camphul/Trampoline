@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class TrampolineSecurityAutoConfiguration {
 
 	private final UserService userService;
+
 	private final TimeProvider timeProvider;
 
 	@Bean

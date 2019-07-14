@@ -29,6 +29,13 @@ public interface TokenService {
 	String issueTokenRefresh(String token);
 
 	/**
+	 * Handle a request to refresh a token.
+	 * @param request http req
+	 * @return jwt token string.
+	 */
+	String issueTokenRefresh(HttpServletRequest request);
+
+	/**
 	 * Get all token information.
 	 * @param token jwt string
 	 * @return jwt DTO representation.
@@ -50,13 +57,6 @@ public interface TokenService {
 	 * @return if the token is valid with the given user
 	 */
 	boolean isValidToken(JwtPayload jwtPayload, UserDetails user);
-
-	/**
-	 * Handle a request to refresh a token.
-	 * @param request http req
-	 * @return jwt token string.
-	 */
-	String issueTokenRefresh(HttpServletRequest request);
 
 	/**
 	 * Read the token and create an {@link Authentication} object from it.

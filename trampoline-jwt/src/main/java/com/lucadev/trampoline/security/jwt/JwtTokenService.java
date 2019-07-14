@@ -22,7 +22,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -35,12 +40,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
 
-	private static final String CLAIM_USERNAME = "t_username";
-
-	private static final String CLAIM_AUTHORITIES = "t_authorities";
-
-	private static final String CLAIM_IGNORE_EXPIRATION_TIMEOUT = "t_ignore_timout";
-
 	private final JwtConfigurationAdapter jwtConfiguration;
 
 	private final TimeProvider timeProvider;
@@ -52,6 +51,9 @@ public class JwtTokenService implements TokenService {
 	@Getter(AccessLevel.PRIVATE)
 	private Key signKey;
 
+	/**
+	 * Configures the signing key after constructing the bean.
+	 */
 	@PostConstruct
 	public void postConstruct() {
 		byte[] encodedSecret = Base64.getEncoder()
@@ -67,10 +69,12 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public String issueToken(UserDetails user) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put(CLAIM_USERNAME, user.getUsername());
-		claims.put(CLAIM_AUTHORITIES, user.getAuthorities().stream()
+		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
+				.getClaims();
+		claims.put(claimConfig.getUsername(), user.getUsername());
+		claims.put(claimConfig.getAuthorities(), user.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
-		claims.put(CLAIM_IGNORE_EXPIRATION_TIMEOUT,
+		claims.put(claimConfig.getIgnoreExpiration(),
 				this.jwtConfiguration.shouldIgnoreExpiration(user));
 		this.jwtConfiguration.createToken(user, claims);
 		return generateToken(claims, user.getUsername());
@@ -90,6 +94,30 @@ public class JwtTokenService implements TokenService {
 		return Jwts.builder().setClaims(claims).setIssuedAt(createdDate)
 				.setExpiration(getExpiryDate(createdDate)).signWith(getSignKey())
 				.compact();
+	}
+
+	/**
+	 * Handle a request to refresh a token.
+	 * @param request http req
+	 * @return jwt token string.
+	 */
+	@Override
+	public String issueTokenRefresh(HttpServletRequest request) {
+		String authHeader = request.getHeader(this.properties.getHeader());
+		final String token = parseTokenHeader(authHeader);
+		JwtPayload jwtPayload = parseToken(token);
+		String username = jwtPayload.getUsername();
+		UserDetails user = this.userService.loadUserByUsername(username);
+		if (!user.getUsername().equals(username)) {
+			throw new BadCredentialsException("Token subject does not match user");
+		}
+
+		if (isTokenRefreshable(jwtPayload)) {
+			return issueTokenRefresh(token);
+		}
+		else {
+			throw new BadCredentialsException("Auth token can not be refreshed");
+		}
 	}
 
 	private String generateToken(Map<String, Object> claims, String subject) {
@@ -113,27 +141,29 @@ public class JwtTokenService implements TokenService {
 	 */
 	@Override
 	public JwtPayload parseToken(String token) {
+		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
+				.getClaims();
 		final Claims claims = getAllTokenClaims(token);
 		JwtPayload jwtPayload = new JwtPayload();
 		jwtPayload.setRawToken(token);
-		jwtPayload.setUsername(claims.get(CLAIM_USERNAME, String.class));
+		jwtPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
 		jwtPayload.setIssuedDate(claims.getIssuedAt());
 		jwtPayload.setExpirationDate(claims.getExpiration());
 		jwtPayload.setIgnorableExpiration(
-				claims.get(CLAIM_IGNORE_EXPIRATION_TIMEOUT, Boolean.class));
-		jwtPayload.setAuthorities(claims.get(CLAIM_AUTHORITIES, ArrayList.class));
+				claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
+		jwtPayload.setAuthorities(
+				claims.get(claimConfig.getAuthorities(), ArrayList.class));
 		return jwtPayload;
 	}
 
 	@Override
 	public JwtPayload parseToken(HttpServletRequest request) {
-		final String requestHeader = request
-				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
+		final String requestHeader = request.getHeader(this.properties.getHeader());
 		if (requestHeader == null || requestHeader.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
 					"Could not find token header.");
 		}
-		if (requestHeader.startsWith(JwtSecurityConfigurationProperties.HEADER_PREFIX)) {
+		if (requestHeader.startsWith(this.properties.getHeaderSchema())) {
 			String authToken = parseTokenHeader(requestHeader);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException(
@@ -166,31 +196,6 @@ public class JwtTokenService implements TokenService {
 		return (user.getUsername().equals(jwtPayload.getUsername())
 				&& (!isPastExpiryDate(jwtPayload.getExpirationDate())
 						|| jwtPayload.isIgnorableExpiration()));
-	}
-
-	/**
-	 * Handle a request to refresh a token.
-	 * @param request http req
-	 * @return jwt token string.
-	 */
-	@Override
-	public String issueTokenRefresh(HttpServletRequest request) {
-		String authHeader = request
-				.getHeader(JwtSecurityConfigurationProperties.TOKEN_HEADER);
-		final String token = parseTokenHeader(authHeader);
-		JwtPayload jwtPayload = parseToken(token);
-		String username = jwtPayload.getUsername();
-		UserDetails user = userService.loadUserByUsername(username);
-		if (!user.getUsername().equals(username)) {
-			throw new BadCredentialsException("Token subject does not match user");
-		}
-
-		if (isTokenRefreshable(jwtPayload)) {
-			return issueTokenRefresh(token);
-		}
-		else {
-			throw new BadCredentialsException("Auth token can not be refreshed");
-		}
 	}
 
 	/**
@@ -249,7 +254,7 @@ public class JwtTokenService implements TokenService {
 	 */
 	private String parseTokenHeader(String headerValue) {
 		String authToken = headerValue
-				.substring(JwtSecurityConfigurationProperties.HEADER_PREFIX.length());
+				.substring(this.properties.getHeaderSchema().length());
 		// Remove first whitespace
 		while (authToken.startsWith(" ")) {
 			authToken = authToken.substring(1);

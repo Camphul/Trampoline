@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationEvent;
 public class AssetEvent extends ApplicationEvent {
 
 	private final AssetMetaData assetMetaData;
+
 	private final Action action;
 
 	/**
@@ -50,6 +51,7 @@ public class AssetEvent extends ApplicationEvent {
 		public Put(AssetStore source, AssetMetaData assetMetaData) {
 			super(source, assetMetaData, Action.PUT);
 		}
+
 	}
 
 	/**
@@ -65,12 +67,14 @@ public class AssetEvent extends ApplicationEvent {
 		public Remove(AssetStore source, AssetMetaData assetMetaData) {
 			super(source, assetMetaData, Action.REMOVE);
 		}
+
 	}
 
 	/**
 	 * Defines the action which took place.
 	 */
 	public enum Action {
+
 		/**
 		 * When an asset has been created.
 		 */
@@ -85,5 +89,7 @@ public class AssetEvent extends ApplicationEvent {
 		 * When there's another action depending on implementation of asset store.
 		 */
 		OTHER
+
 	}
+
 }

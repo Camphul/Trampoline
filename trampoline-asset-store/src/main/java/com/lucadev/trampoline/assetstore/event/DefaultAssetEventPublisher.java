@@ -44,4 +44,5 @@ public class DefaultAssetEventPublisher implements AssetEventPublisher {
 		log.debug("Publishing {} asset event.", assetEvent.getAction());
 		this.applicationEventPublisher.publishEvent(assetEvent);
 	}
+
 }

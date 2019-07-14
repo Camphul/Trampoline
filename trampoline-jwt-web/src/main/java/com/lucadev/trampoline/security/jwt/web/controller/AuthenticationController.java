@@ -27,4 +27,5 @@ public interface AuthenticationController<Response, Request> {
 	 * @return the refreshed token response.
 	 */
 	Response refresh(HttpServletRequest request, HttpServletResponse response);
+
 }

@@ -30,4 +30,5 @@ public interface AssetEventPublisher {
 	 * @param assetEvent event to publish.
 	 */
 	void publish(AssetEvent assetEvent);
+
 }

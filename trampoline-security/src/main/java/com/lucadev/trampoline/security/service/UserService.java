@@ -20,7 +20,8 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public interface UserService extends UserDetailsService, AuthenticationUserDetailsService<Authentication> {
+public interface UserService
+		extends UserDetailsService, AuthenticationUserDetailsService<Authentication> {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}.

@@ -10,4 +10,5 @@ import org.springframework.context.ApplicationListener;
  * @since 7/14/19
  */
 public interface AssetPutEventListener extends ApplicationListener<AssetEvent.Put> {
+
 }

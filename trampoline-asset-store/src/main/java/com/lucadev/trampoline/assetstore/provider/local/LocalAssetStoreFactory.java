@@ -20,6 +20,7 @@ public class LocalAssetStoreFactory implements AssetStoreFactory {
 	private final LocalAssetStoreConfigurationProperties configurationProperties;
 
 	private final AssetMetaDataRepository repository;
+
 	private final AssetEventPublisher eventPublisher;
 
 	@Override
@@ -31,7 +32,8 @@ public class LocalAssetStoreFactory implements AssetStoreFactory {
 	@Override
 	public AssetStore getObject() throws Exception {
 		log.debug("Creating new local asset store.");
-		return new LocalAssetStore(this.configurationProperties, this.repository, this.eventPublisher);
+		return new LocalAssetStore(this.configurationProperties, this.repository,
+				this.eventPublisher);
 	}
 
 	@Override

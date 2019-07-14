@@ -22,7 +22,8 @@ public class UserActivityHandlerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserActivityHandler userActivityHandler(ApplicationEventPublisher eventPublisher) {
+	public UserActivityHandler userActivityHandler(
+			ApplicationEventPublisher eventPublisher) {
 		return new UserActivityEventPublisher(eventPublisher);
 	}
 

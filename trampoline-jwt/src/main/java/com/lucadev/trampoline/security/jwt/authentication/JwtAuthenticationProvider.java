@@ -63,7 +63,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
 		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
 		validateToken(user, jwtPayload);
-		userDetailsChecker.check(user);
+		this.userDetailsChecker.check(user);
 		return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
 	}
 
@@ -74,7 +74,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 */
 	private Authentication createNewJwtAuthentication(Authentication authentication) {
 		UserDetails user = getUserDetails(authentication);
-		userDetailsChecker.check(user);
+		this.userDetailsChecker.check(user);
 		String token = this.tokenService.issueToken(user);
 		JwtPayload payload = this.tokenService.parseToken(token);
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();

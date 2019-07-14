@@ -68,7 +68,7 @@ public class TrampolineUserService implements UserService {
 			return Optional.empty();
 		}
 		UserDetails principal = loadUserDetails(auth);
-		if(principal == null) {
+		if (principal == null) {
 			return Optional.empty();
 		}
 
@@ -235,12 +235,14 @@ public class TrampolineUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserDetails loadUserDetails(Authentication token) throws UsernameNotFoundException {
+	public UserDetails loadUserDetails(Authentication token)
+			throws UsernameNotFoundException {
 		Object principal = token.getPrincipal();
-		if(token instanceof User) {
-			return (UserDetails)principal;
+		if (token instanceof User) {
+			return (UserDetails) principal;
 		}
 
 		return loadUserByUsername(token.getName());
 	}
+
 }

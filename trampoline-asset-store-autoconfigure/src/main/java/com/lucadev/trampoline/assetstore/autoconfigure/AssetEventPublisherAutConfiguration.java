@@ -27,7 +27,9 @@ public class AssetEventPublisherAutConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public AssetEventPublisher assetEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+	public AssetEventPublisher assetEventPublisher(
+			ApplicationEventPublisher applicationEventPublisher) {
 		return new DefaultAssetEventPublisher(applicationEventPublisher);
 	}
+
 }

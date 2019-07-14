@@ -11,6 +11,36 @@
       "type": "java.lang.Long",
       "description": "Seconds before a jwt is considered expired.",
       "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.header",
+      "type": "java.lang.String",
+      "description": "Name of the header containing our token.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.header-schema",
+      "type": "java.lang.String",
+      "description": "Header schema used inside the authentication header.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.claims.username",
+      "type": "java.lang.String",
+      "description": "Claim key to use for username.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.claims.authorities",
+      "type": "java.lang.String",
+      "description": "Claim key to use for authorities.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.claims.ignore-expiration",
+      "type": "java.lang.String",
+      "description": "Claim key to use for ignoring expiration.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
     }
   ]
 }

@@ -30,6 +30,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 	private final LocalAssetStoreConfigurationProperties properties;
 
 	private final AssetMetaDataRepository repository;
+
 	private final AssetEventPublisher eventPublisher;
 
 	@Override
