@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.mail.MessagingException;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * NOP implementation of {@link EmailService}.
@@ -22,16 +21,7 @@ public class NopEmailService implements EmailService {
 
 	@Override
 	public EmailBuilder builder() {
-		return EmailBuilder.create(this.configurationProperties);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void send(Function<EmailBuilder, EmailBuilder> builder)
-			throws MessagingException {
-		send(builder.apply(builder()));
+		return EmailBuilder.create(this, this.configurationProperties);
 	}
 
 	/**
@@ -58,17 +48,6 @@ public class NopEmailService implements EmailService {
 		log.debug(
 				"NOP EmailService sending email from {} to {} with subject {} using template {}",
 				from, to, subject, template);
-	}
-
-	/**
-	 * Async version of {@link TrampolineEmailService#send(Function)}.
-	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException not thrown in this implementation.
-	 */
-	@Override
-	public void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
-			throws MessagingException {
-		send(builder);
 	}
 
 	/**

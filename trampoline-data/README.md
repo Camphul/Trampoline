@@ -12,3 +12,18 @@ Another common exception I was missing is one when a resource(entity) could not 
 This is why there's a `ResourceNotFoundException`. This is a `RuntimeException` which will throw a 404 to the client.
 
 To remap a `Page` object we have created the `MappedPage#of` method. This accepts a `Page` object and a mapping lambda and will return a `MappedPage`.
+
+## MappedPage
+
+If you do not want JPA entities inside of a `Page` to directly to return to the client you can use `MappedPage`.
+This gives you the ability to easily map the entities inside to their DTO's.
+
+Example:
+
+```java
+@GetMapping
+public Page<BlogPostSummaryDto> findAll(Pageable pageable) {
+    return MappedPage.of(this.blogPostService.findAll(pageable),
+            this.blogPostMapper::toSummaryDto);
+}
+```

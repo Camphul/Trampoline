@@ -4,6 +4,7 @@ import com.lucadev.trampoline.notify.email.configuration.EmailConfigurationPrope
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ import java.util.Map;
 @ToString
 public final class EmailBuilder {
 
+	private final EmailService emailService;
+
 	private String from;
 
 	private String to;
@@ -29,9 +32,14 @@ public final class EmailBuilder {
 
 	/**
 	 * Constructs the builder using configured defaults.
+	 * @param emailService email service.
 	 * @param configuration the email properties.
 	 */
-	private EmailBuilder(EmailConfigurationProperties configuration) {
+	private EmailBuilder(EmailService emailService, EmailConfigurationProperties configuration) {
+		if (emailService == null) {
+			throw new NullPointerException("Could not construct EmailBuilder: emailService may not be null.");
+		}
+		this.emailService = emailService;
 		this.model = new HashMap<>();
 		this.from = configuration.getDefaults().getFrom();
 		this.template = configuration.getDefaults().getTemplate();
@@ -44,8 +52,9 @@ public final class EmailBuilder {
 	 * @return new email builder.
 	 */
 	public static EmailBuilder create(
+			EmailService emailService,
 			EmailConfigurationProperties configurationProperties) {
-		return new EmailBuilder(configurationProperties);
+		return new EmailBuilder(emailService, configurationProperties);
 	}
 
 	/**
@@ -117,6 +126,22 @@ public final class EmailBuilder {
 	public EmailBuilder withAttribute(String key, Object value) {
 		this.model.put(key, value);
 		return this;
+	}
+
+	/**
+	 * Send the email.
+	 * @throws MessagingException when we failed to send the email.
+	 */
+	public void send() throws MessagingException {
+		this.emailService.send(this.from, this.to, this.subject, this.template, this.model);
+	}
+
+	/**
+	 * Send the email asynchronously.
+	 * @throws MessagingException when we failed to send the email.
+	 */
+	public void sendAsync() throws MessagingException {
+		this.emailService.sendAsync(this.from, this.to, this.subject, this.template, this.model);
 	}
 
 }

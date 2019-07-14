@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Async;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Default {@link EmailService} implementation.
@@ -33,16 +32,7 @@ public class TrampolineEmailService implements EmailService {
 	 */
 	@Override
 	public EmailBuilder builder() {
-		return EmailBuilder.create(this.configurationProperties);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void send(Function<EmailBuilder, EmailBuilder> builder)
-			throws MessagingException {
-		send(builder.apply(builder()));
+		return EmailBuilder.create(this, this.configurationProperties);
 	}
 
 	/**
@@ -83,18 +73,6 @@ public class TrampolineEmailService implements EmailService {
 		// send mesage
 		this.mailSender.send(message);
 		log.debug("Sent email..");
-	}
-
-	/**
-	 * Async version of {@link TrampolineEmailService#send(Function)}.
-	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException when for some reason we could not send the message.
-	 */
-	@Async
-	@Override
-	public void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
-			throws MessagingException {
-		send(builder);
 	}
 
 	/**
