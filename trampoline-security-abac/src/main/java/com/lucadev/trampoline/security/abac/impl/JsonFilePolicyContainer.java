@@ -55,7 +55,7 @@ public class JsonFilePolicyContainer implements PolicyContainer {
 		try {
 			log.debug("Checking policy file at: {}", jsonFilePath);
 			this.rules = mapper.readValue(file, JsonPolicyFileModel.class).getPolicies();
-			log.info("Policies loaded successfully.");
+			log.debug("Policies loaded successfully.");
 		}
 		catch (JsonMappingException e) {
 			log.error("An error occurred while parsing the policy file.", e);

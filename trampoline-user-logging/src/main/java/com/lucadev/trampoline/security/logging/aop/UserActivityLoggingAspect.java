@@ -6,13 +6,12 @@ import com.lucadev.trampoline.security.logging.UserActivity;
 import com.lucadev.trampoline.security.logging.UserActivityInvocationContext;
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.service.time.TimeProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.Order;
 import org.springframework.expression.EvaluationException;
@@ -37,11 +36,9 @@ import java.util.Map;
  * @since 3/9/19
  */
 @Aspect
+@Slf4j
 @Order(20)
 public class UserActivityLoggingAspect {
-
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(UserActivityLoggingAspect.class);
 
 	private final UserActivityHandler userActivityHandler;
 
@@ -83,7 +80,7 @@ public class UserActivityLoggingAspect {
 				actedUpon = joinPoint.getArgs()[i];
 			}
 			if (param.getName().startsWith("arg")) {
-				LOGGER.warn(
+				log.warn(
 						"Parameter name starts with \"arg\" prefix. Please make sure you compiled with the '-parameters' options.");
 			}
 			argumentMap.put(param.getName(), joinPoint.getArgs()[i]);

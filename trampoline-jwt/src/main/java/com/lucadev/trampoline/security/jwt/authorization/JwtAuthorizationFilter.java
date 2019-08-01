@@ -48,7 +48,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 			//Check if there even is a token present.
 			if (!token.isPresent()) {
-				log.debug("Could not authenticate null JWT token.");
+				log.warn("Could not authenticate null JWT token.");
 				filterChain.doFilter(httpServletRequest, httpServletResponse);
 				return;
 			}
@@ -64,7 +64,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 		}
 		catch (Exception ex) {
 			SecurityContextHolder.clearContext();
-			log.info("Failed JWT filter: {}: {}", ex.getClass().getName(),
+			log.error("Failed JWT filter: {}: {}", ex.getClass().getName(),
 					ex.getMessage());
 			throw ex;
 		}

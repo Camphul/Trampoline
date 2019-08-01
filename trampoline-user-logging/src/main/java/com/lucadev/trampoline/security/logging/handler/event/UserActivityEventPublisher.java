@@ -31,8 +31,8 @@ public class UserActivityEventPublisher implements UserActivityHandler {
 		String activityContextClass = userActivity.getActedUpon() != null
 				? userActivity.getActedUpon().getClass().getName()
 				: "No activity context";
-		log.debug("Publishing user activity event {}: {}#{} {} :: {} {}ms",
-				userActivity.getPrincipal().getUsername(), context.getClassName(),
+		log.debug("Publishing user activity event {}#{} {} :: {} {}ms",
+				context.getClassName(),
 				context.getMethodName(), activityContextClass,
 				userActivity.getDescription(),
 				(context.getInvocationEnd() - context.getInvocationStart()));
