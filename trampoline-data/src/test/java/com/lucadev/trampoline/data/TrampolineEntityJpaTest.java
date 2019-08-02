@@ -64,7 +64,7 @@ public class TrampolineEntityJpaTest {
 		SimpleTrampolineEntity entity = newEntity(payload);
 		long timeStamp = System.currentTimeMillis();
 		SimpleTrampolineEntity persisted = repository.save(entity);
-		assertBounds(timeStamp, persisted.getCreated().getTime(), TIME_BOUNDS);
+		assertBounds(timeStamp, persisted.getCreated().toEpochMilli(), TIME_BOUNDS);
 	}
 
 	/**
@@ -98,13 +98,13 @@ public class TrampolineEntityJpaTest {
 	public void shouldSucceedUpdateDateCheckUpdatedEntity() throws InterruptedException {
 		String payload = "testPersist2";
 		SimpleTrampolineEntity entity = newEntity(payload);
-		entityManager.persistAndFlush(entity).getUpdated().getTime();
+		entityManager.persistAndFlush(entity).getUpdated().toEpochMilli();
 		sleep(2, TimeUnit.SECONDS);
 		String updatedPayload = "haha it has been updated now! ";
 		entity.setPayload(updatedPayload);
 		long timestamp = System.currentTimeMillis();
 		SimpleTrampolineEntity updatedEntity = repository.saveAndFlush(entity);
-		assertBounds(timestamp, updatedEntity.getUpdated().getTime(), TIME_BOUNDS);
+		assertBounds(timestamp, updatedEntity.getUpdated().toEpochMilli(), TIME_BOUNDS);
 	}
 
 	private void assertBounds(long expected, long result, long bounds) {

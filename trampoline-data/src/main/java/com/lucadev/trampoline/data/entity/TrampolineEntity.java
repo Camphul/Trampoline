@@ -13,11 +13,9 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -44,23 +42,21 @@ public abstract class TrampolineEntity implements Serializable {
 	private UUID id;
 
 	/**
-	 * {@link Date} of when this entity was first persisted into the data source.
+	 * {@link Instant} of when this entity was first persisted into the data source.
 	 */
 	@CreatedDate
 	@Column(name = "auditing_created_at", nullable = false, updatable = false)
 	@PastOrPresent
-	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(AccessLevel.PROTECTED)
-	private Date created;
+	private Instant created;
 
 	/**
-	 * {@link Date} of when this entity was last updated in the data source.
+	 * {@link Instant} of when this entity was last updated in the data source.
 	 */
 	@LastModifiedDate
 	@Column(name = "auditing_updated_at", nullable = false)
 	@PastOrPresent
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
+	private Instant updated;
 
 	/**
 	 * Equals implementation which only checks the id, created date and modified date.

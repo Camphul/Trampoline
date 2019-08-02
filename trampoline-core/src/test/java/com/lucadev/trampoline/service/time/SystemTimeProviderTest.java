@@ -34,7 +34,7 @@ public class SystemTimeProviderTest {
 	@Test
 	public void shouldSucceedMatchDate() {
 		long expected = System.currentTimeMillis();
-		long result = systemTimeProvider.now().getTime();
+		long result = systemTimeProvider.now().toEpochMilli();
 		assertAcceptedRange(expected, result);
 	}
 

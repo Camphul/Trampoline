@@ -37,7 +37,8 @@ public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
 
 	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
 		RepositoryFactorySupport factory = super.createRepositoryFactory(em);
-		factory.addRepositoryProxyPostProcessor(this.compliantRepositoryProxyPostProcessor);
+		factory.addRepositoryProxyPostProcessor(
+				this.compliantRepositoryProxyPostProcessor);
 		return factory;
 	}
 

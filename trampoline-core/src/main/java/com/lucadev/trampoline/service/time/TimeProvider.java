@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.service.time;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Interface that defines methods that provide the current time.
@@ -11,10 +11,10 @@ import java.util.Date;
 public interface TimeProvider {
 
 	/**
-	 * Returns {@link #unix()} in a {@link Date} object.
-	 * @return current time inside a {@link Date} object.
+	 * Returns {@link #unix()} in a {@link Instant} object.
+	 * @return current time inside a {@link Instant} object.
 	 */
-	Date now();
+	Instant now();
 
 	/**
 	 * Returns the current unix timestamp.

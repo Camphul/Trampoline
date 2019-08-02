@@ -15,13 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,13 +69,11 @@ public class User extends TrampolineEntity implements UserDetails {
 
 	@Column(name = "last_password_reset_at", nullable = false)
 	@PastOrPresent
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastPasswordReset;
+	private Instant lastPasswordReset;
 
 	@Column(name = "last_seen", nullable = false)
 	@PastOrPresent
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastSeen;
+	private Instant lastSeen;
 
 	/**
 	 * {@inheritDoc}

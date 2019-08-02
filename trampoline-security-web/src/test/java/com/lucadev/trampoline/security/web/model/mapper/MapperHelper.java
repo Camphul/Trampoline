@@ -4,8 +4,8 @@ import com.lucadev.trampoline.security.persistence.entity.Privilege;
 import com.lucadev.trampoline.security.persistence.entity.Role;
 import com.lucadev.trampoline.security.persistence.entity.User;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MapperHelper {
 
-	private static final Date TEST_DATE = new Date(300);
+	private static final Instant TEST_DATE = Instant.ofEpochMilli(3000);
 
 	public static List<Role> createRoles() {
 		List<Role> roles = new ArrayList<>();

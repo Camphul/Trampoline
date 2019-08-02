@@ -3,7 +3,7 @@ package com.lucadev.example.trampoline.web.model;
 import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -21,8 +21,8 @@ public class BlogPostCommentDto {
 
 	private String content;
 
-	private Date created;
+	private Instant created;
 
-	private Date updated;
+	private Instant updated;
 
 }

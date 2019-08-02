@@ -87,7 +87,8 @@ public class JwtTokenService implements TokenService {
 	 */
 	@Override
 	public String issueTokenRefresh(String token) {
-		final Date createdDate = this.timeProvider.now();
+		// Since JJWT does not support LocalDateTime/Instant
+		final Date createdDate = new Date(this.timeProvider.unix());
 		// copy over old claims
 		final Claims claims = getAllTokenClaims(token);
 
@@ -121,7 +122,8 @@ public class JwtTokenService implements TokenService {
 	}
 
 	private String generateToken(Map<String, Object> claims, String subject) {
-		final Date createdDate = this.timeProvider.now();
+		// Since JJWT does not support java 8 time api yet.
+		final Date createdDate = new Date(this.timeProvider.unix());
 		final Date expirationDate = getExpiryDate(createdDate);
 
 		return Jwts.builder().setClaims(claims).setSubject(subject)
@@ -235,16 +237,20 @@ public class JwtTokenService implements TokenService {
 	 * @return if current datetime is before expiration.
 	 */
 	private boolean isPastExpiryDate(Date expiration) {
-		return expiration.before(this.timeProvider.now());
+		// Since JJWT does not support Java 8 time API for now.
+		Date current = new Date(this.timeProvider.unix());
+		return expiration.before(current);
 	}
 
 	/**
-	 * Calculate expiry date based on the configured token timeout.
+	 * Calculate expiry date based on the configured token timeout. Does not use Java 8
+	 * time API since JJWT does not support it yet.
 	 * @param createdDate jwt creation date.
 	 * @return expiration date.
 	 */
 	private Date getExpiryDate(Date createdDate) {
-		return new Date(createdDate.getTime() + this.properties.getTokenTimeout() * 1000);
+		long timeoutMilliseconds = this.properties.getTokenTimeout() * 1000L;
+		return new Date(createdDate.getTime() + timeoutMilliseconds);
 	}
 
 	/**

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
+import java.time.Instant;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
@@ -64,8 +64,8 @@ public class TimeProviderAutoConfigurationTest {
 		public TimeProvider timeProvider() {
 			return new TimeProvider() {
 				@Override
-				public Date now() {
-					return new Date(0);
+				public Instant now() {
+					return Instant.now();
 				}
 
 				@Override
