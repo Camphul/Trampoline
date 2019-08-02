@@ -76,6 +76,11 @@ As you can see this also works well with methods annotated with `@Query`.
 The only downside to this is that queries such as `sortByUsername` will not work(since it will sort on the base64 encoded encrypted string).
 This also disables any `LIKE` queries.
 
+### Encrypting other datatypes
+
+If you wish to use the same encryption for other data types it is recommended to write your own `AttributeConverter`.
+As long as `@EnableGdprCompliance` is enabled you can use
+
 ### Configuring ciphers
 
 We have the following configuration properties:
