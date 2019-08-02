@@ -48,10 +48,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 		if (authentication instanceof JwtAuthenticationToken) {
 			JwtPayload payload = ((JwtAuthenticationToken) authentication)
 					.getJwtPayload();
-			return createValidatedJwtAuthentication(payload);
+			return authorizeToken(payload);
 		}
 		else {
-			return createNewJwtAuthentication(authentication);
+			return authenticateTokenRequest(authentication);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 * @param jwtPayload the JWT data.
 	 * @return the new {@link Authentication} object
 	 */
-	private Authentication createValidatedJwtAuthentication(JwtPayload jwtPayload) {
+	private Authentication authorizeToken(JwtPayload jwtPayload) {
 		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
 		validateToken(user, jwtPayload);
 		this.userDetailsChecker.check(user);
@@ -68,11 +68,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	/**
-	 * Authenticate.
+	 * Authenticate a user.
 	 * @param authentication the auth object.
 	 * @return a jwt auth object.
 	 */
-	private Authentication createNewJwtAuthentication(Authentication authentication) {
+	private Authentication authenticateTokenRequest(Authentication authentication) {
 		UserDetails user = getUserDetails(authentication);
 		this.userDetailsChecker.check(user);
 		String token = this.tokenService.issueToken(user);
