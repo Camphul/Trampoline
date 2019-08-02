@@ -27,3 +27,59 @@ public Page<BlogPostSummaryDto> findAll(Pageable pageable) {
             this.blogPostMapper::toSummaryDto);
 }
 ```
+
+## GDPR Compliance
+
+Trampoline Data offers basic GDPR compliance functionality to encrypt personal data.
+To enable GDPR compliance add the `@EnableGdprCompliance` annotation to your configuration.
+
+The way this module offers compliance is by adding a `@PersonalData` annotation.
+This annotation can be added to entity fields of type `String` like the following:
+
+```java
+public class User extends TrampolineEntity implements UserDetails {
+
+	@PersonalData
+	@Column(name = "username", nullable = false, unique = true, updatable = false)
+	private String username;
+
+	@PersonalData
+	@Column(name = "email", nullable = false, unique = true)
+	private String email;
+	
+	//etc etc..
+}
+```
+
+Trampoline will then register Hibernate event listeners to encrypt and decrypt entities when loaded/persisted.
+
+To maintain working repository queries you are required to also add the `@PersonalData` annotation to method parameters.
+This can be done as such:
+
+```java
+@Repository
+public interface UserRepository extends TrampolineRepository<User> {
+
+	Optional<User> findOneByUsername(@PersonalData String username);
+
+	Optional<User> findOneByEmail(@PersonalData String email);
+
+	@Query("from User u where u.username = :identifier or u.email = :identifier")
+	Optional<User> findOneByUsernameOrEmail(@PersonalData String identifier);
+
+}
+```
+
+Trampoline will intercept the method call to the repository method, check for the annotation and encrypt the argument before invoking the method.
+As you can see this also works well with methods annotated with `@Query`.
+
+The only downside to this is that queries such as `sortByUsername` will not work(since it will sort on the base64 encoded encrypted string).
+This also disables any `LIKE` queries.
+
+### Configuring ciphers
+
+We have the following configuration properties:
+
+- `trampoline.data.gdpr.key`: string key
+- `trampoline.data.gdpr.cipher`: cipher used
+- `trampoline.data.gdpr.algorithm` algorithm used

@@ -37,13 +37,10 @@ import java.util.Optional;
 @Getter
 public class User extends TrampolineEntity implements UserDetails {
 
-	//@NotBlank
-	//@Length(min = 3, max = 32)
 	@PersonalData
 	@Column(name = "username", nullable = false, unique = true, updatable = false)
 	private String username;
 
-	//@Email
 	@PersonalData
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
