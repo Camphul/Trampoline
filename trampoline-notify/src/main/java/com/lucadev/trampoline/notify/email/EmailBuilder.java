@@ -35,9 +35,11 @@ public final class EmailBuilder {
 	 * @param emailService email service.
 	 * @param configuration the email properties.
 	 */
-	private EmailBuilder(EmailService emailService, EmailConfigurationProperties configuration) {
+	private EmailBuilder(EmailService emailService,
+			EmailConfigurationProperties configuration) {
 		if (emailService == null) {
-			throw new NullPointerException("Could not construct EmailBuilder: emailService may not be null.");
+			throw new NullPointerException(
+					"Could not construct EmailBuilder: emailService may not be null.");
 		}
 		this.emailService = emailService;
 		this.model = new HashMap<>();
@@ -51,8 +53,7 @@ public final class EmailBuilder {
 	 * @param configurationProperties configuration for defaults and such.
 	 * @return new email builder.
 	 */
-	public static EmailBuilder create(
-			EmailService emailService,
+	public static EmailBuilder create(EmailService emailService,
 			EmailConfigurationProperties configurationProperties) {
 		return new EmailBuilder(emailService, configurationProperties);
 	}
@@ -133,7 +134,8 @@ public final class EmailBuilder {
 	 * @throws MessagingException when we failed to send the email.
 	 */
 	public void send() throws MessagingException {
-		this.emailService.send(this.from, this.to, this.subject, this.template, this.model);
+		this.emailService.send(this.from, this.to, this.subject, this.template,
+				this.model);
 	}
 
 	/**
@@ -141,7 +143,8 @@ public final class EmailBuilder {
 	 * @throws MessagingException when we failed to send the email.
 	 */
 	public void sendAsync() throws MessagingException {
-		this.emailService.sendAsync(this.from, this.to, this.subject, this.template, this.model);
+		this.emailService.sendAsync(this.from, this.to, this.subject, this.template,
+				this.model);
 	}
 
 }

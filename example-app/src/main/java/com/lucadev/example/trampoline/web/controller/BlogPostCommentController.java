@@ -81,8 +81,7 @@ public class BlogPostCommentController {
 					.withSubject("New comment made on your blogpost.")
 					.withAttribute("username", blogPost.getAuthor().getUsername())
 					.withAttribute("poster", author.getUsername())
-					.withTemplate("add_comment")
-			.send();
+					.withTemplate("add_comment").send();
 		}
 		catch (MessagingException e) {
 			e.printStackTrace();

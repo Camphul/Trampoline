@@ -25,4 +25,5 @@ public class BlogPostUserActivityListener implements UserActivityEventListener {
 	public void handle(UserActivityEvent event) {
 		log.info("BlogPost event: {}", event.getDescription());
 	}
+
 }

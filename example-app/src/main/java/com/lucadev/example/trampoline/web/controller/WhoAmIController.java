@@ -34,7 +34,8 @@ public class WhoAmIController {
 	@PrePolicy("GET_WHO_AM_I") // Check if we are allowed to access this endpoint before
 								// invocation
 	public UserSummaryDto whoAmI() throws MessagingException {
-		this.emailService.builder().to("user@example.com").withSubject("WhoAmI Accessed").sendAsync();
+		this.emailService.builder().to("user@example.com").withSubject("WhoAmI Accessed")
+				.sendAsync();
 		// Get current user or throw an exception(since we cant recover from null)
 		User currentUser = this.userService.currentUserOrThrow();
 		return this.userMapper.toSummary(currentUser);

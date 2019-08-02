@@ -24,4 +24,5 @@ public class WhoAmIUserActivityListener implements UserActivityEventListener {
 	public void handle(UserActivityEvent event) {
 		log.info("Handled GET_WHO_AM_I user activity.");
 	}
+
 }

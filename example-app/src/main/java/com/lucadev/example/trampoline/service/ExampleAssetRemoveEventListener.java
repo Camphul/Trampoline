@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class ExampleAssetRemoveEventListener implements AssetRemoveEventListener {
+
 	@Override
 	public void onApplicationEvent(AssetEvent.Remove remove) {
 		log.info("Removing asset {}", remove.getAssetMetaData().getOriginalFilename());
 	}
+
 }

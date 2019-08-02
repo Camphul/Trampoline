@@ -1,7 +1,11 @@
 package com.lucadev.trampoline.assetstore;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

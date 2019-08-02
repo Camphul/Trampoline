@@ -34,7 +34,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	 * @param httpServletRequest http request.
 	 * @param httpServletResponse http response.
 	 * @param filterChain security chain.
-	 * @throws ServletException when an exception is raised by authorizing or by the chain.
+	 * @throws ServletException when an exception is raised by authorizing or by the
+	 * chain.
 	 * @throws IOException when an exception is raised by authorizing or by the chain.
 	 */
 	@Override
@@ -42,22 +43,22 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-			//Obtain JWT
+			// Obtain JWT
 			Optional<Authentication> token = this.tokenService
 					.getAuthenticationToken(httpServletRequest);
 
-			//Check if there even is a token present.
+			// Check if there even is a token present.
 			if (!token.isPresent()) {
 				log.warn("Could not authenticate null JWT token.");
 				filterChain.doFilter(httpServletRequest, httpServletResponse);
 				return;
 			}
 
-			//Authenticate the token.
+			// Authenticate the token.
 			Authentication authentication = this.authenticationManager
 					.authenticate(token.get());
 
-			//Set authentication after obtaining the auth token.
+			// Set authentication after obtaining the auth token.
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			log.debug("Set the authentication object.");
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
