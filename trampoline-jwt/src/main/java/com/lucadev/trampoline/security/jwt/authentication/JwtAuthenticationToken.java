@@ -1,11 +1,11 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
 import com.lucadev.trampoline.security.jwt.JwtPayload;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -18,6 +18,7 @@ import java.util.Collection;
  */
 @ToString
 @Getter
+@EqualsAndHashCode
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
 	private final JwtPayload jwtPayload;
@@ -29,7 +30,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 * @param jwtPayload the JWT representation.
 	 */
 	public JwtAuthenticationToken(JwtPayload jwtPayload) {
-		super(AuthorityUtils.NO_AUTHORITIES);
+		super(jwtPayload.getAuthorities());
 		this.jwtPayload = jwtPayload;
 		this.principal = jwtPayload.getUsername();
 	}
@@ -49,12 +50,12 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	/**
-	 * Never pass credentials in JWT.
-	 * @return user credentials. NA in JWT.
+	 * Authentication credentials.
+	 * @return authorities.
 	 */
 	@Override
 	public Object getCredentials() {
-		return "N/A";
+		return this.jwtPayload.getAuthorities();
 	}
 
 	/**
@@ -76,8 +77,8 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	/**
-	 * Auth details, jwt token when authenticated. Else {@code super.getDetails();}
-	 * @return user details.
+	 * Jwt payload when authenticated. Else {@code super.getDetails();}
+	 * @return jwt payload data.
 	 */
 	@Override
 	public Object getDetails() {

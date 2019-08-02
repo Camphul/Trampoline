@@ -1,8 +1,8 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationFilter;
 import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
-import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,10 +105,10 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 
 	/**
 	 * Create our JWT filter.
-	 * @return a {@link JwtAuthorizationFilter}
+	 * @return a {@link JwtAuthenticationFilter}
 	 */
 	protected Filter filter() {
-		return new JwtAuthorizationFilter(this.authenticationManager, this.tokenService);
+		return new JwtAuthenticationFilter(this.authenticationManager, this.tokenService);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -24,8 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,7 +96,7 @@ public class JwtTokenService implements TokenService {
 		final Claims claims = getAllTokenClaims(token);
 
 		return Jwts.builder().setClaims(claims).setIssuedAt(createdDate)
-				.setExpiration(getExpiryDate(createdDate)).signWith(getSignKey())
+				.setExpiration(calculateExpiryDate(createdDate)).signWith(getSignKey())
 				.compact();
 	}
 
@@ -124,7 +127,7 @@ public class JwtTokenService implements TokenService {
 	private String generateToken(Map<String, Object> claims, String subject) {
 		// Since JJWT does not support java 8 time api yet.
 		final Date createdDate = new Date(this.timeProvider.unix());
-		final Date expirationDate = getExpiryDate(createdDate);
+		final Date expirationDate = calculateExpiryDate(createdDate);
 
 		return Jwts.builder().setClaims(claims).setSubject(subject)
 				.setIssuedAt(createdDate).setExpiration(expirationDate)
@@ -132,8 +135,7 @@ public class JwtTokenService implements TokenService {
 	}
 
 	private boolean isTokenRefreshable(JwtPayload token) {
-		return (!isPastExpiryDate(token.getExpirationDate())
-				|| token.isIgnorableExpiration());
+		return (!isExpired(token.getExpirationDate()) || token.isIgnorableExpiration());
 	}
 
 	/**
@@ -145,7 +147,7 @@ public class JwtTokenService implements TokenService {
 	public JwtPayload parseToken(String token) {
 		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
 				.getClaims();
-		final Claims claims = getAllTokenClaims(token);
+		Claims claims = getAllTokenClaims(token);
 		JwtPayload jwtPayload = new JwtPayload();
 		jwtPayload.setRawToken(token);
 		jwtPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
@@ -153,11 +155,19 @@ public class JwtTokenService implements TokenService {
 		jwtPayload.setExpirationDate(claims.getExpiration());
 		jwtPayload.setIgnorableExpiration(
 				claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
-		jwtPayload.setAuthorities(
-				claims.get(claimConfig.getAuthorities(), ArrayList.class));
+		Collection<GrantedAuthority> authorities = ((List<String>) claims
+				.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
+				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		jwtPayload.setAuthorities(authorities);
 		return jwtPayload;
 	}
 
+	/**
+	 * Simply obtain the JWT payload from the header.
+	 *
+	 * @param request http request from the client.
+	 * @return JWT payload.
+	 */
 	@Override
 	public JwtPayload parseToken(HttpServletRequest request) {
 		final String requestHeader = request.getHeader(this.properties.getHeader());
@@ -169,21 +179,19 @@ public class JwtTokenService implements TokenService {
 			String authToken = parseTokenHeader(requestHeader);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException(
-						"Auth token is null.");
+						"Authentication token was not found inside header.");
 			}
 			try {
 				return parseToken(authToken);
+			} catch (IllegalArgumentException e) {
+				throw new BadCredentialsException(
+						"Failed to parse token: " + e.getMessage());
+			} catch (ExpiredJwtException e) {
+				throw new BadCredentialsException("Invalid token: token is expired.");
 			}
-			catch (IllegalArgumentException e) {
-				throw new BadCredentialsException("Could not parse token");
-			}
-			catch (ExpiredJwtException e) {
-				throw new BadCredentialsException("Token is expired");
-			}
-		}
-		else {
+		} else {
 			throw new AuthenticationCredentialsNotFoundException(
-					"Could not find bearer string.");
+					"Could not find bearer string inside header.");
 		}
 	}
 
@@ -196,7 +204,7 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
 		return (user.getUsername().equals(jwtPayload.getUsername())
-				&& (!isPastExpiryDate(jwtPayload.getExpirationDate())
+				&& (!isExpired(jwtPayload.getExpirationDate())
 						|| jwtPayload.isIgnorableExpiration()));
 	}
 
@@ -236,7 +244,7 @@ public class JwtTokenService implements TokenService {
 	 * @param expiration expiration date.
 	 * @return if current datetime is before expiration.
 	 */
-	private boolean isPastExpiryDate(Date expiration) {
+	private boolean isExpired(Date expiration) {
 		// Since JJWT does not support Java 8 time API for now.
 		Date current = new Date(this.timeProvider.unix());
 		return expiration.before(current);
@@ -248,7 +256,7 @@ public class JwtTokenService implements TokenService {
 	 * @param createdDate jwt creation date.
 	 * @return expiration date.
 	 */
-	private Date getExpiryDate(Date createdDate) {
+	private Date calculateExpiryDate(Date createdDate) {
 		long timeoutMilliseconds = this.properties.getTokenTimeout() * 1000L;
 		return new Date(createdDate.getTime() + timeoutMilliseconds);
 	}

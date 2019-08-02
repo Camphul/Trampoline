@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.authorization;
+package com.lucadev.trampoline.security.jwt.authentication;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final AuthenticationManager authenticationManager;
 

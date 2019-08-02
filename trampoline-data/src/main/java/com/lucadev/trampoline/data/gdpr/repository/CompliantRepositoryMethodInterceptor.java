@@ -48,7 +48,6 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 
 	/**
 	 * Registers methods which we will intercept. Will improve performance.
-	 *
 	 * @param method method to cache.
 	 */
 	public void registerQueryMethodForIntercept(Method method) {
@@ -64,7 +63,6 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 
 	/**
 	 * Resolve parameter indices which need encryption.
-	 *
 	 * @param parameters the method parameters.
 	 * @return array of indices which require encryption.
 	 */
@@ -89,7 +87,6 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 	/**
 	 * Not to be confused with Java method descriptions. This simply contains classname
 	 * and methodname.
-	 *
 	 * @param method method to get description of.
 	 * @return classname and method name.
 	 */

@@ -89,7 +89,7 @@ public class User extends TrampolineEntity implements UserDetails {
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		//Check if authorities was already calculated.
+		// Check if authorities was already calculated.
 		if (authorities == null) {
 			this.authorities = new ArrayList<>();
 			getRoles().forEach(role -> {
@@ -102,8 +102,8 @@ public class User extends TrampolineEntity implements UserDetails {
 	}
 
 	/**
-	 * Refresh the authorities collection.
-	 * Useful when roles or privileges have been modified.
+	 * Refresh the authorities collection. Useful when roles or privileges have been
+	 * modified.
 	 */
 	public void refreshAuthorities() {
 		this.authorities = null;

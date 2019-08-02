@@ -58,4 +58,5 @@ public class Role extends TrampolineEntity {
 	public Role(String name) {
 		this.name = name;
 	}
+
 }

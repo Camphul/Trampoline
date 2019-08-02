@@ -1,10 +1,11 @@
 package com.lucadev.trampoline.security.jwt;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Representation of the data inside the JWT.
@@ -28,7 +29,7 @@ public class JwtPayload implements Serializable {
 	/**
 	 * Subject authorities.
 	 */
-	private List<String> authorities;
+	private Collection<GrantedAuthority> authorities;
 
 	/**
 	 * Token issue date.

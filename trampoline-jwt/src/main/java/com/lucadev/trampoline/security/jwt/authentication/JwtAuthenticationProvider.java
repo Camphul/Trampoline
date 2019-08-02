@@ -56,7 +56,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	/**
-	 * Authorize when already owner of a JWT token.
+	 * Authenticate existing token in the form of a JWT payload and issue a jwt
+	 * authentication.
 	 * @param jwtPayload the JWT data.
 	 * @return the new {@link Authentication} object
 	 */
@@ -68,7 +69,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	/**
-	 * Authenticate a user.
+	 * Authorize authentication and then issue a new JWT.
 	 * @param authentication the auth object.
 	 * @return a jwt auth object.
 	 */
