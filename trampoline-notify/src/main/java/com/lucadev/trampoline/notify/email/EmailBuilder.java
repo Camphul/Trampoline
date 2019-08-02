@@ -50,6 +50,7 @@ public final class EmailBuilder {
 
 	/**
 	 * Create a new builder.
+	 * @param emailService email service.
 	 * @param configurationProperties configuration for defaults and such.
 	 * @return new email builder.
 	 */

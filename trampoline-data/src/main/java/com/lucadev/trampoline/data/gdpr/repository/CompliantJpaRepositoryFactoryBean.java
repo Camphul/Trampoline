@@ -13,11 +13,11 @@ import java.io.Serializable;
 /**
  * Custom {@link JpaRepositoryFactoryBean} used to add custom advice.
  *
- * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
- * @since 8/2/19
  * @param <R> repository type
  * @param <T> entity type
  * @param <I> entity primary key type
+ * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
+ * @since 8/2/19
  */
 public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
 		extends JpaRepositoryFactoryBean<R, T, I> {
@@ -37,7 +37,7 @@ public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
 
 	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
 		RepositoryFactorySupport factory = super.createRepositoryFactory(em);
-		factory.addRepositoryProxyPostProcessor(compliantRepositoryProxyPostProcessor);
+		factory.addRepositoryProxyPostProcessor(this.compliantRepositoryProxyPostProcessor);
 		return factory;
 	}
 

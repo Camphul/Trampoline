@@ -30,7 +30,7 @@ public class CipherProvider {
 		// do some encryption
 		Key key = new SecretKeySpec(
 				this.cryptoConfigurationProperties.getKey().getBytes(),
-				cryptoConfigurationProperties.getAlgorithm());
+				this.cryptoConfigurationProperties.getAlgorithm());
 		try {
 			Cipher c = Cipher.getInstance(this.cryptoConfigurationProperties.getCipher());
 			c.init(mode, key);

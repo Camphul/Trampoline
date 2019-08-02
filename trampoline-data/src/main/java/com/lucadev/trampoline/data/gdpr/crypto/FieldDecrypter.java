@@ -17,7 +17,7 @@ public class FieldDecrypter {
 	private final StringCrypto stringCrypto;
 
 	/**
-	 * Decrypt
+	 * Decrypt.
 	 * @param state entity state.
 	 * @param propertyNames entity property names.
 	 * @param entity actual entity.
@@ -43,7 +43,7 @@ public class FieldDecrypter {
 				throw new IllegalStateException(
 						"Encrypted annotation was used on a non-String field");
 			}
-			state[propertyIndex] = stringCrypto.decrypt(currentValue.toString());
+			state[propertyIndex] = this.stringCrypto.decrypt(currentValue.toString());
 		}
 	}
 

@@ -1,6 +1,8 @@
 package com.lucadev.trampoline.data.gdpr.crypto;
 
 import com.lucadev.trampoline.data.gdpr.PersonalData;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Field;
@@ -11,12 +13,13 @@ import java.lang.reflect.Field;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/1/19
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EncryptionUtils {
 
 	/**
 	 * Check if the annotation {@link PersonalData} is present on a given field.
-	 * @param field
-	 * @return
+	 * @param field field to check.
+	 * @return if {@link PersonalData} annotation is present on field.
 	 */
 	public static boolean isFieldEncrypted(Field field) {
 		return AnnotationUtils.findAnnotation(field, PersonalData.class) != null;

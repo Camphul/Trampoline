@@ -37,7 +37,7 @@ public class FieldEncrypter {
 				throw new IllegalStateException(
 						"Encrypted annotation was used on a non-String field");
 			}
-			state[propertyIndex] = stringCrypto.encrypt(currentValue.toString());
+			state[propertyIndex] = this.stringCrypto.encrypt(currentValue.toString());
 		}
 	}
 
