@@ -2,10 +2,9 @@ package com.lucadev.trampoline.security.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +26,10 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "TRAMPOLINE_ROLE")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Role extends TrampolineEntity {
 
 	/**
@@ -39,6 +37,7 @@ public class Role extends TrampolineEntity {
 	 */
 	@NotBlank
 	@Size(min = 2, max = 64)
+	@EqualsAndHashCode.Include
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 
@@ -59,35 +58,4 @@ public class Role extends TrampolineEntity {
 	public Role(String name) {
 		this.name = name;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof Role)) {
-			return false;
-		}
-		if (!super.equals(o)) {
-			return false;
-		}
-
-		Role role = (Role) o;
-
-		if (this.name != null ? !this.name.equals(role.name) : role.name != null) {
-			return false;
-		}
-		return this.privileges != null ? this.privileges.equals(role.privileges)
-				: role.privileges == null;
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = super.hashCode();
-		result = 31 * result + (this.name != null ? this.name.hashCode() : 0);
-		result = 31 * result + (this.privileges != null ? this.privileges.hashCode() : 0);
-		return result;
-	}
-
 }

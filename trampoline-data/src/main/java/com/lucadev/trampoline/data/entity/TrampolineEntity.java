@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.data.entity;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +28,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TrampolineEntity implements Serializable {
@@ -39,6 +41,7 @@ public abstract class TrampolineEntity implements Serializable {
 	@Column(name = "id", updatable = false, nullable = false,
 			columnDefinition = "BINARY(16)")
 	@Setter(AccessLevel.PROTECTED)
+	@EqualsAndHashCode.Include
 	private UUID id;
 
 	/**
@@ -57,41 +60,5 @@ public abstract class TrampolineEntity implements Serializable {
 	@Column(name = "auditing_updated_at", nullable = false)
 	@PastOrPresent
 	private Instant updated;
-
-	/**
-	 * Equals implementation which only checks the id, created date and modified date.
-	 * @param o the object to compare to.
-	 * @return if the objects are equal.
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		TrampolineEntity that = (TrampolineEntity) o;
-
-		if (this.id != null ? !this.id.equals(that.id) : that.id != null) {
-			return false;
-		}
-		if (this.created != null ? !this.created.equals(that.created)
-				: that.created != null) {
-			return false;
-		}
-		return this.updated != null ? this.updated.equals(that.updated)
-				: that.updated == null;
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = this.id != null ? this.id.hashCode() : 0;
-		result = 31 * result + (this.created != null ? this.created.hashCode() : 0);
-		result = 31 * result + (this.updated != null ? this.updated.hashCode() : 0);
-		return result;
-	}
 
 }

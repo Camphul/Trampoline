@@ -72,7 +72,7 @@ public class TrampolineUserService implements UserService {
 			return Optional.empty();
 		}
 
-		return User.from((UserDetails) principal);
+		return User.from(principal);
 	}
 
 	/**
@@ -112,7 +112,9 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public User update(User user) {
-		return this.userRepository.save(user);
+		user = this.userRepository.save(user);
+		user.refreshAuthorities();
+		return user;
 	}
 
 	/**

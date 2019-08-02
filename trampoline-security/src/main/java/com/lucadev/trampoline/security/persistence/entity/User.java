@@ -2,6 +2,8 @@ package com.lucadev.trampoline.security.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.data.gdpr.PersonalData;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import java.time.Instant;
@@ -33,9 +36,11 @@ import java.util.Optional;
 @Table(name = "TRAMPOLINE_USER")
 @Setter
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class User extends TrampolineEntity implements UserDetails {
 
 	@PersonalData
+	@EqualsAndHashCode.Include
 	@Column(name = "username", nullable = false, unique = true, updatable = false)
 	private String username;
 
@@ -75,59 +80,58 @@ public class User extends TrampolineEntity implements UserDetails {
 	@PastOrPresent
 	private Instant lastSeen;
 
+	@Transient
+	@Setter(AccessLevel.PRIVATE)
+	private Collection<GrantedAuthority> authorities;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		getRoles().forEach(role -> {
-			authorities.add(new SimpleGrantedAuthority(role.getName()));
-			role.getPrivileges().forEach(privilege -> authorities
-					.add(new SimpleGrantedAuthority(privilege.getName())));
-		});
-		return authorities;
+		//Check if authorities was already calculated.
+		if (authorities == null) {
+			this.authorities = new ArrayList<>();
+			getRoles().forEach(role -> {
+				this.authorities.add(new SimpleGrantedAuthority(role.getName()));
+				role.getPrivileges().forEach(privilege -> authorities
+						.add(new SimpleGrantedAuthority(privilege.getName())));
+			});
+		}
+		return this.authorities;
 	}
 
+	/**
+	 * Refresh the authorities collection.
+	 * Useful when roles or privileges have been modified.
+	 */
+	public void refreshAuthorities() {
+		this.authorities = null;
+		getAuthorities();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isAccountNonExpired() {
 		return !this.expired;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isAccountNonLocked() {
 		return !this.locked;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return !this.credentialsExpired;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof User)) {
-			return false;
-		}
-		if (!super.equals(o)) {
-			return false;
-		}
-
-		User user = (User) o;
-
-		return this.username != null ? this.username.equals(user.username)
-				: user.username == null;
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = super.hashCode();
-		result = 31 * result + (this.username != null ? this.username.hashCode() : 0);
-		return result;
 	}
 
 	/**
