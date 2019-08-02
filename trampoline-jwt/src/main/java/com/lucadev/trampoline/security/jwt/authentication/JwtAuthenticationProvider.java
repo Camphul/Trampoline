@@ -29,7 +29,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 	private final TokenService tokenService;
 
-	private final UserDetailsService userService;
+	private final UserDetailsService userDetailsService;
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -62,7 +62,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	 * @return the new {@link Authentication} object
 	 */
 	private Authentication authorizeToken(JwtPayload jwtPayload) {
-		UserDetails user = this.userService.loadUserByUsername(jwtPayload.getUsername());
+		UserDetails user = this.userDetailsService.loadUserByUsername(jwtPayload.getUsername());
 		validateToken(user, jwtPayload);
 		this.userDetailsChecker.check(user);
 		return new JwtAuthenticationToken(user.getAuthorities(), user, jwtPayload);
@@ -102,7 +102,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	private UserDetails getUserDetails(Authentication authentication) {
 		String name = authentication.getName();
 		String credentials = String.valueOf(authentication.getCredentials());
-		UserDetails userDetails = this.userService.loadUserByUsername(name);
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(name);
 
 		boolean correctCredentials = this.passwordEncoder.matches(credentials,
 				userDetails.getPassword());

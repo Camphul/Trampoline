@@ -5,8 +5,6 @@ import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -20,8 +18,7 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public interface UserService
-		extends UserDetailsService, AuthenticationUserDetailsService<Authentication> {
+public interface UserService {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}.
@@ -44,7 +41,14 @@ public interface UserService
 	Optional<User> findById(UUID subject);
 
 	/**
-	 * Find a {@link User} by it's email.
+	 * Find a {@link User} by its username.
+	 * @param username the user's username.
+	 * @return the found user.
+	 */
+	Optional<User> findByUsername(String username);
+
+	/**
+	 * Find a {@link User} by its email.
 	 * @param email the user email.
 	 * @return the found user.
 	 */
@@ -150,6 +154,14 @@ public interface UserService
 	 * @return the updated {@link User}
 	 */
 	User setCredentialsExpired(User user, boolean expired);
+
+	/**
+	 * Find user by identifier which is based on the {@link IdentificationField}.
+	 *
+	 * @param identifier user identifier.
+	 * @return the user.
+	 */
+	Optional<User> findByIdentificationField(String identifier);
 
 	/**
 	 * Current {@link IdentificationField} being used.

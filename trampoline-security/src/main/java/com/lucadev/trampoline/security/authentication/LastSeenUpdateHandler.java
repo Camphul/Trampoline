@@ -28,6 +28,9 @@ public class LastSeenUpdateHandler implements AuthenticationSuccessListener {
 	@Override
 	public void onAuthenticationSuccess(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
+		if (principal instanceof SimpleUserDetails) {
+			principal = ((SimpleUserDetails) principal).getUser();
+		}
 		if (!(principal instanceof User)) {
 			log.debug("Skipping update because principal is not a user.");
 			return;

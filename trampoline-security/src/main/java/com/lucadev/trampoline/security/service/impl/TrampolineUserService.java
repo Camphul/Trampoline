@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,16 +45,8 @@ public class TrampolineUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String s) {
-		Optional<User> user = Optional.empty();
-		if (this.identificationField == IdentificationField.USERNAME) {
-			user = this.userRepository.findOneByUsername(s);
-		}
-		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
-			user = this.userRepository.findOneByUsernameOrEmail(s);
-		}
-		return user.orElseThrow(() -> new UsernameNotFoundException(
-				"Could not find user with username " + s));
+	public Optional<User> findByUsername(String username) {
+		return userRepository.findOneByUsername(username);
 	}
 
 	/**
@@ -67,7 +58,7 @@ public class TrampolineUserService implements UserService {
 		if (auth == null) {
 			return Optional.empty();
 		}
-		UserDetails principal = loadUserDetails(auth);
+		UserDetails principal = ((UserDetails) auth.getPrincipal());
 		if (principal == null) {
 			return Optional.empty();
 		}
@@ -217,6 +208,16 @@ public class TrampolineUserService implements UserService {
 		return update(user);
 	}
 
+	@Override
+	public Optional<User> findByIdentificationField(String identifier) {
+		if (this.identificationField == IdentificationField.USERNAME) {
+			return findByUsername(identifier);
+		} else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
+			return this.userRepository.findOneByUsernameOrEmail(identifier);
+		}
+		throw new IllegalStateException("Invalid identification field. Cannot find user.");
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -231,20 +232,6 @@ public class TrampolineUserService implements UserService {
 	@Override
 	public void setIdentificationField(IdentificationField identificationField) {
 		this.identificationField = identificationField;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public UserDetails loadUserDetails(Authentication token)
-			throws UsernameNotFoundException {
-		Object principal = token.getPrincipal();
-		if (token instanceof User) {
-			return (UserDetails) principal;
-		}
-
-		return loadUserByUsername(token.getName());
 	}
 
 }

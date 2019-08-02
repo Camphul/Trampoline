@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.data.gdpr.PersonalData;
+import com.lucadev.trampoline.security.authentication.SimpleUserDetails;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,7 +38,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class User extends TrampolineEntity implements UserDetails {
+public class User extends TrampolineEntity {
 
 	@PersonalData
 	@EqualsAndHashCode.Include
@@ -87,7 +88,6 @@ public class User extends TrampolineEntity implements UserDetails {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// Check if authorities was already calculated.
 		if (authorities == null) {
@@ -113,7 +113,6 @@ public class User extends TrampolineEntity implements UserDetails {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public boolean isAccountNonExpired() {
 		return !this.expired;
 	}
@@ -121,7 +120,6 @@ public class User extends TrampolineEntity implements UserDetails {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public boolean isAccountNonLocked() {
 		return !this.locked;
 	}
@@ -129,7 +127,6 @@ public class User extends TrampolineEntity implements UserDetails {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public boolean isCredentialsNonExpired() {
 		return !this.credentialsExpired;
 	}
@@ -142,8 +139,8 @@ public class User extends TrampolineEntity implements UserDetails {
 	 * @see UserDetails
 	 */
 	public static Optional<User> from(UserDetails userDetails) {
-		if (userDetails instanceof User) {
-			return Optional.of((User) userDetails);
+		if (userDetails instanceof SimpleUserDetails) {
+			return Optional.of(((SimpleUserDetails) userDetails).getUser());
 		}
 		return Optional.empty();
 	}
