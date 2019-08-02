@@ -11,6 +11,24 @@
       "type": "java.lang.Boolean",
       "description": "Configure debug output for security.",
       "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.crypto.enabled",
+      "type": "java.lang.Boolean",
+      "description": "If CryptoConverter should be enabled to encrypt data.",
+      "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties$CryptoSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.crypto.algorithm",
+      "type": "java.lang.String",
+      "description": "Cryptographic algorithm used by CryptoConverter.",
+      "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties$CryptoSecurityConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.crypto.password",
+      "type": "java.lang.String",
+      "description": "Cryptographic key used by CryptoConverter",
+      "sourceType": "com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties$CryptoSecurityConfigurationProperties"
     }
   ]
 }

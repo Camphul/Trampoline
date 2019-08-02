@@ -1,18 +1,29 @@
 package com.lucadev.trampoline.security.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
+import com.lucadev.trampoline.data.gdpr.PersonalData;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A {@link TrampolineEntity} and {@link UserDetails} to easily manage users.
@@ -26,12 +37,14 @@ import java.util.*;
 @Getter
 public class User extends TrampolineEntity implements UserDetails {
 
-	@NotBlank
-	@Length(min = 3, max = 32)
+	//@NotBlank
+	//@Length(min = 3, max = 32)
+	@PersonalData
 	@Column(name = "username", nullable = false, unique = true, updatable = false)
 	private String username;
 
-	@Email
+	//@Email
+	@PersonalData
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 

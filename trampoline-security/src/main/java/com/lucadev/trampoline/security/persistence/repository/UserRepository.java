@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.persistence.repository;
 
+import com.lucadev.trampoline.data.gdpr.PersonalData;
 import com.lucadev.trampoline.data.repository.TrampolineRepository;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import org.springframework.data.jpa.repository.Query;
@@ -21,14 +22,14 @@ public interface UserRepository extends TrampolineRepository<User> {
 	 * @param username the {@link User#getUsername()}
 	 * @return the found {@link User}
 	 */
-	Optional<User> findOneByUsername(String username);
+	Optional<User> findOneByUsername(@PersonalData String username);
 
 	/**
 	 * Find user by its email.
 	 * @param email user email
 	 * @return resolved user in an optional.
 	 */
-	Optional<User> findOneByEmail(String email);
+	Optional<User> findOneByEmail(@PersonalData String email);
 
 	/**
 	 * Find user by username or by email.
@@ -36,6 +37,6 @@ public interface UserRepository extends TrampolineRepository<User> {
 	 * @return resolved user in an optional.
 	 */
 	@Query("from User u where u.username = :identifier or u.email = :identifier")
-	Optional<User> findOneByUsernameOrEmail(String identifier);
+	Optional<User> findOneByUsernameOrEmail(@PersonalData String identifier);
 
 }

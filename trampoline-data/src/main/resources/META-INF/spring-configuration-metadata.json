@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "trampoline.data.gdpr.algorithm",
+      "type": "java.lang.String",
+      "description": "Cryptographic algorithm used by CryptoConverter.",
+      "sourceType": "com.lucadev.trampoline.data.gdpr.configuration.CryptoConfigurationProperties"
+    },
+    {
+      "name": "trampoline.data.gdpr.key",
+      "type": "java.lang.String",
+      "description": "Cryptographic key used by CryptoConverter",
+      "sourceType": "com.lucadev.trampoline.data.gdpr.configuration.CryptoConfigurationProperties"
+    }
+  ]
+}
