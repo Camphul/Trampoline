@@ -17,7 +17,11 @@ public class CryptoConfigurationProperties {
 
 	@NotBlank
 	@NotNull
-	private String algorithm = "AES/ECB/PKCS5Padding";
+	private String cipher = "AES/ECB/PKCS5Padding";
+
+	@NotNull
+	@NotBlank
+	private String algorithm = "AES";
 
 	// Crypto key
 	@NotBlank

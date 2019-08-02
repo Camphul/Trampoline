@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.data.gdpr;
 
 import com.lucadev.trampoline.data.gdpr.configuration.CryptoConfigurationProperties;
+import com.lucadev.trampoline.data.gdpr.crypto.CipherProvider;
 import com.lucadev.trampoline.data.gdpr.crypto.FieldDecrypter;
 import com.lucadev.trampoline.data.gdpr.crypto.FieldEncrypter;
 import com.lucadev.trampoline.data.gdpr.crypto.StringCrypto;
@@ -19,21 +20,27 @@ import javax.persistence.EntityManagerFactory;
 class GdprComplianceConfiguration {
 
 	@Bean
-	public StringCrypto dataCrypto(
+	public CipherProvider cipherProvider(
 			CryptoConfigurationProperties cryptoConfigurationProperties) {
-		return new StringCrypto(cryptoConfigurationProperties);
+		return new CipherProvider(cryptoConfigurationProperties);
+	}
+
+	@Bean
+	public StringCrypto stringCrypto(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new StringCrypto(cipherProvider(cryptoConfigurationProperties));
 	}
 
 	@Bean
 	public FieldDecrypter fieldDecrypter(
 			CryptoConfigurationProperties cryptoConfigurationProperties) {
-		return new FieldDecrypter(dataCrypto(cryptoConfigurationProperties));
+		return new FieldDecrypter(stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean
 	public FieldEncrypter fieldEncrypter(
 			CryptoConfigurationProperties cryptoConfigurationProperties) {
-		return new FieldEncrypter(dataCrypto(cryptoConfigurationProperties));
+		return new FieldEncrypter(stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean
@@ -49,7 +56,7 @@ class GdprComplianceConfiguration {
 	public CompliantRepositoryMethodInterceptor compliantRepositoryMethodInterceptor(
 			CryptoConfigurationProperties cryptoConfigurationProperties) {
 		return new CompliantRepositoryMethodInterceptor(
-				dataCrypto(cryptoConfigurationProperties));
+				stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean

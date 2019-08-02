@@ -1,10 +1,8 @@
 package com.lucadev.trampoline.data.gdpr.crypto;
 
-import com.lucadev.trampoline.data.gdpr.configuration.CryptoConfigurationProperties;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.util.Base64;
 
 /**
@@ -13,19 +11,21 @@ import java.util.Base64;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/1/19
  */
+@Slf4j
 public class StringCrypto {
 
-	private final String algorithm;
+	private final Cipher encryptCipher;
 
-	private final byte[] key;
+	private final Cipher decryptCipher;
 
 	/**
-	 * Construct String crypto.
-	 * @param cryptoConfigurationProperties crypto properties.
+	 * Construct by creating necessary ciphers.
+	 * @param cipherProvider cipher provider.
 	 */
-	public StringCrypto(CryptoConfigurationProperties cryptoConfigurationProperties) {
-		this.algorithm = cryptoConfigurationProperties.getAlgorithm();
-		this.key = cryptoConfigurationProperties.getKey().getBytes();
+	public StringCrypto(CipherProvider cipherProvider) {
+		this.encryptCipher = cipherProvider.createCipher(Cipher.ENCRYPT_MODE);
+		this.decryptCipher = cipherProvider.createCipher(Cipher.DECRYPT_MODE);
+		log.debug("Created encryption and decryption ciphers.");
 	}
 
 	/**
@@ -35,13 +35,12 @@ public class StringCrypto {
 	 */
 	public String encrypt(String input) {
 		// do some encryption
-		Key key = new SecretKeySpec(this.key, "AES");
 		try {
-			Cipher c = Cipher.getInstance(algorithm);
-			c.init(Cipher.ENCRYPT_MODE, key);
-			return Base64.getEncoder().encodeToString(c.doFinal(input.getBytes()));
+			return Base64.getEncoder()
+					.encodeToString(this.encryptCipher.doFinal(input.getBytes()));
 		}
 		catch (Exception e) {
+			log.error("Failed to encrypt input.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -53,13 +52,12 @@ public class StringCrypto {
 	 */
 	public String decrypt(String input) {
 		// do some decryption
-		Key key = new SecretKeySpec(this.key, "AES");
 		try {
-			Cipher c = Cipher.getInstance(algorithm);
-			c.init(Cipher.DECRYPT_MODE, key);
-			return new String(c.doFinal(Base64.getDecoder().decode(input)));
+			return new String(
+					this.decryptCipher.doFinal(Base64.getDecoder().decode(input)));
 		}
 		catch (Exception e) {
+			log.error("Failed to decrypt input.", e);
 			throw new RuntimeException(e);
 		}
 	}
