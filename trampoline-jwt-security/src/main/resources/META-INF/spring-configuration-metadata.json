@@ -17,6 +17,12 @@
       "type": "java.lang.String",
       "description": "Refresh endpoint which will be appended to the base mapping.",
       "sourceType": "com.lucadev.trampoline.security.jwt.support.web.configuration.JwtWebConfigurationProperties"
+    },
+    {
+      "name": "trampoline.security.jwt.web.user-mapping",
+      "type": "java.lang.String",
+      "description": "User endpoint which will be appended to the base mapping.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.support.web.configuration.JwtWebConfigurationProperties"
     }
   ]
 }

@@ -3,7 +3,10 @@ package com.lucadev.trampoline.security.jwt.support.web.controller;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.support.web.model.TokenAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.support.web.model.UserAuthenticationRequest;
+import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
+import com.lucadev.trampoline.security.web.model.UserDto;
+import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpStatus;
@@ -33,11 +36,15 @@ import javax.validation.Valid;
 @RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController implements
-		AuthenticationController<TokenAuthenticationResponse, UserAuthenticationRequest> {
+		AuthenticationController<TokenAuthenticationResponse, UserAuthenticationRequest, UserDto> {
 
 	private final AuthenticationManager authenticationManager;
 
 	private final TokenService tokenService;
+
+	private final UserService userService;
+
+	private final UserMapper userMapper;
 
 	/**
 	 * Login with username-password.
@@ -85,6 +92,15 @@ public class JwtAuthenticationController implements
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			throw new AccessDeniedException("Could not refresh token: " + e.getMessage());
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping("${trampoline.security.jwt.web.userMapping:/user}")
+	public UserDto user(HttpServletRequest request) {
+		return this.userMapper.toDto(this.userService.currentUserOrThrow());
 	}
 
 }

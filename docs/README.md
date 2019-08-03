@@ -54,6 +54,7 @@ Properties being used are:
 - `trampoline.security.jwt.web.base-mapping`: auth basepath for authorizing and refreshing tokens, default is /auth
 - `trampoline.security.jwt.web.authorize-mapping`: auth path to obtain tokens. Will be appended to `trampoline.security.jwt.web.base-mapping`. Defaults to `/authorize`
 - `trampoline.security.jwt.web.refresh-mapping`: auth path to refresh existing tokens. Will be appended to `trampoline.security.jwt.web.base-mapping`. Defaults to `/refresh`
+- `trampoline.security.jwt.web.user-mapping`: auth path to get full user dto. Will be appended to `trampoline.security.jwt.web.base-mapping`. Defaults to `/user`
 - `trampoline.security.allow-email-identification`: allow clients to either authenticate with their username or with their email(only used in trampoline-security)
 - `trampoline.notify.email.enabled`: required to be `true` to even make use of this service.
 - `trampoline.notify.email.defaults.from`: address from which the emails are sent.
