@@ -67,7 +67,7 @@ public class TrampolineUserService implements UserService {
 			return Optional.of(((PersistentUserDetails) principal).getUser());
 		}
 
-		return this.userRepository.findOneByUsername(auth.getName());
+		return findByUsername(auth.getName());
 	}
 
 	/**
