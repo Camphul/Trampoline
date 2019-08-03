@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.logging;
 
-import com.lucadev.trampoline.security.logging.aop.UserActivityLoggingAspect;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -18,7 +17,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(UserActivityLoggingAspect.class)
+@Import(UserActivityLoggingConfiguration.class)
 public @interface EnableUserActivityLogging {
 
 }
