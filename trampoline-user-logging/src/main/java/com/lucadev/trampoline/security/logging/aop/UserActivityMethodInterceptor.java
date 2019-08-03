@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -40,8 +41,6 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 
 	private SpelExpressionParser expressionParser = new SpelExpressionParser();
 
-	private StandardEvaluationContext spelEvaluationContext;
-
 	private Map<String, Expression> spelDescriptions = new HashMap<>();
 
 	@Override
@@ -49,7 +48,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 		Method method = invocation.getMethod();
 		LogUserActivity logUserActivity = method
 				.getDeclaredAnnotation(LogUserActivity.class);
-		UserDetails principal = getCurrentUser();
+		UserDetails principal = getUserDetails();
 		Object actedUpon = null;
 		Map<String, Object> argumentMap = new HashMap<>();
 
@@ -65,7 +64,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 			argumentMap.put(param.getName(), invocation.getArguments()[i]);
 		}
 
-		ActivityMethodInvocationResult result = runWrappedMethod(invocation);
+		ActivityMethodInvocationResult result = proceed(invocation);
 
 		String description = logUserActivity.value();
 		// Description was not filled in
@@ -75,7 +74,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 		}
 
 		if (logUserActivity.spel()) {
-			description = evaluateSpelDescription(description, argumentMap);
+			description = evaluateDescription(description, argumentMap);
 		}
 
 		UserActivity userActivity = new UserActivity(result.getInvocationDetails(),
@@ -100,9 +99,9 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 	 * @param methodArguments the arguments passed to the method we're intercepting.
 	 * @return the evaluated expression.
 	 */
-	private String evaluateSpelDescription(String description,
-										   Map<String, Object> methodArguments) {
-		this.spelEvaluationContext = new StandardEvaluationContext();
+	private String evaluateDescription(String description,
+									   Map<String, Object> methodArguments) {
+		EvaluationContext spelEvaluationContext = new StandardEvaluationContext();
 		Expression expression;
 		if (this.spelDescriptions.containsKey(description)) {
 			expression = this.spelDescriptions.get(description);
@@ -112,7 +111,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 		}
 
 		try {
-			return expression.getValue(this.spelEvaluationContext, methodArguments,
+			return expression.getValue(spelEvaluationContext, methodArguments,
 					String.class);
 		} catch (EvaluationException evaluationException) {
 			return description;
@@ -126,7 +125,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 	 * @return a result containing our invocation results.
 	 * @throws Throwable when we dont want to log methods that throw exceptions.
 	 */
-	private ActivityMethodInvocationResult runWrappedMethod(MethodInvocation invocation)
+	private ActivityMethodInvocationResult proceed(MethodInvocation invocation)
 			throws Throwable {
 		Method method = invocation.getMethod();
 		Class clazz = method.getDeclaringClass();
@@ -161,7 +160,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 	 *
 	 * @return current authorized user from {@link SecurityContext}
 	 */
-	private UserDetails getCurrentUser() {
+	private UserDetails getUserDetails() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		if (securityContext == null) {
 			throw new NullPointerException(
