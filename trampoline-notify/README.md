@@ -15,7 +15,6 @@ These can be found [here](../docs/application-prod-example.configurationProperti
 Then you may want to configure some defaults such as the sender address(noreply@example.com for example).
 We have the following configurationProperties:
 
-- `trampoline.notify.email.enabled`: required to be `true` to create an email service bean.
 - `trampoline.notify.email.defaults.from`: address from which the emails are sent.
 - `trampoline.notify.email.defaults.template`: default (fallback) template to render.
 - `trampoline.notify.email.defaults.subject`: default (fallback) subject for emails. 

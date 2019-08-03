@@ -1,12 +1,6 @@
 {
   "properties": [
     {
-      "name": "trampoline.notify.email.enabled",
-      "type": "java.lang.Boolean",
-      "description": "Enable email which configures spring email when true.",
-      "sourceType": "com.lucadev.trampoline.notify.email.configuration.EmailConfigurationProperties"
-    },
-    {
       "name": "trampoline.notify.email.defaults.from",
       "type": "java.lang.String",
       "description": "The email address that all emails are being sent from.",

@@ -23,9 +23,6 @@ import javax.validation.constraints.NotBlank;
 @ConfigurationProperties(prefix = "trampoline.notify.email")
 public class EmailConfigurationProperties {
 
-	// If we should even load email.
-	private boolean enabled = false;
-
 	@Valid
 	@NestedConfigurationProperty
 	private Defaults defaults;
