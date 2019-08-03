@@ -1,9 +1,10 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
-import com.lucadev.trampoline.security.service.SimpleUserDetailsService;
+import com.lucadev.trampoline.security.service.PersistentUserDetailsService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,13 +19,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class SimpleUserDetailsServiceAutoConfiguration {
+public class PersistentUserDetailsServiceAutoConfiguration {
 
 	private final UserService userService;
 
 	@Bean
-	public UserDetailsService simpleUserDetailsService() {
-		return new SimpleUserDetailsService(this.userService);
+	@ConditionalOnMissingBean
+	public UserDetailsService userDetailsService() {
+		return new PersistentUserDetailsService(this.userService);
 	}
 
 }

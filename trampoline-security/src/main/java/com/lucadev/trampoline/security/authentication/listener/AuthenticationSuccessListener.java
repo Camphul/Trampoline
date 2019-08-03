@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.authentication;
+package com.lucadev.trampoline.security.authentication.listener;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;

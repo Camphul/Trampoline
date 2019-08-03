@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.service.impl;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationField;
-import com.lucadev.trampoline.security.authentication.SimpleUserDetails;
+import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
@@ -63,8 +63,8 @@ public class TrampolineUserService implements UserService {
 		if (principal == null) {
 			return Optional.empty();
 		}
-		if (principal instanceof SimpleUserDetails) {
-			return Optional.of(((SimpleUserDetails) principal).getUser());
+		if (principal instanceof PersistentUserDetails) {
+			return Optional.of(((PersistentUserDetails) principal).getUser());
 		}
 
 		return this.userRepository.findOneByUsername(auth.getName());

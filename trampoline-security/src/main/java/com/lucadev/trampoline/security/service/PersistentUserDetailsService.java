@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.service;
 
-import com.lucadev.trampoline.security.authentication.SimpleUserDetails;
+import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,13 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
- * Simple implementation of {@link UserDetailsService}
+ * Simple implementation of {@link UserDetailsService}.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
 @RequiredArgsConstructor
-public class SimpleUserDetailsService implements UserDetailsService {
+public class PersistentUserDetailsService implements UserDetailsService {
 
 	private final UserService userService;
 
@@ -22,6 +22,6 @@ public class SimpleUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = this.userService.findByIdentificationField(username).orElseThrow(() ->
 				new UsernameNotFoundException("Could not find user with username \"" + username + "\""));
-		return new SimpleUserDetails(user);
+		return new PersistentUserDetails(user);
 	}
 }

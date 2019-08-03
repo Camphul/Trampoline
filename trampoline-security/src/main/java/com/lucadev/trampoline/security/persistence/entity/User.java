@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.persistence.entity;
 
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.data.gdpr.PersonalData;
-import com.lucadev.trampoline.security.authentication.SimpleUserDetails;
+import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +38,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class User extends TrampolineEntity implements Serializable {
+public class User extends TrampolineEntity {
 
 	@PersonalData
 	@EqualsAndHashCode.Include
@@ -140,8 +139,8 @@ public class User extends TrampolineEntity implements Serializable {
 	 * @see UserDetails
 	 */
 	public static Optional<User> from(UserDetails userDetails) {
-		if (userDetails instanceof SimpleUserDetails) {
-			return Optional.of(((SimpleUserDetails) userDetails).getUser());
+		if (userDetails instanceof PersistentUserDetails) {
+			return Optional.of(((PersistentUserDetails) userDetails).getUser());
 		}
 		return Optional.empty();
 	}

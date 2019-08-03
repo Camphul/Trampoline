@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 /**
- * Simple {@link UserDetails} implementation.
+ * Persistent {@link UserDetails} implementation which means the actual user data is stored in a data source.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
 @RequiredArgsConstructor
-public class SimpleUserDetails implements UserDetails {
+public class PersistentUserDetails implements UserDetails {
 
 	@Getter
 	private final User user;

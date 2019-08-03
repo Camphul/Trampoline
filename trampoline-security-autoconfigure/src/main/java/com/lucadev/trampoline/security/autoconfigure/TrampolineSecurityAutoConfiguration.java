@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.autoconfigure;
 
-import com.lucadev.trampoline.security.authentication.LastSeenUpdateHandler;
+import com.lucadev.trampoline.security.authentication.listener.LastSeenUpdateHandler;
 import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;

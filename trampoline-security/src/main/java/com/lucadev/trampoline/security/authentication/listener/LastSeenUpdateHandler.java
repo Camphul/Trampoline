@@ -1,5 +1,6 @@
-package com.lucadev.trampoline.security.authentication;
+package com.lucadev.trampoline.security.authentication.listener;
 
+import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.service.time.TimeProvider;
@@ -28,8 +29,8 @@ public class LastSeenUpdateHandler implements AuthenticationSuccessListener {
 	@Override
 	public void onAuthenticationSuccess(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof SimpleUserDetails) {
-			principal = ((SimpleUserDetails) principal).getUser();
+		if (principal instanceof PersistentUserDetails) {
+			principal = ((PersistentUserDetails) principal).getUser();
 		}
 		if (!(principal instanceof User)) {
 			log.debug("Skipping update because principal is not a user.");
