@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -38,8 +37,6 @@ public class TokenServiceAutoConfigurationTest {
 
 	private TimeProvider timeProvider;
 
-	private UserDetailsService userService;
-
 	@Before
 	public void setUp() throws Exception {
 		jwtSecurityConfigurationProperties = mock(
@@ -47,7 +44,6 @@ public class TokenServiceAutoConfigurationTest {
 		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
-		userService = mock(UserDetailsService.class);
 		jwtConfiguration = mock(TokenConfigurationAdapter.class);
 		context = new AnnotationConfigApplicationContext();
 	}
@@ -63,9 +59,7 @@ public class TokenServiceAutoConfigurationTest {
 		if (timeProvider != null) {
 			timeProvider = null;
 		}
-		if (userService != null) {
-			userService = null;
-		}
+
 		if (jwtConfiguration != null) {
 			jwtConfiguration = null;
 		}
@@ -73,8 +67,8 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityConfigurationProperties, timeProvider, userService);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, timeProvider,
+				jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(JwtTokenService.class));
@@ -83,8 +77,8 @@ public class TokenServiceAutoConfigurationTest {
 	@Test
 	public void customTokenServiceBean() {
 		this.context.register(CustomTokenServiceConfig.class);
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityConfigurationProperties, timeProvider, userService);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, timeProvider,
+				jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(TestTokenService.class));
