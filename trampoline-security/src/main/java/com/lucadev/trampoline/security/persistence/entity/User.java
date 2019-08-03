@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import java.time.Instant;
@@ -41,10 +43,13 @@ import java.util.Optional;
 public class User extends TrampolineEntity {
 
 	@PersonalData
+	@Length(min = 2, max = 64)
+	@NotBlank
 	@EqualsAndHashCode.Include
 	@Column(name = "username", nullable = false, unique = true, updatable = false)
 	private String username;
 
+	@Email
 	@PersonalData
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
