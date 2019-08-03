@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationEntryPoint;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationFilter;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
@@ -72,7 +74,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 				// Apply our JWT filter.
 				.addFilterBefore(filter(), JWT_FILTER_BEFORE)
 				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 		// Disable cross site request forgery since JWT is not vulnerable to CSRF
 		http.csrf().disable();
 	}
@@ -81,6 +84,11 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(preAuthenticationProvider());
 		auth.authenticationProvider(usernamePasswordProvider());
+	}
+
+	@Bean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return new TokenAuthenticationEntryPoint();
 	}
 
 	@Bean

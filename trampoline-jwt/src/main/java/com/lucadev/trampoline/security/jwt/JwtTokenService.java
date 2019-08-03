@@ -179,7 +179,7 @@ public class JwtTokenService implements TokenService {
 				throw new BadCredentialsException(
 						"Failed to parse token: " + e.getMessage());
 			} catch (ExpiredJwtException e) {
-				throw new BadCredentialsException("Invalid token: token is expired.");
+				throw new BadCredentialsException("Token is expired.");
 			}
 		} else {
 			throw new AuthenticationCredentialsNotFoundException(
