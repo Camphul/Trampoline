@@ -26,8 +26,7 @@ public class StatelessUserDetailsService
 		if (authentication.getPrincipal() != null
 				&& authentication.getPrincipal() instanceof TokenPayload
 				&& authentication.getCredentials() instanceof TokenPayload) {
-			log.debug("PreAuthenticated loadUserDetails: {}", authentication);
-
+			log.debug("Loading stateless user details.");
 			TokenPayload tokenPayload = (TokenPayload) authentication.getPrincipal();
 			return new StatelessUserDetails(tokenPayload);
 		} else {

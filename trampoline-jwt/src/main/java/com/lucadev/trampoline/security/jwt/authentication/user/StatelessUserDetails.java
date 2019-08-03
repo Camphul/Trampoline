@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 /**
+ * Stateless user details based off of {@link TokenPayload}.
+ *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
