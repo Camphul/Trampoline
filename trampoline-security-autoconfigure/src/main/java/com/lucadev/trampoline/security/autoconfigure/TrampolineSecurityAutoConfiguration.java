@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 
 /**
  * Autoconfigure security.
@@ -29,6 +31,12 @@ public class TrampolineSecurityAutoConfiguration {
 	@ConditionalOnMissingBean
 	public LastSeenUpdateHandler lastSeenUpdateHandler() {
 		return new LastSeenUpdateHandler(userService, timeProvider);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public UserDetailsChecker userDetailsChecker() {
+		return new AccountStatusUserDetailsChecker();
 	}
 
 }

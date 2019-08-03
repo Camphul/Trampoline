@@ -22,6 +22,11 @@ public class TokenPayload implements Serializable {
 	private String rawToken;
 
 	/**
+	 * Principal id(most likely entity id)
+	 */
+	private String principalIdentifier;
+
+	/**
 	 * Subject username.
 	 */
 	private String username;

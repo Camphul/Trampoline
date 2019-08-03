@@ -21,7 +21,7 @@ public class TokenConfigurationAdapterAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean(TokenConfigurationAdapter.class)
-	public TokenConfigurationAdapter jwtConfiguration() {
+	public TokenConfigurationAdapter tokenConfigurationAdapter() {
 		log.debug("Using default jwt configuration");
 		return new NopTokenConfigurationAdapter();
 	}

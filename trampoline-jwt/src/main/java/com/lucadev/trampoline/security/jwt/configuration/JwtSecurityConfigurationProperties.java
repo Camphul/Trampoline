@@ -54,6 +54,10 @@ public class JwtSecurityConfigurationProperties {
 	@Data
 	public static class ClaimsConfigurationProperties {
 
+		// Name of the key containing the principal id.
+		@NotBlank
+		private String principalIdentifier = "principalId";
+
 		// Name of the key containing the username.
 		@NotBlank
 		private String username = "username";

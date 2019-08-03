@@ -25,6 +25,12 @@
       "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties"
     },
     {
+      "name": "trampoline.security.jwt.claims.principal-id",
+      "type": "java.lang.String",
+      "description": "Claim key to use for principal id.",
+      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
+    },
+    {
       "name": "trampoline.security.jwt.claims.username",
       "type": "java.lang.String",
       "description": "Claim key to use for username.",

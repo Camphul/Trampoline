@@ -20,6 +20,15 @@ public class StatelessUserDetails implements UserDetails {
 		this.tokenPayload = tokenPayload;
 	}
 
+	/**
+	 * Get principal id.
+	 *
+	 * @return id of the principal.
+	 */
+	public String getPrincipalId() {
+		return this.tokenPayload.getPrincipalIdentifier();
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.tokenPayload.getAuthorities();

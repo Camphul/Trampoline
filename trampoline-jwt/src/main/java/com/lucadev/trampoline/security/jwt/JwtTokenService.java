@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
 
-	private final TokenConfigurationAdapter jwtConfiguration;
+	private final TokenConfigurationAdapter tokenConfigurationAdapter;
 
 	private final TimeProvider timeProvider;
 
@@ -75,8 +75,8 @@ public class JwtTokenService implements TokenService {
 		claims.put(claimConfig.getAuthorities(), user.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		claims.put(claimConfig.getIgnoreExpiration(),
-				this.jwtConfiguration.shouldIgnoreExpiration(user));
-		this.jwtConfiguration.createToken(user, claims);
+				this.tokenConfigurationAdapter.shouldIgnoreExpiration(user));
+		this.tokenConfigurationAdapter.createToken(user, claims);
 		return generateToken(claims, user.getUsername());
 	}
 
@@ -145,6 +145,7 @@ public class JwtTokenService implements TokenService {
 		tokenPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
 		tokenPayload.setIssuedDate(claims.getIssuedAt());
 		tokenPayload.setExpirationDate(claims.getExpiration());
+		tokenPayload.setPrincipalIdentifier(claims.get(claimConfig.getPrincipalIdentifier(), String.class));
 		tokenPayload.setIgnorableExpiration(
 				claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
 		Collection<GrantedAuthority> authorities = ((List<String>) claims
