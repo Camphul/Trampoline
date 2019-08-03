@@ -54,7 +54,8 @@ public class TokenConfigurationAdapterAutoConfigurationAdapterTest {
 	}
 
 	@Configuration
-	protected static class SomeRandomTokenConfiguration implements TokenConfigurationAdapter {
+	protected static class SomeRandomTokenConfiguration
+			implements TokenConfigurationAdapter {
 
 		@Override
 		public boolean shouldIgnoreExpiration(UserDetails user) {

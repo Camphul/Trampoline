@@ -54,4 +54,5 @@ public class StatelessUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
 }

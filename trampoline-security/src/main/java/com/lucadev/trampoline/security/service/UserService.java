@@ -157,7 +157,6 @@ public interface UserService {
 
 	/**
 	 * Find user by identifier which is based on the {@link IdentificationField}.
-	 *
 	 * @param identifier user identifier.
 	 * @return the user.
 	 */

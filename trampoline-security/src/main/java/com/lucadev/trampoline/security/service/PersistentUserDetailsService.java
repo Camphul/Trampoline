@@ -19,9 +19,12 @@ public class PersistentUserDetailsService implements UserDetailsService {
 	private final UserService userService;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = this.userService.findByIdentificationField(username).orElseThrow(() ->
-				new UsernameNotFoundException("Could not find user with username \"" + username + "\""));
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		User user = this.userService.findByIdentificationField(username)
+				.orElseThrow(() -> new UsernameNotFoundException(
+						"Could not find user with username \"" + username + "\""));
 		return new PersistentUserDetails(user);
 	}
+
 }

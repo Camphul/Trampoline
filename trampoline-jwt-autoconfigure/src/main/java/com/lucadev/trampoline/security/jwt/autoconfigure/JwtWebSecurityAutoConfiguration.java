@@ -56,7 +56,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	private TokenAuthenticationProvider tokenAuthenticationProvider;
 
 	@Autowired(required = false)
-	public void setTokenAuthenticationProvider(TokenAuthenticationProvider tokenAuthenticationProvider) {
+	public void setTokenAuthenticationProvider(
+			TokenAuthenticationProvider tokenAuthenticationProvider) {
 		this.tokenAuthenticationProvider = tokenAuthenticationProvider;
 	}
 
@@ -74,10 +75,9 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 				// All other requests should be authenticated
 				.anyRequest().authenticated().and()
 				// Apply our JWT filter.
-				.addFilterBefore(filter(), JWT_FILTER_BEFORE)
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
+				.addFilterBefore(filter(), JWT_FILTER_BEFORE).sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 		// Disable cross site request forgery since JWT is not vulnerable to CSRF
 		http.csrf().disable();
 	}
@@ -106,7 +106,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	 * @return a {@link TokenAuthenticationFilter}
 	 */
 	protected Filter filter() {
-		TokenAuthenticationFilter filter = new TokenAuthenticationFilter(this.tokenService);
+		TokenAuthenticationFilter filter = new TokenAuthenticationFilter(
+				this.tokenService);
 		try {
 			filter.setAuthenticationManager(authenticationManagerBean());
 		} catch (Exception e) {
@@ -116,14 +117,15 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	}
 
 	/**
-	 * Construct the {@link PreAuthenticatedAuthenticationProvider} used for authentication.
-	 *
+	 * Construct the {@link PreAuthenticatedAuthenticationProvider} used for
+	 * authentication.
 	 * @return JWT auth provider.
 	 */
 	@Bean
 	protected AuthenticationProvider preAuthenticationProvider() {
 		PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-		provider.setPreAuthenticatedUserDetailsService(this.authenticationUserDetailsService);
+		provider.setPreAuthenticatedUserDetailsService(
+				this.authenticationUserDetailsService);
 		return provider;
 	}
 

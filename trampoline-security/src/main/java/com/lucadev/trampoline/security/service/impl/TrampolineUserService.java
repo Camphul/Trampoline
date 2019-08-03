@@ -219,7 +219,8 @@ public class TrampolineUserService implements UserService {
 		} else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
 			return this.userRepository.findOneByUsernameOrEmail(identifier);
 		}
-		throw new IllegalStateException("Invalid identification field. Cannot find user.");
+		throw new IllegalStateException(
+				"Invalid identification field. Cannot find user.");
 	}
 
 	/**

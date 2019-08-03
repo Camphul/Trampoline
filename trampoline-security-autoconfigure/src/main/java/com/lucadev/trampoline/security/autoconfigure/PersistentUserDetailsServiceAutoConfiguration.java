@@ -11,7 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Spring {@link WebSecurityConfigurerAdapter} to configure our own simple user details implementation.
+ * Spring {@link WebSecurityConfigurerAdapter} to configure our own simple user details
+ * implementation.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18

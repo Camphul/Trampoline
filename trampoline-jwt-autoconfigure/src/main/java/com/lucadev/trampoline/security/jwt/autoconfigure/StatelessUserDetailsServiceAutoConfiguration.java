@@ -21,4 +21,5 @@ public class StatelessUserDetailsServiceAutoConfiguration {
 	public AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService() {
 		return new StatelessUserDetailsService();
 	}
+
 }

@@ -6,14 +6,12 @@ import com.lucadev.trampoline.security.jwt.authentication.StatelessAuthenticatio
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 
 /**
  * Custom auth provider.
@@ -22,21 +20,24 @@ import org.springframework.stereotype.Component;
  * @since 8/3/19
  */
 @Slf4j
-@Component
 @RequiredArgsConstructor
-@ConditionalOnMissingBean(TokenAuthenticationProvider.class)
-public class UserDetailsTokenAuthenticationProvider implements TokenAuthenticationProvider {
+public class UserDetailsTokenAuthenticationProvider
+		implements TokenAuthenticationProvider {
 
 	private final TokenService tokenService;
+
 	private final UserDetailsService userDetailsService;
+
 	private final UserDetailsChecker userDetailsChecker;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException {
 		log.debug("Issueing new token.");
 		UsernamePasswordAuthenticationToken authorizationToken = (UsernamePasswordAuthenticationToken) authentication;
-		UserDetails userDetails = this.userDetailsService.loadUserByUsername(authorizationToken.getName());
-		//Checks attributes such as enabled/credentials expired/etc..
+		UserDetails userDetails = this.userDetailsService
+				.loadUserByUsername(authorizationToken.getName());
+		// Checks attributes such as enabled/credentials expired/etc..
 		this.userDetailsChecker.check(userDetails);
 		String token = this.tokenService.issueToken(userDetails);
 		TokenPayload tokenPayload = this.tokenService.decodeToken(token);
@@ -47,4 +48,5 @@ public class UserDetailsTokenAuthenticationProvider implements TokenAuthenticati
 	public boolean supports(Class<?> authentication) {
 		return UsernamePasswordAuthenticationToken.class.equals(authentication);
 	}
+
 }

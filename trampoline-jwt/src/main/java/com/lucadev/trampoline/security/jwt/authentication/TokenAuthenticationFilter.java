@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class TokenAuthenticationFilter extends AbstractTokenPreAuthenticatedProcessingFilter {
+public class TokenAuthenticationFilter
+		extends AbstractTokenPreAuthenticatedProcessingFilter {
 
 	private final TokenService tokenService;
 
@@ -23,4 +24,5 @@ public class TokenAuthenticationFilter extends AbstractTokenPreAuthenticatedProc
 	public TokenPayload getToken(HttpServletRequest request) {
 		return this.tokenService.decodeToken(request);
 	}
+
 }

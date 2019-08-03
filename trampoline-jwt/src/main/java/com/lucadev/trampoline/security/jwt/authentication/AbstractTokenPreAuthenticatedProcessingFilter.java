@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
-public abstract class AbstractTokenPreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedProcessingFilter {
+public abstract class AbstractTokenPreAuthenticatedProcessingFilter
+		extends AbstractPreAuthenticatedProcessingFilter {
 
 	/**
 	 * Obtain the token used for further authentication.
-	 *
 	 * @param request http request.
 	 * @return token payload.
 	 */
@@ -23,7 +23,6 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter extends Abst
 
 	/**
 	 * Get principal in the form of a token.
-	 *
 	 * @param request http request.
 	 * @return token payload.
 	 */
@@ -34,7 +33,6 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter extends Abst
 
 	/**
 	 * Fetch credentials from the request in the form of a token.
-	 *
 	 * @param request the http request.
 	 * @return token.
 	 */
@@ -42,4 +40,5 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter extends Abst
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
 		return getToken(request);
 	}
+
 }

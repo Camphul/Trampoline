@@ -67,8 +67,8 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, timeProvider,
-				jwtSecurityConfigurationProperties);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
+				timeProvider, jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(JwtTokenService.class));
@@ -77,8 +77,8 @@ public class TokenServiceAutoConfigurationTest {
 	@Test
 	public void customTokenServiceBean() {
 		this.context.register(CustomTokenServiceConfig.class);
-		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration, timeProvider,
-				jwtSecurityConfigurationProperties);
+		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
+				timeProvider, jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(TestTokenService.class));

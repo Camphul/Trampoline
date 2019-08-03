@@ -156,7 +156,6 @@ public class JwtTokenService implements TokenService {
 
 	/**
 	 * Simply obtain the JWT payload from the header.
-	 *
 	 * @param request http request from the client.
 	 * @return JWT payload.
 	 */
