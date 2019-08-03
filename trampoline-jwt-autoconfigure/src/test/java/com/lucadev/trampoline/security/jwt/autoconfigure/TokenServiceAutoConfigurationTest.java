@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
+import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
@@ -113,17 +113,17 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public JwtPayload parseToken(String token) {
+		public TokenPayload decodeToken(String token) {
 			return null;
 		}
 
 		@Override
-		public JwtPayload parseToken(HttpServletRequest request) {
+		public TokenPayload decodeToken(HttpServletRequest request) {
 			return null;
 		}
 
 		@Override
-		public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
+		public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
 			return false;
 		}
 

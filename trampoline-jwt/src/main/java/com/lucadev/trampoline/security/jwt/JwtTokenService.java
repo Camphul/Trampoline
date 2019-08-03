@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +45,6 @@ public class JwtTokenService implements TokenService {
 	private final JwtConfigurationAdapter jwtConfiguration;
 
 	private final TimeProvider timeProvider;
-
-	private final UserDetailsService userService;
 
 	private final JwtSecurityConfigurationProperties properties;
 
@@ -109,14 +106,9 @@ public class JwtTokenService implements TokenService {
 	public String issueTokenRefresh(HttpServletRequest request) {
 		String authHeader = request.getHeader(this.properties.getHeader());
 		final String token = parseTokenHeader(authHeader);
-		JwtPayload jwtPayload = parseToken(token);
-		String username = jwtPayload.getUsername();
-		UserDetails user = this.userService.loadUserByUsername(username);
-		if (!user.getUsername().equals(username)) {
-			throw new BadCredentialsException("Token subject does not match user");
-		}
+		TokenPayload tokenPayload = decodeToken(token);
 
-		if (isTokenRefreshable(jwtPayload)) {
+		if (isTokenRefreshable(tokenPayload)) {
 			return issueTokenRefresh(token);
 		}
 		else {
@@ -134,7 +126,7 @@ public class JwtTokenService implements TokenService {
 				.signWith(getSignKey()).compact();
 	}
 
-	private boolean isTokenRefreshable(JwtPayload token) {
+	private boolean isTokenRefreshable(TokenPayload token) {
 		return (!isExpired(token.getExpirationDate()) || token.isIgnorableExpiration());
 	}
 
@@ -144,22 +136,22 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt DTO representation.
 	 */
 	@Override
-	public JwtPayload parseToken(String token) {
+	public TokenPayload decodeToken(String token) {
 		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
 				.getClaims();
 		Claims claims = getAllTokenClaims(token);
-		JwtPayload jwtPayload = new JwtPayload();
-		jwtPayload.setRawToken(token);
-		jwtPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
-		jwtPayload.setIssuedDate(claims.getIssuedAt());
-		jwtPayload.setExpirationDate(claims.getExpiration());
-		jwtPayload.setIgnorableExpiration(
+		TokenPayload tokenPayload = new TokenPayload();
+		tokenPayload.setRawToken(token);
+		tokenPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
+		tokenPayload.setIssuedDate(claims.getIssuedAt());
+		tokenPayload.setExpirationDate(claims.getExpiration());
+		tokenPayload.setIgnorableExpiration(
 				claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
 		Collection<GrantedAuthority> authorities = ((List<String>) claims
 				.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-		jwtPayload.setAuthorities(authorities);
-		return jwtPayload;
+		tokenPayload.setAuthorities(authorities);
+		return tokenPayload;
 	}
 
 	/**
@@ -169,7 +161,7 @@ public class JwtTokenService implements TokenService {
 	 * @return JWT payload.
 	 */
 	@Override
-	public JwtPayload parseToken(HttpServletRequest request) {
+	public TokenPayload decodeToken(HttpServletRequest request) {
 		final String requestHeader = request.getHeader(this.properties.getHeader());
 		if (requestHeader == null || requestHeader.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(
@@ -182,7 +174,7 @@ public class JwtTokenService implements TokenService {
 						"Authentication token was not found inside header.");
 			}
 			try {
-				return parseToken(authToken);
+				return decodeToken(authToken);
 			} catch (IllegalArgumentException e) {
 				throw new BadCredentialsException(
 						"Failed to parse token: " + e.getMessage());
@@ -197,15 +189,15 @@ public class JwtTokenService implements TokenService {
 
 	/**
 	 * Validate token data against the suspected User.
-	 * @param jwtPayload jwt dto.
+	 * @param tokenPayload jwt dto.
 	 * @param user user who the token belongs to.
 	 * @return if the token is valid.
 	 */
 	@Override
-	public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
-		return (user.getUsername().equals(jwtPayload.getUsername())
-				&& (!isExpired(jwtPayload.getExpirationDate())
-						|| jwtPayload.isIgnorableExpiration()));
+	public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
+		return (user.getUsername().equals(tokenPayload.getUsername())
+				&& (!isExpired(tokenPayload.getExpirationDate())
+				|| tokenPayload.isIgnorableExpiration()));
 	}
 
 	/**
@@ -217,11 +209,11 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
 		try {
-			JwtPayload jwtPayload = parseToken(request);
-			if (jwtPayload == null) {
+			TokenPayload tokenPayload = decodeToken(request);
+			if (tokenPayload == null) {
 				return Optional.empty();
 			}
-			return Optional.of(new JwtAuthenticationToken(jwtPayload));
+			return Optional.of(new JwtAuthenticationToken(tokenPayload));
 		}
 		catch (Exception ex) {
 			log.error("Failed to obtain JWT authentication object.", ex);

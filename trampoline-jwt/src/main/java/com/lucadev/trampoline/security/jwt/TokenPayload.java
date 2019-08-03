@@ -14,7 +14,7 @@ import java.util.Date;
  * @since 21-4-18
  */
 @Data
-public class JwtPayload implements Serializable {
+public class TokenPayload implements Serializable {
 
 	/**
 	 * Raw token data.

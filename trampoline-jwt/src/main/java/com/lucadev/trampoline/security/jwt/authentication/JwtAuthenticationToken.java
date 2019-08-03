@@ -1,14 +1,11 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.JwtPayload;
+import com.lucadev.trampoline.security.jwt.TokenPayload;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 
 /**
  * Authentication token for JWT.
@@ -21,30 +18,28 @@ import java.util.Collection;
 @EqualsAndHashCode
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-	private final JwtPayload jwtPayload;
+	private final TokenPayload tokenPayload;
 
 	private final Object principal;
 
 	/**
 	 * Construct the token with raw jwt data. Not setting authenticated.
-	 * @param jwtPayload the JWT representation.
+	 * @param tokenPayload the JWT representation.
 	 */
-	public JwtAuthenticationToken(JwtPayload jwtPayload) {
-		super(jwtPayload.getAuthorities());
-		this.jwtPayload = jwtPayload;
-		this.principal = jwtPayload.getUsername();
+	public JwtAuthenticationToken(TokenPayload tokenPayload) {
+		super(tokenPayload.getAuthorities());
+		this.tokenPayload = tokenPayload;
+		this.principal = tokenPayload.getUsername();
 	}
 
 	/**
 	 * Construct an authenticated token.
-	 * @param authorities the user authorities.
 	 * @param user the actual user.
-	 * @param jwtPayload the jwt linked to the user.
+	 * @param tokenPayload the jwt linked to the user.
 	 */
-	public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities,
-			UserDetails user, JwtPayload jwtPayload) {
-		super(authorities);
-		this.jwtPayload = jwtPayload;
+	public JwtAuthenticationToken(UserDetails user, TokenPayload tokenPayload) {
+		super(user.getAuthorities());
+		this.tokenPayload = tokenPayload;
 		this.principal = user;
 		setAuthenticated(true);
 	}
@@ -55,7 +50,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 */
 	@Override
 	public Object getCredentials() {
-		return this.jwtPayload.getAuthorities();
+		return this.tokenPayload.getAuthorities();
 	}
 
 	/**
@@ -73,7 +68,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 */
 	@Override
 	public String getName() {
-		return this.jwtPayload.getUsername();
+		return this.tokenPayload.getUsername();
 	}
 
 	/**
@@ -82,18 +77,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 */
 	@Override
 	public Object getDetails() {
-		return isAuthenticated() ? this.jwtPayload.getRawToken() : super.getDetails();
-	}
-
-	/**
-	 * Get the user.
-	 * @return null if the principal is not a {@link UserDetails}
-	 */
-	public UserDetails getUserDetails() {
-		if (!(this.principal instanceof UserDetails)) {
-			return null;
-		}
-		return (UserDetails) this.principal;
+		return isAuthenticated() ? this.tokenPayload.getRawToken() : super.getDetails();
 	}
 
 }

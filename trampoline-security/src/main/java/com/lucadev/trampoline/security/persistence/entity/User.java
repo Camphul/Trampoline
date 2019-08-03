@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +39,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class User extends TrampolineEntity {
+public class User extends TrampolineEntity implements Serializable {
 
 	@PersonalData
 	@EqualsAndHashCode.Include

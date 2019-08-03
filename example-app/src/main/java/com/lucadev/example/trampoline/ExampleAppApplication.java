@@ -2,7 +2,6 @@ package com.lucadev.example.trampoline;
 
 import com.lucadev.trampoline.EnableTrampoline;
 import com.lucadev.trampoline.security.abac.access.annotation.EnablePrePostPolicy;
-import com.lucadev.trampoline.security.autoconfigure.annotation.EnableSimpleUserDetails;
 import com.lucadev.trampoline.security.logging.EnableUserActivityLogging;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
@@ -25,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableIgnoreSecurity
 @EnablePrePostPolicy
 //@EnableGdprCompliance
-@EnableSimpleUserDetails
 public class ExampleAppApplication {
 
 	public static void main(String[] args) {

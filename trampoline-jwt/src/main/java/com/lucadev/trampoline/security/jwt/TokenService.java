@@ -40,23 +40,23 @@ public interface TokenService {
 	 * @param token jwt string
 	 * @return jwt DTO representation.
 	 */
-	JwtPayload parseToken(String token);
+	TokenPayload decodeToken(String token);
 
 	/**
-	 * Similar to {@link #parseToken(String)} but this reads the request header instead.
+	 * Similar to {@link #decodeToken(String)} but this reads the request header instead.
 	 * of passing the raw token
 	 * @param request http req
 	 * @return jwt dto.
 	 */
-	JwtPayload parseToken(HttpServletRequest request);
+	TokenPayload decodeToken(HttpServletRequest request);
 
 	/**
 	 * Validate a token.
-	 * @param jwtPayload the data read from the token
+	 * @param tokenPayload the data read from the token
 	 * @param user the user to validate the data on
 	 * @return if the token is valid with the given user
 	 */
-	boolean isValidToken(JwtPayload jwtPayload, UserDetails user);
+	boolean isValidToken(TokenPayload tokenPayload, UserDetails user);
 
 	/**
 	 * Read the token and create an {@link Authentication} object from it.
