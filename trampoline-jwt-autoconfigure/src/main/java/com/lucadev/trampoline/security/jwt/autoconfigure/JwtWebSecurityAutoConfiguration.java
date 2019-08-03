@@ -6,6 +6,7 @@ import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationFil
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsChecker;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -54,9 +53,12 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 
 	private final TokenService tokenService;
 
-	private final UserDetailsService userDetailsService;
+	private TokenAuthenticationProvider tokenAuthenticationProvider;
 
-	private final UserDetailsChecker userDetailsChecker;
+	@Autowired(required = false)
+	public void setTokenAuthenticationProvider(TokenAuthenticationProvider tokenAuthenticationProvider) {
+		this.tokenAuthenticationProvider = tokenAuthenticationProvider;
+	}
 
 	/**
 	 * Configure security chains to work with JWT.
@@ -83,7 +85,9 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(preAuthenticationProvider());
-		auth.authenticationProvider(usernamePasswordProvider());
+		if (this.tokenAuthenticationProvider != null) {
+			auth.authenticationProvider(this.tokenAuthenticationProvider);
+		}
 	}
 
 	@Bean
@@ -121,11 +125,6 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 		PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
 		provider.setPreAuthenticatedUserDetailsService(this.authenticationUserDetailsService);
 		return provider;
-	}
-
-	@Bean
-	protected AuthenticationProvider usernamePasswordProvider() {
-		return new TokenAuthenticationProvider(this.tokenService, this.userDetailsService, this.userDetailsChecker);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.web.model;
+package com.lucadev.trampoline.security.jwt.support.web.model;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

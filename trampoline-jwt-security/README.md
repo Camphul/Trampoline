@@ -1,6 +1,6 @@
-# trampoline-jwt-web
+# trampoline-jwt-security
 
-REST API endpoints for [trampoline-jwt](../trampoline-jwt)
+REST API endpoints for [trampoline-jwt](../trampoline-jwt) which work with [trampoline-security](../trampoline-security)
 
 ## Architecture
 
@@ -11,6 +11,8 @@ The base path for the control endpoints are configured by the `trampoline.securi
 The authorization mapping on top of the base mapping can be configured using the `trampoline.security.jwt.web.authorize-mapping` property(default: `/authorize`.
 
 The token refresh mapping on top of the base mapping can be configured using the `trampoline.security.jwt.web.refresh-mapping` property(default `/authorize`).
+
+This module binds together the security and jwt modules incase you wish to create a monolithic application.
 
 ## Override controller
 

@@ -14,7 +14,7 @@ Please reference the following starter modules for documentation:
 - [trampoline-security](../trampoline-security)
 - [trampoline-security-abac](../trampoline-security-abac)
 - [trampoline-jwt](../trampoline-jwt)
-- [trampoline-jwt-web](../trampoline-jwt-web)
+- [trampoline-jwt-security](../trampoline-jwt-security)
 - [trampoline-user-logging](../trampoline-user-logging)
 - [trampoline-web](../trampoline-web)
 
@@ -25,7 +25,7 @@ Please reference the following starter modules for documentation:
 - [trampoline-data](https://lucadev.com/trampoline/docs/trampoline-data)
 - [trampoline-data-web](https://lucadev.com/trampoline/docs/trampoline-data-web)
 - [trampoline-jwt](https://lucadev.com/trampoline/docs/trampoline-jwt)
-- [trampoline-jwt-web](https://lucadev.com/trampoline/docs/trampoline-jwt-web)
+- [trampoline-jwt-security](https://lucadev.com/trampoline/docs/trampoline-jwt-security)
 - [trampoline-notify](https://lucadev.com/trampoline/docs/trampoline-notify)
 - [trampoline-security](https://lucadev.com/trampoline/docs/trampoline-security)
 - [trampoline-security-abac](https://lucadev.com/trampoline/docs/trampoline-security-abac)

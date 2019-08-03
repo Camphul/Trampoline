@@ -1,8 +1,8 @@
-package com.lucadev.trampoline.security.jwt.web.controller;
+package com.lucadev.trampoline.security.jwt.support.web.controller;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.web.model.JwtAuthenticationResponse;
-import com.lucadev.trampoline.security.jwt.web.model.UserAuthenticationRequest;
+import com.lucadev.trampoline.security.jwt.support.web.model.TokenAuthenticationResponse;
+import com.lucadev.trampoline.security.jwt.support.web.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -33,7 +33,7 @@ import javax.validation.Valid;
 @RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController implements
-		AuthenticationController<JwtAuthenticationResponse, UserAuthenticationRequest> {
+		AuthenticationController<TokenAuthenticationResponse, UserAuthenticationRequest> {
 
 	private final AuthenticationManager authenticationManager;
 
@@ -47,7 +47,7 @@ public class JwtAuthenticationController implements
 	@IgnoreSecurity
 	@PostMapping("${trampoline.security.jwt.web.authorizeMapping:/authorize}")
 	@Override
-	public JwtAuthenticationResponse authenticate(
+	public TokenAuthenticationResponse authenticate(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
 		try {
 			Authentication authentication = this.authenticationManager
@@ -58,7 +58,7 @@ public class JwtAuthenticationController implements
 			if (authentication == null) {
 				throw new AccessDeniedException("Could not authorize user.");
 			}
-			return new JwtAuthenticationResponse(
+			return new TokenAuthenticationResponse(
 					String.valueOf(authentication.getDetails()));
 		}
 		catch (Exception ex) {
@@ -74,11 +74,11 @@ public class JwtAuthenticationController implements
 	 */
 	@Override
 	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
-	public JwtAuthenticationResponse refresh(HttpServletRequest request,
-			HttpServletResponse response) {
+	public TokenAuthenticationResponse refresh(HttpServletRequest request,
+											   HttpServletResponse response) {
 		try {
 			String refreshedToken = this.tokenService.issueTokenRefresh(request);
-			return new JwtAuthenticationResponse(refreshedToken);
+			return new TokenAuthenticationResponse(refreshedToken);
 		}
 		catch (Exception e) {
 			// Catch model to always return correct format
