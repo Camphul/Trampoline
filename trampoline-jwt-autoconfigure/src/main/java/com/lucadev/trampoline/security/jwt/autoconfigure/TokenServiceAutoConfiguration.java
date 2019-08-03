@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class TokenServiceAutoConfiguration {
 
-	private final JwtConfigurationAdapter jwtConfiguration;
+	private final TokenConfigurationAdapter jwtConfiguration;
 
 	private final JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 

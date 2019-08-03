@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt;
 
-import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationToken;
+import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.authentication.StatelessAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
 
-	private final JwtConfigurationAdapter jwtConfiguration;
+	private final TokenConfigurationAdapter jwtConfiguration;
 
 	private final TimeProvider timeProvider;
 
@@ -213,7 +213,7 @@ public class JwtTokenService implements TokenService {
 			if (tokenPayload == null) {
 				return Optional.empty();
 			}
-			return Optional.of(new JwtAuthenticationToken(tokenPayload));
+			return Optional.of(new StatelessAuthenticationToken(tokenPayload));
 		}
 		catch (Exception ex) {
 			log.error("Failed to obtain JWT authentication object.", ex);

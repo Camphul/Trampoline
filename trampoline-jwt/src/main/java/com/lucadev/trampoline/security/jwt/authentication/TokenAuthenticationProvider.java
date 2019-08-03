@@ -36,7 +36,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		this.userDetailsChecker.check(userDetails);
 		String token = this.tokenService.issueToken(userDetails);
 		TokenPayload tokenPayload = this.tokenService.decodeToken(token);
-		return new JwtAuthenticationToken(userDetails, tokenPayload);
+		return new StatelessAuthenticationToken(userDetails, tokenPayload);
 	}
 
 	@Override

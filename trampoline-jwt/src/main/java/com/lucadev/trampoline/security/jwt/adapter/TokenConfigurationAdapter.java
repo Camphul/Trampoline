@@ -10,7 +10,7 @@ import java.util.Map;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-public interface JwtConfigurationAdapter {
+public interface TokenConfigurationAdapter {
 
 	/**
 	 * Should we ignore token expiry.

@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.user.TokenUserDetailsService;
+import com.lucadev.trampoline.security.jwt.authentication.user.StatelessUserDetailsService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +14,11 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
  * @since 8/3/19
  */
 @Configuration
-public class TokenUserDetailsServiceAutoConfiguration {
+public class StatelessUserDetailsServiceAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
 	public AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService() {
-		return new TokenUserDetailsService();
+		return new StatelessUserDetailsService();
 	}
 }

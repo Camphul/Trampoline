@@ -5,12 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Map;
 
 /**
- * Default {@link JwtConfigurationAdapter} implementation which does not do anything.
+ * Default {@link TokenConfigurationAdapter} implementation which does not do anything.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-public class NopJwtConfigurationAdapter implements JwtConfigurationAdapter {
+public class NopTokenConfigurationAdapter implements TokenConfigurationAdapter {
 
 	@Override
 	public boolean shouldIgnoreExpiration(UserDetails user) {

@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.adapter.NopJwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.NopTokenConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
+public class TokenConfigurationAdapterAutoConfigurationAdapterTest {
 
 	private AnnotationConfigApplicationContext context;
 
@@ -35,26 +35,26 @@ public class JwtConfigurationAdapterAutoConfigurationAdapterTest {
 	}
 
 	@Test
-	public void registersDefaultJwtConfigurationAutomatically() {
-		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
+	public void registersDefaultTokenConfigurationAutomatically() {
+		this.context.register(TokenConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfigurationAdapter jwtConfiguration = this.context
-				.getBean(JwtConfigurationAdapter.class);
-		assertThat(jwtConfiguration, instanceOf(NopJwtConfigurationAdapter.class));
+		TokenConfigurationAdapter tokenConfiguration = this.context
+				.getBean(TokenConfigurationAdapter.class);
+		assertThat(tokenConfiguration, instanceOf(NopTokenConfigurationAdapter.class));
 	}
 
 	@Test
-	public void customJwtConfigurationBean() {
-		this.context.register(SomeRandomJwtConfiguration.class);
-		this.context.register(JwtConfigurationAdapterAutoConfiguration.class);
+	public void customTokenConfigurationBean() {
+		this.context.register(SomeRandomTokenConfiguration.class);
+		this.context.register(TokenConfigurationAdapterAutoConfiguration.class);
 		this.context.refresh();
-		JwtConfigurationAdapter jwtConfiguration = this.context
-				.getBean(JwtConfigurationAdapter.class);
-		assertThat(jwtConfiguration, instanceOf(SomeRandomJwtConfiguration.class));
+		TokenConfigurationAdapter tokenConfiguration = this.context
+				.getBean(TokenConfigurationAdapter.class);
+		assertThat(tokenConfiguration, instanceOf(SomeRandomTokenConfiguration.class));
 	}
 
 	@Configuration
-	protected static class SomeRandomJwtConfiguration implements JwtConfigurationAdapter {
+	protected static class SomeRandomTokenConfiguration implements TokenConfigurationAdapter {
 
 		@Override
 		public boolean shouldIgnoreExpiration(UserDetails user) {

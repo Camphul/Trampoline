@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.adapter.NopJwtConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.NopTokenConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,14 +16,14 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass(JwtConfigurationAdapter.class)
-public class JwtConfigurationAdapterAutoConfiguration {
+@ConditionalOnClass(TokenConfigurationAdapter.class)
+public class TokenConfigurationAdapterAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean(JwtConfigurationAdapter.class)
-	public JwtConfigurationAdapter jwtConfiguration() {
+	@ConditionalOnMissingBean(TokenConfigurationAdapter.class)
+	public TokenConfigurationAdapter jwtConfiguration() {
 		log.debug("Using default jwt configuration");
-		return new NopJwtConfigurationAdapter();
+		return new NopTokenConfigurationAdapter();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.user;
+package com.lucadev.trampoline.security.jwt.authentication.user;
 
 import com.lucadev.trampoline.security.jwt.TokenPayload;
 import lombok.Getter;
@@ -11,12 +11,12 @@ import java.util.Collection;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
-public class TokenUserDetails implements UserDetails {
+public class StatelessUserDetails implements UserDetails {
 
 	@Getter
 	private final TokenPayload tokenPayload;
 
-	public TokenUserDetails(TokenPayload tokenPayload) {
+	public StatelessUserDetails(TokenPayload tokenPayload) {
 		this.tokenPayload = tokenPayload;
 	}
 

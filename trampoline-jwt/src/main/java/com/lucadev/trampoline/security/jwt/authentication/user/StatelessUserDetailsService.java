@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.user;
+package com.lucadev.trampoline.security.jwt.authentication.user;
 
 import com.lucadev.trampoline.security.jwt.TokenPayload;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
  */
 @Slf4j
 @RequiredArgsConstructor
-public class TokenUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
+public class StatelessUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication) throws UsernameNotFoundException {
@@ -25,7 +25,7 @@ public class TokenUserDetailsService implements AuthenticationUserDetailsService
 			log.debug("PreAuthenticated loadUserDetails: {}", authentication);
 
 			TokenPayload tokenPayload = (TokenPayload) authentication.getPrincipal();
-			return new TokenUserDetails(tokenPayload);
+			return new StatelessUserDetails(tokenPayload);
 		} else {
 			throw new UsernameNotFoundException("Could not find user details for '" + authentication.getPrincipal() + "'");
 		}

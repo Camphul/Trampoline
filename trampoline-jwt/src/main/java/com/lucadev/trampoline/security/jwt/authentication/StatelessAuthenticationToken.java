@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @ToString
 @Getter
 @EqualsAndHashCode
-public class JwtAuthenticationToken extends AbstractAuthenticationToken {
+public class StatelessAuthenticationToken extends AbstractAuthenticationToken {
 
 	private final TokenPayload tokenPayload;
 
@@ -26,7 +26,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 * Construct the token with raw jwt data. Not setting authenticated.
 	 * @param tokenPayload the JWT representation.
 	 */
-	public JwtAuthenticationToken(TokenPayload tokenPayload) {
+	public StatelessAuthenticationToken(TokenPayload tokenPayload) {
 		super(tokenPayload.getAuthorities());
 		this.tokenPayload = tokenPayload;
 		this.principal = tokenPayload.getUsername();
@@ -37,7 +37,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	 * @param user the actual user.
 	 * @param tokenPayload the jwt linked to the user.
 	 */
-	public JwtAuthenticationToken(UserDetails user, TokenPayload tokenPayload) {
+	public StatelessAuthenticationToken(UserDetails user, TokenPayload tokenPayload) {
 		super(user.getAuthorities());
 		this.tokenPayload = tokenPayload;
 		this.principal = user;
