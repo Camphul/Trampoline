@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.authentication.user;
 
 import com.lucadev.trampoline.security.jwt.TokenPayload;
+import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -20,15 +21,23 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 public class StatelessUserDetailsService
 		implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
+	private final TokenService tokenService;
+
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication)
 			throws UsernameNotFoundException {
 		if (authentication.getPrincipal() != null
-				&& authentication.getPrincipal() instanceof TokenPayload
-				&& authentication.getCredentials() instanceof TokenPayload) {
+				&& authentication.getPrincipal() instanceof String
+				&& authentication.getCredentials() instanceof String) {
 			log.debug("Loading stateless user details.");
-			TokenPayload tokenPayload = (TokenPayload) authentication.getPrincipal();
-			return new StatelessUserDetails(tokenPayload);
+			try {
+				TokenPayload tokenPayload = tokenService
+						.decodeTokenHeader((String) authentication.getPrincipal());
+				return new StatelessUserDetails(tokenPayload);
+			} catch (Exception ex) {
+				throw new UsernameNotFoundException(
+						"Could not decode token: " + ex.getMessage());
+			}
 		} else {
 			throw new UsernameNotFoundException("Could not find user details for '"
 					+ authentication.getPrincipal() + "'");

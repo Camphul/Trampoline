@@ -94,8 +94,7 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 	/**
 	 * Evaluates description defined in {@link LogUserActivity}. Uses a hashmap to prevent
 	 * having to re-parse expressions.
-	 *
-	 * @param description     the SPeL expression.
+	 * @param description the SPeL expression.
 	 * @param methodArguments the arguments passed to the method we're intercepting.
 	 * @return the evaluated expression.
 	 */
@@ -120,7 +119,6 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 
 	/**
 	 * Run the method we're intercepting and return a result we can understand.
-	 *
 	 * @param invocation the method invocation
 	 * @return a result containing our invocation results.
 	 * @throws Throwable when we dont want to log methods that throw exceptions.
@@ -157,7 +155,6 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 
 	/**
 	 * Get user who invoked the activity.
-	 *
 	 * @return current authorized user from {@link SecurityContext}
 	 */
 	private UserDetails getUserDetails() {

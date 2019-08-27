@@ -1,10 +1,8 @@
 package com.lucadev.trampoline.security.jwt;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 /**
  * Interface for interacting with JWT tokens.
@@ -37,18 +35,18 @@ public interface TokenService {
 
 	/**
 	 * Get all token information.
+	 *
+	 * @param token jwt string with schema attached.
+	 * @return jwt DTO representation.
+	 */
+	TokenPayload decodeTokenHeader(String token);
+
+	/**
+	 * Get all token information.
 	 * @param token jwt string
 	 * @return jwt DTO representation.
 	 */
 	TokenPayload decodeToken(String token);
-
-	/**
-	 * Similar to {@link #decodeToken(String)} but this reads the request header instead.
-	 * of passing the raw token
-	 * @param request http req
-	 * @return jwt dto.
-	 */
-	TokenPayload decodeToken(HttpServletRequest request);
 
 	/**
 	 * Validate a token.
@@ -59,10 +57,10 @@ public interface TokenService {
 	boolean isValidToken(TokenPayload tokenPayload, UserDetails user);
 
 	/**
-	 * Read the token and create an {@link Authentication} object from it.
-	 * @param request http req
-	 * @return auth object.
+	 * Get the token string from the request header.
+	 * @param request request from the client.
+	 * @return token header,
 	 */
-	Optional<Authentication> getAuthenticationToken(HttpServletRequest request);
+	String getTokenHeader(HttpServletRequest request);
 
 }

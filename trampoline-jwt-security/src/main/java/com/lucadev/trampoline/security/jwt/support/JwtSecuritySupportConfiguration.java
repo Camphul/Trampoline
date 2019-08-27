@@ -22,6 +22,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @ConditionalOnClass({TokenService.class, UserService.class})
 public class JwtSecuritySupportConfiguration {
 
+	/**
+	 * Create token auth provider.
+	 *
+	 * @param tokenService       token service.
+	 * @param userDetailsService user details service which is persistent.
+	 * @param userDetailsChecker checks if the user is allowed access.
+	 * @return stateless auth provider.
+	 */
 	@Bean
 	@ConditionalOnMissingBean(value = TokenAuthenticationProvider.class,
 			ignored = UserDetailsTokenAuthenticationProvider.class)
@@ -32,6 +40,11 @@ public class JwtSecuritySupportConfiguration {
 				userDetailsService, userDetailsChecker);
 	}
 
+	/**
+	 * Creates adapter which adds user id to token.
+	 * @param jwtSecurityConfigurationProperties jwt config properties.
+	 * @return token config adapter.
+	 */
 	@Bean
 	public TokenConfigurationAdapter tokenConfigurationAdapter(
 			JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties) {

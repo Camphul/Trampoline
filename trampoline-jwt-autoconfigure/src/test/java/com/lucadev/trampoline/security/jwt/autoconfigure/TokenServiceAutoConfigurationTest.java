@@ -12,11 +12,9 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
@@ -107,12 +105,12 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public TokenPayload decodeToken(String token) {
+		public TokenPayload decodeTokenHeader(String token) {
 			return null;
 		}
 
 		@Override
-		public TokenPayload decodeToken(HttpServletRequest request) {
+		public TokenPayload decodeToken(String token) {
 			return null;
 		}
 
@@ -127,8 +125,7 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public Optional<Authentication> getAuthenticationToken(
-				HttpServletRequest request) {
+		public String getTokenHeader(HttpServletRequest request) {
 			return null;
 		}
 

@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +20,8 @@ public class TokenAuthenticationFilter
 	private final TokenService tokenService;
 
 	@Override
-	public TokenPayload getToken(HttpServletRequest request) {
-		return this.tokenService.decodeToken(request);
+	public String getTokenHeader(HttpServletRequest request) {
+		return this.tokenService.getTokenHeader(request);
 	}
 
 }

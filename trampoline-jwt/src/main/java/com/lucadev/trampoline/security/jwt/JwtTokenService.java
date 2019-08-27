@@ -1,7 +1,6 @@
 package com.lucadev.trampoline.security.jwt;
 
 import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
-import com.lucadev.trampoline.security.jwt.authentication.StatelessAuthenticationToken;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +27,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -136,54 +133,48 @@ public class JwtTokenService implements TokenService {
 	 * @return jwt DTO representation.
 	 */
 	@Override
-	public TokenPayload decodeToken(String token) {
-		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
-				.getClaims();
-		Claims claims = getAllTokenClaims(token);
-		TokenPayload tokenPayload = new TokenPayload();
-		tokenPayload.setRawToken(token);
-		tokenPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
-		tokenPayload.setIssuedDate(claims.getIssuedAt());
-		tokenPayload.setExpirationDate(claims.getExpiration());
-		tokenPayload.setPrincipalIdentifier(claims.get(claimConfig.getPrincipalIdentifier(), String.class));
-		tokenPayload.setIgnorableExpiration(
-				claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
-		Collection<GrantedAuthority> authorities = ((List<String>) claims
-				.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
-				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-		tokenPayload.setAuthorities(authorities);
-		return tokenPayload;
-	}
-
-	/**
-	 * Simply obtain the JWT payload from the header.
-	 * @param request http request from the client.
-	 * @return JWT payload.
-	 */
-	@Override
-	public TokenPayload decodeToken(HttpServletRequest request) {
-		final String requestHeader = request.getHeader(this.properties.getHeader());
-		if (requestHeader == null || requestHeader.isEmpty()) {
-			throw new AuthenticationCredentialsNotFoundException(
-					"Could not find token header.");
+	public TokenPayload decodeTokenHeader(String token) {
+		if (token == null || token.isEmpty()) {
+			throw new AuthenticationCredentialsNotFoundException("Could not find token.");
 		}
-		if (requestHeader.startsWith(this.properties.getHeaderSchema())) {
-			String authToken = parseTokenHeader(requestHeader);
+		if (token.startsWith(this.properties.getHeaderSchema())) {
+			String authToken = parseTokenHeader(token);
 			if (authToken == null) {
 				throw new AuthenticationCredentialsNotFoundException(
 						"Authentication token was not found inside header.");
 			}
-			try {
-				return decodeToken(authToken);
-			} catch (IllegalArgumentException e) {
-				throw new BadCredentialsException(
-						"Failed to parse token: " + e.getMessage());
-			} catch (ExpiredJwtException e) {
-				throw new BadCredentialsException("Token is expired.");
-			}
+			return decodeToken(authToken);
 		} else {
 			throw new AuthenticationCredentialsNotFoundException(
 					"Could not find bearer string inside header.");
+		}
+	}
+
+	@Override
+	public TokenPayload decodeToken(String token) {
+		try {
+			JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
+					.getClaims();
+			Claims claims = getAllTokenClaims(token);
+			TokenPayload tokenPayload = new TokenPayload();
+			tokenPayload.setRawToken(token);
+			tokenPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
+			tokenPayload.setIssuedDate(claims.getIssuedAt());
+			tokenPayload.setExpirationDate(claims.getExpiration());
+			tokenPayload.setPrincipalIdentifier(
+					claims.get(claimConfig.getPrincipalIdentifier(), String.class));
+			tokenPayload.setIgnorableExpiration(
+					claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
+			Collection<GrantedAuthority> authorities = ((List<String>) claims
+					.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
+					.map(SimpleGrantedAuthority::new)
+					.collect(Collectors.toList());
+			tokenPayload.setAuthorities(authorities);
+			return tokenPayload;
+		} catch (IllegalArgumentException e) {
+			throw new BadCredentialsException("Failed to parse token: " + e.getMessage());
+		} catch (ExpiredJwtException e) {
+			throw new BadCredentialsException("Token is expired.");
 		}
 	}
 
@@ -200,25 +191,9 @@ public class JwtTokenService implements TokenService {
 				|| tokenPayload.isIgnorableExpiration()));
 	}
 
-	/**
-	 * Read the header containing our token and create an {@link Authentication} object
-	 * from it.
-	 * @param request http req
-	 * @return auth object.
-	 */
 	@Override
-	public Optional<Authentication> getAuthenticationToken(HttpServletRequest request) {
-		try {
-			TokenPayload tokenPayload = decodeToken(request);
-			if (tokenPayload == null) {
-				return Optional.empty();
-			}
-			return Optional.of(new StatelessAuthenticationToken(tokenPayload));
-		}
-		catch (Exception ex) {
-			log.error("Failed to obtain JWT authentication object.", ex);
-			return Optional.empty();
-		}
+	public String getTokenHeader(HttpServletRequest request) {
+		return request.getHeader(this.properties.getHeader());
 	}
 
 	/**

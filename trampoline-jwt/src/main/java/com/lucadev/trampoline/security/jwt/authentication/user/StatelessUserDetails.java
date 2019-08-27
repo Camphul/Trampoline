@@ -24,7 +24,6 @@ public class StatelessUserDetails implements UserDetails {
 
 	/**
 	 * Get principal id.
-	 *
 	 * @return id of the principal.
 	 */
 	public String getPrincipalId() {

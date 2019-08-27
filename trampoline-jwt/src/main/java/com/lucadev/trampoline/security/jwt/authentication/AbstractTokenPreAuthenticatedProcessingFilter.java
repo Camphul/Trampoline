@@ -1,6 +1,5 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.TokenPayload;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter
 	 * @param request http request.
 	 * @return token payload.
 	 */
-	public abstract TokenPayload getToken(HttpServletRequest request);
+	public abstract String getTokenHeader(HttpServletRequest request);
 
 	/**
 	 * Get principal in the form of a token.
@@ -28,7 +27,7 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter
 	 */
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-		return getToken(request);
+		return getTokenHeader(request);
 	}
 
 	/**
@@ -38,7 +37,7 @@ public abstract class AbstractTokenPreAuthenticatedProcessingFilter
 	 */
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-		return getToken(request);
+		return getTokenHeader(request);
 	}
 
 }

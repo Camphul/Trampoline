@@ -33,7 +33,7 @@ public class UserDetailsTokenAuthenticationProvider
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
-		log.debug("Issueing new token.");
+		log.debug("Issuing new token.");
 		UsernamePasswordAuthenticationToken authorizationToken = (UsernamePasswordAuthenticationToken) authentication;
 		UserDetails userDetails = this.userDetailsService
 				.loadUserByUsername(authorizationToken.getName());
