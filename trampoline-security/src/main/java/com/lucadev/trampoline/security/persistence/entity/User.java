@@ -91,13 +91,14 @@ public class User extends TrampolineEntity {
 	private Collection<GrantedAuthority> authorities;
 
 	/**
-	 * {@inheritDoc}
+	 * Maps the roles and privileges to granted authorities.
+	 * @return list of granted authorities for the user.
 	 */
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// Check if authorities was already calculated.
-		if (authorities == null) {
+		if (this.authorities == null) {
 			this.authorities = new ArrayList<>();
-			getRoles().forEach(role -> {
+			this.getRoles().forEach(role -> {
 				this.authorities.add(new SimpleGrantedAuthority(role.getName()));
 				role.getPrivileges().forEach(privilege -> authorities
 						.add(new SimpleGrantedAuthority(privilege.getName())));
@@ -116,21 +117,24 @@ public class User extends TrampolineEntity {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Return non-expiry flag.
+	 * @return true when the account is not expired.
 	 */
 	public boolean isAccountNonExpired() {
 		return !this.expired;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Return non-locked flag.
+	 * @return true when the account is not locked.
 	 */
 	public boolean isAccountNonLocked() {
 		return !this.locked;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Return credentials not expired flag.
+	 * @return true when the user credentials are not expired.
 	 */
 	public boolean isCredentialsNonExpired() {
 		return !this.credentialsExpired;

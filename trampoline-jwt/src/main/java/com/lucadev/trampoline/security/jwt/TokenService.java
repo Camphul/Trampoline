@@ -35,7 +35,6 @@ public interface TokenService {
 
 	/**
 	 * Get all token information.
-	 *
 	 * @param token jwt string with schema attached.
 	 * @return jwt DTO representation.
 	 */

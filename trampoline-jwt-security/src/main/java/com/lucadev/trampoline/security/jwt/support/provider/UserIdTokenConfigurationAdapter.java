@@ -32,7 +32,7 @@ public class UserIdTokenConfigurationAdapter implements TokenConfigurationAdapte
 			log.debug("Adding principal id claim.");
 			PersistentUserDetails persistentUserDetails = (PersistentUserDetails) userDetails;
 			claims.put(
-					jwtSecurityConfigurationProperties.getClaims()
+					this.jwtSecurityConfigurationProperties.getClaims()
 							.getPrincipalIdentifier(),
 					persistentUserDetails.getUser().getId().toString());
 
