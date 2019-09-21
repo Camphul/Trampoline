@@ -3,8 +3,8 @@ package com.lucadev.trampoline.security.jwt.autoconfigure;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
 import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class TokenServiceAutoConfigurationTest {
 
 	private AnnotationConfigApplicationContext context;
 
-	private TokenConfigurationAdapter jwtConfiguration;
+	private TokenDecorator jwtConfiguration;
 
 	private JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 
@@ -42,7 +42,7 @@ public class TokenServiceAutoConfigurationTest {
 		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
-		jwtConfiguration = mock(TokenConfigurationAdapter.class);
+		jwtConfiguration = mock(TokenDecorator.class);
 		context = new AnnotationConfigApplicationContext();
 	}
 

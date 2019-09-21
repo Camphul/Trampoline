@@ -1,11 +1,11 @@
 package com.lucadev.trampoline.security.jwt.support;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.security.jwt.support.provider.UserDetailsTokenAuthenticationProvider;
-import com.lucadev.trampoline.security.jwt.support.provider.UserIdTokenConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.support.provider.UserIdTokenDecorator;
 import com.lucadev.trampoline.security.service.UserService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -45,9 +45,9 @@ public class JwtSecuritySupportConfiguration {
 	 * @return token config adapter.
 	 */
 	@Bean
-	public TokenConfigurationAdapter tokenConfigurationAdapter(
+	public TokenDecorator userIdTokenDecorator(
 			JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties) {
-		return new UserIdTokenConfigurationAdapter(jwtSecurityConfigurationProperties);
+		return new UserIdTokenDecorator(jwtSecurityConfigurationProperties);
 	}
 
 }

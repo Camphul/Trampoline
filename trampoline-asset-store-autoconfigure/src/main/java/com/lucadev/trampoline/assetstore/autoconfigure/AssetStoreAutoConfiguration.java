@@ -61,12 +61,11 @@ public class AssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store factory.
-	 *
 	 * @param localAssetStoreConfigurationProperties spring cofiguration properties for
-	 *                                               this factory.
-	 * @param metaDataRepository                     jpa repository for.
-	 * @param eventPublisher                         event publisher.
-	 *                                               {@link com.lucadev.trampoline.assetstore.AssetMetaData}.
+	 * this factory.
+	 * @param metaDataRepository jpa repository for.
+	 * @param eventPublisher event publisher.
+	 * {@link com.lucadev.trampoline.assetstore.AssetMetaData}.
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean

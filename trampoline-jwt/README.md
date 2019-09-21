@@ -32,12 +32,7 @@ This module provides web controllers and missing components to make the link fla
 - `trampoline.security.jwt.header-schema`: Schema prefix inside the header value(Bearer)
 - `trampoline.security.jwt.claims.username`: claim key for username
 - `trampoline.security.jwt.claims.authorities`: claim key for authorities
-- `trampoline.security.jwt.claims.ignore-expiration`: claim key for ignoring expiration
 
 ## Handling custom claims
 
-If you wish to add custom claims to the token you may implement `JwtConfigurationAdapter`(with `@Configuration` of course).
-
-This interface contains methods which are invoked when creating a token.
-These claims can be retrieved from the `Authentication` object by casting `Authentication` to `JwtAuthenticationToken`.
-The parsed JWT will be available by invoking `JwtAuthenticationToken#getJwtPayload()`.
+Implement a bean of type `TokenDecorator` to modify token claims.

@@ -22,7 +22,7 @@ public class TokenPayload implements Serializable {
 	private String rawToken;
 
 	/**
-	 * Principal id(most likely entity id)
+	 * Principal id(most likely entity id).
 	 */
 	private String principalIdentifier;
 
@@ -45,10 +45,5 @@ public class TokenPayload implements Serializable {
 	 * Token expiry date.
 	 */
 	private Date expirationDate;
-
-	/**
-	 * If we can ignore expiry date.
-	 */
-	private boolean ignorableExpiration;
 
 }

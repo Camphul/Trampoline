@@ -50,7 +50,6 @@ Properties being used are:
 - `trampoline.security.jwt.tokenTimeout`: timeout property of jwt, default is 3600
 - `trampoline.security.jwt.claims.username`: claim key for username
 - `trampoline.security.jwt.claims.authorities`: claim key for authorities
-- `trampoline.security.jwt.claims.ignore-expiration`: claim key for ignoring expiration
 - `trampoline.security.jwt.web.base-mapping`: auth basepath for authorizing and refreshing tokens, default is /auth
 - `trampoline.security.jwt.web.authorize-mapping`: auth path to obtain tokens. Will be appended to `trampoline.security.jwt.web.base-mapping`. Defaults to `/authorize`
 - `trampoline.security.jwt.web.refresh-mapping`: auth path to refresh existing tokens. Will be appended to `trampoline.security.jwt.web.base-mapping`. Defaults to `/refresh`

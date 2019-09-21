@@ -66,10 +66,6 @@ public class JwtSecurityConfigurationProperties {
 		@NotBlank
 		private String authorities = "authorities";
 
-		// Name of the key deciding if we can ignore token timeout
-		@NotBlank
-		private String ignoreExpiration = "ignoreExpiration";
-
 	}
 
 }

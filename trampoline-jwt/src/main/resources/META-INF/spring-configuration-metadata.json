@@ -41,12 +41,6 @@
       "type": "java.lang.String",
       "description": "Claim key to use for authorities.",
       "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
-    },
-    {
-      "name": "trampoline.security.jwt.claims.ignore-expiration",
-      "type": "java.lang.String",
-      "description": "Claim key to use for ignoring expiration.",
-      "sourceType": "com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties$ClaimsConfigurationProperties"
     }
   ]
 }

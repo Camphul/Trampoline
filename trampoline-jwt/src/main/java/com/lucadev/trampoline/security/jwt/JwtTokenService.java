@@ -1,7 +1,7 @@
 package com.lucadev.trampoline.security.jwt;
 
-import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenService implements TokenService {
 
-	private final TokenConfigurationAdapter tokenConfigurationAdapter;
+	private final List<TokenDecorator> tokenDecorators;
 
 	private final TimeProvider timeProvider;
 
@@ -71,9 +71,8 @@ public class JwtTokenService implements TokenService {
 		claims.put(claimConfig.getUsername(), user.getUsername());
 		claims.put(claimConfig.getAuthorities(), user.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
-		claims.put(claimConfig.getIgnoreExpiration(),
-				this.tokenConfigurationAdapter.shouldIgnoreExpiration(user));
-		this.tokenConfigurationAdapter.createToken(user, claims);
+		this.tokenDecorators
+				.forEach(tokenDecorator -> tokenDecorator.createToken(user, claims));
 		return generateToken(claims, user.getUsername());
 	}
 
@@ -124,7 +123,7 @@ public class JwtTokenService implements TokenService {
 	}
 
 	private boolean isTokenRefreshable(TokenPayload token) {
-		return (!isExpired(token.getExpirationDate()) || token.isIgnorableExpiration());
+		return !isExpired(token.getExpirationDate());
 	}
 
 	/**
@@ -163,8 +162,6 @@ public class JwtTokenService implements TokenService {
 			tokenPayload.setExpirationDate(claims.getExpiration());
 			tokenPayload.setPrincipalIdentifier(
 					claims.get(claimConfig.getPrincipalIdentifier(), String.class));
-			tokenPayload.setIgnorableExpiration(
-					claims.get(claimConfig.getIgnoreExpiration(), Boolean.class));
 			Collection<GrantedAuthority> authorities = ((List<String>) claims
 					.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
 					.map(SimpleGrantedAuthority::new)
@@ -187,8 +184,7 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
 		return (user.getUsername().equals(tokenPayload.getUsername())
-				&& (!isExpired(tokenPayload.getExpirationDate())
-				|| tokenPayload.isIgnorableExpiration()));
+				&& (!isExpired(tokenPayload.getExpirationDate())));
 	}
 
 	@Override

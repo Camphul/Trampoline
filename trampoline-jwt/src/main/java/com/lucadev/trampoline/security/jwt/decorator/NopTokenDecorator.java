@@ -1,21 +1,16 @@
-package com.lucadev.trampoline.security.jwt.adapter;
+package com.lucadev.trampoline.security.jwt.decorator;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;
 
 /**
- * Default {@link TokenConfigurationAdapter} implementation which does not do anything.
+ * Default {@link TokenDecorator} implementation which does not do anything.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 22-5-18
  */
-public class NopTokenConfigurationAdapter implements TokenConfigurationAdapter {
-
-	@Override
-	public boolean shouldIgnoreExpiration(UserDetails user) {
-		return false;
-	}
+public class NopTokenDecorator implements TokenDecorator {
 
 	@Override
 	public void createToken(UserDetails user, Map<String, Object> claims) {
