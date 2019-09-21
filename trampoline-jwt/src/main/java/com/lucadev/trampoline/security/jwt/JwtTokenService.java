@@ -72,7 +72,7 @@ public class JwtTokenService implements TokenService {
 		claims.put(claimConfig.getAuthorities(), user.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		this.tokenDecorators
-				.forEach(tokenDecorator -> tokenDecorator.createToken(user, claims));
+				.forEach(tokenDecorator -> tokenDecorator.createClaims(user, claims));
 		return generateToken(claims, user.getUsername());
 	}
 

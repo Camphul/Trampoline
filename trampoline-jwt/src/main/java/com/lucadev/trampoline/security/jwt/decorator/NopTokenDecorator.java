@@ -13,7 +13,7 @@ import java.util.Map;
 public class NopTokenDecorator implements TokenDecorator {
 
 	@Override
-	public void createToken(UserDetails user, Map<String, Object> claims) {
+	public void createClaims(UserDetails user, Map<String, Object> claims) {
 		// Dont do anything by default
 	}
 

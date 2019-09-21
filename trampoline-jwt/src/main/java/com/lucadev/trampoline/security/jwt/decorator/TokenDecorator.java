@@ -17,6 +17,6 @@ public interface TokenDecorator {
 	 * @param user the user for which a token is created
 	 * @param claims the created claims
 	 */
-	void createToken(UserDetails user, Map<String, Object> claims);
+	void createClaims(UserDetails user, Map<String, Object> claims);
 
 }

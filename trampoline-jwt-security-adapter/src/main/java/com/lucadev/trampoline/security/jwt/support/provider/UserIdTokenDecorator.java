@@ -22,7 +22,7 @@ public class UserIdTokenDecorator implements TokenDecorator {
 	private final JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 
 	@Override
-	public void createToken(UserDetails userDetails, Map<String, Object> claims) {
+	public void createClaims(UserDetails userDetails, Map<String, Object> claims) {
 		if (userDetails instanceof PersistentUserDetails) {
 			log.debug("Adding principal id claim.");
 			PersistentUserDetails persistentUserDetails = (PersistentUserDetails) userDetails;
