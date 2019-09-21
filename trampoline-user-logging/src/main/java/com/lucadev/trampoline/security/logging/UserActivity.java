@@ -17,11 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserActivity {
 
 	/**
-	 * Context in which the activity took place.
-	 */
-	private UserActivityInvocationContext invocationContext;
-
-	/**
 	 * User who caused the activity.
 	 */
 	private final UserDetails principal;
@@ -35,5 +30,10 @@ public class UserActivity {
 	 * On which object did the activity take place.
 	 */
 	private final Object actedUpon;
+
+	/**
+	 * Context in which the activity took place.
+	 */
+	private UserActivityInvocationContext invocationContext;
 
 }

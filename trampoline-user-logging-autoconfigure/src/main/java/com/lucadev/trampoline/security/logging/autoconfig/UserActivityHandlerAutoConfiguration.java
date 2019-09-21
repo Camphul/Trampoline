@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.logging.autoconfig;
 
 import com.lucadev.trampoline.security.logging.handler.UserActivityHandler;
 import com.lucadev.trampoline.security.logging.handler.event.UserActivityEventPublisher;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -17,14 +17,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(UserActivityHandler.class)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserActivityHandlerAutoConfiguration {
+
+	private final ApplicationEventPublisher eventPublisher;
 
 	@Bean
 	@ConditionalOnMissingBean
-	public UserActivityHandler userActivityHandler(
-			ApplicationEventPublisher eventPublisher) {
-		return new UserActivityEventPublisher(eventPublisher);
+	public UserActivityHandler userActivityHandler() {
+		return new UserActivityEventPublisher(this.eventPublisher);
 	}
 
 }

@@ -39,6 +39,28 @@ public class AssetEvent extends ApplicationEvent {
 	}
 
 	/**
+	 * Defines the action which took place.
+	 */
+	public enum Action {
+
+		/**
+		 * When an asset has been created.
+		 */
+		PUT,
+
+		/**
+		 * When as asset has been removed.
+		 */
+		REMOVE,
+
+		/**
+		 * When there's another action depending on implementation of asset store.
+		 */
+		OTHER
+
+	}
+
+	/**
 	 * Put event.
 	 */
 	public static class Put extends AssetEvent {
@@ -67,28 +89,6 @@ public class AssetEvent extends ApplicationEvent {
 		public Remove(AssetStore source, AssetMetaData assetMetaData) {
 			super(source, assetMetaData, Action.REMOVE);
 		}
-
-	}
-
-	/**
-	 * Defines the action which took place.
-	 */
-	public enum Action {
-
-		/**
-		 * When an asset has been created.
-		 */
-		PUT,
-
-		/**
-		 * When as asset has been removed.
-		 */
-		REMOVE,
-
-		/**
-		 * When there's another action depending on implementation of asset store.
-		 */
-		OTHER
 
 	}
 

@@ -32,8 +32,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ExampleAppApplication {
 
 	private final TimeProvider timeProvider;
+
 	private final UserService userService;
+
 	private final RoleService roleService;
+
 	private final PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
@@ -44,8 +47,8 @@ public class ExampleAppApplication {
 	@ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto",
 			havingValue = "create") // Only run when db scheme is dropped at start
 	public DummyUserImporter dummyUserImporter() {
-		return new DummyUserImporter(this.timeProvider, this.userService, this.roleService,
-				this.passwordEncoder);
+		return new DummyUserImporter(this.timeProvider, this.userService,
+				this.roleService, this.passwordEncoder);
 	}
 
 }

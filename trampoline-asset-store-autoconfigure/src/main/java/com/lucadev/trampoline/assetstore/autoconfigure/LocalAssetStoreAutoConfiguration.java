@@ -35,7 +35,6 @@ public class LocalAssetStoreAutoConfiguration {
 
 	/**
 	 * Configure default asset store factory.
-	 *
 	 * @return a new {@link AssetStore}
 	 */
 	@Bean
