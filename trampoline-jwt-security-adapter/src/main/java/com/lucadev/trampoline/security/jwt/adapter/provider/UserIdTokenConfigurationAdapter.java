@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.support.provider;
+package com.lucadev.trampoline.security.jwt.adapter.provider;
 
 import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;

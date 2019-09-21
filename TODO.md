@@ -12,7 +12,7 @@ Autoconfigs, configs, components, etc.. Apply constructor di.
 We want a clear oversight of our wanted architecture and prevent any design issues(such as tight coupling) 
 
 
-## 3. Refactor trampoline-jwt-security to adapter-like name
+## 3. Refactor trampoline-jwt-security to adapter-like name - DONE
 
 The module is basically one big adapter so we should use it in the name.
 
@@ -29,6 +29,10 @@ Resource's should still be persisted to the DB but only require the URL to be st
 
 They can add loads of modularity to Trampoline components. They should also use Spring Ordered interface when possible.
 Current implementations of these patterns are lacking.
+
+In some modules the terminology could be used differently. Such as:
+
+- TokenConfigurationAdapter: is actually a decorator. Add support for Ordered interface/multiple decorators.
 
 
 ## 6. data module should configure a Flyway bean

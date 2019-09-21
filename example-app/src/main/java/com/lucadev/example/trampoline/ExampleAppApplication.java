@@ -3,7 +3,7 @@ package com.lucadev.example.trampoline;
 import com.lucadev.trampoline.EnableTrampoline;
 import com.lucadev.trampoline.data.gdpr.EnableGdprCompliance;
 import com.lucadev.trampoline.security.abac.access.annotation.EnablePrePostPolicy;
-import com.lucadev.trampoline.security.jwt.support.EnableJwtSecuritySupport;
+import com.lucadev.trampoline.security.jwt.adapter.EnableJwtSecurityAdapter;
 import com.lucadev.trampoline.security.logging.EnableUserActivityLogging;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableUserActivityLogging
 @EnableIgnoreSecurity
 @EnablePrePostPolicy
-@EnableJwtSecuritySupport
+@EnableJwtSecurityAdapter
 @EnableGdprCompliance
 @RequiredArgsConstructor
 public class ExampleAppApplication {
