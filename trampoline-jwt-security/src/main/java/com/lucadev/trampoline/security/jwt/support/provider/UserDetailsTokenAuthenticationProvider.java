@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Authentication provider which creates an authentication object from a
- * username password login.
+ * Authentication provider which creates an authentication object from a username password
+ * login.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
