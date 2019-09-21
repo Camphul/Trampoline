@@ -1,4 +1,4 @@
-# trampoline-jwt-security
+# trampoline-jwt-security-adapter
 
 REST API endpoints for [trampoline-jwt](../trampoline-jwt) which work with [trampoline-security](../trampoline-security)
 

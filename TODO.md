@@ -3,11 +3,11 @@
 Development todo list in order of what needs to be completed.
 
 
-## 1. Apply constructor inject everywhere
+## 1. Apply constructor inject everywhere - DONE
 
 Autoconfigs, configs, components, etc.. Apply constructor di.
 
-## 2. Create UML diagram for each module
+## 2. Create UML diagram for each module - POSTPONED
 
 We want a clear oversight of our wanted architecture and prevent any design issues(such as tight coupling) 
 

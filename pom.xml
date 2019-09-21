@@ -112,7 +112,7 @@
 		<module>trampoline-security-autoconfigure</module>
 		<module>trampoline-security-starter</module>
 		<module>trampoline-jwt</module>
-		<module>trampoline-jwt-security</module>
+		<module>trampoline-jwt-security-adapter</module>
 		<module>trampoline-jwt-autoconfigure</module>
 		<module>trampoline-jwt-starter</module>
 		<module>trampoline-starter</module>

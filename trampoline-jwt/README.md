@@ -21,7 +21,7 @@ We then have the following interfaces and classes to work with:
 
 By implementing already existing Spring interface we can easily switch authorization without having any deeply coupled jwt code in our projects.
 
-If you also use `trampoline-security` please add the `trampoline-jwt-security` module to your dependencies.
+If you also use `trampoline-security` please add the `trampoline-jwt-security-adapter` module to your dependencies.
 This module provides web controllers and missing components to make the link flawless.
 
 ## Configuration

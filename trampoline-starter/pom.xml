@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
-			<artifactId>trampoline-jwt-security</artifactId>
+			<artifactId>trampoline-jwt-security-adapter</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
