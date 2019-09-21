@@ -7,7 +7,6 @@ import com.lucadev.trampoline.data.gdpr.crypto.FieldEncrypter;
 import com.lucadev.trampoline.data.gdpr.crypto.StringCrypto;
 import com.lucadev.trampoline.data.gdpr.repository.CompliantRepositoryMethodInterceptor;
 import com.lucadev.trampoline.data.gdpr.repository.CompliantRepositoryProxyPostProcessor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.EntityManagerFactory;
@@ -18,48 +17,53 @@ import javax.persistence.EntityManagerFactory;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/2/19
  */
-@RequiredArgsConstructor
 class GdprComplianceConfiguration {
 
-	private final EntityManagerFactory entityManagerFactory;
-
-	private final CryptoConfigurationProperties cryptoConfigurationProperties;
-
 	@Bean
-	public CipherProvider cipherProvider() {
-		return new CipherProvider(this.cryptoConfigurationProperties);
+	public CipherProvider cipherProvider(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new CipherProvider(cryptoConfigurationProperties);
 	}
 
 	@Bean
-	public StringCrypto stringCrypto() {
-		return new StringCrypto(cipherProvider());
+	public StringCrypto stringCrypto(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new StringCrypto(cipherProvider(cryptoConfigurationProperties));
 	}
 
 	@Bean
-	public FieldDecrypter fieldDecrypter() {
-		return new FieldDecrypter(stringCrypto());
+	public FieldDecrypter fieldDecrypter(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new FieldDecrypter(stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean
-	public FieldEncrypter fieldEncrypter() {
-		return new FieldEncrypter(stringCrypto());
+	public FieldEncrypter fieldEncrypter(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new FieldEncrypter(stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean
-	public PersonalDataEntityListener personalDataEntityListener() {
-		return new PersonalDataEntityListener(this.entityManagerFactory, fieldDecrypter(),
-				fieldEncrypter());
+	public PersonalDataEntityListener personalDataEntityListener(
+			EntityManagerFactory entityManagerFactory,
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new PersonalDataEntityListener(entityManagerFactory,
+				fieldDecrypter(cryptoConfigurationProperties),
+				fieldEncrypter(cryptoConfigurationProperties));
 	}
 
 	@Bean
-	public CompliantRepositoryMethodInterceptor compliantRepositoryMethodInterceptor() {
-		return new CompliantRepositoryMethodInterceptor(stringCrypto());
+	public CompliantRepositoryMethodInterceptor compliantRepositoryMethodInterceptor(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
+		return new CompliantRepositoryMethodInterceptor(
+				stringCrypto(cryptoConfigurationProperties));
 	}
 
 	@Bean
-	public CompliantRepositoryProxyPostProcessor compliantRepositoryProxyPostProcessor() {
+	public CompliantRepositoryProxyPostProcessor compliantRepositoryProxyPostProcessor(
+			CryptoConfigurationProperties cryptoConfigurationProperties) {
 		return new CompliantRepositoryProxyPostProcessor(
-				compliantRepositoryMethodInterceptor());
+				compliantRepositoryMethodInterceptor(cryptoConfigurationProperties));
 	}
 
 }

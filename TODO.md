@@ -37,7 +37,7 @@ If Flyway is in the classpath Trampoline should provide migrations for the entit
 
 The Flyway bean will be configured through decorators adding locations for migrations.
 
-## 7. notify module to use conditional beans based upon dependent modules. - DONE
+## 7. notify module to use conditional beans based upon dependent modules.
 
 Only when the Spring Email library is in the classpath shall the notify module create an EmailService bean.
 
@@ -59,6 +59,6 @@ Do more research on database column encryption, write reusable migration code to
 
 Don't just write some code but follow design pattern guidelines. 
 
-## 12. Make ModelMapper mappers conditional
+## 12. asset-store to implement a FactoryBean
 
-Option to disable the registration mapper beans.
+Create a FactoryBean which creates the actual AssetStore instance instead of putting all logic in the autoconfig.

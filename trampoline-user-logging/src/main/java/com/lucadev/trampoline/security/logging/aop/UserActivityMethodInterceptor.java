@@ -77,8 +77,8 @@ public class UserActivityMethodInterceptor implements MethodInterceptor {
 			description = evaluateDescription(description, argumentMap);
 		}
 
-		UserActivity userActivity = new UserActivity(principal, description, actedUpon,
-				result.getInvocationDetails());
+		UserActivity userActivity = new UserActivity(result.getInvocationDetails(),
+				principal, description, actedUpon);
 
 		try {
 			this.userActivityHandler.handleUserActivity(userActivity);

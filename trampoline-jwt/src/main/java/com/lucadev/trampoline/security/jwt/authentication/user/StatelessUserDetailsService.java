@@ -31,7 +31,7 @@ public class StatelessUserDetailsService
 				&& authentication.getCredentials() instanceof String) {
 			log.debug("Loading stateless user details.");
 			try {
-				TokenPayload tokenPayload = this.tokenService
+				TokenPayload tokenPayload = tokenService
 						.decodeTokenHeader((String) authentication.getPrincipal());
 				return new StatelessUserDetails(tokenPayload);
 			} catch (Exception ex) {

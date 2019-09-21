@@ -47,7 +47,7 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public Optional<User> findByUsername(String username) {
-		return this.userRepository.findOneByUsername(username);
+		return userRepository.findOneByUsername(username);
 	}
 
 	/**

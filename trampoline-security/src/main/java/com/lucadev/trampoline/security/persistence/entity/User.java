@@ -91,20 +91,6 @@ public class User extends TrampolineEntity {
 	private Collection<GrantedAuthority> authorities;
 
 	/**
-	 * Cast UserDetails to User.
-	 * @param userDetails the UserDetails to cast.
-	 * @return optional with the user. Empty optional if the userDetails is not an
-	 * instance of User.
-	 * @see UserDetails
-	 */
-	public static Optional<User> from(UserDetails userDetails) {
-		if (userDetails instanceof PersistentUserDetails) {
-			return Optional.of(((PersistentUserDetails) userDetails).getUser());
-		}
-		return Optional.empty();
-	}
-
-	/**
 	 * Maps the roles and privileges to granted authorities.
 	 * @return list of granted authorities for the user.
 	 */
@@ -114,7 +100,7 @@ public class User extends TrampolineEntity {
 			this.authorities = new ArrayList<>();
 			this.getRoles().forEach(role -> {
 				this.authorities.add(new SimpleGrantedAuthority(role.getName()));
-				role.getPrivileges().forEach(privilege -> this.authorities
+				role.getPrivileges().forEach(privilege -> authorities
 						.add(new SimpleGrantedAuthority(privilege.getName())));
 			});
 		}
@@ -152,6 +138,21 @@ public class User extends TrampolineEntity {
 	 */
 	public boolean isCredentialsNonExpired() {
 		return !this.credentialsExpired;
+	}
+
+	/**
+	 * Cast UserDetails to User.
+	 *
+	 * @param userDetails the UserDetails to cast.
+	 * @return optional with the user. Empty optional if the userDetails is not an
+	 * instance of User.
+	 * @see UserDetails
+	 */
+	public static Optional<User> from(UserDetails userDetails) {
+		if (userDetails instanceof PersistentUserDetails) {
+			return Optional.of(((PersistentUserDetails) userDetails).getUser());
+		}
+		return Optional.empty();
 	}
 
 }
