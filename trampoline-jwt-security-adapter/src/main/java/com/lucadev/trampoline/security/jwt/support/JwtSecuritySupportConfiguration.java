@@ -1,10 +1,11 @@
-package com.lucadev.trampoline.security.jwt.adapter;
+package com.lucadev.trampoline.security.jwt.support;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.provider.UserDetailsTokenAuthenticationProvider;
-import com.lucadev.trampoline.security.jwt.adapter.provider.UserIdTokenConfigurationAdapter;
+import com.lucadev.trampoline.security.jwt.adapter.TokenConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.support.provider.UserDetailsTokenAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.support.provider.UserIdTokenConfigurationAdapter;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -21,7 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 @RequiredArgsConstructor
 @ConditionalOnClass({TokenService.class, UserService.class})
-public class JwtSecurityAdapterConfiguration {
+public class JwtSecuritySupportConfiguration {
 
 	private final TokenService tokenService;
 

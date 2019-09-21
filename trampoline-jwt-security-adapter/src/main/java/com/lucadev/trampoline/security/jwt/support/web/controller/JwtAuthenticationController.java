@@ -1,8 +1,8 @@
-package com.lucadev.trampoline.security.jwt.adapter.web.controller;
+package com.lucadev.trampoline.security.jwt.support.web.controller;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.web.model.TokenAuthenticationResponse;
-import com.lucadev.trampoline.security.jwt.adapter.web.model.UserAuthenticationRequest;
+import com.lucadev.trampoline.security.jwt.support.web.model.TokenAuthenticationResponse;
+import com.lucadev.trampoline.security.jwt.support.web.model.UserAuthenticationRequest;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import com.lucadev.trampoline.security.web.model.UserDto;

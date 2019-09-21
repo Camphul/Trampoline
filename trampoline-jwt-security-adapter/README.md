@@ -2,7 +2,7 @@
 
 REST API endpoints for [trampoline-jwt](../trampoline-jwt) which work with [trampoline-security](../trampoline-security)
 
-Use the `@EnableJwtSecurityAdapter` annotation to hook the jwt and security modules together.
+Use the `@EnableJwtSecuritySupport` annotation to hook the jwt and security modules together.
 
 ## Architecture
 
