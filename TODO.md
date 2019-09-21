@@ -58,3 +58,7 @@ Do more research on database column encryption, write reusable migration code to
 ## 11. Refactor code to match design patterns better
 
 Don't just write some code but follow design pattern guidelines. 
+
+## 12. asset-store to implement a FactoryBean
+
+Create a FactoryBean which creates the actual AssetStore instance instead of putting all logic in the autoconfig.
