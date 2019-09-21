@@ -92,7 +92,6 @@ public class User extends TrampolineEntity {
 
 	/**
 	 * Cast UserDetails to User.
-	 *
 	 * @param userDetails the UserDetails to cast.
 	 * @return optional with the user. Empty optional if the userDetails is not an
 	 * instance of User.

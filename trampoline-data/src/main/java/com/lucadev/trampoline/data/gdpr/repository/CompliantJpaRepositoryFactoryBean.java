@@ -24,7 +24,8 @@ public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
 
 	@Setter
 	@Getter
-	@Autowired
+	@Autowired // autowired is required due to not being able to constructor inject this
+	// bean.
 	private CompliantRepositoryProxyPostProcessor compliantRepositoryProxyPostProcessor;
 
 	/**

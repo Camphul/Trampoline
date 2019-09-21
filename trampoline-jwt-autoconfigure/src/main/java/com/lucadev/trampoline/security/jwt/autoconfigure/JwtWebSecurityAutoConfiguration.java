@@ -55,7 +55,10 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 
 	private TokenAuthenticationProvider tokenAuthenticationProvider;
 
-	@Autowired(required = false)
+	@Autowired(required = false/*
+								 * This mechanism will be replaced soon by a rewritten
+								 * adapter module
+								 */)
 	public void setTokenAuthenticationProvider(
 			TokenAuthenticationProvider tokenAuthenticationProvider) {
 		this.tokenAuthenticationProvider = tokenAuthenticationProvider;
