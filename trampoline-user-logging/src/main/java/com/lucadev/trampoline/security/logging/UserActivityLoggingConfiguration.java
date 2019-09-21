@@ -24,7 +24,7 @@ class UserActivityLoggingConfiguration {
 	private final TimeProvider timeProvider;
 
 	@Bean
-	public Advisor advisor() {
+	public Advisor userActivityAdvisor() {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		pointcut.setExpression(
 				"@annotation(com.lucadev.trampoline.security.logging.LogUserActivity)");

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @AllArgsConstructor
 @ToString
-public class UserActivity {
+public final class UserActivity {
 
 	/**
 	 * Context in which the activity took place.

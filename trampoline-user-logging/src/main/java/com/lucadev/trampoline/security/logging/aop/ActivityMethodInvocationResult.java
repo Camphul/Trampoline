@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 5/8/19
  */
 @Data
-public class ActivityMethodInvocationResult {
+public final class ActivityMethodInvocationResult {
 
 	private final UserActivityInvocationContext invocationDetails;
 

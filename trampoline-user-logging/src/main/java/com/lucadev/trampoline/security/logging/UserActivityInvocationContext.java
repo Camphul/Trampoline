@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public class UserActivityInvocationContext {
+public final class UserActivityInvocationContext {
 
 	private final String className;
 

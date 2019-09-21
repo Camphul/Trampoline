@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class UserActivityMethodInterceptor implements MethodInterceptor {
+public final class UserActivityMethodInterceptor implements MethodInterceptor {
 
 	private final UserActivityHandler userActivityHandler;
 
