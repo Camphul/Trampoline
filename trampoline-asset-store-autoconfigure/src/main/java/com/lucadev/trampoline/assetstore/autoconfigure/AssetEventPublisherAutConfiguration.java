@@ -25,12 +25,11 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore(AssetStoreAutoConfiguration.class)
 public class AssetEventPublisherAutConfiguration {
 
-	private final ApplicationEventPublisher applicationEventPublisher;
-
 	@Bean
 	@ConditionalOnMissingBean
-	public AssetEventPublisher assetEventPublisher() {
-		return new DefaultAssetEventPublisher(this.applicationEventPublisher);
+	public AssetEventPublisher assetEventPublisher(
+			ApplicationEventPublisher applicationEventPublisher) {
+		return new DefaultAssetEventPublisher(applicationEventPublisher);
 	}
 
 }
