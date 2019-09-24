@@ -5,7 +5,7 @@ import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,10 +23,10 @@ import java.util.List;
  * @since 21-4-18
  */
 @Configuration
+@RequiredArgsConstructor
 @ConditionalOnClass(TokenService.class)
 @AutoConfigureAfter(TokenDecoratorAutoConfiguration.class)
 @EnableConfigurationProperties(JwtSecurityConfigurationProperties.class)
-@AllArgsConstructor
 public class TokenServiceAutoConfiguration {
 
 	private final List<TokenDecorator> tokenDecorators;
@@ -35,7 +35,12 @@ public class TokenServiceAutoConfiguration {
 
 	private final TimeProvider timeProvider;
 
-	@Bean
+	/**
+	 * Creates a {@link TokenService} bean if none are provided.
+	 *
+	 * @return autoconfigured {@link TokenService}
+	 */
+	@Bean(name = "tokenService")
 	@ConditionalOnMissingBean(TokenService.class)
 	public TokenService tokenService() {
 		return new JwtTokenService(this.tokenDecorators, this.timeProvider,
