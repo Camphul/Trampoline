@@ -44,7 +44,8 @@ public class JwtSecuritySupportConfiguration {
 	 * @param jwtSecurityConfigurationProperties jwt config properties.
 	 * @return token config adapter.
 	 */
-	@Bean
+	@Bean(name = "userIdTokenDecorator")
+	@ConditionalOnMissingBean(name = "userIdTokenDecorator")
 	public TokenDecorator userIdTokenDecorator(
 			JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties) {
 		return new UserIdTokenDecorator(jwtSecurityConfigurationProperties);

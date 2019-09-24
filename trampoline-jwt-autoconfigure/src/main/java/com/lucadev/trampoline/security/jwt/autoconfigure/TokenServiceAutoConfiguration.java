@@ -6,6 +6,7 @@ import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfiguratio
 import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnClass(TokenService.class)
+@AutoConfigureAfter(TokenDecoratorAutoConfiguration.class)
 @EnableConfigurationProperties(JwtSecurityConfigurationProperties.class)
 @AllArgsConstructor
 public class TokenServiceAutoConfiguration {

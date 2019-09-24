@@ -66,11 +66,6 @@ public class JwtTokenService implements TokenService {
 	@Override
 	public String issueToken(UserDetails user) {
 		Map<String, Object> claims = new HashMap<>();
-		JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
-				.getClaims();
-		claims.put(claimConfig.getUsername(), user.getUsername());
-		claims.put(claimConfig.getAuthorities(), user.getAuthorities().stream()
-				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		this.tokenDecorators
 				.forEach(tokenDecorator -> tokenDecorator.createClaims(user, claims));
 		return generateToken(claims, user.getUsername());
