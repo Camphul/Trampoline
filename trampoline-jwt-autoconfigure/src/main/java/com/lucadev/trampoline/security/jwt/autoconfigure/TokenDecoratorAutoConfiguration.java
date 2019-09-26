@@ -27,7 +27,6 @@ public class TokenDecoratorAutoConfiguration {
 	/**
 	 * A {@link TokenDecorator} which adds the username to the token. Only adds the bean
 	 * when no other "usernameTokenDecorator" exists.
-	 *
 	 * @return {@link UsernameTokenDecorator} bean.
 	 */
 	@Bean(name = "usernameTokenDecorator")

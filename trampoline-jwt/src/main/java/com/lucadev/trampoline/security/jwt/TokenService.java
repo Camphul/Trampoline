@@ -34,14 +34,14 @@ public interface TokenService {
 	String issueTokenRefresh(HttpServletRequest request);
 
 	/**
-	 * Get all token information.
+	 * Get all token information from the full schema string.
 	 * @param token jwt string with schema attached.
 	 * @return jwt DTO representation.
 	 */
 	TokenPayload decodeTokenHeader(String token);
 
 	/**
-	 * Get all token information.
+	 * Get all token information without the schema attached.
 	 * @param token jwt string
 	 * @return jwt DTO representation.
 	 */
