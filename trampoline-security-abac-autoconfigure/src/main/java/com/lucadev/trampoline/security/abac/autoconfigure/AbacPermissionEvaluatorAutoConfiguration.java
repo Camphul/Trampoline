@@ -2,14 +2,16 @@ package com.lucadev.trampoline.security.abac.autoconfigure;
 
 import com.lucadev.trampoline.security.abac.AbacPermissionEvaluator;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
+import com.lucadev.trampoline.security.abac.decorator.PolicyEnvironmentDecorator;
 import com.lucadev.trampoline.security.abac.impl.TrampolineAbacPermissionEvaluator;
-import com.lucadev.trampoline.service.time.TimeProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * Autoconfigure the {@link org.springframework.security.access.PermissionEvaluator} to
@@ -26,14 +28,14 @@ public class AbacPermissionEvaluatorAutoConfiguration {
 
 	private final PolicyEnforcement policyEnforcement;
 
-	private final TimeProvider timeProvider;
+	private final List<PolicyEnvironmentDecorator> environmentDecorators;
 
 	@Bean
 	@ConditionalOnMissingBean(AbacPermissionEvaluator.class)
 	public AbacPermissionEvaluator abacPermissionEvaluator() {
 		log.debug("Creating autoconfigured abac permission evaluator");
 		return new TrampolineAbacPermissionEvaluator(this.policyEnforcement,
-				this.timeProvider);
+				this.environmentDecorators);
 	}
 
 }

@@ -29,7 +29,6 @@ public class AuthoritiesTokenDecorator implements TokenDecorator {
 
 	/**
 	 * Maps user authorities to a list of strings.
-	 *
 	 * @param user user to get authorities from.
 	 * @return list of user authorities represented as strings.
 	 */

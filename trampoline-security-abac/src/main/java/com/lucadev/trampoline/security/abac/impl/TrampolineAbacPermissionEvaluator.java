@@ -2,11 +2,12 @@ package com.lucadev.trampoline.security.abac.impl;
 
 import com.lucadev.trampoline.security.abac.AbstractAbacPermissionEvaluator;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
-import com.lucadev.trampoline.service.time.TimeProvider;
+import com.lucadev.trampoline.security.abac.decorator.PolicyEnvironmentDecorator;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +19,12 @@ import java.util.Map;
  */
 public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEvaluator {
 
-	private final TimeProvider timeProvider;
+	private final List<PolicyEnvironmentDecorator> environmentDecorators;
 
 	public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement,
-			TimeProvider timeProvider) {
+											 List<PolicyEnvironmentDecorator> environmentDecorators) {
 		super(policyEnforcement);
-		this.timeProvider = timeProvider;
+		this.environmentDecorators = environmentDecorators;
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 		Object user = authentication.getPrincipal();
 		Map<String, Object> environment = new HashMap<>();
 
-		environment.put("time", this.timeProvider.now());
+		this.environmentDecorators.forEach(decorator -> decorator.decorate(environment));
 
 		boolean allowed = this.policyEnforcement.check(user, targetDomainObject,
 				permission, environment);
