@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnClass(AssetStore.class)
+@ConditionalOnClass(AssetMetaDataRepository.class)
 @EnableConfigurationProperties({AssetStoreConfigurationProperties.class,
 		LocalAssetStoreConfigurationProperties.class})
 public class AssetStoreAutoConfiguration {

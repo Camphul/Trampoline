@@ -24,7 +24,6 @@ public class PolicyEnvironmentDecoratorAutoConfiguration {
 
 	/**
 	 * Create decorator which adds time to the environment.
-	 *
 	 * @return time decorator.
 	 */
 	@Bean(name = "timePolicyEnvironmentDecorator")

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -73,7 +74,8 @@ public class User extends TrampolineEntity {
 	// UserDetails roles can never be null so we use eager loading for roles.
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "TRAMPOLINE_USER_ROLE",
-			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"),
+			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fk_t_user_roles")),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID",
 					referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<>();

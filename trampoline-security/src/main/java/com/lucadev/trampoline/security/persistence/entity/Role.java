@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -46,9 +47,11 @@ public class Role extends TrampolineEntity {
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "TRAMPOLINE_ROLE_PRIVILEGE",
-			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fk_t_role_privileges")),
 			inverseJoinColumns = @JoinColumn(name = "privilege_id",
-					referencedColumnName = "id"))
+					referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fk_t_privilege_role")))
 	private Collection<Privilege> privileges = new ArrayList<>();
 
 	/**

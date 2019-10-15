@@ -12,7 +12,6 @@ public interface PolicyEnvironmentDecorator {
 
 	/**
 	 * Decorate the environment variables.
-	 *
 	 * @param environment environment variables.
 	 */
 	void decorate(Map<String, Object> environment);
