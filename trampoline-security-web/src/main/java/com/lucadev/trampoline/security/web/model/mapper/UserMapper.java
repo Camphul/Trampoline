@@ -14,7 +14,7 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */
-@Mapper(uses = RoleMapper.class)
+@Mapper(uses = {RoleMapper.class, GrantedAuthorityMapper.class})
 public interface UserMapper {
 
 	/**

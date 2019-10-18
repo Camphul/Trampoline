@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.web.error;
 
+import com.lucadev.trampoline.web.BusinessRuleViolationException;
 import com.lucadev.trampoline.web.model.error.ApiErrorResponse;
 import com.lucadev.trampoline.web.model.error.ApiFieldConstraintError;
 import lombok.extern.slf4j.Slf4j;
@@ -42,11 +43,10 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 	/**
 	 * Parses binding result and returns errors.
-	 *
 	 * @param bindingResult binding result to extract errors from.
 	 * @return list of field errors.
 	 */
-	protected List<ApiFieldConstraintError> parseBindingResult(
+	protected List<ApiFieldConstraintError> getFieldConstraintErrors(
 			BindingResult bindingResult) {
 		List<ApiFieldConstraintError> errors = new ArrayList<>();
 		for (FieldError error : bindingResult.getFieldErrors()) {
@@ -62,10 +62,9 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 	/**
 	 * Handles method argument validation exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -74,8 +73,8 @@ public abstract class TrampolineResponseEntityExceptionHandler
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
 			WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
-		List<ApiFieldConstraintError> errors = parseBindingResult(ex.getBindingResult());
-		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse(
+		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(ex.getBindingResult());
+		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
 				request);
@@ -83,10 +82,9 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 	/**
 	 * Handles binding exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -94,8 +92,8 @@ public abstract class TrampolineResponseEntityExceptionHandler
 	protected ResponseEntity<Object> handleBindException(BindException ex,
 														 HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
-		List<ApiFieldConstraintError> errors = parseBindingResult(ex.getBindingResult());
-		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse(
+		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(ex.getBindingResult());
+		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
 				request);
@@ -103,10 +101,9 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 	/**
 	 * Handles type mismatch validation exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -117,18 +114,17 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		String error = ex.getValue() + " value for " + ex.getPropertyName()
 				+ " should be of type " + ex.getRequiredType();
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST,
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles missing request part exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -138,18 +134,17 @@ public abstract class TrampolineResponseEntityExceptionHandler
 			WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 		String error = ex.getRequestPartName() + " part is missing";
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST,
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles missing servlet request param exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -159,41 +154,39 @@ public abstract class TrampolineResponseEntityExceptionHandler
 			HttpStatus status, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 		String error = ex.getParameterName() + " parameter is missing";
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST,
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles method argument type mismatch exceptions.
-	 *
-	 * @param ex      mismatch exception.
+	 * @param ex mismatch exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
 	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
-	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
+	public ResponseEntity<ApiErrorResponse> handleMethodArgumentTypeMismatch(
 			MethodArgumentTypeMismatchException ex, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 		String error = ex.getName() + " should be of type "
 				+ ex.getRequiredType().getName();
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(HttpStatus.BAD_REQUEST,
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles constraint validation exceptions.
-	 *
-	 * @param ex      constraint exception.
+	 * @param ex constraint exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
 	@ExceptionHandler({ConstraintViolationException.class})
-	public ResponseEntity<Object> handleConstraintViolation(
+	public ResponseEntity<ApiErrorResponse> handleConstraintViolation(
 			ConstraintViolationException ex, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 		List<ApiFieldConstraintError> errors = new ArrayList<>();
@@ -203,18 +196,35 @@ public abstract class TrampolineResponseEntityExceptionHandler
 					violation.getMessage()));
 		}
 
-		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse(
+		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
+				apiError.getStatus());
+	}
+
+	/**
+	 * Handles business rule violation.
+	 *
+	 * @param ex      business rule exception.
+	 * @param request web request.
+	 * @return error response.
+	 */
+	@ExceptionHandler({BusinessRuleViolationException.class})
+	public ResponseEntity<Object> handleBusinessRuleViolation(
+			BusinessRuleViolationException ex, WebRequest request) {
+		log.debug("Exception advice for {}", ex.getClass().getName());
+
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
+				ex.getStatus(), ex.getReason(), ex.getReason());
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles 404 not found exceptions.
-	 *
-	 * @param ex      404 exceptions.
+	 * @param ex 404 exceptions.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -226,18 +236,17 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		String error = "No handler found for " + ex.getHttpMethod() + " "
 				+ ex.getRequestURL();
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(HttpStatus.NOT_FOUND,
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.NOT_FOUND,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles http 405 method not supported.
-	 *
-	 * @param ex      http exception.
+	 * @param ex http exception.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -251,21 +260,20 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		builder.append(ex.getMethod());
 		builder.append(
 				" method is not supported for this request. Supported methods are ");
-		ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
+		ex.getSupportedHttpMethods().forEach(t -> builder.append(t).append(" "));
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(),
 				builder.toString());
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles 415 media type not supported.
-	 *
-	 * @param ex      http exception.
+	 * @param ex http exception.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -277,30 +285,29 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getContentType());
 		builder.append(" media type is not supported. Supported media types are ");
-		ex.getSupportedMediaTypes().forEach(t -> builder.append(t + " "));
+		ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append(" "));
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(),
 				builder.substring(0, builder.length() - 2));
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 
 	/**
 	 * Handles internal server error 500.
-	 *
-	 * @param ex      exception causing a 500.
+	 * @param ex exception causing a 500.
 	 * @param request web request.
 	 * @return error response.
 	 */
-	@ExceptionHandler({Exception.class})
+	@ExceptionHandler({ Exception.class })
 	public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 		logger.error("error", ex);
-		ApiErrorResponse<String> apiError = new ApiErrorResponse(
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(),
 				"error occurred");
-		return new ResponseEntity<Object>(apiError, new HttpHeaders(),
+		return new ResponseEntity<>(apiError, new HttpHeaders(),
 				apiError.getStatus());
 	}
 

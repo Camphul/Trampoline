@@ -29,7 +29,6 @@ public class ResponseEntityExceptionHandlerAutoConfiguration {
 	/**
 	 * Create default exception handler/controller advice which returns standardized
 	 * responses.
-	 *
 	 * @return trampoline {@link ResponseEntityExceptionHandler}
 	 */
 	@Bean

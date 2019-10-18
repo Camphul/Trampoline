@@ -30,6 +30,9 @@ public class UserMapperTest {
 	@Autowired
 	private RoleMapper roleMapper;
 
+	@Autowired
+	private GrantedAuthorityMapper grantedAuthorityMapper;
+
 	@Test
 	public void mapperNotNull() {
 		assertNotNull(userMapper);
@@ -50,7 +53,8 @@ public class UserMapperTest {
 		UserSummaryDto result = userMapper.toSummary(input);
 		assertEquals(input.getUsername(), result.getUsername());
 		assertEquals(input.getEmail(), result.getEmail());
-		assertEquals(roleMapper.toNames(input.getRoles()), result.getRoles());
+		assertEquals(grantedAuthorityMapper.toNames(input.getAuthorities()),
+				result.getAuthorities());
 	}
 
 	@Test

@@ -3,9 +3,10 @@ package com.lucadev.trampoline.security.jwt.support.web.controller;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.support.web.model.TokenAuthenticationResponse;
 import com.lucadev.trampoline.security.jwt.support.web.model.UserAuthenticationRequest;
+import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserService;
 import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
-import com.lucadev.trampoline.security.web.model.UserDto;
+import com.lucadev.trampoline.security.web.model.UserSummaryDto;
 import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -36,7 +37,7 @@ import javax.validation.Valid;
 @RequestMapping("${trampoline.security.jwt.web.baseMapping:/auth}")
 @AllArgsConstructor
 public class JwtAuthenticationController implements
-		AuthenticationController<TokenAuthenticationResponse, UserAuthenticationRequest, UserDto> {
+		AuthenticationController<TokenAuthenticationResponse, UserAuthenticationRequest, UserSummaryDto> {
 
 	private final AuthenticationManager authenticationManager;
 
@@ -69,7 +70,7 @@ public class JwtAuthenticationController implements
 					String.valueOf(authentication.getDetails()));
 		}
 		catch (Exception ex) {
-			throw new AccessDeniedException("Could not authorize: " + ex.getMessage());
+			throw new AccessDeniedException(ex.getMessage());
 		}
 	}
 
@@ -99,8 +100,10 @@ public class JwtAuthenticationController implements
 	 */
 	@Override
 	@GetMapping("${trampoline.security.jwt.web.userMapping:/user}")
-	public UserDto user(HttpServletRequest request) {
-		return this.userMapper.toDto(this.userService.currentUserOrThrow());
+	public UserSummaryDto user(HttpServletRequest request) {
+		User user = this.userService.currentUserOrThrow();
+		user.getAuthorities();// Required to fetch authorities.
+		return this.userMapper.toSummary(user);
 	}
 
 }
