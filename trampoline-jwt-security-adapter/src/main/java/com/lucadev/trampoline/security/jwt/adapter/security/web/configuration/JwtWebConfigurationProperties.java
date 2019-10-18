@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.support.web.configuration;
+package com.lucadev.trampoline.security.jwt.adapter.security.web.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

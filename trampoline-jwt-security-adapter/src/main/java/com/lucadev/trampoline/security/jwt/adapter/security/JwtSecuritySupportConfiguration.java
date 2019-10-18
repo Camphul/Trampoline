@@ -1,11 +1,11 @@
-package com.lucadev.trampoline.security.jwt.support;
+package com.lucadev.trampoline.security.jwt.adapter.security;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.adapter.security.provider.UserDetailsTokenAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.adapter.security.provider.UserIdTokenDecorator;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
-import com.lucadev.trampoline.security.jwt.support.provider.UserDetailsTokenAuthenticationProvider;
-import com.lucadev.trampoline.security.jwt.support.provider.UserIdTokenDecorator;
 import com.lucadev.trampoline.security.service.UserService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -29,7 +29,7 @@ public class JwtSecuritySupportConfiguration {
 	 * @param userDetailsChecker checks if the user is allowed access.
 	 * @return stateless auth provider.
 	 */
-	@Bean
+	@Bean(name = "tokenAuthenticationProvider")
 	@ConditionalOnMissingBean(value = TokenAuthenticationProvider.class,
 			ignored = UserDetailsTokenAuthenticationProvider.class)
 	public TokenAuthenticationProvider tokenAuthenticationProvider(

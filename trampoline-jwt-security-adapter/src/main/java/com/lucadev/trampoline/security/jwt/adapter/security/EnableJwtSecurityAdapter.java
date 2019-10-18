@@ -1,6 +1,6 @@
-package com.lucadev.trampoline.security.jwt.support;
+package com.lucadev.trampoline.security.jwt.adapter.security;
 
-import com.lucadev.trampoline.security.jwt.support.web.configuration.JwtWebConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.adapter.security.web.configuration.JwtWebConfigurationProperties;
 import com.lucadev.trampoline.security.web.annotation.EnableIgnoreSecurity;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
@@ -23,6 +23,6 @@ import java.lang.annotation.Target;
 @EnableIgnoreSecurity
 @EnableConfigurationProperties(JwtWebConfigurationProperties.class)
 @Import(JwtSecuritySupportConfiguration.class)
-public @interface EnableJwtSecuritySupport {
+public @interface EnableJwtSecurityAdapter {
 
 }

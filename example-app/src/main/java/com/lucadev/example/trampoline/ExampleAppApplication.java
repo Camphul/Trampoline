@@ -1,8 +1,9 @@
 package com.lucadev.example.trampoline;
 
 import com.lucadev.trampoline.EnableTrampoline;
+import com.lucadev.trampoline.data.gdpr.EnableGdprCompliance;
 import com.lucadev.trampoline.security.abac.access.annotation.EnablePrePostPolicy;
-import com.lucadev.trampoline.security.jwt.support.EnableJwtSecuritySupport;
+import com.lucadev.trampoline.security.jwt.adapter.security.EnableJwtSecurityAdapter;
 import com.lucadev.trampoline.security.logging.EnableUserActivityLogging;
 import com.lucadev.trampoline.security.service.RoleService;
 import com.lucadev.trampoline.security.service.UserService;
@@ -11,6 +12,7 @@ import com.lucadev.trampoline.service.time.TimeProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -24,8 +26,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableUserActivityLogging
 @EnableIgnoreSecurity
 @EnablePrePostPolicy
-@EnableJwtSecuritySupport
-// @EnableGdprCompliance
+@EnableJwtSecurityAdapter
+@EnableGdprCompliance
+@EnableCaching
 public class ExampleAppApplication {
 
 	public static void main(String[] args) {

@@ -32,10 +32,13 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		String methodDescription = getMethodDescription(invocation.getMethod());
+		// Check if the method description is registered in the map.
+		// If it is not we can simply return the invocation.
 		if (!this.METHOD_INTERCEPTS.containsKey(methodDescription)) {
 			return invocation.proceed();
 		}
 
+		// Else we will parse the arguments and apply encryption where necessary.
 		Object[] arguments = invocation.getArguments();
 		for (int paramIndex : this.METHOD_INTERCEPTS.get(methodDescription)) {
 			arguments[paramIndex] = this.stringCrypto
@@ -51,12 +54,19 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 	 * @param method method to cache.
 	 */
 	public void registerQueryMethodForIntercept(Method method) {
+		// Fetch param indices that are annotated with @PersonalData
 		int[] indices = resolvePersonalDataParameterIndices(method.getParameters());
+
+		// Check if we found any params at all that are annotated.
 		if (indices.length == 0) {
 			throw new IllegalStateException(
 					"Cannot register method which does not include @PersonalData");
 		}
+
+		// Get the method description
 		String methodDescription = getMethodDescription(method);
+		// Put the indices annotated with @PersonalData in a map entry with the method
+		// description as key.
 		this.METHOD_INTERCEPTS.put(methodDescription, indices);
 		log.debug("Registered query method {} in cache.", methodDescription);
 	}

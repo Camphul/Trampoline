@@ -1,7 +1,8 @@
 package com.lucadev.trampoline.security.abac.access;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
+import com.lucadev.trampoline.security.abac.access.method.SecuredMethodInvocationIntercept;
+
+import java.lang.reflect.Method;
 
 /**
  * Interface for handling method security using pre/post policy.
@@ -13,16 +14,19 @@ public interface PolicyMethodSecurityHandler {
 
 	/**
 	 * Get triggered before method body executes.
-	 * @param joinPoint before {@link JoinPoint}
+	 * @param method the method about to be invoked.
+	 * @param arguments the arguments used in the method invocation.
 	 */
-	void handlePrePolicy(JoinPoint joinPoint);
+	void handlePrePolicy(Method method, Object[] arguments);
 
 	/**
 	 * Gets triggered around the method body and acts accordingly.
-	 * @param joinPoint between {@link ProceedingJoinPoint}
-	 * @return return value.
+	 * @param securedMethodInvocationIntercept wrapper to abstract away method invocation
+	 * details.
 	 * @throws Throwable when the invoked method throws an exception.
 	 */
-	Object handlePostPolicy(ProceedingJoinPoint joinPoint) throws Throwable;
+	Object handlePostPolicy(
+			SecuredMethodInvocationIntercept securedMethodInvocationIntercept)
+			throws Throwable;
 
 }

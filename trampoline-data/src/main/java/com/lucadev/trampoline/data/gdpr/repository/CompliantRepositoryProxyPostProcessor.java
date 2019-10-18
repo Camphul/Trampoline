@@ -24,21 +24,43 @@ public class CompliantRepositoryProxyPostProcessor
 
 	private final CompliantRepositoryMethodInterceptor compliantRepositoryMethodInterceptor;
 
+	/**
+	 * Processes a repository proxy to add GDPR support where needed.
+	 *
+	 * @param factory               the proxy factory.
+	 * @param repositoryInformation repository information.
+	 */
 	@Override
 	public void postProcess(ProxyFactory factory,
-			RepositoryInformation repositoryInformation) {
+							RepositoryInformation repositoryInformation) {
 		// Check if we need to register a method interceptor on given repository.
 		Streamable<Method> methods = repositoryInformation.getQueryMethods()
 				.filter(this::hasAnyPersonalData);
+
+		// If no param in any method in the repo is annotated using @PersonalData do not
+		// add the interceptor at all.
 		if (methods.isEmpty()) {
 			return;
 		}
-		log.info("Adding GDPR compliant repository advice.");
+
+		log.info("Adding GDPR compliant repository advice to {}.",
+				repositoryInformation.getRepositoryBaseClass().getName());
+		// Register the interceptor for each query method inside the repository.
 		methods.forEach(
 				this.compliantRepositoryMethodInterceptor::registerQueryMethodForIntercept);
+
+		// Finally adds the interceptor advice to the proxy factory resulting in the GDPR
+		// compliance being added.
 		factory.addAdvice(this.compliantRepositoryMethodInterceptor);
 	}
 
+	/**
+	 * Checks if a method contains any parameter annotated with the {@link PersonalData}
+	 * annotation.
+	 * @param method method to inspect.
+	 * @return true when atleast one or more method parameters is annotated using
+	 * {@link PersonalData}.
+	 */
 	private boolean hasAnyPersonalData(Method method) {
 		return Arrays.stream(method.getParameters())
 				.anyMatch(parameter -> parameter.isAnnotationPresent(PersonalData.class));

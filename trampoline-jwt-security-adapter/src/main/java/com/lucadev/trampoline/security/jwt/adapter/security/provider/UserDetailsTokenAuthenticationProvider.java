@@ -1,4 +1,4 @@
-package com.lucadev.trampoline.security.jwt.support.provider;
+package com.lucadev.trampoline.security.jwt.adapter.security.provider;
 
 import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;

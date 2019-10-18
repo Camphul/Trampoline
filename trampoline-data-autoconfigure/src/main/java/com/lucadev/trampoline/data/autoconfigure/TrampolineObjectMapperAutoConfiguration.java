@@ -21,8 +21,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class TrampolineObjectMapperAutoConfiguration {
 
 	/**
-	 * Jackson {@link ObjectMapper} bean definition.
-	 * Autoconfigures the Java 8 date/time serialization(JSR310).
+	 * Jackson {@link ObjectMapper} bean definition. Autoconfigures the Java 8 date/time
+	 * serialization(JSR310).
 	 * @return {@link ObjectMapper} bean
 	 */
 	@Bean

@@ -2,6 +2,7 @@ package com.lucadev.trampoline.data.gdpr.repository;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
@@ -19,6 +20,7 @@ import java.io.Serializable;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/2/19
  */
+@Slf4j
 public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
 		extends JpaRepositoryFactoryBean<R, T, I> {
 
@@ -37,6 +39,7 @@ public class CompliantJpaRepositoryFactoryBean<R extends JpaRepository<T, I>, T,
 	}
 
 	protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
+		log.debug("Creating GDPR compliant repository factory support.");
 		RepositoryFactorySupport factory = super.createRepositoryFactory(em);
 		factory.addRepositoryProxyPostProcessor(
 				this.compliantRepositoryProxyPostProcessor);
