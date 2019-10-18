@@ -31,7 +31,7 @@ public class CompliantRepositoryProxyPostProcessor
 	 */
 	@Override
 	public void postProcess(ProxyFactory factory,
-							RepositoryInformation repositoryInformation) {
+			RepositoryInformation repositoryInformation) {
 		// Check if we need to register a method interceptor on given repository.
 		Streamable<Method> methods = repositoryInformation.getQueryMethods()
 				.filter(this::hasAnyPersonalData);

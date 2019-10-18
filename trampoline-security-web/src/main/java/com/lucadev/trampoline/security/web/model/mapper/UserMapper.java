@@ -16,7 +16,7 @@ import java.util.List;
  * @since 6/8/19
  */
 @Mapper(config = WebSecurityMapperConfiguration.class,
-		uses = {RoleMapper.class, GrantedAuthorityMapper.class})
+		uses = { RoleMapper.class, GrantedAuthorityMapper.class })
 public interface UserMapper {
 
 	/**

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
@@ -46,15 +47,19 @@ public final class UserActivityMethodInterceptor implements MethodInterceptor {
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		Method method = invocation.getMethod();
-		LogUserActivity logUserActivity = method
-				.getDeclaredAnnotation(LogUserActivity.class);
+		LogUserActivity logUserActivity = AnnotationUtils.findAnnotation(method,
+				LogUserActivity.class);
+		if (logUserActivity == null) {
+			throw new NullPointerException(
+					"@LogUserActivity annotation required on intercepted method.");
+		}
 		UserDetails principal = getUserDetails();
 		Object actedUpon = null;
 		Map<String, Object> argumentMap = new HashMap<>();
 
 		for (int i = 0; i < method.getParameters().length; i++) {
 			Parameter param = method.getParameters()[i];
-			if (param.isAnnotationPresent(ActingUpon.class)) {
+			if (AnnotationUtils.findAnnotation(param, ActingUpon.class) != null) {
 				actedUpon = invocation.getArguments()[i];
 			}
 			if (param.getName().startsWith("arg")) {
@@ -82,10 +87,12 @@ public final class UserActivityMethodInterceptor implements MethodInterceptor {
 
 		try {
 			this.userActivityHandler.handleUserActivity(userActivity);
-		} finally {
+		}
+		finally {
 			if (result.getThrowable() != null) {
 				throw result.getThrowable();
-			} else {
+			}
+			else {
 				return result.getResult();
 			}
 		}
@@ -99,12 +106,13 @@ public final class UserActivityMethodInterceptor implements MethodInterceptor {
 	 * @return the evaluated expression.
 	 */
 	private String evaluateDescription(String description,
-									   Map<String, Object> methodArguments) {
+			Map<String, Object> methodArguments) {
 		EvaluationContext spelEvaluationContext = new StandardEvaluationContext();
 		Expression expression;
 		if (this.spelDescriptions.containsKey(description)) {
 			expression = this.spelDescriptions.get(description);
-		} else {
+		}
+		else {
 			expression = this.expressionParser.parseExpression(description);
 			this.spelDescriptions.put(description, expression);
 		}
@@ -112,7 +120,8 @@ public final class UserActivityMethodInterceptor implements MethodInterceptor {
 		try {
 			return expression.getValue(spelEvaluationContext, methodArguments,
 					String.class);
-		} catch (EvaluationException evaluationException) {
+		}
+		catch (EvaluationException evaluationException) {
 			return description;
 		}
 	}
@@ -127,22 +136,27 @@ public final class UserActivityMethodInterceptor implements MethodInterceptor {
 			throws Throwable {
 		Method method = invocation.getMethod();
 		Class clazz = method.getDeclaringClass();
-		LogUserActivity logUserActivity = method
-				.getDeclaredAnnotation(LogUserActivity.class);
-
+		LogUserActivity logUserActivity = AnnotationUtils.findAnnotation(method,
+				LogUserActivity.class);
+		if (logUserActivity == null) {
+			throw new NullPointerException(
+					"@LogUserActivity annotation required on intercepted method.");
+		}
 		long invocationStart = this.timeProvider.unix();
 		long invocationEnd;
 		Object returnValue = null;
 		Throwable throwable = null;
 		try {
 			returnValue = invocation.proceed();
-		} catch (Throwable ex) {
+		}
+		catch (Throwable ex) {
 			// Still throw if we're skipping them
 			if (!logUserActivity.logThrowables()) {
 				throw ex;
 			}
 			throwable = ex;
-		} finally {
+		}
+		finally {
 			invocationEnd = this.timeProvider.unix();
 		}
 		boolean exceptionThrown = throwable != null;

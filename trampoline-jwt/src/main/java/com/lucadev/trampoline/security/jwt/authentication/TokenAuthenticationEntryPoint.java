@@ -19,7 +19,7 @@ public class TokenAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
-						 AuthenticationException authException) throws IOException, ServletException {
+			AuthenticationException authException) throws IOException, ServletException {
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
 				"Unauthorized: " + authException.getMessage());

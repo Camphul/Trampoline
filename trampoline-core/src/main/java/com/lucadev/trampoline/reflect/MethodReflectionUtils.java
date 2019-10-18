@@ -21,13 +21,12 @@ public final class MethodReflectionUtils {
 
 	/**
 	 * Get a map with parameter and value(argument).
-	 *
-	 * @param method    method to make a map of.
+	 * @param method method to make a map of.
 	 * @param arguments arguments supplied.
 	 * @return map of params and args.
 	 */
 	public static Map<Parameter, Object> mapParametersToArguments(Method method,
-																  Object[] arguments) {
+			Object[] arguments) {
 		int length = method.getParameterCount();
 		if (length != arguments.length) {
 			throw new IllegalArgumentException(
@@ -40,7 +39,6 @@ public final class MethodReflectionUtils {
 
 	/**
 	 * Map map key from type parameter to string.
-	 *
 	 * @param maps the map.
 	 * @return remapped keys.
 	 */
@@ -63,12 +61,11 @@ public final class MethodReflectionUtils {
 
 	/**
 	 * Run through parameters.
-	 *
 	 * @param method
 	 * @param parameterCallback
 	 */
 	public static void doWithParameters(Method method,
-										ParameterCallback parameterCallback) {
+			ParameterCallback parameterCallback) {
 		for (int i = 0; i < method.getParameters().length; i++) {
 			parameterCallback.accept(method.getParameters()[i], i);
 		}

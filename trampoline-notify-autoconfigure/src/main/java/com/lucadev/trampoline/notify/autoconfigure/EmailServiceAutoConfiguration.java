@@ -25,7 +25,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @RequiredArgsConstructor
 @EnableAsync
 @EnableConfigurationProperties(EmailConfigurationProperties.class)
-@ConditionalOnClass({JavaMailSender.class, EmailService.class})
+@ConditionalOnClass({ JavaMailSender.class, EmailService.class })
 public class EmailServiceAutoConfiguration {
 
 	private final JavaMailSender javaMailSender;

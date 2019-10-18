@@ -138,7 +138,8 @@ public class JwtTokenService implements TokenService {
 						"Authentication token was not found inside header.");
 			}
 			return decodeToken(authToken);
-		} else {
+		}
+		else {
 			throw new AuthenticationCredentialsNotFoundException(
 					"Could not find bearer string inside header.");
 		}
@@ -159,13 +160,15 @@ public class JwtTokenService implements TokenService {
 					claims.get(claimConfig.getPrincipalIdentifier(), String.class));
 			Collection<GrantedAuthority> authorities = ((List<String>) claims
 					.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
-					.map(SimpleGrantedAuthority::new)
-					.collect(Collectors.toList());
+							.map(SimpleGrantedAuthority::new)
+							.collect(Collectors.toList());
 			tokenPayload.setAuthorities(authorities);
 			return tokenPayload;
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			throw new BadCredentialsException("Failed to parse token: " + e.getMessage());
-		} catch (ExpiredJwtException e) {
+		}
+		catch (ExpiredJwtException e) {
 			throw new BadCredentialsException("Token is expired.");
 		}
 	}

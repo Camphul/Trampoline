@@ -216,7 +216,8 @@ public class TrampolineUserService implements UserService {
 	public Optional<User> findByIdentificationField(String identifier) {
 		if (this.identificationField == IdentificationField.USERNAME) {
 			return findByUsername(identifier);
-		} else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
+		}
+		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
 			return this.userRepository.findOneByUsernameOrEmail(identifier);
 		}
 		throw new IllegalStateException(

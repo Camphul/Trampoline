@@ -19,7 +19,7 @@ import org.thymeleaf.TemplateEngine;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnClass({TemplateEngine.class, EmailTemplateParser.class})
+@ConditionalOnClass({ TemplateEngine.class, EmailTemplateParser.class })
 public class EmailTemplateParserAutoConfiguration {
 
 	private final TemplateEngine templateEngine;

@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.web.annotation.IgnoreSecurity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -40,7 +41,8 @@ public class IgnoreSecurityWebSecurityConfiguration extends WebSecurityConfigure
 		// Get all mappings.
 		this.handlerMapping.getHandlerMethods().forEach((info, method) -> {
 			// If @IgnoreSecurity is present on the method.
-			if (method.hasMethodAnnotation(IgnoreSecurity.class)) {
+			if (AnnotationUtils.findAnnotation(method.getMethod(),
+					IgnoreSecurity.class) != null) {
 				// Loop through
 				info.getPatternsCondition().getPatterns().forEach(pattern -> {
 					// For each request method accepted

@@ -22,7 +22,7 @@ public class TrampolineAbacPermissionEvaluator extends AbstractAbacPermissionEva
 	private final List<PolicyEnvironmentDecorator> environmentDecorators;
 
 	public TrampolineAbacPermissionEvaluator(PolicyEnforcement policyEnforcement,
-											 List<PolicyEnvironmentDecorator> environmentDecorators) {
+			List<PolicyEnvironmentDecorator> environmentDecorators) {
 		super(policyEnforcement);
 		this.environmentDecorators = environmentDecorators;
 	}

@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 8/3/19
  */
-@ConditionalOnClass({TokenService.class, UserService.class})
+@ConditionalOnClass({ TokenService.class, UserService.class })
 public class JwtSecuritySupportConfiguration {
 
 	/**

@@ -38,7 +38,7 @@ public class TransactionalPolicyMethodSecurityHandler
 	 * @return parameter value or null
 	 */
 	private Object getPolicyResource(Method method,
-									 Map<Parameter, Object> paramArguments) {
+			Map<Parameter, Object> paramArguments) {
 		Parameter parameter = MethodReflectionUtils
 				.findFirstParameterWithAnnotation(method, PolicyResource.class);
 		if (parameter == null) {
@@ -91,7 +91,8 @@ public class TransactionalPolicyMethodSecurityHandler
 
 		try {
 			returnValue = securedMethodInvocationIntercept.proceed();
-		} catch (Throwable throwable) {
+		}
+		catch (Throwable throwable) {
 			log.error("Proxied method threw exception.", throwable);
 			throw throwable;
 		}
@@ -115,7 +116,8 @@ public class TransactionalPolicyMethodSecurityHandler
 		if (policyResource != null) {
 			this.policyEnforcement.check(policyResource, postPolicy.value(),
 					namedParamArgs);
-		} else {
+		}
+		else {
 			this.policyEnforcement.check(returnValue, postPolicy.value(), namedParamArgs);
 		}
 		return returnValue;

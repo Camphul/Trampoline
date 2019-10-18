@@ -27,8 +27,8 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 @ConditionalOnClass(AssetMetaDataRepository.class)
-@EnableConfigurationProperties({AssetStoreConfigurationProperties.class,
-		LocalAssetStoreConfigurationProperties.class})
+@EnableConfigurationProperties({ AssetStoreConfigurationProperties.class,
+		LocalAssetStoreConfigurationProperties.class })
 public class AssetStoreAutoConfiguration {
 
 	/**
@@ -41,7 +41,7 @@ public class AssetStoreAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(AssetStore.class)
 	public AssetStore assetStore(List<AssetStoreFactory> factories,
-								 AssetStoreConfigurationProperties configurationProperties) throws Exception {
+			AssetStoreConfigurationProperties configurationProperties) throws Exception {
 		if (factories.isEmpty()) {
 			log.warn("No AssetStore factories discovered.");
 			throw new NullPointerException(

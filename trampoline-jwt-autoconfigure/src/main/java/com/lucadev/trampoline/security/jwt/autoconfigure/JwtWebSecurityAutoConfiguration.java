@@ -113,7 +113,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 				this.tokenService);
 		try {
 			filter.setAuthenticationManager(authenticationManagerBean());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return filter;

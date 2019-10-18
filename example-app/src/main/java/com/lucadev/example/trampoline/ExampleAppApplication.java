@@ -39,8 +39,8 @@ public class ExampleAppApplication {
 	@ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto",
 			havingValue = "create") // Only run when db scheme is dropped at start
 	public DummyUserImporter dummyUserImporter(TimeProvider timeProvider,
-											   UserService userService, RoleService roleService,
-											   PasswordEncoder passwordEncoder) {
+			UserService userService, RoleService roleService,
+			PasswordEncoder passwordEncoder) {
 		return new DummyUserImporter(timeProvider, userService, roleService,
 				passwordEncoder);
 	}

@@ -92,7 +92,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 */
 	@Override
 	protected ResponseEntity<Object> handleBindException(BindException ex,
-														 HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.debug("#handleBindException advice for {}", ex.getClass().getName());
 		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(
 				ex.getBindingResult());
@@ -112,7 +112,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 */
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex,
-														HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.debug("#handleTypeMismatch: advice for {}", ex.getClass().getName());
 		String error = ex.getValue() + " value for " + ex.getPropertyName()
 				+ " should be of type " + ex.getRequiredType();
@@ -168,7 +168,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 * @param request web request.
 	 * @return error response.
 	 */
-	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
+	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
 	public ResponseEntity<ApiErrorResponse> handleMethodArgumentTypeMismatchException(
 			MethodArgumentTypeMismatchException ex, WebRequest request) {
 		log.debug("#handleMethodArgumentTypeMismatchException: advice for {}",
@@ -187,7 +187,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 * @param request web request.
 	 * @return error response.
 	 */
-	@ExceptionHandler({ConstraintViolationException.class})
+	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<ApiErrorResponse> handleConstraintViolation(
 			ConstraintViolationException ex, WebRequest request) {
 		log.debug("#handleConstraintViolationException advice for {}",
@@ -210,7 +210,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 * @param request web request.
 	 * @return error response.
 	 */
-	@ExceptionHandler({BusinessRuleViolationException.class})
+	@ExceptionHandler({ BusinessRuleViolationException.class })
 	public ResponseEntity<Object> handleBusinessRuleViolationException(
 			BusinessRuleViolationException ex, WebRequest request) {
 		log.debug("#handleBusinessRuleViolationException: advice for {}",
@@ -300,7 +300,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 	 * @param request web request.
 	 * @return error response.
 	 */
-	@ExceptionHandler({Exception.class})
+	@ExceptionHandler({ Exception.class })
 	public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
 		log.debug("#handleAll: advice for {}", ex.getClass().getName());
 		logger.error("Unhandled exception.", ex);

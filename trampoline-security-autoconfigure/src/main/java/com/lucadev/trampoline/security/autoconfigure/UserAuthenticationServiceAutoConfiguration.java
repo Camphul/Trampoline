@@ -22,7 +22,7 @@ public class UserAuthenticationServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public UserAuthenticationService userPasswordService(UserService userService,
-														 PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder) {
 		return new TrampolineUserAuthenticationService(userService, passwordEncoder);
 	}
 

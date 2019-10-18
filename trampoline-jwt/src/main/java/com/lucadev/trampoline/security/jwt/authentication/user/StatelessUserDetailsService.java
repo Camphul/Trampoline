@@ -34,11 +34,13 @@ public class StatelessUserDetailsService
 				TokenPayload tokenPayload = this.tokenService
 						.decodeTokenHeader((String) authentication.getPrincipal());
 				return new StatelessUserDetails(tokenPayload);
-			} catch (Exception ex) {
+			}
+			catch (Exception ex) {
 				throw new UsernameNotFoundException(
 						"Could not decode token: " + ex.getMessage());
 			}
-		} else {
+		}
+		else {
 			throw new UsernameNotFoundException("Could not find user details for '"
 					+ authentication.getPrincipal() + "'");
 		}

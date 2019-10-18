@@ -83,7 +83,7 @@ public class JwtAuthenticationController implements
 	@Override
 	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
 	public TokenAuthenticationResponse refresh(HttpServletRequest request,
-											   HttpServletResponse response) {
+			HttpServletResponse response) {
 		try {
 			String refreshedToken = this.tokenService.issueTokenRefresh(request);
 			return new TokenAuthenticationResponse(refreshedToken);

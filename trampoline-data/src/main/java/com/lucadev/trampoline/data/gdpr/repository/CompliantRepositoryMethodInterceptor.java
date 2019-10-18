@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -83,7 +84,9 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 		for (int i = 0; i < parameters.length; i++) {
 			Parameter parameter = parameters[i];
 			// Check if we need to encrypt
-			if (parameter.isAnnotationPresent(PersonalData.class)) {
+			PersonalData personalData = AnnotationUtils.findAnnotation(parameter,
+					PersonalData.class);
+			if (personalData != null) {
 				if (!parameter.getType().equals(String.class)) {
 					throw new IllegalArgumentException("Argument \"" + parameter.getName()
 							+ "\" with @PersonalData must be of type String.");

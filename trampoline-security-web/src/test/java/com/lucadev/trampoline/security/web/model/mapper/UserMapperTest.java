@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
  * @since 6/8/19
  */
 @SpringBootTest(classes = { UserMapperImpl.class, RoleMapperImpl.class,
-		PrivilegeMapperImpl.class, GrantedAuthorityMapperImpl.class})
+		PrivilegeMapperImpl.class, GrantedAuthorityMapperImpl.class })
 @RunWith(SpringRunner.class)
 public class UserMapperTest {
 
