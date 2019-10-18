@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.web.autoconfigure;
 
+import com.lucadev.trampoline.web.error.AbstractResponseEntityExceptionHandler;
 import com.lucadev.trampoline.web.error.TrampolineResponseEntityExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -17,10 +18,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @Configuration
 @ConditionalOnWebApplication // Requires a webapp
-@ConditionalOnClass(TrampolineResponseEntityExceptionHandler.class/*
-																	 * Dont event try when
-																	 * this isnt available
-																	 */)
+@ConditionalOnClass(AbstractResponseEntityExceptionHandler.class/*
+																 * Dont event try when
+																 * this isnt available
+																 */)
 @ConditionalOnMissingBean(annotation = ControllerAdvice.class) // Check if no other class
 // uses @ControllerAdvice
 // already
@@ -35,8 +36,7 @@ public class ResponseEntityExceptionHandlerAutoConfiguration {
 	public ResponseEntityExceptionHandler responseEntityExceptionHandler() {
 		// Create custom implementation since we require an abstract one to prevent
 		// default bean init.
-		return new TrampolineResponseEntityExceptionHandler() {
-		};
+		return new TrampolineResponseEntityExceptionHandler();
 	}
 
 }
