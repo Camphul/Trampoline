@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.abac.access;
 
+import com.lucadev.trampoline.reflect.MethodReflectionUtils;
 import com.lucadev.trampoline.security.abac.PolicyEnforcement;
 import com.lucadev.trampoline.security.abac.access.annotation.PolicyResource;
 import com.lucadev.trampoline.security.abac.access.annotation.PostPolicy;
@@ -7,15 +8,12 @@ import com.lucadev.trampoline.security.abac.access.annotation.PrePolicy;
 import com.lucadev.trampoline.security.abac.access.method.SecuredMethodInvocationIntercept;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,35 +29,28 @@ import java.util.Map;
 public class TransactionalPolicyMethodSecurityHandler
 		implements PolicyMethodSecurityHandler {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(TransactionalPolicyMethodSecurityHandler.class);
-
 	private final PolicyEnforcement policyEnforcement;
 
 	/**
 	 * Get parameter value which is annotation with @PolicyResource or get null.
 	 * @param method method to get the policy resource from.
-	 * @param arguments arguments used in the invocation.
+	 * @param paramArguments parameter arguments map.
 	 * @return parameter value or null
 	 */
-	private Object getPolicyResource(Method method, Object[] arguments) {
-		for (int paramCounter = 0; paramCounter < method
-				.getParameters().length; paramCounter++) {
-			Parameter parameter = method.getParameters()[paramCounter];
-			PolicyResource policyResource = AnnotationUtils.findAnnotation(parameter,
-					PolicyResource.class);
-			if (policyResource != null) {
-				// policy resource found
-				return arguments[paramCounter];
-			}
+	private Object getPolicyResource(Method method,
+									 Map<Parameter, Object> paramArguments) {
+		Parameter parameter = MethodReflectionUtils
+				.findFirstParameterWithAnnotation(method, PolicyResource.class);
+		if (parameter == null) {
+			return null;
 		}
-		return null;
+
+		return paramArguments.get(parameter);
 	}
 
 	/**
 	 * Checks permissions/policies before invocating a method.
-	 *
-	 * @param method    the method about to be invoked.
+	 * @param method the method about to be invoked.
 	 * @param arguments the arguments used in the method invocation.
 	 */
 	@Override
@@ -72,26 +63,11 @@ public class TransactionalPolicyMethodSecurityHandler
 					"Intercepted method requires @PrePolicy annotation.");
 		}
 		// executed.
-		Object resource = getPolicyResource(method, arguments);
-		Map<String, Object> env = getParameterArgumentMap(method, arguments);
-		this.policyEnforcement.check(resource, prePolicy.value(), env);
-	}
-
-	/**
-	 * Creates a map with param name and value.
-	 *
-	 * @param method method being invoked with those arguments. * @param args parameter
-	 *               values.
-	 * @return map with PARAM NAME-PARAM VALUE structure.
-	 */
-	private Map<String, Object> getParameterArgumentMap(Method method, Object[] args) {
-		Map<String, Object> environment = new HashMap<>();
-		for (int paramCount = 0; paramCount < method
-				.getParameters().length; paramCount++) {
-			Parameter parameter = method.getParameters()[paramCount];
-			environment.put(parameter.getName(), args[paramCount]);
-		}
-		return environment;
+		Map<Parameter, Object> env = MethodReflectionUtils
+				.mapParametersToArguments(method, arguments);
+		Object resource = getPolicyResource(method, env);
+		this.policyEnforcement.check(resource, prePolicy.value(),
+				MethodReflectionUtils.mapToParameterNameKeys(env));
 	}
 
 	/**
@@ -129,14 +105,18 @@ public class TransactionalPolicyMethodSecurityHandler
 		}
 
 		// executed.
-		Object policyResource = getPolicyResource(method, arguments);
-		Map<String, Object> env = getParameterArgumentMap(method, arguments);
+		Map<Parameter, Object> env = MethodReflectionUtils
+				.mapParametersToArguments(method, arguments);
+		Object policyResource = getPolicyResource(method, env);
+		Map<String, Object> namedParamArgs = MethodReflectionUtils
+				.mapToParameterNameKeys(env);
 
 		// If @PolicyResource is applied use that instead of return value.
 		if (policyResource != null) {
-			this.policyEnforcement.check(policyResource, postPolicy.value(), env);
+			this.policyEnforcement.check(policyResource, postPolicy.value(),
+					namedParamArgs);
 		} else {
-			this.policyEnforcement.check(returnValue, postPolicy.value(), env);
+			this.policyEnforcement.check(returnValue, postPolicy.value(), namedParamArgs);
 		}
 		return returnValue;
 	}

@@ -26,8 +26,7 @@ public class CompliantRepositoryProxyPostProcessor
 
 	/**
 	 * Processes a repository proxy to add GDPR support where needed.
-	 *
-	 * @param factory               the proxy factory.
+	 * @param factory the proxy factory.
 	 * @param repositoryInformation repository information.
 	 */
 	@Override

@@ -12,7 +12,6 @@ public interface SecuredMethodInvocationIntercept {
 
 	/**
 	 * Invokes the method.
-	 *
 	 * @return invocation return value.
 	 * @throws Throwable exception thrown by method that was invoked.
 	 */
@@ -20,7 +19,6 @@ public interface SecuredMethodInvocationIntercept {
 
 	/**
 	 * Invokes the method.
-	 *
 	 * @param arguments custom arguments to invoke the method with.
 	 * @return invocation return value.
 	 * @throws Throwable exception thrown by method that was invoked.
@@ -29,14 +27,12 @@ public interface SecuredMethodInvocationIntercept {
 
 	/**
 	 * Get method that is being invoked.
-	 *
 	 * @return the method being invoked.
 	 */
 	Method getMethod();
 
 	/**
 	 * Get the arguments passed to the method.
-	 *
 	 * @return arguments used to invoke the method.
 	 */
 	Object[] getArguments();
