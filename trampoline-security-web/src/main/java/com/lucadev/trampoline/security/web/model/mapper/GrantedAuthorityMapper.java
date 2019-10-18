@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.web.model.mapper;
 
+import com.lucadev.trampoline.security.web.configuration.WebSecurityMapperConfiguration;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */
-@Mapper
+@Mapper(config = WebSecurityMapperConfiguration.class)
 public interface GrantedAuthorityMapper {
 
 	default String toName(GrantedAuthority authority) {

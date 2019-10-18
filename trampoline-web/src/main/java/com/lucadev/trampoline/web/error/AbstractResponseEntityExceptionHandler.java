@@ -43,7 +43,6 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Parses binding result and returns errors.
-	 *
 	 * @param bindingResult binding result to extract errors from.
 	 * @return list of field errors.
 	 */
@@ -63,10 +62,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles method argument validation exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -86,10 +84,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles binding exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -107,10 +104,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles type mismatch validation exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -128,10 +124,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles missing request part exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -149,10 +144,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles missing servlet request param exceptions.
-	 *
-	 * @param ex      the validation exception.
+	 * @param ex the validation exception.
 	 * @param headers http header requests.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return response entity with error.
 	 */
@@ -170,8 +164,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles method argument type mismatch exceptions.
-	 *
-	 * @param ex      mismatch exception.
+	 * @param ex mismatch exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -190,8 +183,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles constraint validation exceptions.
-	 *
-	 * @param ex      constraint exception.
+	 * @param ex constraint exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -214,8 +206,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles business rule violation.
-	 *
-	 * @param ex      business rule exception.
+	 * @param ex business rule exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -232,10 +223,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles 404 not found exceptions.
-	 *
-	 * @param ex      404 exceptions.
+	 * @param ex 404 exceptions.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -255,10 +245,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles http 405 method not supported.
-	 *
-	 * @param ex      http exception.
+	 * @param ex http exception.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -283,10 +272,9 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles 415 media type not supported.
-	 *
-	 * @param ex      http exception.
+	 * @param ex http exception.
 	 * @param headers http headers.
-	 * @param status  http status.
+	 * @param status http status.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -308,8 +296,7 @@ public abstract class AbstractResponseEntityExceptionHandler
 
 	/**
 	 * Handles internal server error 500.
-	 *
-	 * @param ex      exception causing a 500.
+	 * @param ex exception causing a 500.
 	 * @param request web request.
 	 * @return error response.
 	 */

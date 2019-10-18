@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.web.model.mapper;
 
 import com.lucadev.trampoline.security.persistence.entity.User;
+import com.lucadev.trampoline.security.web.configuration.WebSecurityMapperConfiguration;
 import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import com.lucadev.trampoline.security.web.model.UserDto;
 import com.lucadev.trampoline.security.web.model.UserSummaryDto;
@@ -14,7 +15,8 @@ import java.util.List;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */
-@Mapper(uses = {RoleMapper.class, GrantedAuthorityMapper.class})
+@Mapper(config = WebSecurityMapperConfiguration.class,
+		uses = {RoleMapper.class, GrantedAuthorityMapper.class})
 public interface UserMapper {
 
 	/**
