@@ -84,9 +84,8 @@ public class CompliantRepositoryMethodInterceptor implements MethodInterceptor {
 		for (int i = 0; i < parameters.length; i++) {
 			Parameter parameter = parameters[i];
 			// Check if we need to encrypt
-			PersonalData personalData = AnnotationUtils.findAnnotation(parameter,
-					PersonalData.class);
-			if (personalData != null) {
+			if (AnnotationUtils.findAnnotation(parameter,
+					PersonalData.class) != null) {
 				if (!parameter.getType().equals(String.class)) {
 					throw new IllegalArgumentException("Argument \"" + parameter.getName()
 							+ "\" with @PersonalData must be of type String.");
