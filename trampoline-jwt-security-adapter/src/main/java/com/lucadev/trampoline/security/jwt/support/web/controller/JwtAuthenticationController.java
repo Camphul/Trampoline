@@ -102,7 +102,8 @@ public class JwtAuthenticationController implements
 	@GetMapping("${trampoline.security.jwt.web.userMapping:/user}")
 	public UserSummaryDto user(HttpServletRequest request) {
 		User user = this.userService.currentUserOrThrow();
-		user.getAuthorities();// Required to fetch authorities.
+		// Required to fetch authorities.
+		user.getAuthorities();
 		return this.userMapper.toSummary(user);
 	}
 

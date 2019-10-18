@@ -73,7 +73,8 @@ public abstract class TrampolineResponseEntityExceptionHandler
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
 			WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
-		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(ex.getBindingResult());
+		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(
+				ex.getBindingResult());
 		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
@@ -92,7 +93,8 @@ public abstract class TrampolineResponseEntityExceptionHandler
 	protected ResponseEntity<Object> handleBindException(BindException ex,
 														 HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
-		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(ex.getBindingResult());
+		List<ApiFieldConstraintError> errors = getFieldConstraintErrors(
+				ex.getBindingResult());
 		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(),
@@ -116,8 +118,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -136,8 +137,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		String error = ex.getRequestPartName() + " part is missing";
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -156,8 +156,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		String error = ex.getParameterName() + " parameter is missing";
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -175,8 +174,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -198,14 +196,12 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 		ApiErrorResponse<ApiFieldConstraintError> apiError = new ApiErrorResponse<>(
 				HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
 	 * Handles business rule violation.
-	 *
-	 * @param ex      business rule exception.
+	 * @param ex business rule exception.
 	 * @param request web request.
 	 * @return error response.
 	 */
@@ -214,10 +210,9 @@ public abstract class TrampolineResponseEntityExceptionHandler
 			BusinessRuleViolationException ex, WebRequest request) {
 		log.debug("Exception advice for {}", ex.getClass().getName());
 
-		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
-				ex.getStatus(), ex.getReason(), ex.getReason());
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(ex.getStatus(),
+				ex.getReason(), ex.getReason());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -238,8 +233,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(HttpStatus.NOT_FOUND,
 				ex.getLocalizedMessage(), error);
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -265,8 +259,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(),
 				builder.toString());
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -290,8 +283,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(),
 				builder.substring(0, builder.length() - 2));
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 	/**
@@ -307,8 +299,7 @@ public abstract class TrampolineResponseEntityExceptionHandler
 		ApiErrorResponse<String> apiError = new ApiErrorResponse<>(
 				HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(),
 				"error occurred");
-		return new ResponseEntity<>(apiError, new HttpHeaders(),
-				apiError.getStatus());
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
 }
