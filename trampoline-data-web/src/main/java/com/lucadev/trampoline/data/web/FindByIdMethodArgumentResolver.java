@@ -4,6 +4,7 @@ import com.lucadev.trampoline.data.ResourceNotFoundException;
 import com.lucadev.trampoline.data.web.annotation.FindById;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -44,7 +45,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 
 		Class paramType = parameter.getParameterType();
 		// Require @Entity annotation
-		if (!paramType.isAnnotationPresent(Entity.class)) {
+		if (AnnotationUtils.findAnnotation(paramType, Entity.class) == null) {
 			return false;
 		}
 
@@ -91,7 +92,7 @@ public class FindByIdMethodArgumentResolver implements HandlerMethodArgumentReso
 	public String getPathVariableName(MethodParameter parameter, FindById annotation) {
 		String name = annotation.value();
 
-		if (name == null || name.isEmpty()) {
+		if (name.isEmpty()) {
 			name = parameter.getParameterName();
 		}
 
