@@ -4,6 +4,7 @@ import com.lucadev.trampoline.data.gdpr.PersonalData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.support.RepositoryProxyPostProcessor;
 import org.springframework.data.util.Streamable;
@@ -62,7 +63,7 @@ public class CompliantRepositoryProxyPostProcessor
 	 */
 	private boolean hasAnyPersonalData(Method method) {
 		return Arrays.stream(method.getParameters())
-				.anyMatch(parameter -> parameter.isAnnotationPresent(PersonalData.class));
+				.anyMatch(parameter -> AnnotationUtils.findAnnotation(parameter, PersonalData.class) != null);
 	}
 
 }

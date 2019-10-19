@@ -11,8 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Utils class similar to Spring
- * {@link org.springframework.core.annotation.AnnotationUtils} but for methods.
+ * Utils class similar to Spring reflection utils classes.
  *
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 10/18/19
@@ -60,10 +59,7 @@ public final class MethodReflectionUtils {
 			Method method, Class<A> annotationClass) {
 		return Arrays.stream(method.getParameters()).filter((parameter) -> {
 			A annotation = AnnotationUtils.findAnnotation(parameter, annotationClass);
-			if (annotation != null) {
-				return true;
-			}
-			return false;
+			return annotation != null;
 		}).findFirst().orElse(null);
 	}
 
