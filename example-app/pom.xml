@@ -22,6 +22,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 		<!--
 		trampoline-starter imports all trampoline starter modules.
 		You may want to import specific modules such as trampoline-data if you dont need certain functionality.

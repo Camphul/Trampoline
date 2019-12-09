@@ -47,6 +47,16 @@ Version `20190507` would have started development on the 7th of may 2019.
 
 In-development versions are versioned the same but with the `-SNAPSHOT` suffix.
 
+## Flyway migrations
+
+When Flyway is added to the classpath in your project and you use any of the following: `trampoline-data` and/or `trampoline-asset-store` and/or `trampoline-security`.
+You must adhere to some rules when writing your own migrations.
+
+Custom migrations must start with version `V10`. V10 is required since Trampoline reserves atleast 10 migrations.
+Either the `db/migration/mysql` or `db/migration/h2` dir is chosen as location for migrations based on the `spring.jpa.properties.hibernate.dialect` property.
+When the value of the property contains `mysql` it will use `db/migration/mysql` and when it contains `h2` it will use `db/migration/h2`.
+The default fallback is to `db/migration/mysql`.
+
 ## Contributing
 
 If you wish to contribute please read the guidelines as described in [CONTRIBUTING.md](/CONTRIBUTING.md)

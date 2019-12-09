@@ -77,7 +77,8 @@ public class User extends TrampolineEntity {
 			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id",
 					foreignKey = @ForeignKey(name = "fk_t_user_roles")),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID",
-					referencedColumnName = "id"))
+					referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fk_t_role_users")))
 	private List<Role> roles = new ArrayList<>();
 
 	@Column(name = "last_password_reset_at", nullable = false)

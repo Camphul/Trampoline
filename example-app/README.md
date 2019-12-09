@@ -14,6 +14,13 @@ The following dummy users are generated when the application finished loading(us
 - joe(ROLE_USER): password: test, email: joe@example.com
 - admin(ROLE_USER, ROLE_ADMIN): password: test, email: admin@example.com
 
+There are also dummy users imported when flyway is present.
+
+## Flyway
+
+Custom migrations must start with version `V10` and be inside `db/migration/mysql` or `db/migration/h2`.
+V10 is required since Trampoline reserves atleast 10 migrations.
+
 ## REST mappings
 
 For this example we require the user to always be authenticated(except for signup, authorize and unprotected ping routes).

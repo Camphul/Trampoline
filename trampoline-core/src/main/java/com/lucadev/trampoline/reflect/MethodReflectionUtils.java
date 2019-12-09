@@ -1,5 +1,7 @@
 package com.lucadev.trampoline.reflect;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.annotation.Annotation;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 10/18/19
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MethodReflectionUtils {
 
 	/**
@@ -65,8 +68,8 @@ public final class MethodReflectionUtils {
 
 	/**
 	 * Run through parameters.
-	 * @param method
-	 * @param parameterCallback
+	 * @param method the method.
+	 * @param parameterCallback callback.
 	 */
 	public static void doWithParameters(Method method,
 			ParameterCallback parameterCallback) {

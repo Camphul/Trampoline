@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,7 +33,8 @@ public class BlogPost extends TrampolineEntity {
 
 	// The user who persisted this blogpost.
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "blogpost_author")
+	@JoinColumn(name = "blogpost_author", nullable = false,
+			foreignKey = @ForeignKey(name = "FK_blogpost_author"))
 	private User author;
 
 	@Column(name = "title", nullable = false)
@@ -45,6 +48,14 @@ public class BlogPost extends TrampolineEntity {
 	 * comments pageable.
 	 */
 	@OneToMany(orphanRemoval = true)
+	@JoinTable(name = "blogpost_comments",
+			joinColumns = @JoinColumn(name = "blogpost_id", referencedColumnName = "id",
+					nullable = false,
+					foreignKey = @ForeignKey(name = "fk_blogpost_blogpost_comment")),
+			inverseJoinColumns = @JoinColumn(name = "comment_id",
+					nullable = false,
+					referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost")))
 	private Collection<BlogPostComment> comments = new ArrayList<>();
 
 }

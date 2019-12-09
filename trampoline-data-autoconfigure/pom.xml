@@ -14,6 +14,12 @@
 	<description>A trampoline starter module</description>
 	<url>https://github.com/Camphul/Trampoline</url>
 	<dependencies>
+		<!-- Only used flyway when flyway is present -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-data</artifactId>
