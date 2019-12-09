@@ -8,7 +8,7 @@
 		<version>20190628-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-
+	<packaging>jar</packaging>
 	<artifactId>trampoline-jwt-security-adapter</artifactId>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A trampoline starter module</description>

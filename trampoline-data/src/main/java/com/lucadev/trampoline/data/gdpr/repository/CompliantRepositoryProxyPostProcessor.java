@@ -62,8 +62,8 @@ public class CompliantRepositoryProxyPostProcessor
 	 * {@link PersonalData}.
 	 */
 	private boolean hasAnyPersonalData(Method method) {
-		return Arrays.stream(method.getParameters())
-				.anyMatch(parameter -> AnnotationUtils.findAnnotation(parameter, PersonalData.class) != null);
+		return Arrays.stream(method.getParameters()).anyMatch(parameter -> AnnotationUtils
+				.findAnnotation(parameter, PersonalData.class) != null);
 	}
 
 }
