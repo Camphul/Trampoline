@@ -22,4 +22,7 @@ public class LocalAssetStoreConfigurationProperties {
 	@NotBlank
 	private String directory = "./local-asset-store/";
 
+	@NotNull
+	private boolean keepOnDiskWhenRemoved = false;
+
 }

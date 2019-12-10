@@ -11,6 +11,12 @@
       "type": "java.lang.String",
       "description": "Define which directory to store files in.",
       "sourceType": "com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreConfigurationProperties"
+    },
+    {
+      "name": "trampoline.assetstore.provider.local.keep-on-disk-when-removed",
+      "type": "java.lang.Boolean",
+      "description": "Does not remove asset data from disk when asset meta reference is deleted.",
+      "sourceType": "com.lucadev.trampoline.assetstore.provider.local.LocalAssetStoreConfigurationProperties"
     }
   ]
 }

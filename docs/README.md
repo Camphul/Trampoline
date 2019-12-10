@@ -38,6 +38,7 @@ Properties being used are:
 
 - `trampoline.assetstore.provider`: which AssetStore to use, defaults to local
 - `trampoline.assetstore.provider.local.directory`: directory to use for local AssetStore, defaults to ./local-asset-store/
+- `trampoline.assetstore.provider.local.keep-on-disk-when-removed`: does not remove asset data from disk when asset meta reference is deleted, defaults to false
 - `trampoline.data.gdpr.algorithm`: algorithm used to encrypt personal data. Default: `AES` 
 - `trampoline.data.gdpr.cipher`: cipher used to encrypt personal data. Default: `AES/ECB/PKCS5Padding`
 - `trampoline.data.gdpr.key`: key used to encrypt personal data(string). Default `MySuperSecretKey`

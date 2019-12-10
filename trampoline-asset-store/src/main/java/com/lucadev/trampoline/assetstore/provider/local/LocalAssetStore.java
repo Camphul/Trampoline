@@ -129,6 +129,10 @@ public class LocalAssetStore extends AbstractAssetStore implements AssetMetaData
 
 	@Override
 	public void onApplicationEvent(AssetMetaDataPreRemoveEvent assetMetaDataPreRemoveEvent) {
+		if (this.properties.isKeepOnDiskWhenRemoved()) {
+			log.debug("Ignoring asset meta removal and keeping data on disk.");
+			return;
+		}
 		FileSystemResource resource = getFileSystemResource(assetMetaDataPreRemoveEvent.getAssetMetaData());
 		if (resource.getFile().delete()) {
 			log.debug("Removed asset from disk.");
