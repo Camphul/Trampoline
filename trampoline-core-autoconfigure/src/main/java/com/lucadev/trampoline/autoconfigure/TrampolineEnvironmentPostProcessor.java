@@ -3,6 +3,7 @@ package com.lucadev.trampoline.autoconfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
@@ -13,7 +14,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @since 6/28/19
  */
 @Slf4j
-public class TrampolineEnvironmentPostProcessor implements EnvironmentPostProcessor {
+public class TrampolineEnvironmentPostProcessor
+		implements EnvironmentPostProcessor, Ordered {
 
 	/**
 	 * Configure bean override.
@@ -25,6 +27,15 @@ public class TrampolineEnvironmentPostProcessor implements EnvironmentPostProces
 			SpringApplication application) {
 		log.debug("Configuring trampoline environment.");
 		application.setAllowBeanDefinitionOverriding(true);
+	}
+
+	/**
+	 * Trampoline environment post processor load order.
+	 * @return load order.
+	 */
+	@Override
+	public int getOrder() {
+		return 30;
 	}
 
 }

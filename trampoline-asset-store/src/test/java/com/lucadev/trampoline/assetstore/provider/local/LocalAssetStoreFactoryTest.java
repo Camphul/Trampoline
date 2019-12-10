@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.assetstore.provider.local;
 
 import com.lucadev.trampoline.assetstore.AssetStore;
+import com.lucadev.trampoline.assetstore.event.AssetEventPublisher;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -23,14 +24,17 @@ public class LocalAssetStoreFactoryTest {
 
 	private AssetMetaDataRepository mockedRepository;
 
+	private AssetEventPublisher mockedEventPublisher;
+
 	private String storeDir = "_junit_test";
 
 	@Before
 	public void setUp() throws Exception {
 		mockedRepository = mock(AssetMetaDataRepository.class);
+		mockedEventPublisher = mock(AssetEventPublisher.class);
 		configurationProperties = new LocalAssetStoreConfigurationProperties();
 		assetStoreFactory = new LocalAssetStoreFactory(configurationProperties,
-				mockedRepository);
+				mockedRepository, mockedEventPublisher);
 	}
 
 	@After

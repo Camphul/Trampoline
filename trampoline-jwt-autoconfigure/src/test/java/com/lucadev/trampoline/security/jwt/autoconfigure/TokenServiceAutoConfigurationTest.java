@@ -1,10 +1,10 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.JwtPayload;
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
+import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.adapter.JwtConfigurationAdapter;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
+import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -12,12 +12,9 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
@@ -32,13 +29,11 @@ public class TokenServiceAutoConfigurationTest {
 
 	private AnnotationConfigApplicationContext context;
 
-	private JwtConfigurationAdapter jwtConfiguration;
+	private TokenDecorator jwtConfiguration;
 
 	private JwtSecurityConfigurationProperties jwtSecurityConfigurationProperties;
 
 	private TimeProvider timeProvider;
-
-	private UserDetailsService userService;
 
 	@Before
 	public void setUp() throws Exception {
@@ -47,8 +42,7 @@ public class TokenServiceAutoConfigurationTest {
 		when(jwtSecurityConfigurationProperties.getSecret())
 				.thenReturn("averylongstringasjwtsecurity");
 		timeProvider = mock(TimeProvider.class);
-		userService = mock(UserDetailsService.class);
-		jwtConfiguration = mock(JwtConfigurationAdapter.class);
+		jwtConfiguration = mock(TokenDecorator.class);
 		context = new AnnotationConfigApplicationContext();
 	}
 
@@ -63,9 +57,7 @@ public class TokenServiceAutoConfigurationTest {
 		if (timeProvider != null) {
 			timeProvider = null;
 		}
-		if (userService != null) {
-			userService = null;
-		}
+
 		if (jwtConfiguration != null) {
 			jwtConfiguration = null;
 		}
@@ -74,7 +66,7 @@ public class TokenServiceAutoConfigurationTest {
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityConfigurationProperties, timeProvider, userService);
+				timeProvider, jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(JwtTokenService.class));
@@ -84,7 +76,7 @@ public class TokenServiceAutoConfigurationTest {
 	public void customTokenServiceBean() {
 		this.context.register(CustomTokenServiceConfig.class);
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
-				jwtSecurityConfigurationProperties, timeProvider, userService);
+				timeProvider, jwtSecurityConfigurationProperties);
 		this.context.refresh();
 		TokenService tokenService = this.context.getBean(TokenService.class);
 		assertThat(tokenService, instanceOf(TestTokenService.class));
@@ -113,17 +105,17 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public JwtPayload parseToken(String token) {
+		public TokenPayload decodeTokenHeader(String token) {
 			return null;
 		}
 
 		@Override
-		public JwtPayload parseToken(HttpServletRequest request) {
+		public TokenPayload decodeToken(String token) {
 			return null;
 		}
 
 		@Override
-		public boolean isValidToken(JwtPayload jwtPayload, UserDetails user) {
+		public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
 			return false;
 		}
 
@@ -133,8 +125,7 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public Optional<Authentication> getAuthenticationToken(
-				HttpServletRequest request) {
+		public String getTokenHeader(HttpServletRequest request) {
 			return null;
 		}
 

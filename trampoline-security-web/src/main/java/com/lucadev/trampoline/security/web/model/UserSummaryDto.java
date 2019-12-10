@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.web.model;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -20,6 +20,6 @@ public class UserSummaryDto {
 
 	private String email;
 
-	private List<String> roles;
+	private Collection<String> authorities;
 
 }

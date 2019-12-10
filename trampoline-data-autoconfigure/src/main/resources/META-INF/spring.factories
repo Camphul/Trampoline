@@ -1,3 +1,5 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.lucadev.trampoline.data.autoconfigure.TrampolineFlywayEnvironmentPostProcessor
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.lucadev.trampoline.data.autoconfigure.TrampolineDataAutoConfiguration,\
 com.lucadev.trampoline.data.autoconfigure.TrampolineObjectMapperAutoConfiguration

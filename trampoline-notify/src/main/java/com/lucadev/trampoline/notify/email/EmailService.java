@@ -2,7 +2,6 @@ package com.lucadev.trampoline.notify.email;
 
 import javax.mail.MessagingException;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Interface which defines basic functionality for handling rich html email.
@@ -17,13 +16,6 @@ public interface EmailService {
 	 * @return email builder.
 	 */
 	EmailBuilder builder();
-
-	/**
-	 * Send a message built using a {@link EmailBuilder}.
-	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException when for some reason we could not send the email.
-	 */
-	void send(Function<EmailBuilder, EmailBuilder> builder) throws MessagingException;
 
 	/**
 	 * Send email made using the builder.
@@ -43,14 +35,6 @@ public interface EmailService {
 	 */
 	void send(String from, String to, String subject, String template,
 			Map<String, Object> model) throws MessagingException;
-
-	/**
-	 * Send a message built using a {@link EmailBuilder} asynchronously.
-	 * @param builder function which expects a builder to be returned.
-	 * @throws MessagingException when for some reason we could not send the email.
-	 */
-	void sendAsync(Function<EmailBuilder, EmailBuilder> builder)
-			throws MessagingException;
 
 	/**
 	 * Send email made using the builder asynchronously.

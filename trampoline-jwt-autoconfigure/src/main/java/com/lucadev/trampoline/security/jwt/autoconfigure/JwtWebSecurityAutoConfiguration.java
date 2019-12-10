@@ -1,12 +1,14 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.TokenService;
-import com.lucadev.trampoline.security.jwt.authentication.JwtAuthenticationProvider;
-import com.lucadev.trampoline.security.jwt.authorization.JwtAuthorizationFilter;
+import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationEntryPoint;
+import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationFilter;
+import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -16,10 +18,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 
 import javax.servlet.Filter;
 
@@ -31,7 +34,7 @@ import javax.servlet.Filter;
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter(TokenServiceAutoConfiguration.class)
+@AutoConfigureAfter({ TokenServiceAutoConfiguration.class, JwtAutoConfiguration.class })
 @RequiredArgsConstructor
 public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter
 		implements Ordered {
@@ -44,36 +47,21 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	/**
 	 * The filter class which our custom JWT filter will sit infront of.
 	 */
-	public static final Class<? extends Filter> JWT_FILTER_BEFORE = UsernamePasswordAuthenticationFilter.class;
+	public static final Class<? extends Filter> JWT_FILTER_BEFORE = RequestHeaderAuthenticationFilter.class;
 
-	// Request filter for auth
-	private final AuthenticationEntryPoint entryPoint;
-
-	private final UserDetailsService userService;
+	private final AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService;
 
 	private final TokenService tokenService;
 
-	private final AuthenticationManager authenticationManager;
+	private TokenAuthenticationProvider tokenAuthenticationProvider;
 
-	private final PasswordEncoder passwordEncoder;
-
-	/**
-	 * Autowires the {@link AuthenticationManager} builder. Used to build the global
-	 * {@link AuthenticationManager}
-	 * @param builder the builder for the global {@link AuthenticationManager}
-	 */
-	@Autowired
-	public void initAuthenticationManager(AuthenticationManagerBuilder builder) {
-		builder.authenticationProvider(authenticationProvider());
-	}
-
-	/**
-	 * Construct the {@link JwtAuthenticationProvider} used for authentication.
-	 * @return JWT auth provider.
-	 */
-	protected AuthenticationProvider authenticationProvider() {
-		return new JwtAuthenticationProvider(this.tokenService, this.userService,
-				this.passwordEncoder);
+	@Autowired(required = false/*
+								 * This mechanism will be replaced soon by a rewritten
+								 * adapter module
+								 */)
+	public void setTokenAuthenticationProvider(
+			TokenAuthenticationProvider tokenAuthenticationProvider) {
+		this.tokenAuthenticationProvider = tokenAuthenticationProvider;
 	}
 
 	/**
@@ -85,27 +73,64 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	protected void configure(HttpSecurity http) throws Exception {
 		log.debug("Configuring jwt websecurity");
 		http
-				// Sessionless
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				// Handle unauthorized/auth exceptions
-				.exceptionHandling().authenticationEntryPoint(this.entryPoint).and()
 				.authorizeRequests()
 				// All other requests should be authenticated
 				.anyRequest().authenticated().and()
 				// Apply our JWT filter.
-				.addFilterBefore(filter(), JWT_FILTER_BEFORE);
-
+				.addFilterBefore(filter(), JWT_FILTER_BEFORE).sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 		// Disable cross site request forgery since JWT is not vulnerable to CSRF
 		http.csrf().disable();
 	}
 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(preAuthenticationProvider());
+		if (this.tokenAuthenticationProvider != null) {
+			auth.authenticationProvider(this.tokenAuthenticationProvider);
+		}
+	}
+
+	@Bean
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return new TokenAuthenticationEntryPoint();
+	}
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	/**
 	 * Create our JWT filter.
-	 * @return a {@link JwtAuthorizationFilter}
+	 * @return a {@link TokenAuthenticationFilter}
 	 */
 	protected Filter filter() {
-		return new JwtAuthorizationFilter(this.authenticationManager, this.tokenService);
+		TokenAuthenticationFilter filter = new TokenAuthenticationFilter(
+				this.tokenService);
+		try {
+			filter.setAuthenticationManager(authenticationManagerBean());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return filter;
+	}
+
+	/**
+	 * Construct the {@link PreAuthenticatedAuthenticationProvider} used for
+	 * authentication.
+	 * @return JWT auth provider.
+	 */
+	@Bean
+	protected AuthenticationProvider preAuthenticationProvider() {
+		PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+		provider.setPreAuthenticatedUserDetailsService(
+				this.authenticationUserDetailsService);
+		return provider;
 	}
 
 	@Override

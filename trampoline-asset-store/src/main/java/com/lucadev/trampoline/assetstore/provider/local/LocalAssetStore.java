@@ -3,6 +3,7 @@ package com.lucadev.trampoline.assetstore.provider.local;
 import com.lucadev.trampoline.assetstore.AbstractAssetStore;
 import com.lucadev.trampoline.assetstore.Asset;
 import com.lucadev.trampoline.assetstore.AssetMetaData;
+import com.lucadev.trampoline.assetstore.event.AssetEventPublisher;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class LocalAssetStore extends AbstractAssetStore {
 
 	private final AssetMetaDataRepository repository;
 
+	private final AssetEventPublisher eventPublisher;
+
 	@Override
 	public List<AssetMetaData> findAllByName(String name) {
 		return this.repository.findByName(name);
@@ -55,6 +58,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 			log.error("Failed to put asset data.", e);
 			e.printStackTrace();
 		}
+		this.eventPublisher.publishPut(this, assetMetaData);
 		return assetMetaData;
 	}
 
@@ -85,6 +89,7 @@ public class LocalAssetStore extends AbstractAssetStore {
 	 */
 	@Override
 	public void remove(AssetMetaData assetMetaData) {
+		this.eventPublisher.publishRemove(this, assetMetaData);
 		FileSystemResource resource = getFileSystemResource(assetMetaData);
 		if (resource.getFile().delete()) {
 			this.repository.delete(assetMetaData);

@@ -3,7 +3,7 @@ package com.lucadev.example.trampoline.web.model;
 import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -21,6 +21,6 @@ public class BlogPostSummaryDto {
 
 	private String title;
 
-	private Date created;
+	private Instant created;
 
 }

@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.service.time;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * A {@link TimeProvider} implementation which uses the default {@link System} class to
@@ -15,8 +15,8 @@ public class SystemTimeProvider implements TimeProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date now() {
-		return new Date(unix());
+	public Instant now() {
+		return Instant.now();
 	}
 
 	/**

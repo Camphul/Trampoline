@@ -2,6 +2,7 @@ package com.lucadev.trampoline.security.service.impl;
 
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationField;
+import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
 import com.lucadev.trampoline.security.configuration.SecurityConfigurationProperties;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,16 +46,8 @@ public class TrampolineUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String s) {
-		Optional<User> user = Optional.empty();
-		if (this.identificationField == IdentificationField.USERNAME) {
-			user = this.userRepository.findOneByUsername(s);
-		}
-		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
-			user = this.userRepository.findOneByUsernameOrEmail(s);
-		}
-		return user.orElseThrow(() -> new UsernameNotFoundException(
-				"Could not find user with username " + s));
+	public Optional<User> findByUsername(String username) {
+		return this.userRepository.findOneByUsername(username);
 	}
 
 	/**
@@ -63,16 +55,19 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public Optional<User> currentUser() {
-		Authentication auth = authenticationContext();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null) {
 			return Optional.empty();
 		}
-		Object principal = auth.getPrincipal();
-		if (!(principal instanceof UserDetails)) {
+		UserDetails principal = ((UserDetails) auth.getPrincipal());
+		if (principal == null) {
 			return Optional.empty();
 		}
+		if (principal instanceof PersistentUserDetails) {
+			return Optional.of(((PersistentUserDetails) principal).getUser());
+		}
 
-		return User.from((UserDetails) principal);
+		return findByUsername(auth.getName());
 	}
 
 	/**
@@ -87,8 +82,16 @@ public class TrampolineUserService implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User findById(UUID subject) {
-		return this.userRepository.findById(subject).orElse(null);
+	public Optional<User> findById(UUID subject) {
+		return this.userRepository.findById(subject);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return this.userRepository.findOneByEmail(email);
 	}
 
 	/**
@@ -104,7 +107,9 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public User update(User user) {
-		return this.userRepository.save(user);
+		user = this.userRepository.save(user);
+		user.refreshAuthorities();
+		return user;
 	}
 
 	/**
@@ -207,6 +212,18 @@ public class TrampolineUserService implements UserService {
 		return update(user);
 	}
 
+	@Override
+	public Optional<User> findByIdentificationField(String identifier) {
+		if (this.identificationField == IdentificationField.USERNAME) {
+			return findByUsername(identifier);
+		}
+		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
+			return this.userRepository.findOneByUsernameOrEmail(identifier);
+		}
+		throw new IllegalStateException(
+				"Invalid identification field. Cannot find user.");
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -221,15 +238,6 @@ public class TrampolineUserService implements UserService {
 	@Override
 	public void setIdentificationField(IdentificationField identificationField) {
 		this.identificationField = identificationField;
-	}
-
-	/**
-	 * Get the current context's {@link Authentication}.
-	 * @return the current thread's
-	 * {@link org.springframework.security.core.context.SecurityContext} authentication.
-	 */
-	private Authentication authenticationContext() {
-		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
 }

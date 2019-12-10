@@ -1,4 +1,5 @@
 local-asset-store
+aspectjtools-1.9.4.jar
 experimental-*
 public.key
 private.key

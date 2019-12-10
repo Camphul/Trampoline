@@ -2,14 +2,13 @@ package com.lucadev.trampoline.autoconfigure;
 
 import com.lucadev.trampoline.service.time.SystemTimeProvider;
 import com.lucadev.trampoline.service.time.TimeProvider;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
+import java.time.Instant;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.IsNot.not;
@@ -22,36 +21,28 @@ import static org.junit.Assert.assertThat;
  */
 public class TimeProviderAutoConfigurationTest {
 
-	private AnnotationConfigApplicationContext context;
-
-	@Before
-	public void setUp() throws Exception {
-		context = new AnnotationConfigApplicationContext();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (this.context != null) {
-			this.context.close();
-		}
-	}
-
 	@Test
 	public void registersSystemTimeProviderAutomatically() {
-		this.context.register(TimeProviderAutoConfiguration.class);
-		this.context.refresh();
-		TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-		assertThat(timeProvider, instanceOf(SystemTimeProvider.class));
+		new ApplicationContextRunner()
+				.withConfiguration(
+						AutoConfigurations.of(TimeProviderAutoConfiguration.class))
+				.run(context -> {
+					TimeProvider timeProvider = context.getBean(TimeProvider.class);
+					assertThat(timeProvider, instanceOf(SystemTimeProvider.class));
+				});
 	}
 
 	@Test
 	public void customTimeProviderBean() {
-		this.context.register(TimeProviderConfiguration.class,
-				TimeProviderAutoConfiguration.class);
-		this.context.refresh();
-		TimeProvider timeProvider = this.context.getBean(TimeProvider.class);
-		assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
-		assertEquals(0L, timeProvider.unix());
+		new ApplicationContextRunner()
+				.withConfiguration(AutoConfigurations.of(TimeProviderConfiguration.class))
+				.withConfiguration(
+						AutoConfigurations.of(TimeProviderAutoConfiguration.class))
+				.run(context -> {
+					TimeProvider timeProvider = context.getBean(TimeProvider.class);
+					assertThat(timeProvider, not(instanceOf(SystemTimeProvider.class)));
+					assertEquals(0L, timeProvider.unix());
+				});
 	}
 
 	/**
@@ -64,8 +55,8 @@ public class TimeProviderAutoConfigurationTest {
 		public TimeProvider timeProvider() {
 			return new TimeProvider() {
 				@Override
-				public Date now() {
-					return new Date(0);
+				public Instant now() {
+					return Instant.now();
 				}
 
 				@Override

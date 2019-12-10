@@ -4,9 +4,6 @@ import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.service.UserAuthenticationService;
 import com.lucadev.trampoline.security.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -37,32 +34,6 @@ public class TrampolineUserAuthenticationService implements UserAuthenticationSe
 	public User changePassword(User user, String newPassword) {
 		user.setPassword(this.passwordEncoder.encode(newPassword));
 		return this.userService.update(user);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void isAllowed(User user) {
-		if (!user.isEnabled()) {
-			throw new DisabledException(
-					"Could not authorize user because the account is disabled.");
-		}
-
-		if (!user.isAccountNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the account is expired.");
-		}
-
-		if (!user.isCredentialsNonExpired()) {
-			throw new AccountExpiredException(
-					"Could not authorize user because the credentials are expired.");
-		}
-
-		if (!user.isAccountNonLocked()) {
-			throw new LockedException(
-					"Could not authorize user because the account is locked.");
-		}
 	}
 
 }

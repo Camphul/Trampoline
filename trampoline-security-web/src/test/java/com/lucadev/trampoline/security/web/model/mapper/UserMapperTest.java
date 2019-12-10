@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
  * @since 6/8/19
  */
 @SpringBootTest(classes = { UserMapperImpl.class, RoleMapperImpl.class,
-		PrivilegeMapperImpl.class })
+		PrivilegeMapperImpl.class, GrantedAuthorityMapperImpl.class })
 @RunWith(SpringRunner.class)
 public class UserMapperTest {
 
@@ -29,6 +29,9 @@ public class UserMapperTest {
 
 	@Autowired
 	private RoleMapper roleMapper;
+
+	@Autowired
+	private GrantedAuthorityMapper grantedAuthorityMapper;
 
 	@Test
 	public void mapperNotNull() {
@@ -50,7 +53,8 @@ public class UserMapperTest {
 		UserSummaryDto result = userMapper.toSummary(input);
 		assertEquals(input.getUsername(), result.getUsername());
 		assertEquals(input.getEmail(), result.getEmail());
-		assertEquals(roleMapper.toNames(input.getRoles()), result.getRoles());
+		assertEquals(grantedAuthorityMapper.toNames(input.getAuthorities()),
+				result.getAuthorities());
 	}
 
 	@Test

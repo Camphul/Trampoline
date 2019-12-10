@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /**
@@ -21,37 +23,49 @@ import javax.validation.constraints.Positive;
 public class JwtSecurityConfigurationProperties {
 
 	/**
-	 * Default secret if none are defined.
-	 */
-	public static final String DEFAULT_SECRET = "trampolineSecret238746982643";
-
-	/**
-	 * Header containing our token.
-	 */
-	public static final String TOKEN_HEADER = "Authorization";
-
-	/**
-	 * Define scheme used in header.
-	 */
-	public static final String HEADER_PREFIX = "Bearer";
-
-	/**
-	 * Default timeout for jwt tokens(expiry).
-	 */
-	public static final long DEFAULT_TOKEN_TIMEOUT = 3600L;
-
-	/**
 	 * Errormessage that gets thrown when you try to modify this object through a setter
 	 * method.
 	 */
 	private static final String IMMUTABILITY_ERROR_MESSAGE = "Cannot set prop of immutable config properties!";
 
 	// Signing secret
-	@Length(min = 15)
-	private String secret = DEFAULT_SECRET;
+	@Length(min = 16)
+	private String secret = "trampolineSecret238746982643";
 
 	// Timeout for token invalidation
 	@Positive
-	private long tokenTimeout = DEFAULT_TOKEN_TIMEOUT;
+	private long tokenTimeout = 3600L;
+
+	// Head name
+	@NotBlank
+	private String header = "Authorization";
+
+	// Schema used for jwt
+	@NotNull
+	private String headerSchema = "Bearer";
+
+	// Configures claims.
+	@NotNull
+	private ClaimsConfigurationProperties claims = new ClaimsConfigurationProperties();
+
+	/**
+	 * Configures claim keys.
+	 */
+	@Data
+	public static class ClaimsConfigurationProperties {
+
+		// Name of the key containing the principal id.
+		@NotBlank
+		private String principalIdentifier = "principalId";
+
+		// Name of the key containing the username.
+		@NotBlank
+		private String username = "username";
+
+		// Name of the key containing the authorities.
+		@NotBlank
+		private String authorities = "authorities";
+
+	}
 
 }

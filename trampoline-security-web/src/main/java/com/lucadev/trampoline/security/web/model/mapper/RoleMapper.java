@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.web.model.mapper;
 
 import com.lucadev.trampoline.security.persistence.entity.Role;
+import com.lucadev.trampoline.security.web.configuration.WebSecurityMapperConfiguration;
 import com.lucadev.trampoline.security.web.model.RoleDto;
 import com.lucadev.trampoline.security.web.model.RoleSummaryDto;
 import org.mapstruct.Mapper;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 6/8/19
  */
-@Mapper(uses = PrivilegeMapper.class)
+@Mapper(config = WebSecurityMapperConfiguration.class, uses = PrivilegeMapper.class)
 public interface RoleMapper {
 
 	/**

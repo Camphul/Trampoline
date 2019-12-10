@@ -40,7 +40,7 @@ public class JpaPolicyContainer implements PolicyContainer {
 	}
 
 	private void importPolicyRules(PolicyContainer parent) {
-		log.info("Importing policy rules...");
+		log.debug("Importing policy rules from parent container.");
 		List<PolicyRule> policyRules = parent.findAllPolicyRules();
 
 		policyRules.stream()

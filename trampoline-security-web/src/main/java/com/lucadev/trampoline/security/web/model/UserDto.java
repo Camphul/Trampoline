@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.web.model;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +23,9 @@ public class UserDto {
 
 	private List<RoleDto> roles;
 
-	private Date created;
+	private Instant created;
 
-	private Date lastSeen;
+	private Instant lastSeen;
 
 	private boolean locked;
 

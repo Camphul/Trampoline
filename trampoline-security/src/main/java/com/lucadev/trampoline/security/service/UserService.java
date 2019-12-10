@@ -18,7 +18,7 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}.
@@ -38,7 +38,21 @@ public interface UserService extends UserDetailsService {
 	 * @param subject the {@link UUID} to find.
 	 * @return null or the found {@link User}
 	 */
-	User findById(UUID subject);
+	Optional<User> findById(UUID subject);
+
+	/**
+	 * Find a {@link User} by its username.
+	 * @param username the user's username.
+	 * @return the found user.
+	 */
+	Optional<User> findByUsername(String username);
+
+	/**
+	 * Find a {@link User} by its email.
+	 * @param email the user email.
+	 * @return the found user.
+	 */
+	Optional<User> findByEmail(String email);
 
 	/**
 	 * Persist new {@link User}.
@@ -140,6 +154,13 @@ public interface UserService extends UserDetailsService {
 	 * @return the updated {@link User}
 	 */
 	User setCredentialsExpired(User user, boolean expired);
+
+	/**
+	 * Find user by identifier which is based on the {@link IdentificationField}.
+	 * @param identifier user identifier.
+	 * @return the user.
+	 */
+	Optional<User> findByIdentificationField(String identifier);
 
 	/**
 	 * Current {@link IdentificationField} being used.

@@ -5,7 +5,7 @@
 
 	<groupId>com.lucadev.trampoline</groupId>
 	<artifactId>trampoline-parent</artifactId>
-	<version>20190509</version>
+	<version>20190628</version>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
@@ -26,7 +26,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<trampoline.spring.version>2.1.6.RELEASE</trampoline.spring.version>
+		<trampoline.spring.version>2.2.2.RELEASE</trampoline.spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -40,22 +40,28 @@
 		<delombok.output>${project.build.directory}/delombok</delombok.output>
 		<javadoc.source.version>8</javadoc.source.version>
 		<nexus.staging.plugin.version>1.6.7</nexus.staging.plugin.version>
-		<mapstruct.version>1.3.0.Final</mapstruct.version>
+		<mapstruct.version>1.3.1.Final</mapstruct.version>
 		<spring.javaformat.plugin.version>0.0.9</spring.javaformat.plugin.version>
 		<lombok.version>1.18.8</lombok.version>
 	</properties>
-
 	<dependencies>
+		<!-- Core Spring Boot dependencies required in each module -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
+		<!-- Jackson provides Java 8 Time api support -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		<!-- Testing utils/tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Code generator used for getters, setters, constructors etc.. -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -112,7 +118,7 @@
 		<module>trampoline-security-autoconfigure</module>
 		<module>trampoline-security-starter</module>
 		<module>trampoline-jwt</module>
-		<module>trampoline-jwt-web</module>
+		<module>trampoline-jwt-security-adapter</module>
 		<module>trampoline-jwt-autoconfigure</module>
 		<module>trampoline-jwt-starter</module>
 		<module>trampoline-starter</module>

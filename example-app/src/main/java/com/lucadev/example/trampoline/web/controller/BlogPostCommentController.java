@@ -20,7 +20,12 @@ import com.lucadev.trampoline.web.model.UUIDDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 
@@ -72,11 +77,11 @@ public class BlogPostCommentController {
 		comment = this.blogPostService.addComment(author, blogPost, comment);
 		try {
 			// Example of how you could send an awesome email notification!
-			this.emailService.send(builder -> builder.to(blogPost.getAuthor().getEmail())
+			this.emailService.builder().to(blogPost.getAuthor().getEmail())
 					.withSubject("New comment made on your blogpost.")
 					.withAttribute("username", blogPost.getAuthor().getUsername())
 					.withAttribute("poster", author.getUsername())
-					.withTemplate("add_comment"));
+					.withTemplate("add_comment").send();
 		}
 		catch (MessagingException e) {
 			e.printStackTrace();

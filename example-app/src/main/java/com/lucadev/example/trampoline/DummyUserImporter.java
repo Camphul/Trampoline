@@ -56,6 +56,7 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 		user.setCredentialsExpired(false);
 		user.setEnabled(true);
 		user.setExpired(false);
+		user.setLastSeen(this.timeProvider.now());
 		user.setLastPasswordReset(this.timeProvider.now());
 		user.setLocked(false);
 		user.setEmail(name + "@" + USER_EMAIL_DOMAIN);

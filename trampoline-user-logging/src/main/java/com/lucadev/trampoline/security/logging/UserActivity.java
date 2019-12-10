@@ -14,9 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @AllArgsConstructor
 @ToString
-public class UserActivity {
+public final class UserActivity {
 
-	private UserActivityInvocationDetails invocationDetails;
+	/**
+	 * Context in which the activity took place.
+	 */
+	private UserActivityInvocationContext invocationContext;
 
 	/**
 	 * User who caused the activity.

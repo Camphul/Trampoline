@@ -1,19 +1,22 @@
 # Trampoline
 
+[![master](http://lucadev.com/service/jenkins/buildStatus/icon?job=trampoline&build=10)](http://lucadev.com/service/jenkins/job/trampoline/10/)
+[![next-release](http://lucadev.com/service/jenkins/buildStatus/icon?job=trampoline)](http://lucadev.com/service/jenkins/job/trampoline/)
+
 Collection of reusable Spring Boot starter modules providing multiple new features/and or implementations(Spring Security, etc..).
 
 ## Getting Started
 
 Please make sure you have git, maven and Java (min. version 8) installed.
 
-Trampoline is deployed on maven and is built upon `Spring Boot 2.1.6-RELEASE`
+Trampoline is deployed on maven and is built upon `Spring Boot 2.2.2.RELEASE`
 
 Please use the following dependency to use all functionality Trampoline offers:
 ```xml
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190509</version>
+       <version>20190628</version>
 </dependency>
 ```
 Read the [docs](/docs/README.md) for more information.
@@ -43,6 +46,16 @@ We use the date that development of a new Trampoline version began as a version 
 Version `20190507` would have started development on the 7th of may 2019.
 
 In-development versions are versioned the same but with the `-SNAPSHOT` suffix.
+
+## Flyway migrations
+
+When Flyway is added to the classpath in your project and you use any of the following: `trampoline-data` and/or `trampoline-asset-store` and/or `trampoline-security`.
+You must adhere to some rules when writing your own migrations.
+
+Custom migrations must start with version `V10`. V10 is required since Trampoline reserves atleast 10 migrations.
+Either the `db/migration/mysql` or `db/migration/h2` dir is chosen as location for migrations based on the `spring.jpa.properties.hibernate.dialect` property.
+When the value of the property contains `mysql` it will use `db/migration/mysql` and when it contains `h2` it will use `db/migration/h2`.
+The default fallback is to `db/migration/mysql`.
 
 ## Contributing
 

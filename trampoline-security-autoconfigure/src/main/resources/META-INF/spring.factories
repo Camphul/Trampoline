@@ -7,4 +7,5 @@ com.lucadev.trampoline.security.autoconfigure.PrivilegeServiceAutoConfiguration,
 com.lucadev.trampoline.security.autoconfigure.RoleServiceAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.UserServiceAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.UserAuthenticationServiceAutoConfiguration,\
+com.lucadev.trampoline.security.autoconfigure.PersistentUserDetailsServiceAutoConfiguration,\
 com.lucadev.trampoline.security.autoconfigure.AuthorizationSchemeServiceAutoConfiguration
