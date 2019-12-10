@@ -18,4 +18,5 @@ public class AssetMetaDataPreRemoveEvent extends ApplicationEvent {
 	public AssetMetaData getAssetMetaData() {
 		return (AssetMetaData) this.source;
 	}
+
 }

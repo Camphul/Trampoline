@@ -24,4 +24,5 @@ public class AssetMetaDataPreRemoveListener {
 		log.debug("Publishing preRemove event of asset {}", assetMetaData.getId());
 		this.publisher.publishEvent(new AssetMetaDataPreRemoveEvent(assetMetaData));
 	}
+
 }

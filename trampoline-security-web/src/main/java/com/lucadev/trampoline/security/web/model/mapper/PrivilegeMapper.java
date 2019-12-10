@@ -29,7 +29,6 @@ public interface PrivilegeMapper {
 
 	/**
 	 * Map privileges to their names.
-	 *
 	 * @param privileges the privileges to map.
 	 * @return names of the privileges.
 	 */
@@ -46,7 +45,6 @@ public interface PrivilegeMapper {
 
 	/**
 	 * Map privileges to dto's.
-	 *
 	 * @param privileges privileges to map.
 	 * @return dto's.
 	 */

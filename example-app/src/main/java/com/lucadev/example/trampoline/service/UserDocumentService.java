@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDocumentService {
 
 	private final UserDocumentRepository repository;
+
 	private final AssetStore assetStore;
 
 	public Page<UserDocument> findAll(Pageable pageable) {
@@ -45,4 +46,5 @@ public class UserDocumentService {
 	public void remove(UserDocument userDocument) {
 		this.repository.delete(userDocument);
 	}
+
 }

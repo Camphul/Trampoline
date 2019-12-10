@@ -14,7 +14,11 @@ import java.util.UUID;
 public class UserDocumentDto {
 
 	private UUID id;
+
 	private Instant created;
+
 	private EmbeddedUser author;
+
 	private AssetMetaDataDto asset;
+
 }

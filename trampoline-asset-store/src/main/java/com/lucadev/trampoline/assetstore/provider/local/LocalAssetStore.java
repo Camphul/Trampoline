@@ -27,7 +27,8 @@ import java.util.UUID;
  */
 @Slf4j
 @AllArgsConstructor
-public class LocalAssetStore extends AbstractAssetStore implements AssetMetaDataPreRemoveEventListener {
+public class LocalAssetStore extends AbstractAssetStore
+		implements AssetMetaDataPreRemoveEventListener {
 
 	private final LocalAssetStoreConfigurationProperties properties;
 
@@ -128,12 +129,14 @@ public class LocalAssetStore extends AbstractAssetStore implements AssetMetaData
 	}
 
 	@Override
-	public void onApplicationEvent(AssetMetaDataPreRemoveEvent assetMetaDataPreRemoveEvent) {
+	public void onApplicationEvent(
+			AssetMetaDataPreRemoveEvent assetMetaDataPreRemoveEvent) {
 		if (this.properties.isKeepOnDiskWhenRemoved()) {
 			log.debug("Ignoring asset meta removal and keeping data on disk.");
 			return;
 		}
-		FileSystemResource resource = getFileSystemResource(assetMetaDataPreRemoveEvent.getAssetMetaData());
+		FileSystemResource resource = getFileSystemResource(
+				assetMetaDataPreRemoveEvent.getAssetMetaData());
 		if (resource.getFile().delete()) {
 			log.debug("Removed asset from disk.");
 		} else {
@@ -141,4 +144,5 @@ public class LocalAssetStore extends AbstractAssetStore implements AssetMetaData
 			throw new RuntimeException("Could not delete asset(no permission to fs?)");
 		}
 	}
+
 }

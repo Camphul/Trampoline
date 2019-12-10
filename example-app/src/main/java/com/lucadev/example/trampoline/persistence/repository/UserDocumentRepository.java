@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface UserDocumentRepository extends TrampolineRepository<UserDocument> {
 
 	Page<UserDocument> findByAuthor(User author, Pageable pageable);
+
 }

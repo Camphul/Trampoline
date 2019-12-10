@@ -29,7 +29,6 @@ public interface RoleMapper {
 
 	/**
 	 * Map role names.
-	 *
 	 * @param roles roles to map.
 	 * @return mapped role names.
 	 */
@@ -46,7 +45,6 @@ public interface RoleMapper {
 
 	/**
 	 * Map roles to summary dto's.
-	 *
 	 * @param roles roles to map.
 	 * @return summary dto's.
 	 */
@@ -61,7 +59,6 @@ public interface RoleMapper {
 
 	/**
 	 * Map roles to dto's.
-	 *
 	 * @param roles roles to map.
 	 * @return dto's.
 	 */

@@ -18,4 +18,5 @@ public interface UserDocumentMapper {
 	UserDocumentDto toDto(UserDocument userDocument);
 
 	List<UserDocumentDto> toDtos(Collection<UserDocument> userDocument);
+
 }

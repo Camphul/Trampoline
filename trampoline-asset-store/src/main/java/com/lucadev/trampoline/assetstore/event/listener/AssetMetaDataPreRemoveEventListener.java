@@ -9,5 +9,7 @@ import org.springframework.context.ApplicationListener;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 12/10/19
  */
-public interface AssetMetaDataPreRemoveEventListener extends ApplicationListener<AssetMetaDataPreRemoveEvent> {
+public interface AssetMetaDataPreRemoveEventListener
+		extends ApplicationListener<AssetMetaDataPreRemoveEvent> {
+
 }

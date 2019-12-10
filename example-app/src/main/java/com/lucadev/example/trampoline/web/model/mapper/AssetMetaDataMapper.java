@@ -12,4 +12,5 @@ import org.mapstruct.Mapper;
 public interface AssetMetaDataMapper {
 
 	AssetMetaDataDto toDto(AssetMetaData assetMetaData);
+
 }

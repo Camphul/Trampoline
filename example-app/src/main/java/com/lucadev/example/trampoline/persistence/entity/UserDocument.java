@@ -34,10 +34,12 @@ public class UserDocument extends TrampolineEntity {
 	@JoinColumn(name = "author_id", nullable = false,
 			foreignKey = @ForeignKey(name = "fk_user_document_author_id_user_id"))
 	private User author;
+
 	// The user who persisted this blogpost.
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	@OnDelete(action = OnDeleteAction.CASCADE) // Delete blogpost when user is deleted.
 	@JoinColumn(name = "asset_id", nullable = false,
 			foreignKey = @ForeignKey(name = "fk_user_document_asset_id_asset_id"))
 	private AssetMetaData asset;
+
 }

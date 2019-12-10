@@ -12,8 +12,13 @@ import java.util.UUID;
 public class AssetMetaDataDto {
 
 	private UUID id;
+
 	private String name;
+
 	private String originalFilename;
+
 	private String contentType;
+
 	private long fileSize;
+
 }

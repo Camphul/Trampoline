@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserDocumentController {
 
 	private final UserDocumentMapper mapper;
+
 	private final UserDocumentService service;
+
 	private final UserService userService;
 
 	@GetMapping
@@ -42,7 +44,8 @@ public class UserDocumentController {
 
 	@GetMapping("/me")
 	public Page<UserDocumentDto> findAllByPrincipal(Pageable pageable) {
-		return MappedPage.of(this.service.findAllByUser(this.userService.currentUserOrThrow(), pageable), mapper::toDto);
+		return MappedPage.of(this.service.findAllByUser(
+				this.userService.currentUserOrThrow(), pageable), mapper::toDto);
 	}
 
 	@PostMapping
@@ -54,7 +57,8 @@ public class UserDocumentController {
 		assetMetaData.setFileSize(data.length);
 		assetMetaData.setName("textdoc.txt");
 		assetMetaData.setOriginalFilename("textdoc.txt");
-		UserDocument document = this.service.create(this.userService.currentUserOrThrow(), data, assetMetaData);
+		UserDocument document = this.service.create(this.userService.currentUserOrThrow(),
+				data, assetMetaData);
 		return mapper.toDto(document);
 	}
 
@@ -63,6 +67,5 @@ public class UserDocumentController {
 		this.service.remove(userDocument);
 		return new SuccessResponse();
 	}
-
 
 }
