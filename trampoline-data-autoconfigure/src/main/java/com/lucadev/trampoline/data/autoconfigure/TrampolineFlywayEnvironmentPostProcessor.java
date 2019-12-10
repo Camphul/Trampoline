@@ -45,7 +45,7 @@ public class TrampolineFlywayEnvironmentPostProcessor
 
 	private static final int FLYWAY_BASELINE_VERSION = 1;
 
-	private static final String DEFAULT_HIBERNATE_DIALECT = "org.hibernate.dialect.MySQL5Dialect";
+	private static final String DEFAULT_HIBERNATE_DIALECT = "org.hibernate.dialect.MySQL8Dialect";
 
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment,

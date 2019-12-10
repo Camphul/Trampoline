@@ -71,3 +71,12 @@ ALTER TABLE `trampoline_user`
 ALTER TABLE `trampoline_user_role`
   ADD KEY `FK_user_role_role` (`role_id`),
   ADD KEY `FK_user_role_user` (`user_id`);
+
+ALTER TABLE `trampoline_role_privilege`
+  ADD CONSTRAINT `fk_t_privilege_role` FOREIGN KEY (`privilege_id`) REFERENCES `trampoline_privilege` (`id`),
+  ADD CONSTRAINT `fk_t_role_privileges` FOREIGN KEY (`role_id`) REFERENCES `trampoline_role` (`id`);
+
+ALTER TABLE `trampoline_user_role`
+  ADD CONSTRAINT `fk_t_role_users` FOREIGN KEY (`role_id`) REFERENCES `trampoline_role` (`id`),
+  ADD CONSTRAINT `fk_t_user_roles` FOREIGN KEY (`user_id`) REFERENCES `trampoline_user` (`id`);
+

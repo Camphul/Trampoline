@@ -28,8 +28,9 @@ ALTER TABLE `blogpost`
 
 ALTER TABLE `blogpost_comment`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_blogpost_comment_author` (`blogpost_comment_author`),
-  ADD KEY `fk_blogpost_comment_blogpost` (`blogpost_id`);
+  ADD CONSTRAINT `FK_blogpost_comment_author` FOREIGN KEY (`blogpost_comment_author`) REFERENCES `trampoline_user` (`id`),
+  ADD CONSTRAINT `fk_blogpost_comment_blogpost` FOREIGN KEY (`blogpost_id`) REFERENCES `blogpost` (`id`);
+
 
 ALTER TABLE `blogpost_comments`
   ADD UNIQUE KEY `UK_jxj0my1uu4x2ung6qtofj6uyo` (`comment_id`),
