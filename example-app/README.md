@@ -53,6 +53,6 @@ DROP FUNCTION IF EXISTS t_generate_uuid_bin;
 DROP FUNCTION IF EXISTS t_bin_to_uuid;
 DROP FUNCTION IF EXISTS t_uuid_to_bin;
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS `blogpost`, `blogpost_comment`, `bind_blogpost_blogpost_comment`, `flyway_schema_history`, `trampoline_asset_meta_data`, `trampoline_policy_rule`, `trampoline_privilege`, `trampoline_role`, `bind_role_privilege`, `trampoline_user`, `bind_user_role`;
+DROP TABLE IF EXISTS `blogpost`, `blogpost_comment`, `bind_blogpost_blogpost_comment`, `flyway_schema_history`, `user_document`, `trampoline_asset_meta_data`, `trampoline_policy_rule`, `trampoline_privilege`, `trampoline_role`, `bind_role_privilege`, `trampoline_user`, `bind_user_role`;
 SET FOREIGN_KEY_CHECKS = 1;
 ```
