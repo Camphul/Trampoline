@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableIgnoreSecurity
 @EnablePrePostPolicy
 @EnableJwtSecurityAdapter
-//@EnableGdprCompliance
+// @EnableGdprCompliance
 @EnableCaching
 public class ExampleAppApplication {
 

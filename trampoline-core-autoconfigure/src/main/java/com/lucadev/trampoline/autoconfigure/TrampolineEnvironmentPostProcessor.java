@@ -32,7 +32,6 @@ public class TrampolineEnvironmentPostProcessor
 
 	/**
 	 * Trampoline environment post processor load order.
-	 *
 	 * @return load order.
 	 */
 	@Override

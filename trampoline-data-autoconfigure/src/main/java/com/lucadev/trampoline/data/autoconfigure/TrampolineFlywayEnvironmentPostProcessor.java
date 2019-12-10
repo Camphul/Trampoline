@@ -92,7 +92,6 @@ public class TrampolineFlywayEnvironmentPostProcessor
 
 	/**
 	 * Check if flyway is in the classpath/available.
-	 *
 	 * @return true when present.
 	 */
 	private boolean isFlywayPresent() {
@@ -133,7 +132,6 @@ public class TrampolineFlywayEnvironmentPostProcessor
 
 	/**
 	 * Order for this environment post processor.
-	 *
 	 * @return loading order.
 	 */
 	@Override

@@ -52,8 +52,7 @@ public class BlogPost extends TrampolineEntity {
 			joinColumns = @JoinColumn(name = "blogpost_id", referencedColumnName = "id",
 					nullable = false,
 					foreignKey = @ForeignKey(name = "fk_blogpost_blogpost_comment")),
-			inverseJoinColumns = @JoinColumn(name = "comment_id",
-					nullable = false,
+			inverseJoinColumns = @JoinColumn(name = "comment_id", nullable = false,
 					referencedColumnName = "id",
 					foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost")))
 	private Collection<BlogPostComment> comments = new ArrayList<>();
