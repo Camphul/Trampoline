@@ -103,3 +103,4 @@ Please follow the following schema conventions:
 - And please do not overuse quotes.
 - You may skip the `trampoline_` or whatever prefix you use on constraint names.
 - Binding tables use this for fk: `fkb_[referencing field name]_[second table name which is bound]`
+- Index names follow this convention: `idx_[table name]_[field name]`

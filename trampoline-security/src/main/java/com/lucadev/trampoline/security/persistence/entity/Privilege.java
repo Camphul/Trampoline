@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,7 +19,8 @@ import javax.validation.constraints.Size;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "trampoline_privilege")
+@Table(name = "trampoline_privilege",
+		indexes = @Index(name = "idx_privilege_name", columnList = "name", unique = true))
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor

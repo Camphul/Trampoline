@@ -10,7 +10,10 @@ CREATE TABLE blogpost
     CONSTRAINT fk_blogpost_author_id_user_id
         FOREIGN KEY (author_id)
             REFERENCES trampoline_user (id)
+            ON DELETE CASCADE
 );
+
+CREATE INDEX idx_blogpost_title ON blogpost (title);
 
 CREATE TABLE blogpost_comment
 (
@@ -22,11 +25,14 @@ CREATE TABLE blogpost_comment
     blogpost_id         binary(16)   NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_blogpost_comment_author_id_user_id
-        FOREIGN KEY (author_id) REFERENCES trampoline_user (id),
+        FOREIGN KEY (author_id) REFERENCES trampoline_user (id)
+            ON DELETE CASCADE,
     CONSTRAINT fk_blogpost_comment_blogpost_id
         FOREIGN KEY (blogpost_id) REFERENCES blogpost (id)
+            ON DELETE CASCADE
 );
 
+CREATE INDEX idx_blogpost_comment_blogpost_id ON blogpost_comment (blogpost_id);
 
 CREATE TABLE bind_blogpost_blogpost_comment
 (

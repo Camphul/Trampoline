@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -37,7 +38,9 @@ import java.util.Optional;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "trampoline_user")
+@Table(name = "trampoline_user", indexes = {
+		@Index(name = "idx_user_email", columnList = "email", unique = true),
+		@Index(name = "idx_user_username", columnList = "username", unique = true)})
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -75,9 +78,10 @@ public class User extends TrampolineEntity {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "bind_user_role",
 			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id",
+					nullable = false, updatable = false,
 					foreignKey = @ForeignKey(name = "fkb_user_id_user_role")),
 			inverseJoinColumns = @JoinColumn(name = "role_id",
-					referencedColumnName = "id",
+					referencedColumnName = "id", nullable = false, updatable = false,
 					foreignKey = @ForeignKey(name = "fkb_role_id_user_role")))
 	private List<Role> roles = new ArrayList<>();
 

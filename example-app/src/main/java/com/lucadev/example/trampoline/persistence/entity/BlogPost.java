@@ -5,12 +5,15 @@ import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -29,11 +32,13 @@ import java.util.Collection;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "blogpost")
+@Table(name = "blogpost",
+		indexes = @Index(name = "idx_blogpost_title", columnList = "title"))
 public class BlogPost extends TrampolineEntity {
 
 	// The user who persisted this blogpost.
 	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE) // Delete blogpost when user is deleted.
 	@JoinColumn(name = "author_id", nullable = false,
 			foreignKey = @ForeignKey(name = "fk_blogpost_author_id_user_id"))
 	private User author;
@@ -53,9 +58,10 @@ public class BlogPost extends TrampolineEntity {
 			joinColumns = @JoinColumn(name = "blogpost_id", referencedColumnName = "id",
 					nullable = false,
 					foreignKey = @ForeignKey(name = "fkb_blogpost_id_blogpost_comment")),
-			inverseJoinColumns = @JoinColumn(name = "blogpost_comment_id", referencedColumnName = "id",
-					nullable = false,
-					foreignKey = @ForeignKey(name = "fkb_blogpost_comment_id_blogpost_comment")))
+			inverseJoinColumns = @JoinColumn(name = "blogpost_comment_id",
+					referencedColumnName = "id", nullable = false,
+					foreignKey = @ForeignKey(
+							name = "fkb_blogpost_comment_id_blogpost_comment")))
 	private Collection<BlogPostComment> comments = new ArrayList<>();
 
 }

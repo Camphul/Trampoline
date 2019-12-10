@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -20,13 +21,17 @@ import javax.validation.constraints.Positive;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 9-6-18
  */
-@Entity
-@Table(name = "trampoline_asset_meta_data")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "trampoline_asset_meta_data", indexes = {
+		@Index(name = "idx_asset_meta_data_asset_name", columnList = "asset_name"),
+		@Index(name = "idx_asset_meta_data_original_filename",
+				columnList = "original_filename"),
+		@Index(name = "idx_asset_meta_data_content_type", columnList = "content_type")})
 public class AssetMetaData extends TrampolineEntity {
 
 	@Setter
@@ -42,11 +47,11 @@ public class AssetMetaData extends TrampolineEntity {
 
 	@NotBlank
 	@NotEmpty
-	@Column(name = "content_type")
+	@Column(name = "content_type", nullable = false)
 	private String contentType;
 
 	@Positive
-	@Column(name = "file_size")
+	@Column(name = "file_size", nullable = false)
 	private long fileSize;
 
 	@Override
