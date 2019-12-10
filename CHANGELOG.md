@@ -10,6 +10,8 @@ We use the following versioning scheme `YEARMMDD` so version `20190308` would ha
 - Make JWT more configurable overall.
 - Use Spring application events for default user-logging handler.
 - Add events to asset-store.
+- Easily add flyway and use trampoline's provided migrations
+- Way better code
 
 ## 20190509
 

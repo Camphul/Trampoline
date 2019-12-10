@@ -49,7 +49,7 @@ public class TrampolineFlywayEnvironmentPostProcessor
 
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment,
-									   SpringApplication application) {
+			SpringApplication application) {
 		if (!isFlywayPresent()) {
 			log.debug(
 					"Flyway not present in classpath. Not running environment post processor.");
@@ -78,7 +78,8 @@ public class TrampolineFlywayEnvironmentPostProcessor
 			if (dialect.toLowerCase().contains(H2_DIR_POSTFIX)) {
 				log.debug("Switched to H2 migrations for flyway.");
 				return H2_DIR_POSTFIX;
-			} else if (dialect.toLowerCase().contains(MYSQL_DIR_POSTFIX)) {
+			}
+			else if (dialect.toLowerCase().contains(MYSQL_DIR_POSTFIX)) {
 				log.debug(
 						"Switched to mysql migrations for flyway from unknown mysql dialect: {}",
 						dialect);
@@ -100,9 +101,8 @@ public class TrampolineFlywayEnvironmentPostProcessor
 
 	/**
 	 * Merges custom property source with defaults.
-	 *
 	 * @param propertySources environment property source.
-	 * @param map             custom configuration.
+	 * @param map custom configuration.
 	 * @see PropertySource
 	 */
 	private void merge(MutablePropertySources propertySources, Map<String, Object> map) {

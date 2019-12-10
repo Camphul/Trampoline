@@ -52,10 +52,9 @@ public final class MethodReflectionUtils {
 
 	/**
 	 * Find the first parameter of a method annotated with a given annotation.
-	 *
-	 * @param method          the method to check parameters of.
+	 * @param method the method to check parameters of.
 	 * @param annotationClass annotation class.
-	 * @param <A>             annotation type.
+	 * @param <A> annotation type.
 	 * @return parameter which is annotated or null.
 	 */
 	public static <A extends Annotation> Parameter findFirstParameterWithAnnotation(

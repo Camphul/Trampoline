@@ -16,7 +16,7 @@ Please use the following dependency to use all functionality Trampoline offers:
 <dependency>
        <groupId>com.lucadev.trampoline</groupId>
        <artifactId>trampoline-starter</artifactId>
-       <version>20190628-SNAPSHOT</version>
+       <version>20190628</version>
 </dependency>
 ```
 Read the [docs](/docs/README.md) for more information.

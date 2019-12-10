@@ -19,13 +19,12 @@ public class TrampolineEnvironmentPostProcessor
 
 	/**
 	 * Configure bean override.
-	 *
 	 * @param environment config env.
 	 * @param application our app.
 	 */
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment,
-									   SpringApplication application) {
+			SpringApplication application) {
 		log.debug("Configuring trampoline environment.");
 		application.setAllowBeanDefinitionOverriding(true);
 	}
