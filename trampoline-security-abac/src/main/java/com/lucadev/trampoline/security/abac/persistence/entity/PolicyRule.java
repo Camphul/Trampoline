@@ -26,7 +26,7 @@ import javax.validation.constraints.NotEmpty;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-@Table(name = "TRAMPOLINE_POLICY_RULE")
+@Table(name = "trampoline_policy_rule")
 public class PolicyRule extends TrampolineEntity {
 
 	@NotBlank

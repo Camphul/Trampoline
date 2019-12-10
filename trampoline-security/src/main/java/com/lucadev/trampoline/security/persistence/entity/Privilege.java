@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "TRAMPOLINE_PRIVILEGE")
+@Table(name = "trampoline_privilege")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor

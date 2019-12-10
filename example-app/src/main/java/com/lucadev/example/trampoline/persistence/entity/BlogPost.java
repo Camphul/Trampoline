@@ -28,13 +28,13 @@ import java.util.Collection;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "BLOGPOST")
+@Table(name = "blogpost")
 public class BlogPost extends TrampolineEntity {
 
 	// The user who persisted this blogpost.
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "blogpost_author", nullable = false,
-			foreignKey = @ForeignKey(name = "FK_blogpost_author"))
+	@JoinColumn(name = "author_id", nullable = false,
+			foreignKey = @ForeignKey(name = "fk_blogpost_author_id_user_id"))
 	private User author;
 
 	@Column(name = "title", nullable = false)
@@ -48,13 +48,13 @@ public class BlogPost extends TrampolineEntity {
 	 * comments pageable.
 	 */
 	@OneToMany(orphanRemoval = true)
-	@JoinTable(name = "blogpost_comments",
+	@JoinTable(name = "bind_blogpost_blogpost_comment",
 			joinColumns = @JoinColumn(name = "blogpost_id", referencedColumnName = "id",
 					nullable = false,
-					foreignKey = @ForeignKey(name = "fk_blogpost_blogpost_comment")),
-			inverseJoinColumns = @JoinColumn(name = "comment_id", nullable = false,
-					referencedColumnName = "id",
-					foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost")))
+					foreignKey = @ForeignKey(name = "fkb_blogpost_id_blogpost_comment")),
+			inverseJoinColumns = @JoinColumn(name = "blogpost_comment_id", referencedColumnName = "id",
+					nullable = false,
+					foreignKey = @ForeignKey(name = "fkb_blogpost_comment_id_blogpost_comment")))
 	private Collection<BlogPostComment> comments = new ArrayList<>();
 
 }

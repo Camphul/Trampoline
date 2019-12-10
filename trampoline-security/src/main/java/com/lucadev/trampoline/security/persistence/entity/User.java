@@ -37,7 +37,7 @@ import java.util.Optional;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "TRAMPOLINE_USER")
+@Table(name = "trampoline_user")
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -73,12 +73,12 @@ public class User extends TrampolineEntity {
 
 	// UserDetails roles can never be null so we use eager loading for roles.
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "TRAMPOLINE_USER_ROLE",
-			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id",
-					foreignKey = @ForeignKey(name = "fk_t_user_roles")),
-			inverseJoinColumns = @JoinColumn(name = "ROLE_ID",
+	@JoinTable(name = "bind_user_role",
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id",
+					foreignKey = @ForeignKey(name = "fkb_user_id_user_role")),
+			inverseJoinColumns = @JoinColumn(name = "role_id",
 					referencedColumnName = "id",
-					foreignKey = @ForeignKey(name = "fk_t_role_users")))
+					foreignKey = @ForeignKey(name = "fkb_role_id_user_role")))
 	private List<Role> roles = new ArrayList<>();
 
 	@Column(name = "last_password_reset_at", nullable = false)

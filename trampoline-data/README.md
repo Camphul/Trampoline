@@ -88,3 +88,18 @@ We have the following configuration properties:
 - `trampoline.data.gdpr.key`: string key
 - `trampoline.data.gdpr.cipher`: cipher used
 - `trampoline.data.gdpr.algorithm` algorithm used
+
+## Schema conventions
+
+Please follow the following schema conventions:
+
+- lowercase table/fieldnames with a `_` as separator(for spaces).
+- table names in single verb(trampoline_user instead of trampoline_users)
+- apply correct constraints
+- Foreign key constraints following the following format: `fk_[referencing table name]_[referencing field name]_[referenced table name]_[referenced field name]`
+- Unique constraints following this format: `uc_[referencing table name]_[referencing field name]_[referenced field name]`
+- Unique constraint may also be named `uc_[referencing table name]` when used in a binding table.
+- Tables used for many/many relationships following this name: `bind_[referencing (parent) table name]_[referenced (child) table name]`
+- And please do not overuse quotes.
+- You may skip the `trampoline_` or whatever prefix you use on constraint names.
+- Binding tables use this for fk: `fkb_[referencing field name]_[second table name which is bound]`

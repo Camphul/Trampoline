@@ -26,7 +26,7 @@ import java.util.Collection;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "TRAMPOLINE_ROLE")
+@Table(name = "trampoline_role")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @AllArgsConstructor
@@ -46,12 +46,12 @@ public class Role extends TrampolineEntity {
 	 * {@code Collection} of {@link Privilege} that this group contains.
 	 */
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "TRAMPOLINE_ROLE_PRIVILEGE",
+	@JoinTable(name = "bind_role_privilege",
 			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id",
-					foreignKey = @ForeignKey(name = "fk_t_role_privileges")),
+					foreignKey = @ForeignKey(name = "fkb_role_id_role_privilege")),
 			inverseJoinColumns = @JoinColumn(name = "privilege_id",
 					referencedColumnName = "id",
-					foreignKey = @ForeignKey(name = "fk_t_privilege_role")))
+					foreignKey = @ForeignKey(name = "fkb_privilege_id_role_privilege")))
 	private Collection<Privilege> privileges = new ArrayList<>();
 
 	/**

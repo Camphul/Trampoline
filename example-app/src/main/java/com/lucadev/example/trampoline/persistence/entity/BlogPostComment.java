@@ -23,18 +23,18 @@ import javax.persistence.Table;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "BLOGPOST_COMMENT")
+@Table(name = "blogpost_comment")
 public class BlogPostComment extends TrampolineEntity {
 
 	@ToString.Exclude // Exclude since we dont want infinite loops.
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "blogpost_id",
-			foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost"))
+	@JoinColumn(name = "blogpost_id", nullable = false, updatable = false,
+			foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost_id"))
 	private BlogPost blogPost;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "blogpost_comment_author", nullable = false,
-			foreignKey = @ForeignKey(name = "FK_blogpost_comment_author"))
+	@JoinColumn(name = "author_id", nullable = false, updatable = false,
+			foreignKey = @ForeignKey(name = "fk_blogpost_comment_author_id_user_id"))
 	private User author;
 
 	@Column(name = "content", nullable = false)

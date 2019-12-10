@@ -39,7 +39,7 @@ public abstract class TrampolineEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "id", updatable = false, nullable = false,
-			columnDefinition = "BINARY(16)")
+			columnDefinition = "BINARY(16)", unique = true)
 	@Setter(AccessLevel.PROTECTED)
 	@EqualsAndHashCode.Include
 	private UUID id;

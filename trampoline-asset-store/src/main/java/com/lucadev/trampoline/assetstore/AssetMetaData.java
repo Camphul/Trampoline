@@ -21,7 +21,7 @@ import javax.validation.constraints.Positive;
  * @since 9-6-18
  */
 @Entity
-@Table(name = "TRAMPOLINE_ASSET_META_DATA")
+@Table(name = "trampoline_asset_meta_data")
 @Getter
 @Setter
 @ToString

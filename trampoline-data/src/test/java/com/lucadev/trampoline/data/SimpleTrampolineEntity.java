@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @since 21-4-18
  */
 @Entity
-@Table(name = "TRAMPOLINE_TEST_ENTITY")
+@Table(name = "trampoline_test_entity")
 @NoArgsConstructor
 @Getter
 @Setter

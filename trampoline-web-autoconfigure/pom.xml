@@ -18,7 +18,6 @@
 			<groupId>com.lucadev.trampoline</groupId>
 			<artifactId>trampoline-web</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
