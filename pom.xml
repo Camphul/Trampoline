@@ -5,7 +5,7 @@
 
 	<groupId>com.lucadev.trampoline</groupId>
 	<artifactId>trampoline-parent</artifactId>
-	<version>20190628</version>
+	<version>20191210-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Multi-module project to opinionate Spring Boot even more and make development even faster. Parent
