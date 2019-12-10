@@ -15,6 +15,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,7 @@ public class JwtAuthenticationController implements
 	@IgnoreSecurity
 	@PostMapping("${trampoline.security.jwt.web.authorizeMapping:/authorize}")
 	@Override
+	@Transactional
 	public TokenAuthenticationResponse authenticate(
 			@Valid @RequestBody UserAuthenticationRequest userAuthenticationRequest) {
 		try {
@@ -81,6 +83,7 @@ public class JwtAuthenticationController implements
 	 * @return jwt auth response.
 	 */
 	@Override
+	@Transactional
 	@GetMapping("${trampoline.security.jwt.web.refreshMapping:/refresh}")
 	public TokenAuthenticationResponse refresh(HttpServletRequest request,
 			HttpServletResponse response) {
