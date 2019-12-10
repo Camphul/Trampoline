@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -27,6 +28,7 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(AssetMetaDataPreRemoveListener.class)
 @Table(name = "trampoline_asset_meta_data", indexes = {
 		@Index(name = "idx_asset_meta_data_asset_name", columnList = "asset_name"),
 		@Index(name = "idx_asset_meta_data_original_filename",

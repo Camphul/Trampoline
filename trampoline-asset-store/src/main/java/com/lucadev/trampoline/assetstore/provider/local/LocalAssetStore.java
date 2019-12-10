@@ -4,6 +4,8 @@ import com.lucadev.trampoline.assetstore.AbstractAssetStore;
 import com.lucadev.trampoline.assetstore.Asset;
 import com.lucadev.trampoline.assetstore.AssetMetaData;
 import com.lucadev.trampoline.assetstore.event.AssetEventPublisher;
+import com.lucadev.trampoline.assetstore.event.AssetMetaDataPreRemoveEvent;
+import com.lucadev.trampoline.assetstore.event.listener.AssetMetaDataPreRemoveEventListener;
 import com.lucadev.trampoline.assetstore.repository.AssetMetaDataRepository;
 import com.lucadev.trampoline.data.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ import java.util.UUID;
  */
 @Slf4j
 @AllArgsConstructor
-public class LocalAssetStore extends AbstractAssetStore {
+public class LocalAssetStore extends AbstractAssetStore implements AssetMetaDataPreRemoveEventListener {
 
 	private final LocalAssetStoreConfigurationProperties properties;
 
@@ -125,4 +127,14 @@ public class LocalAssetStore extends AbstractAssetStore {
 		return new FileSystemResource(this.properties.getDirectory() + id.toString());
 	}
 
+	@Override
+	public void onApplicationEvent(AssetMetaDataPreRemoveEvent assetMetaDataPreRemoveEvent) {
+		FileSystemResource resource = getFileSystemResource(assetMetaDataPreRemoveEvent.getAssetMetaData());
+		if (resource.getFile().delete()) {
+			log.debug("Removed asset from disk.");
+		} else {
+			log.error("Failed to delete asset.");
+			throw new RuntimeException("Could not delete asset(no permission to fs?)");
+		}
+	}
 }
