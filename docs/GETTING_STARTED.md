@@ -11,7 +11,7 @@ Please check the [example-app/pom.xml](../example-app/pom.xml).
 
 As you can see you require the trampoline starter dependency. This dependency adds all of the trampoline starters.
 
-Trampoline is built upon `Spring Boot 2.1.9.RELEASE`
+Trampoline is built upon `Spring Boot 2.2.2.RELEASE`
 
 ```xml
 <dependency>

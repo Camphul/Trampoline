@@ -1,4 +1,7 @@
-/* Contains first version of required functions */
+DROP FUNCTION IF EXISTS t_generate_uuid_bin;
+DROP FUNCTION IF EXISTS t_bin_to_uuid;
+DROP FUNCTION IF EXISTS t_uuid_to_bin;
+
 DELIMITER //
 CREATE FUNCTION t_bin_to_uuid(b BINARY(16))
 RETURNS CHAR(36)
@@ -24,3 +27,4 @@ BEGIN
     RETURN t_uuid_to_bin(uuid());
 END //
 DELIMITER ;
+
