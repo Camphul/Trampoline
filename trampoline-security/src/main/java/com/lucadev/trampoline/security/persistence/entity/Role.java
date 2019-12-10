@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -17,8 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A {@link User} group.
@@ -47,7 +46,7 @@ public class Role extends TrampolineEntity {
 	/**
 	 * {@code Collection} of {@link Privilege} that this group contains.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "bind_role_privilege",
 			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id",
 					nullable = false, updatable = false,
@@ -55,7 +54,7 @@ public class Role extends TrampolineEntity {
 			inverseJoinColumns = @JoinColumn(name = "privilege_id",
 					referencedColumnName = "id", nullable = false, updatable = false,
 					foreignKey = @ForeignKey(name = "fkb_privilege_id_role_privilege")))
-	private Collection<Privilege> privileges = new ArrayList<>();
+	private Set<Privilege> privileges = new HashSet<>();
 
 	/**
 	 * Construct a new {@code Role}.

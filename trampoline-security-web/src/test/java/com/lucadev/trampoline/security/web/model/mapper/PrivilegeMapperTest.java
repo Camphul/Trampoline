@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,8 +44,8 @@ public class PrivilegeMapperTest {
 
 	@Test
 	public void toNames() {
-		List<Privilege> privileges = new ArrayList<>();
-		List<String> expected = new ArrayList<>();
+		Set<Privilege> privileges = new HashSet<>();
+		Set<String> expected = new HashSet<>();
 		for (int x = 0; x < 10; x++) {
 			Privilege priv = new Privilege();
 			String name = "SOME_PRIVILEGE_" + x;
@@ -53,7 +53,7 @@ public class PrivilegeMapperTest {
 			privileges.add(priv);
 			expected.add(name);
 		}
-		List<String> result = privilegeMapper.toNames(privileges);
+		Set<String> result = privilegeMapper.toNames(privileges);
 		assertEquals(expected, result);
 	}
 

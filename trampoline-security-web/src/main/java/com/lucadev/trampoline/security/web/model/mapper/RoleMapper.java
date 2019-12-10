@@ -6,8 +6,7 @@ import com.lucadev.trampoline.security.web.model.RoleDto;
 import com.lucadev.trampoline.security.web.model.RoleSummaryDto;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -30,11 +29,12 @@ public interface RoleMapper {
 
 	/**
 	 * Map role names.
+	 *
 	 * @param roles roles to map.
 	 * @return mapped role names.
 	 */
-	default List<String> toNames(Collection<Role> roles) {
-		return roles.stream().map(this::toName).collect(Collectors.toList());
+	default Set<String> toNames(Set<Role> roles) {
+		return roles.stream().map(this::toName).collect(Collectors.toSet());
 	}
 
 	/**
@@ -46,10 +46,11 @@ public interface RoleMapper {
 
 	/**
 	 * Map roles to summary dto's.
+	 *
 	 * @param roles roles to map.
 	 * @return summary dto's.
 	 */
-	List<RoleSummaryDto> toSummaries(Collection<Role> roles);
+	Set<RoleSummaryDto> toSummaries(Set<Role> roles);
 
 	/**
 	 * Map role to dto.
@@ -60,9 +61,10 @@ public interface RoleMapper {
 
 	/**
 	 * Map roles to dto's.
+	 *
 	 * @param roles roles to map.
 	 * @return dto's.
 	 */
-	List<RoleDto> toDtos(Collection<Role> roles);
+	Set<RoleDto> toDtos(Set<Role> roles);
 
 }

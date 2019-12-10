@@ -19,8 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Blogpost entity.
@@ -37,7 +37,7 @@ import java.util.Collection;
 public class BlogPost extends TrampolineEntity {
 
 	// The user who persisted this blogpost.
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@OnDelete(action = OnDeleteAction.CASCADE) // Delete blogpost when user is deleted.
 	@JoinColumn(name = "author_id", nullable = false,
 			foreignKey = @ForeignKey(name = "fk_blogpost_author_id_user_id"))
@@ -62,6 +62,6 @@ public class BlogPost extends TrampolineEntity {
 					referencedColumnName = "id", nullable = false,
 					foreignKey = @ForeignKey(
 							name = "fkb_blogpost_comment_id_blogpost_comment")))
-	private Collection<BlogPostComment> comments = new ArrayList<>();
+	private Set<BlogPostComment> comments = new HashSet<>();
 
 }

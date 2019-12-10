@@ -2,7 +2,7 @@ package com.lucadev.trampoline.security.web.model;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Role DTO.
@@ -15,6 +15,6 @@ public class RoleDto {
 
 	private String name;
 
-	private List<String> privileges;
+	private Set<String> privileges;
 
 }

@@ -4,7 +4,7 @@ import com.lucadev.trampoline.security.web.model.EmbeddedUser;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -28,6 +28,6 @@ public class BlogPostDto {
 
 	private EmbeddedUser author;
 
-	private List<BlogPostCommentDto> comments;
+	private Set<BlogPostCommentDto> comments;
 
 }

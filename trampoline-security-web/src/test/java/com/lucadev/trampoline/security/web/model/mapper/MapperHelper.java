@@ -6,7 +6,9 @@ import com.lucadev.trampoline.security.persistence.entity.User;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Helper class for testing mapstruct mappers.
@@ -18,8 +20,8 @@ public class MapperHelper {
 
 	private static final Instant TEST_DATE = Instant.ofEpochMilli(3000);
 
-	public static List<Role> createRoles() {
-		List<Role> roles = new ArrayList<>();
+	public static Set<Role> createRoles() {
+		Set<Role> roles = new HashSet<>();
 		for (int i = 0; i < 13; i++) {
 			roles.add(createRole("ROLE_NUM_" + i));
 		}

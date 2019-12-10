@@ -3,7 +3,7 @@ package com.lucadev.trampoline.security.web.model;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -21,7 +21,7 @@ public class UserDto {
 
 	private String email;
 
-	private List<RoleDto> roles;
+	private Set<RoleDto> roles;
 
 	private Instant created;
 

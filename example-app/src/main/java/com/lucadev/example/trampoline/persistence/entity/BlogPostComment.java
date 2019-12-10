@@ -3,6 +3,7 @@ package com.lucadev.example.trampoline.persistence.entity;
 import com.lucadev.trampoline.data.entity.TrampolineEntity;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
@@ -32,7 +33,8 @@ import javax.persistence.Table;
 public class BlogPostComment extends TrampolineEntity {
 
 	@ToString.Exclude // Exclude since we dont want infinite loops.
-	@ManyToOne(fetch = FetchType.LAZY)
+	@EqualsAndHashCode.Exclude // Exclude since we dont want infinite loops.
+	@ManyToOne(fetch = FetchType.LAZY/* Prevent recursive lookup */)
 	@OnDelete(action = OnDeleteAction.CASCADE) // Delete comment when blogpost is deleted.
 	@JoinColumn(name = "blogpost_id", nullable = false, updatable = false,
 			foreignKey = @ForeignKey(name = "fk_blogpost_comment_blogpost_id"))

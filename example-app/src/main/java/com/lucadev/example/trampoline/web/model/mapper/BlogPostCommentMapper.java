@@ -6,6 +6,8 @@ import com.lucadev.example.trampoline.web.model.CreateBlogPostCommentRequest;
 import com.lucadev.trampoline.security.web.model.mapper.UserMapper;
 import org.mapstruct.Mapper;
 
+import java.util.Set;
+
 /**
  * MapStruct mapper for comments.
  *
@@ -18,5 +20,7 @@ public interface BlogPostCommentMapper {
 	BlogPostCommentDto toDto(BlogPostComment comment);
 
 	BlogPostComment fromRequest(CreateBlogPostCommentRequest request);
+
+	Set<BlogPostCommentDto> toDtos(Set<BlogPostComment> comments);
 
 }

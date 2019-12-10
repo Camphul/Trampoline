@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -47,11 +48,11 @@ public class RoleMapperTest {
 
 	@Test
 	public void toNames() {
-		List<Role> input = MapperHelper.createRoles();
+		Set<Role> input = MapperHelper.createRoles();
 
-		List<String> expected = input.stream().map(Role::getName)
-				.collect(Collectors.toList());
-		List<String> result = roleMapper.toNames(input);
+		Set<String> expected = input.stream().map(Role::getName)
+				.collect(Collectors.toSet());
+		Set<String> result = roleMapper.toNames(input);
 		assertEquals(expected, result);
 	}
 
@@ -65,14 +66,14 @@ public class RoleMapperTest {
 
 	@Test
 	public void toSummaries() {
-		List<Role> input = MapperHelper.createRoles();
+		Set<Role> input = MapperHelper.createRoles();
 
-		List<RoleSummaryDto> result = roleMapper.toSummaries(input);
+		Set<RoleSummaryDto> result = roleMapper.toSummaries(input);
 
-		List<String> mappedNamesExpectation = input.stream().map(Role::getName)
-				.collect(Collectors.toList());
-		List<String> mappedNamesResult = result.stream().map(RoleSummaryDto::getName)
-				.collect(Collectors.toList());
+		Set<String> mappedNamesExpectation = input.stream().map(Role::getName)
+				.collect(Collectors.toSet());
+		Set<String> mappedNamesResult = result.stream().map(RoleSummaryDto::getName)
+				.collect(Collectors.toSet());
 		assertEquals(mappedNamesExpectation, mappedNamesResult);
 	}
 
@@ -86,32 +87,34 @@ public class RoleMapperTest {
 
 	@Test
 	public void toDtos_Name() {
-		List<Role> roles = MapperHelper.createRoles();
-		List<String> mappedNamesExpectation = roles.stream().map(Role::getName)
-				.collect(Collectors.toList());
-		List<RoleDto> dtoResult = roleMapper.toDtos(roles);
-		List<String> mappedResultNames = dtoResult.stream().map(RoleDto::getName)
-				.collect(Collectors.toList());
+		Set<Role> roles = MapperHelper.createRoles();
+		Set<String> mappedNamesExpectation = roles.stream().map(Role::getName)
+				.collect(Collectors.toSet());
+		Set<RoleDto> dtoResult = roleMapper.toDtos(roles);
+		Set<String> mappedResultNames = dtoResult.stream().map(RoleDto::getName)
+				.collect(Collectors.toSet());
 		assertEquals(mappedNamesExpectation, mappedResultNames);
 	}
 
 	@Test
 	public void toDto_Privileges() {
 		Role role = MapperHelper.createRole("ROLE_DEVELOPER");
-		List<String> expectedPrivileges = privilegeMapper.toNames(role.getPrivileges());
+		Set<String> expectedPrivileges = privilegeMapper.toNames(role.getPrivileges());
 		RoleDto result = roleMapper.toDto(role);
 		assertEquals(expectedPrivileges, result.getPrivileges());
 	}
 
 	@Test
 	public void toDtos_Privileges() {
-		List<Role> roles = MapperHelper.createRoles();
-		List<RoleDto> dtoResult = roleMapper.toDtos(roles);
+		Set<Role> roles = MapperHelper.createRoles();
+		Set<RoleDto> dtoResult = roleMapper.toDtos(roles);
 
-		for (int i = 0; i < roles.size(); i++) {
-			Role role = roles.get(i);
-			RoleDto result = dtoResult.get(i);
-			List<String> expected = privilegeMapper.toNames(role.getPrivileges());
+		Iterator<Role> it1 = roles.iterator();
+		Iterator<RoleDto> it2 = dtoResult.iterator();
+		while (it1.hasNext() && it2.hasNext()) {
+			Role role = it1.next();
+			RoleDto result = it2.next();
+			Set<String> expected = privilegeMapper.toNames(role.getPrivileges());
 			assertEquals(expected, result.getPrivileges());
 		}
 	}

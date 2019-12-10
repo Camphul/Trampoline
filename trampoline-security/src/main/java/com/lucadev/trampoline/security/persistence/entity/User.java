@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -28,8 +27,9 @@ import javax.validation.constraints.PastOrPresent;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link TrampolineEntity} and {@link UserDetails} to easily manage users.
@@ -75,7 +75,7 @@ public class User extends TrampolineEntity {
 	private boolean enabled = true;
 
 	// UserDetails roles can never be null so we use eager loading for roles.
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "bind_user_role",
 			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id",
 					nullable = false, updatable = false,
@@ -83,7 +83,7 @@ public class User extends TrampolineEntity {
 			inverseJoinColumns = @JoinColumn(name = "role_id",
 					referencedColumnName = "id", nullable = false, updatable = false,
 					foreignKey = @ForeignKey(name = "fkb_role_id_user_role")))
-	private List<Role> roles = new ArrayList<>();
+	private Set<Role> roles = new HashSet<>();
 
 	@Column(name = "last_password_reset_at", nullable = false)
 	@PastOrPresent
