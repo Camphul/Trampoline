@@ -16,4 +16,5 @@ public interface UserDocumentRepository extends TrampolineRepository<UserDocumen
 
 	Page<UserDocument> findByAuthor(User author, Pageable pageable);
 
+
 }
