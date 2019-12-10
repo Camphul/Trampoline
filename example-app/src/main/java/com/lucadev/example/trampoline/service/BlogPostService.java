@@ -82,12 +82,11 @@ public class BlogPostService {
 	 * @param comment the blogpost comment to add.
 	 * @return the created comment.
 	 */
-	@Transactional
 	public BlogPostComment addComment(User author, BlogPost blogPost,
 			BlogPostComment comment) {
 		comment.setAuthor(author);
-		comment = this.commentRepository.save(comment);
 		comment.setBlogPost(blogPost);
+		comment = this.commentRepository.save(comment);
 		blogPost.getComments().add(comment);
 		this.repository.save(blogPost);
 		return comment;
@@ -120,7 +119,6 @@ public class BlogPostService {
 	@Transactional
 	public void deleteComment(BlogPost blogPost, BlogPostComment comment) {
 		// Unlink relations
-		this.commentRepository.delete(comment);
 		blogPost.getComments().remove(comment);
 		// Save blogpost
 		update(blogPost);

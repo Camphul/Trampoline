@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class BlogPost extends TrampolineEntity {
 	 * A blogpost may have 0 or more comments. We use two way relationships so we can make
 	 * comments pageable.
 	 */
-	@OneToMany(orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "bind_blogpost_blogpost_comment",
 			joinColumns = @JoinColumn(name = "blogpost_id", referencedColumnName = "id",
 					nullable = false,
