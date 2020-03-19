@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.jwt.adapter.security;
 
+import com.lucadev.trampoline.security.jwt.TokenDecoder;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.adapter.security.provider.UserDetailsTokenAuthenticationProvider;
 import com.lucadev.trampoline.security.jwt.adapter.security.provider.UserIdTokenDecorator;
@@ -30,6 +31,7 @@ public class JwtSecuritySupportConfiguration {
 	 * @param userDetailsService user details service which is persistent.
 	 * @param userDetailsChecker checks if the user is allowed access.
 	 * @param passwordEncoder    the password encoding for hashing passwords.
+	 * @param tokenDecoder       jwt token decoder.
 	 * @return stateless auth provider.
 	 */
 	@Bean(name = "tokenAuthenticationProvider")
@@ -37,9 +39,10 @@ public class JwtSecuritySupportConfiguration {
 			ignored = UserDetailsTokenAuthenticationProvider.class)
 	public TokenAuthenticationProvider tokenAuthenticationProvider(
 			TokenService tokenService, UserDetailsService userDetailsService,
-			UserDetailsChecker userDetailsChecker, PasswordEncoder passwordEncoder) {
+			UserDetailsChecker userDetailsChecker, PasswordEncoder passwordEncoder,
+			TokenDecoder tokenDecoder) {
 		return new UserDetailsTokenAuthenticationProvider(tokenService,
-				userDetailsService, userDetailsChecker, passwordEncoder);
+				userDetailsService, userDetailsChecker, passwordEncoder, tokenDecoder);
 	}
 
 	/**

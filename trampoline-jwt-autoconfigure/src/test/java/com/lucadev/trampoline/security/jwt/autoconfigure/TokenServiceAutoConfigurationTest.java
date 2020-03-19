@@ -65,6 +65,10 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Test
 	public void registersJwtTokenServiceAutomatically() {
+		this.context.registerBean(TokenDecoderAutoConfiguration.class,
+				jwtSecurityConfigurationProperties);
+		this.context.registerBean(TokenExtractorAutoConfiguration.class,
+				jwtSecurityConfigurationProperties);
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
 				timeProvider, jwtSecurityConfigurationProperties);
 		this.context.refresh();
@@ -74,6 +78,10 @@ public class TokenServiceAutoConfigurationTest {
 
 	@Test
 	public void customTokenServiceBean() {
+		this.context.registerBean(TokenDecoderAutoConfiguration.class,
+				jwtSecurityConfigurationProperties);
+		this.context.registerBean(TokenExtractorAutoConfiguration.class,
+				jwtSecurityConfigurationProperties);
 		this.context.register(CustomTokenServiceConfig.class);
 		this.context.registerBean(TokenServiceAutoConfiguration.class, jwtConfiguration,
 				timeProvider, jwtSecurityConfigurationProperties);
@@ -105,27 +113,12 @@ public class TokenServiceAutoConfigurationTest {
 		}
 
 		@Override
-		public TokenPayload decodeTokenHeader(String token) {
-			return null;
-		}
-
-		@Override
-		public TokenPayload decodeToken(String token) {
-			return null;
-		}
-
-		@Override
 		public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
 			return false;
 		}
 
 		@Override
 		public String issueTokenRefresh(HttpServletRequest request) {
-			return null;
-		}
-
-		@Override
-		public String getTokenHeader(HttpServletRequest request) {
 			return null;
 		}
 

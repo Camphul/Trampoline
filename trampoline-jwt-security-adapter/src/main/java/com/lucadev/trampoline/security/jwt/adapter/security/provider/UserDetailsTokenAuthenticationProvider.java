@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.jwt.adapter.security.provider;
 
+import com.lucadev.trampoline.security.jwt.TokenDecoder;
 import com.lucadev.trampoline.security.jwt.TokenPayload;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.StatelessAuthenticationToken;
@@ -35,6 +36,8 @@ public class UserDetailsTokenAuthenticationProvider
 
 	private final PasswordEncoder passwordEncoder;
 
+	private final TokenDecoder tokenDecoder;
+
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
@@ -52,7 +55,12 @@ public class UserDetailsTokenAuthenticationProvider
 		// Checks attributes such as enabled/credentials expired/etc..
 		this.userDetailsChecker.check(userDetails);
 		String token = this.tokenService.issueToken(userDetails);
-		TokenPayload tokenPayload = this.tokenService.decodeToken(token);
+		TokenPayload tokenPayload = null;
+		try {
+			tokenPayload = this.tokenDecoder.decode(token);
+		} catch (Exception e) {
+			throw new BadCredentialsException("Invalid token", e);
+		}
 		return new StatelessAuthenticationToken(userDetails, tokenPayload);
 	}
 

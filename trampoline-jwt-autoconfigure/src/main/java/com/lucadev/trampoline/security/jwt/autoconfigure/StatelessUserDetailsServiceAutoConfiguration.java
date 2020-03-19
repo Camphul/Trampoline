@@ -1,6 +1,7 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
-import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.TokenDecoder;
+import com.lucadev.trampoline.security.jwt.TokenExtractor;
 import com.lucadev.trampoline.security.jwt.authentication.user.StatelessUserDetailsService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +21,8 @@ public class StatelessUserDetailsServiceAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService(
-			TokenService tokenService) {
-		return new StatelessUserDetailsService(tokenService);
+			TokenDecoder tokenDecoder, TokenExtractor tokenExtractor) {
+		return new StatelessUserDetailsService(tokenDecoder, tokenExtractor);
 	}
 
 }

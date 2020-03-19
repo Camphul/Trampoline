@@ -34,32 +34,11 @@ public interface TokenService {
 	String issueTokenRefresh(HttpServletRequest request);
 
 	/**
-	 * Get all token information from the full schema string.
-	 * @param token jwt string with schema attached.
-	 * @return jwt DTO representation.
-	 */
-	TokenPayload decodeTokenHeader(String token);
-
-	/**
-	 * Get all token information without the schema attached.
-	 * @param token jwt string
-	 * @return jwt DTO representation.
-	 */
-	TokenPayload decodeToken(String token);
-
-	/**
 	 * Validate a token.
 	 * @param tokenPayload the data read from the token
 	 * @param user the user to validate the data on
 	 * @return if the token is valid with the given user
 	 */
 	boolean isValidToken(TokenPayload tokenPayload, UserDetails user);
-
-	/**
-	 * Get the token string from the request header.
-	 * @param request request from the client.
-	 * @return token header,
-	 */
-	String getTokenHeader(HttpServletRequest request);
 
 }

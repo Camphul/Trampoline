@@ -4,30 +4,23 @@ import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfiguratio
 import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
 import com.lucadev.trampoline.service.time.TimeProvider;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Implementation for {@link TokenService} used to manage JWT tokens.
@@ -44,6 +37,10 @@ public class JwtTokenService implements TokenService {
 	private final TimeProvider timeProvider;
 
 	private final JwtSecurityConfigurationProperties properties;
+
+	private final TokenExtractor tokenExtractor;
+
+	private final TokenDecoder tokenDecoder;
 
 	@Getter(AccessLevel.PRIVATE)
 	private Key signKey;
@@ -72,7 +69,19 @@ public class JwtTokenService implements TokenService {
 	}
 
 	/**
+	 * Parse JWT and obtain all claims.
+	 *
+	 * @param token jwt string.
+	 * @return all token claims.
+	 * @see Claims
+	 */
+	private Claims getAllTokenClaims(String token) {
+		return Jwts.parser().setSigningKey(getSignKey()).parseClaimsJws(token).getBody();
+	}
+
+	/**
 	 * Refresh an existing token without any checks.
+	 *
 	 * @param token jwt
 	 * @return refreshed jwt
 	 */
@@ -95,14 +104,12 @@ public class JwtTokenService implements TokenService {
 	 */
 	@Override
 	public String issueTokenRefresh(HttpServletRequest request) {
-		String authHeader = request.getHeader(this.properties.getHeader());
-		final String token = parseTokenHeader(authHeader);
-		TokenPayload tokenPayload = decodeToken(token);
+		final String token = this.tokenExtractor.extract(request);
+		TokenPayload tokenPayload = this.tokenDecoder.decode(token);
 
 		if (isTokenRefreshable(tokenPayload)) {
 			return issueTokenRefresh(token);
-		}
-		else {
+		} else {
 			throw new BadCredentialsException("Auth token can not be refreshed");
 		}
 	}
@@ -122,58 +129,6 @@ public class JwtTokenService implements TokenService {
 	}
 
 	/**
-	 * Get all token information.
-	 * @param token jwt string
-	 * @return jwt DTO representation.
-	 */
-	@Override
-	public TokenPayload decodeTokenHeader(String token) {
-		if (token == null || token.isEmpty()) {
-			throw new AuthenticationCredentialsNotFoundException("Could not find token.");
-		}
-		if (token.startsWith(this.properties.getHeaderSchema())) {
-			String authToken = parseTokenHeader(token);
-			if (authToken == null) {
-				throw new AuthenticationCredentialsNotFoundException(
-						"Authentication token was not found inside header.");
-			}
-			return decodeToken(authToken);
-		}
-		else {
-			throw new AuthenticationCredentialsNotFoundException(
-					"Could not find bearer string inside header.");
-		}
-	}
-
-	@Override
-	public TokenPayload decodeToken(String token) {
-		try {
-			JwtSecurityConfigurationProperties.ClaimsConfigurationProperties claimConfig = this.properties
-					.getClaims();
-			Claims claims = getAllTokenClaims(token);
-			TokenPayload tokenPayload = new TokenPayload();
-			tokenPayload.setRawToken(token);
-			tokenPayload.setUsername(claims.get(claimConfig.getUsername(), String.class));
-			tokenPayload.setIssuedDate(claims.getIssuedAt());
-			tokenPayload.setExpirationDate(claims.getExpiration());
-			tokenPayload.setPrincipalIdentifier(
-					claims.get(claimConfig.getPrincipalIdentifier(), String.class));
-			Collection<GrantedAuthority> authorities = ((List<String>) claims
-					.get(claimConfig.getAuthorities(), ArrayList.class)).stream()
-							.map(SimpleGrantedAuthority::new)
-							.collect(Collectors.toList());
-			tokenPayload.setAuthorities(authorities);
-			return tokenPayload;
-		}
-		catch (IllegalArgumentException e) {
-			throw new BadCredentialsException("Failed to parse token: " + e.getMessage());
-		}
-		catch (ExpiredJwtException e) {
-			throw new BadCredentialsException("Token is expired.");
-		}
-	}
-
-	/**
 	 * Validate token data against the suspected User.
 	 * @param tokenPayload jwt dto.
 	 * @param user user who the token belongs to.
@@ -183,21 +138,6 @@ public class JwtTokenService implements TokenService {
 	public boolean isValidToken(TokenPayload tokenPayload, UserDetails user) {
 		return (user.getUsername().equals(tokenPayload.getUsername())
 				&& (!isExpired(tokenPayload.getExpirationDate())));
-	}
-
-	@Override
-	public String getTokenHeader(HttpServletRequest request) {
-		return request.getHeader(this.properties.getHeader());
-	}
-
-	/**
-	 * Parse JWT and obtain all claims.
-	 * @param token jwt string.
-	 * @return all token claims.
-	 * @see Claims
-	 */
-	private Claims getAllTokenClaims(String token) {
-		return Jwts.parser().setSigningKey(getSignKey()).parseClaimsJws(token).getBody();
 	}
 
 	/**
@@ -220,21 +160,6 @@ public class JwtTokenService implements TokenService {
 	private Date calculateExpiryDate(Date createdDate) {
 		long timeoutMilliseconds = this.properties.getTokenTimeout() * 1000L;
 		return new Date(createdDate.getTime() + timeoutMilliseconds);
-	}
-
-	/**
-	 * Get the raw token string from the header value(remove the prefix).
-	 * @param headerValue the raw header value
-	 * @return the un-prefixed, ready to parse jwt token
-	 */
-	private String parseTokenHeader(String headerValue) {
-		String authToken = headerValue
-				.substring(this.properties.getHeaderSchema().length());
-		// Remove first whitespace
-		while (authToken.startsWith(" ")) {
-			authToken = authToken.substring(1);
-		}
-		return authToken;
 	}
 
 }

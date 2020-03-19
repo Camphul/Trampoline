@@ -1,6 +1,6 @@
 package com.lucadev.trampoline.security.jwt.authentication;
 
-import com.lucadev.trampoline.security.jwt.TokenService;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 public class TokenAuthenticationFilter
 		extends AbstractTokenPreAuthenticatedProcessingFilter {
 
-	private final TokenService tokenService;
+	private final JwtSecurityConfigurationProperties properties;
 
 	@Override
 	public String getTokenHeader(HttpServletRequest request) {
-		return this.tokenService.getTokenHeader(request);
+		return request.getHeader(this.properties.getHeader());
 	}
 
 }

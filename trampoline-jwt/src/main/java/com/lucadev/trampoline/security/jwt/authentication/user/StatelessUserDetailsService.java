@@ -1,7 +1,8 @@
 package com.lucadev.trampoline.security.jwt.authentication.user;
 
+import com.lucadev.trampoline.security.jwt.TokenDecoder;
+import com.lucadev.trampoline.security.jwt.TokenExtractor;
 import com.lucadev.trampoline.security.jwt.TokenPayload;
-import com.lucadev.trampoline.security.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -21,7 +22,9 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 public class StatelessUserDetailsService
 		implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
-	private final TokenService tokenService;
+	private final TokenDecoder tokenDecoder;
+
+	private final TokenExtractor tokenExtractor;
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken authentication)
@@ -31,8 +34,9 @@ public class StatelessUserDetailsService
 				&& authentication.getCredentials() instanceof String) {
 			log.debug("Loading stateless user details.");
 			try {
-				TokenPayload tokenPayload = this.tokenService
-						.decodeTokenHeader((String) authentication.getPrincipal());
+				String token = this.tokenExtractor
+						.extract((String) authentication.getPrincipal());
+				TokenPayload tokenPayload = this.tokenDecoder.decode(token);
 				return new StatelessUserDetails(tokenPayload);
 			}
 			catch (Exception ex) {

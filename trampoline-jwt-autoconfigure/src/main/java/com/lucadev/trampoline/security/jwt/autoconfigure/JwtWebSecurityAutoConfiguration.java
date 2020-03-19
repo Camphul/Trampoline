@@ -4,6 +4,7 @@ import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationEntryPoint;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationFilter;
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
+import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,8 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	private final TokenService tokenService;
 
 	private TokenAuthenticationProvider tokenAuthenticationProvider;
+
+	private final JwtSecurityConfigurationProperties jwtProperties;
 
 	@Autowired(required = false/*
 								 * This mechanism will be replaced soon by a rewritten
@@ -110,7 +113,7 @@ public class JwtWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapte
 	 */
 	protected Filter filter() {
 		TokenAuthenticationFilter filter = new TokenAuthenticationFilter(
-				this.tokenService);
+				this.jwtProperties);
 		try {
 			filter.setAuthenticationManager(authenticationManagerBean());
 		}

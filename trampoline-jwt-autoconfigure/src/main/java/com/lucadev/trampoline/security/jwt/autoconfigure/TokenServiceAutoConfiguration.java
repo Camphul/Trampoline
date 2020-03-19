@@ -1,6 +1,8 @@
 package com.lucadev.trampoline.security.jwt.autoconfigure;
 
 import com.lucadev.trampoline.security.jwt.JwtTokenService;
+import com.lucadev.trampoline.security.jwt.TokenDecoder;
+import com.lucadev.trampoline.security.jwt.TokenExtractor;
 import com.lucadev.trampoline.security.jwt.TokenService;
 import com.lucadev.trampoline.security.jwt.configuration.JwtSecurityConfigurationProperties;
 import com.lucadev.trampoline.security.jwt.decorator.TokenDecorator;
@@ -35,15 +37,21 @@ public class TokenServiceAutoConfiguration {
 
 	private final TimeProvider timeProvider;
 
+	private final TokenExtractor tokenExtractor;
+
+	private final TokenDecoder tokenDecoder;
+
 	/**
 	 * Creates a {@link TokenService} bean if none are provided.
+	 *
 	 * @return autoconfigured {@link TokenService}
 	 */
 	@Bean(name = "tokenService")
 	@ConditionalOnMissingBean(TokenService.class)
 	public TokenService tokenService() {
 		return new JwtTokenService(this.tokenDecorators, this.timeProvider,
-				this.jwtSecurityConfigurationProperties);
+				this.jwtSecurityConfigurationProperties, this.tokenExtractor,
+				this.tokenDecoder);
 	}
 
 }
