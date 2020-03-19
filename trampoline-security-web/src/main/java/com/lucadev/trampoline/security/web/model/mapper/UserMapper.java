@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.web.model.mapper;
 
+import com.lucadev.trampoline.data.service.GenericMapper;
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.web.configuration.WebSecurityMapperConfiguration;
 import com.lucadev.trampoline.security.web.model.EmbeddedUser;
@@ -16,11 +17,12 @@ import java.util.List;
  * @since 6/8/19
  */
 @Mapper(config = WebSecurityMapperConfiguration.class,
-		uses = { RoleMapper.class, GrantedAuthorityMapper.class })
-public interface UserMapper {
+		uses = {RoleMapper.class, GrantedAuthorityMapper.class})
+public interface UserMapper extends GenericMapper<User, UserDto, UserSummaryDto> {
 
 	/**
 	 * To basic embeddable user.
+	 *
 	 * @param user user to map.
 	 * @return embeddable model.
 	 */

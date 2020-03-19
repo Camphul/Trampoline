@@ -1,5 +1,6 @@
 package com.lucadev.trampoline.security.service.impl;
 
+import com.lucadev.trampoline.data.service.AbstractCrudService;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.authentication.PersistentUserDetails;
@@ -7,13 +8,11 @@ import com.lucadev.trampoline.security.configuration.SecurityConfigurationProper
 import com.lucadev.trampoline.security.persistence.entity.User;
 import com.lucadev.trampoline.security.persistence.repository.UserRepository;
 import com.lucadev.trampoline.security.service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,20 +22,21 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public class TrampolineUserService implements UserService {
-
-	private final UserRepository userRepository;
+@Slf4j
+public class TrampolineUserService extends AbstractCrudService<User, UserRepository>
+		implements UserService {
 
 	private IdentificationField identificationField = IdentificationField.USERNAME;
 
 	/**
 	 * Construct the abstract handler.
-	 * @param userRepository the {@code Repository} used to persist {@link User} entities.
+	 *
+	 * @param userRepository                  the {@code Repository} used to persist {@link User} entities.
 	 * @param securityConfigurationProperties authentication properties.
 	 */
 	public TrampolineUserService(UserRepository userRepository,
-			SecurityConfigurationProperties securityConfigurationProperties) {
-		this.userRepository = userRepository;
+								 SecurityConfigurationProperties securityConfigurationProperties) {
+		super(userRepository);
 		if (securityConfigurationProperties.isAllowEmailIdentification()) {
 			this.identificationField = IdentificationField.USERNAME_OR_EMAIL;
 		}
@@ -47,7 +47,7 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public Optional<User> findByUsername(String username) {
-		return this.userRepository.findOneByUsername(username);
+		return getRepository().findOneByUsername(username);
 	}
 
 	/**
@@ -79,11 +79,14 @@ public class TrampolineUserService implements UserService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Delete user by id.
+	 *
+	 * @param id user id.
 	 */
 	@Override
-	public Optional<User> findById(UUID subject) {
-		return this.userRepository.findById(subject);
+	public void deleteById(UUID id) {
+		log.debug("Deleting user {}", id);
+		super.deleteById(id);
 	}
 
 	/**
@@ -91,15 +94,7 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public Optional<User> findByEmail(String email) {
-		return this.userRepository.findOneByEmail(email);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User save(User user) {
-		return this.userRepository.save(user);
+		return getRepository().findOneByEmail(email);
 	}
 
 	/**
@@ -107,25 +102,9 @@ public class TrampolineUserService implements UserService {
 	 */
 	@Override
 	public User update(User user) {
-		user = this.userRepository.save(user);
+		user = getRepository().save(user);
 		user.refreshAuthorities();
 		return user;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<User> findAll() {
-		return this.userRepository.findAll();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page<User> findAll(Pageable pageable) {
-		return this.userRepository.findAll(pageable);
 	}
 
 	/**
@@ -218,7 +197,7 @@ public class TrampolineUserService implements UserService {
 			return findByUsername(identifier);
 		}
 		else if (this.identificationField == IdentificationField.USERNAME_OR_EMAIL) {
-			return this.userRepository.findOneByUsernameOrEmail(identifier);
+			return getRepository().findOneByUsernameOrEmail(identifier);
 		}
 		throw new IllegalStateException(
 				"Invalid identification field. Cannot find user.");

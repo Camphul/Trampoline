@@ -1,15 +1,12 @@
 package com.lucadev.trampoline.security.service;
 
+import com.lucadev.trampoline.data.service.CrudService;
 import com.lucadev.trampoline.security.CurrentUserNotFoundException;
 import com.lucadev.trampoline.security.authentication.IdentificationField;
 import com.lucadev.trampoline.security.persistence.entity.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Service to manage {@link User} entities. Extends {@link UserDetailsService} to
@@ -18,10 +15,11 @@ import java.util.UUID;
  * @author <a href="mailto:luca@camphuisen.com">Luca Camphuisen</a>
  * @since 21-4-18
  */
-public interface UserService {
+public interface UserService extends CrudService<User> {
 
 	/**
 	 * Obtain the {@link User} from the current {@link Thread}.
+	 *
 	 * @return currently active {@link User} inside an {@link Optional}
 	 */
 	Optional<User> currentUser();
@@ -32,13 +30,6 @@ public interface UserService {
 	 * @return currently active {@link User}
 	 */
 	User currentUserOrThrow();
-
-	/**
-	 * Find a {@link User} by it's {@link User#getId()}.
-	 * @param subject the {@link UUID} to find.
-	 * @return null or the found {@link User}
-	 */
-	Optional<User> findById(UUID subject);
 
 	/**
 	 * Find a {@link User} by its username.
@@ -53,33 +44,6 @@ public interface UserService {
 	 * @return the found user.
 	 */
 	Optional<User> findByEmail(String email);
-
-	/**
-	 * Persist new {@link User}.
-	 * @param user the {@link User} to persist
-	 * @return the persisted {@link User}
-	 */
-	User save(User user);
-
-	/**
-	 * Update a {@link User}.
-	 * @param user the {@link User} containing updated data.
-	 * @return the updated {@link User} after being updated.
-	 */
-	User update(User user);
-
-	/**
-	 * Get a {@link List} of all users.
-	 * @return a {@link List} of all {@link User} entities.
-	 */
-	List<User> findAll();
-
-	/**
-	 * Find all users but paged.
-	 * @param pageable paging information.
-	 * @return a {@link Page} of {@link User} entities.
-	 */
-	Page<User> findAll(Pageable pageable);
 
 	/**
 	 * Set user enabled to false.

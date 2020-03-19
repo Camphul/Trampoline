@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lucadev.trampoline.apibrick.autoconfigure.ApiBrickAutoConfiguration,\
+com.lucadev.trampoline.apibrick.autoconfigure.SecurityApiBrickAutoConfiguration

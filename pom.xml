@@ -140,6 +140,10 @@
 		<module>trampoline-notify-starter</module>
 		<module>trampoline-data-web-autoconfigure</module>
 		<module>trampoline-data-web-starter</module>
+		<module>trampoline-api-brick</module>
+		<module>trampoline-api-brick-security</module>
+		<module>trampoline-api-brick-autoconfigure</module>
+		<module>trampoline-api-brick-starter</module>
 	</modules>
 
 	<profiles>

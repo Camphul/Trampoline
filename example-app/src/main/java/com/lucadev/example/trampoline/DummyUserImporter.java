@@ -65,11 +65,10 @@ public class DummyUserImporter implements ApplicationListener<ContextRefreshedEv
 		for (Role role : roles) {
 			user.getRoles().add(role);
 		}
-		user = this.userService.save(user);
+		user = this.userService.save(user).orElse(null);
 		if (user == null) {
 			log.error("Could not persist user!");
-		}
-		else {
+		} else {
 			log.info("Created new user with id {}", user.getId());
 		}
 		return user;
