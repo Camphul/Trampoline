@@ -6,12 +6,14 @@ import com.lucadev.trampoline.security.jwt.authentication.StatelessAuthenticatio
 import com.lucadev.trampoline.security.jwt.authentication.TokenAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Authentication provider which creates an authentication object from a username password
@@ -31,13 +33,22 @@ public class UserDetailsTokenAuthenticationProvider
 
 	private final UserDetailsChecker userDetailsChecker;
 
+	private final PasswordEncoder passwordEncoder;
+
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		log.debug("Issuing new token.");
+
 		UsernamePasswordAuthenticationToken authorizationToken = (UsernamePasswordAuthenticationToken) authentication;
 		UserDetails userDetails = this.userDetailsService
 				.loadUserByUsername(authorizationToken.getName());
+
+		if (!this.passwordEncoder.matches(String.valueOf(authentication.getCredentials()),
+				userDetails.getPassword())) {
+			throw new BadCredentialsException("Password does not match.");
+		}
+
 		// Checks attributes such as enabled/credentials expired/etc..
 		this.userDetailsChecker.check(userDetails);
 		String token = this.tokenService.issueToken(userDetails);

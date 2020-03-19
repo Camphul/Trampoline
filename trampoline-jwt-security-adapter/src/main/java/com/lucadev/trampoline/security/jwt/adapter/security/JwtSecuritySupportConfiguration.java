@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Configures to enable this module.
@@ -24,9 +25,11 @@ public class JwtSecuritySupportConfiguration {
 
 	/**
 	 * Create token auth provider.
-	 * @param tokenService token service.
+	 *
+	 * @param tokenService       token service.
 	 * @param userDetailsService user details service which is persistent.
 	 * @param userDetailsChecker checks if the user is allowed access.
+	 * @param passwordEncoder    the password encoding for hashing passwords.
 	 * @return stateless auth provider.
 	 */
 	@Bean(name = "tokenAuthenticationProvider")
@@ -34,9 +37,9 @@ public class JwtSecuritySupportConfiguration {
 			ignored = UserDetailsTokenAuthenticationProvider.class)
 	public TokenAuthenticationProvider tokenAuthenticationProvider(
 			TokenService tokenService, UserDetailsService userDetailsService,
-			UserDetailsChecker userDetailsChecker) {
+			UserDetailsChecker userDetailsChecker, PasswordEncoder passwordEncoder) {
 		return new UserDetailsTokenAuthenticationProvider(tokenService,
-				userDetailsService, userDetailsChecker);
+				userDetailsService, userDetailsChecker, passwordEncoder);
 	}
 
 	/**
