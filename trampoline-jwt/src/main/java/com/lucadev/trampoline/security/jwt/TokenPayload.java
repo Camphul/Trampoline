@@ -16,34 +16,16 @@ import java.util.Date;
 @Data
 public class TokenPayload implements Serializable {
 
-	/**
-	 * Raw token data.
-	 */
 	private String rawToken;
 
-	/**
-	 * Principal id(most likely entity id).
-	 */
 	private String principalIdentifier;
 
-	/**
-	 * Subject username.
-	 */
 	private String username;
 
-	/**
-	 * Subject authorities.
-	 */
 	private Collection<GrantedAuthority> authorities;
 
-	/**
-	 * Token issue date.
-	 */
 	private Date issuedDate;
 
-	/**
-	 * Token expiry date.
-	 */
 	private Date expirationDate;
 
 }

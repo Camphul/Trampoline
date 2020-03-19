@@ -19,10 +19,8 @@ public class BearerTokenExtractor implements TokenExtractor {
 
 	/**
 	 * Get bearer token.
-	 *
 	 * @param request http request.
 	 * @return bearer token.
-	 * @throws Exception when it fails to extract bearer token.
 	 */
 	@Override
 	public String extract(HttpServletRequest request) throws RuntimeException {
@@ -31,10 +29,8 @@ public class BearerTokenExtractor implements TokenExtractor {
 
 	/**
 	 * Get bearer token.
-	 *
 	 * @param header header value.
 	 * @return bearer token.
-	 * @throws Exception when it fails to extract bearer token.
 	 */
 	@Override
 	public String extract(String header) throws RuntimeException {

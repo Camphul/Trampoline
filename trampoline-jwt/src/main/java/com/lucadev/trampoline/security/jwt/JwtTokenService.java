@@ -70,7 +70,6 @@ public class JwtTokenService implements TokenService {
 
 	/**
 	 * Parse JWT and obtain all claims.
-	 *
 	 * @param token jwt string.
 	 * @return all token claims.
 	 * @see Claims
@@ -81,7 +80,6 @@ public class JwtTokenService implements TokenService {
 
 	/**
 	 * Refresh an existing token without any checks.
-	 *
 	 * @param token jwt
 	 * @return refreshed jwt
 	 */

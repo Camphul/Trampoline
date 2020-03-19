@@ -43,7 +43,6 @@ public class TokenServiceAutoConfiguration {
 
 	/**
 	 * Creates a {@link TokenService} bean if none are provided.
-	 *
 	 * @return autoconfigured {@link TokenService}
 	 */
 	@Bean(name = "tokenService")

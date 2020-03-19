@@ -12,19 +12,15 @@ public interface TokenExtractor {
 
 	/**
 	 * Extract token header.
-	 *
 	 * @param request http request.
 	 * @return token as string.
-	 * @throws Exception when fails to extract.
 	 */
 	String extract(HttpServletRequest request) throws RuntimeException;
 
 	/**
 	 * Extract token header.
-	 *
 	 * @param header header value.
 	 * @return token as string.
-	 * @throws Exception when fails to extract.
 	 */
 	String extract(String header) throws RuntimeException;
 

@@ -30,10 +30,8 @@ public class JwtTokenDecoder implements TokenDecoder {
 
 	/**
 	 * Decodes jwt token.
-	 *
 	 * @param token string token.
 	 * @return decoded token payload.
-	 * @throws Exception when we fail to decode due to invalid token.
 	 */
 	@Override
 	public TokenPayload decode(String token) throws RuntimeException {
@@ -63,7 +61,6 @@ public class JwtTokenDecoder implements TokenDecoder {
 
 	/**
 	 * Get jwt sign key.
-	 *
 	 * @return jwt sign key.
 	 */
 	private Key getSignKey() {
@@ -74,7 +71,6 @@ public class JwtTokenDecoder implements TokenDecoder {
 
 	/**
 	 * Parse JWT and obtain all claims.
-	 *
 	 * @param token jwt string.
 	 * @return all token claims.
 	 * @see Claims

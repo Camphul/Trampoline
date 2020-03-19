@@ -10,10 +10,8 @@ public interface TokenDecoder {
 
 	/**
 	 * Decodes token into payload.
-	 *
 	 * @param token string token.
 	 * @return decoded token.
-	 * @throws RuntimeException when we fail to decode the token.
 	 */
 	TokenPayload decode(String token) throws RuntimeException;
 
